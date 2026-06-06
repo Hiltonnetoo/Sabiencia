@@ -52,7 +52,7 @@ export const ProfessorFormPage: React.FC = () => {
         updateProfessor(id, {
           ...data,
           role: 'professor' as const,
-        });
+        } as any);
         toast.success('Professor atualizado com sucesso!');
       } else {
         // Criar novo professor
@@ -60,7 +60,7 @@ export const ProfessorFormPage: React.FC = () => {
           ...data,
           role: 'professor' as const,
           cpf: data.cpf.replace(/\D/g, ''), // Remover formatação do CPF
-        });
+        } as any);
         toast.success('Professor cadastrado com sucesso!');
       }
 

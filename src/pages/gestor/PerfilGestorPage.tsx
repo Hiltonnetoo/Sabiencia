@@ -23,7 +23,7 @@ export const PerfilGestorPage: React.FC = () => {
   // Estatísticas gerais
   const totalAlunos = alunos.filter((a) => a.ativo).length;
   const totalProfessores = professores.filter((p) => p.ativo).length;
-  const totalTurmas = turmas.filter((t) => t.ativo).length;
+  const totalTurmas = turmas.filter((t) => t.ativa).length;
   const totalCursos = cursos.filter((c) => c.ativo).length;
 
   const handleSavePerfil = (data: PerfilPessoalFormData) => {

@@ -17,7 +17,7 @@ export const LoginDebug: React.FC = () => {
     
     // Teste 2: Listar usuários
     mockUsers.forEach(user => {
-      results.push(`  - ${user.role}: CPF ${user.cpf} | Senha: ${user.senha}`);
+      results.push(`  - ${user.role}: CPF ${user.cpf} | Senha: ${user.senha_hash}`);
     });
     
     // Teste 3: Verificar mockData
@@ -29,7 +29,7 @@ export const LoginDebug: React.FC = () => {
     // Teste 4: Tentar login manual
     const testCPF = '000.000.000-01';
     const testSenha = 'gestor123';
-    const found = mockUsers.find(u => u.cpf === testCPF && u.senha === testSenha);
+    const found = mockUsers.find(u => u.cpf === testCPF && u.senha_hash === testSenha);
     
     if (found) {
       results.push(`✅ Login teste PASSOU: ${testCPF} encontrado como ${found.role}`);
@@ -83,7 +83,7 @@ export const LoginDebug: React.FC = () => {
                   </div>
                   <div className="text-sm text-gray-700">
                     <div>CPF: <span className="font-mono">{user.cpf}</span></div>
-                    <div>Senha: <span className="font-mono">{user.senha}</span></div>
+                    <div>Senha: <span className="font-mono">{user.senha_hash}</span></div>
                     <div>ID: <span className="font-mono text-xs">{user.user_id}</span></div>
                   </div>
                 </div>

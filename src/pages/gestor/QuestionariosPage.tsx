@@ -205,12 +205,7 @@ export const QuestionariosPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Breadcrumb */}
-      <PageBreadcrumb
-        items={[
-          { label: 'Início', href: '/gestor/dashboard' },
-          { label: 'Questionários', href: '/gestor/questionarios' }
-        ]}
-      />
+      <PageBreadcrumb />
 
       {/* Header */}
       <div className="flex items-center justify-between">

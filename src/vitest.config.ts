@@ -3,11 +3,15 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react() as any],
+  define: {
+    'import.meta.env.VITE_DEMO_MODE': JSON.stringify('true'),
+    'import.meta.env.VITE_AUTH_SECRET': JSON.stringify('test-secret-key-12345678901234567890')
+  },
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: ['./test/setup.ts'],
+    setupFiles: [path.resolve(__dirname, 'test/setup.ts')],
     css: true,
     coverage: {
       provider: 'v8',

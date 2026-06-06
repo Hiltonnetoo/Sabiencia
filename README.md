@@ -103,9 +103,7 @@ demos and portfolio review. The same authentication flow integrates with **Supab
 are provided via `.env`, real authentication is used, with a demo fallback gated behind
 `VITE_DEMO_MODE`.
 
-**Authentication & RBAC.** Login accepts CPF or e-mail. Sessions are persisted with an
-integrity signature (HMAC) and a fixed expiry, after which the user is auto-logged out.
-`ProtectedRoute` enforces per-role access and redirects each role to its default dashboard.
+**Authentication & RBAC.** Login accepts CPF or e-mail. Sessions are persisted with a local integrity signature (HMAC) and a fixed expiry. Note that client-side HMAC signatures validate state consistency in local storage to prevent naive UI role tampering, while the true database security and API protection are handled through Supabase Row-Level Security (RLS) policies. `ProtectedRoute` enforces per-role access and redirects each role to its default dashboard.
 
 **Routing.** Routes are split by role (`src/routes/`) and lazy-loaded so each area ships its
 own bundle.
@@ -144,7 +142,7 @@ Copy `.env.example` to `.env` and configure:
 | --- | --- | --- |
 | `VITE_SUPABASE_URL` | for production | Supabase project URL |
 | `VITE_SUPABASE_ANON_KEY` | for production | Supabase public anon key |
-| `VITE_AUTH_SECRET` | yes | 32-byte hex secret used to sign client sessions (HMAC) |
+| `VITE_AUTH_SECRET` | yes | 32-byte hex secret used to sign client sessions for local state integrity validation |
 | `VITE_DEMO_MODE` | optional | `true` enables passwordless demo login (development only) |
 
 > Only the public Supabase **anon** key is used on the client. Never commit `.env` — it is

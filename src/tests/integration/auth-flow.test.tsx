@@ -6,7 +6,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider, useAuth } from '../../contexts/AuthContext';
 import { LoginPage } from '../../components/auth/LoginPage';
 import { ProtectedRoute } from '../../components/auth/ProtectedRoute';
@@ -16,17 +16,22 @@ import { MockDataProvider } from '../../contexts/MockDataContext';
 // Componente de teste para rota protegida
 const TestDashboard = () => {
   const { user } = useAuth();
-  return <div>Welcome {user?.nome}</div>;
+  return <div>Welcome {user?.nome_completo}</div>;
 };
 
 // App de teste completo
-const TestApp = () => {
+interface TestAppProps {
+  initialPath?: string;
+}
+
+const TestApp = ({ initialPath = '/' }: TestAppProps) => {
   return (
-    <BrowserRouter>
+    <MemoryRouter initialEntries={[initialPath]}>
       <AuthProvider>
         <MockDataProvider>
           <Routes>
             <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
             <Route path="/redirect" element={<div>Redirecting...</div>} />
             <Route
               path="/gestor/dashboard"
@@ -47,49 +52,57 @@ const TestApp = () => {
           </Routes>
         </MockDataProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </MemoryRouter>
   );
 };
 
 describe('Authentication Flow - Integration', () => {
   it('deve fazer login completo e acessar dashboard', async () => {
     const user = userEvent.setup();
-    render(<TestApp />);
+    render(<TestApp initialPath="/" />);
 
     // Verificar que está na página de login
-    expect(screen.getByText(/Sistema de Gestão Educacional/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/Entre com suas credenciais/i)).toBeInTheDocument();
+    });
 
     // Fazer login
     await user.type(screen.getByLabelText(/cpf/i), '00000000001');
     await user.type(screen.getByLabelText(/senha/i), 'gestor123');
     await user.click(screen.getByRole('button', { name: /entrar/i }));
 
-    // Aguardar redirecionamento
+    // Aguardar o redirecionamento (na prática o navigate direcionará para /redirect)
+    // No MemoryRouter, a rota /redirect será renderizada
     await waitFor(() => {
-      expect(window.location.pathname).toContain('/redirect');
+      expect(screen.getByText(/Redirecting.../i)).toBeInTheDocument();
     });
   });
 
   it('deve persistir autenticação entre páginas', async () => {
-    const user = userEvent.setup();
-    
-    // Mock do localStorage
+    // Mock do localStorage com envelope SecureStorage
     const mockUser = {
       id: '1',
       cpf: '000.000.000-01',
-      nome: 'Maria Clara Santos',
+      nome_completo: 'Maria Clara Santos',
       email: 'maria@sabiencia.com.br',
       role: 'gestor' as const,
-      ativo: true
+      ativo: true,
+      created_at: new Date()
     };
 
-    localStorage.setItem('sabiencia_auth_user', JSON.stringify(mockUser));
+    const secureStorageObj = {
+      token: {
+        user: mockUser,
+        expiresAt: Date.now() + 1000 * 60 * 60 * 8, // 8h
+        createdAt: Date.now()
+      },
+      signature: 'mock-signature'
+    };
+
+    localStorage.setItem('sabiencia_auth_user', JSON.stringify(secureStorageObj));
     localStorage.setItem('sabiencia_auth_token', 'mock-token');
 
-    render(<TestApp />);
-
-    // Navegar direto para dashboard (deve estar autenticado)
-    window.history.pushState({}, '', '/test-dashboard');
+    render(<TestApp initialPath="/test-dashboard" />);
 
     await waitFor(() => {
       expect(screen.queryByText(/Welcome Maria Clara Santos/i)).toBeTruthy();
@@ -99,14 +112,11 @@ describe('Authentication Flow - Integration', () => {
   it('deve redirecionar para login quando não autenticado', async () => {
     localStorage.clear();
     
-    render(<TestApp />);
+    render(<TestApp initialPath="/test-dashboard" />);
 
-    // Tentar acessar rota protegida
-    window.history.pushState({}, '', '/test-dashboard');
-
-    // Deve redirecionar para login
+    // Deve redirecionar para login (que renderiza a tela com "Entre com suas credenciais")
     await waitFor(() => {
-      expect(screen.getByText(/Sistema de Gestão Educacional/i)).toBeInTheDocument();
+      expect(screen.getByText(/Entre com suas credenciais/i)).toBeInTheDocument();
     });
   });
 
@@ -117,13 +127,23 @@ describe('Authentication Flow - Integration', () => {
     const mockUser = {
       id: '1',
       cpf: '000.000.000-01',
-      nome: 'Maria Clara Santos',
+      nome_completo: 'Maria Clara Santos',
       email: 'maria@sabiencia.com.br',
       role: 'gestor' as const,
-      ativo: true
+      ativo: true,
+      created_at: new Date()
     };
 
-    localStorage.setItem('sabiencia_auth_user', JSON.stringify(mockUser));
+    const secureStorageObj = {
+      token: {
+        user: mockUser,
+        expiresAt: Date.now() + 1000 * 60 * 60 * 8,
+        createdAt: Date.now()
+      },
+      signature: 'mock-signature'
+    };
+
+    localStorage.setItem('sabiencia_auth_user', JSON.stringify(secureStorageObj));
     
     const TestAppWithLogout = () => {
       const { logout, user } = useAuth();
@@ -132,7 +152,7 @@ describe('Authentication Flow - Integration', () => {
         <div>
           {user ? (
             <>
-              <div>Logged in as {user.nome}</div>
+              <div>Logged in as {user.nome_completo}</div>
               <button onClick={logout}>Logout</button>
             </>
           ) : (
@@ -143,11 +163,11 @@ describe('Authentication Flow - Integration', () => {
     };
 
     render(
-      <BrowserRouter>
+      <MemoryRouter initialEntries={['/']}>
         <AuthProvider>
           <TestAppWithLogout />
         </AuthProvider>
-      </BrowserRouter>
+      </MemoryRouter>
     );
 
     // Usuário deve estar logado
@@ -172,20 +192,27 @@ describe('Authentication Flow - Integration', () => {
     const mockUser = {
       id: '3',
       cpf: '333.333.333-33',
-      nome: 'João Pedro Santos',
+      nome_completo: 'João Pedro Santos',
       email: 'joao@exemplo.com',
       role: 'aluno' as const,
-      ativo: true
+      ativo: true,
+      created_at: new Date()
     };
 
-    localStorage.setItem('sabiencia_auth_user', JSON.stringify(mockUser));
+    const secureStorageObj = {
+      token: {
+        user: mockUser,
+        expiresAt: Date.now() + 1000 * 60 * 60 * 8,
+        createdAt: Date.now()
+      },
+      signature: 'mock-signature'
+    };
 
-    render(<TestApp />);
+    localStorage.setItem('sabiencia_auth_user', JSON.stringify(secureStorageObj));
 
-    // Tentar acessar dashboard do gestor
-    window.history.pushState({}, '', '/gestor/dashboard');
+    render(<TestApp initialPath="/gestor/dashboard" />);
 
-    // Deve ser bloqueado (redirecionar ou mostrar acesso negado)
+    // Deve ser redirecionado para dashboard do aluno ou ficar na login / não exibir welcome
     await waitFor(() => {
       expect(screen.queryByText(/Welcome/i)).toBeNull();
     });
@@ -200,28 +227,30 @@ describe('Auth + MockData Integration', () => {
       const { user } = useAuth();
       
       return (
-        <BrowserRouter>
-          <AuthProvider>
-            <MockDataProvider>
-              <Routes>
-                <Route path="/" element={<LoginPage />} />
-                <Route
-                  path="/redirect"
-                  element={
-                    <div>
-                      User: {user?.nome}
-                      Role: {user?.role}
-                    </div>
-                  }
-                />
-              </Routes>
-            </MockDataProvider>
-          </AuthProvider>
-        </BrowserRouter>
+        <MockDataProvider>
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route
+              path="/redirect"
+              element={
+                <div>
+                  User: {user?.nome_completo}
+                  Role: {user?.role}
+                </div>
+              }
+            />
+          </Routes>
+        </MockDataProvider>
       );
     };
 
-    render(<TestAppWithData />);
+    render(
+      <MemoryRouter initialEntries={['/']}>
+        <AuthProvider>
+          <TestAppWithData />
+        </AuthProvider>
+      </MemoryRouter>
+    );
 
     // Login
     await user.type(screen.getByLabelText(/cpf/i), '00000000001');
@@ -230,7 +259,7 @@ describe('Auth + MockData Integration', () => {
 
     // Verificar que dados do usuário foram carregados
     await waitFor(() => {
-      expect(screen.queryByText(/User: Maria Clara Santos/i)).toBeTruthy();
+      expect(screen.queryByText(/User: Gestor Demo/i)).toBeTruthy();
       expect(screen.queryByText(/Role: gestor/i)).toBeTruthy();
     });
   });

@@ -6,12 +6,14 @@
  * Formata CPF: 000.000.000-00
  */
 export const formatCPF = (cpf: string): string => {
+  if (!cpf) return '';
   const cleaned = cpf.replace(/\D/g, '');
+  if (cleaned.length !== 11) return '';
   const match = cleaned.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
   if (match) {
     return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
   }
-  return cpf;
+  return '';
 };
 
 /**
@@ -25,7 +27,9 @@ export const unformatCPF = (cpf: string): string => {
  * Formata telefone: (00) 00000-0000
  */
 export const formatPhone = (phone: string): string => {
+  if (!phone) return '';
   const cleaned = phone.replace(/\D/g, '');
+  if (cleaned.length !== 10 && cleaned.length !== 11) return '';
   const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
   if (match) {
     return `(${match[1]}) ${match[2]}-${match[3]}`;
@@ -35,7 +39,7 @@ export const formatPhone = (phone: string): string => {
   if (match8) {
     return `(${match8[1]}) ${match8[2]}-${match8[3]}`;
   }
-  return phone;
+  return '';
 };
 
 /**
@@ -54,12 +58,26 @@ export const formatCEP = (cep: string): string => {
  * Formata data: dd/MM/yyyy
  */
 export const formatDate = (date: Date | string): string => {
-  const d = typeof date === 'string' ? new Date(date) : date;
-  if (isNaN(d.getTime())) return '';
+  if (!date) return '-';
+  let d: Date;
+  if (typeof date === 'string') {
+    if (date.includes('-') && !date.includes('T')) {
+      const parts = date.split('-');
+      d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+    } else {
+      d = new Date(date);
+    }
+  } else {
+    d = date;
+  }
+  if (isNaN(d.getTime())) return '-';
   
-  const day = String(d.getDate()).padStart(2, '0');
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const year = d.getFullYear();
+  // Se for exatamente meia-noite em UTC (como as geradas por strings de data ou New Date('YYYY-MM-DD')), usamos UTC
+  const useUTC = d.getUTCHours() === 0 && d.getUTCMinutes() === 0 && d.getUTCSeconds() === 0 && d.getUTCMilliseconds() === 0;
+  
+  const day = String(useUTC ? d.getUTCDate() : d.getDate()).padStart(2, '0');
+  const month = String(useUTC ? d.getUTCMonth() + 1 : d.getMonth() + 1).padStart(2, '0');
+  const year = useUTC ? d.getUTCFullYear() : d.getFullYear();
   
   return `${day}/${month}/${year}`;
 };
@@ -68,8 +86,9 @@ export const formatDate = (date: Date | string): string => {
  * Formata data com hora: dd/MM/yyyy HH:mm
  */
 export const formatDateTime = (date: Date | string): string => {
+  if (!date) return '-';
   const d = typeof date === 'string' ? new Date(date) : date;
-  if (isNaN(d.getTime())) return '';
+  if (isNaN(d.getTime())) return '-';
   
   const day = String(d.getDate()).padStart(2, '0');
   const month = String(d.getMonth() + 1).padStart(2, '0');
@@ -87,7 +106,7 @@ export const formatCurrency = (value: number): string => {
   return new Intl.NumberFormat('pt-BR', {
     style: 'currency',
     currency: 'BRL'
-  }).format(value);
+  }).format(value).replace(/\s/g, ' ');
 };
 
 /**
@@ -156,6 +175,13 @@ export const formatFileSize = (bytes: number): string => {
  */
 export const formatPercent = (value: number, decimals: number = 1): string => {
   return `${value.toFixed(decimals)}%`;
+};
+
+/**
+ * Formata percentual com multiplicação por 100
+ */
+export const formatPercentage = (value: number, decimals: number = 0): string => {
+  return `${(value * 100).toFixed(decimals)}%`;
 };
 
 /**

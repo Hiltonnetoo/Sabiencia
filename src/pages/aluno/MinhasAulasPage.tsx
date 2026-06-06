@@ -161,7 +161,7 @@ export const MinhasAulasPage: React.FC = () => {
         proximaAula,
         videoaulas: videoaulasDisciplina
       };
-    }).filter((aula): aula is AulaData => aula !== null);
+    }).filter((aula): aula is any => aula !== null) as AulaData[];
   }, [user, matriculas, turmas, disciplinas, professores, professorTurmaDisciplina, frequencias, materiais, videoaulas]);
 
   // Filtrar aulas por aba
@@ -197,12 +197,7 @@ export const MinhasAulasPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Breadcrumb */}
-      <PageBreadcrumb
-        items={[
-          { label: 'Início', href: '/aluno/dashboard' },
-          { label: 'Minhas Aulas', href: '/aluno/aulas' }
-        ]}
-      />
+      <PageBreadcrumb />
 
       {/* Header */}
       <div>

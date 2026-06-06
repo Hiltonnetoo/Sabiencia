@@ -146,7 +146,7 @@ export const ProfessoresTable: React.FC<ProfessoresTableProps> = ({
 
   // Filtrar e ordenar professores
   const filteredAndSortedProfessores = useMemo(() => {
-    let filtered = professores.filter(professor => {
+    const filtered = professores.filter(professor => {
       // Filtro de busca
       const matchesSearch =
         professor.nome_completo.toLowerCase().includes(searchTerm.toLowerCase()) ||

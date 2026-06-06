@@ -109,12 +109,7 @@ export const CertificadosPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Breadcrumb */}
-      <PageBreadcrumb
-        items={[
-          { label: 'Início', href: '/aluno/dashboard' },
-          { label: 'Meus Certificados', href: '/aluno/certificados' }
-        ]}
-      />
+      <PageBreadcrumb />
 
       {/* Header */}
       <div>

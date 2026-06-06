@@ -176,14 +176,7 @@ export const MeusAlunosPage: React.FC = () => {
   }, [dadosAlunos]);
 
   const getStatusMatricula = (status: string) => {
-    const configs = {
-      ativo: { label: 'Ativo', variant: 'success' as const },
-      trancado: { label: 'Trancado', variant: 'warning' as const },
-      concluido: { label: 'Concluído', variant: 'default' as const },
-    };
-    
-    const config = configs[status as keyof typeof configs] || configs.ativo;
-    return <StatusBadge status={config.label} variant={config.variant} />;
+    return <StatusBadge status={status as any} />;
   };
 
   const getFrequenciaColor = (percent: number) => {

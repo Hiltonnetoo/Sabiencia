@@ -70,10 +70,10 @@ export const DisciplinasListPage: React.FC = () => {
 
   const handleSubmitForm = (data: DisciplinaFormData) => {
     if (selectedDisciplina) {
-      updateDisciplina(selectedDisciplina.id, data);
+      updateDisciplina(selectedDisciplina.id, data as any);
       toast.success('Disciplina atualizada com sucesso!');
     } else {
-      addDisciplina(data);
+      addDisciplina(data as any);
       toast.success('Disciplina criada com sucesso!');
     }
     setShowForm(false);

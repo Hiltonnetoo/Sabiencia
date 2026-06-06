@@ -197,8 +197,8 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
               </SelectTrigger>
               <SelectContent>
                 {TIPOS_AVALIACAO.map((tipo) => (
-                  <SelectItem key={tipo.value} value={tipo.value}>
-                    {tipo.label}
+                  <SelectItem key={tipo} value={tipo}>
+                    {tipo}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -359,7 +359,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
           </Button>
           <LoadingButton
             onClick={handleSubmit}
-            loading={isSubmitting}
+            isLoading={isSubmitting}
             disabled={!canSave}
           >
             <Save className="h-4 w-4 mr-2" />

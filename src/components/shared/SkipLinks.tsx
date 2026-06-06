@@ -108,7 +108,7 @@ export const SkipLinks: React.FC<SkipLinksProps> = ({
  */
 interface LandmarkProps {
   id: string;
-  as?: 'main' | 'nav' | 'aside' | 'footer' | 'section';
+  as?: 'main' | 'nav' | 'aside' | 'footer' | 'section' | 'div';
   ariaLabel?: string;
   children: React.ReactNode;
   className?: string;
@@ -116,11 +116,12 @@ interface LandmarkProps {
 
 export const Landmark: React.FC<LandmarkProps> = ({
   id,
-  as: Component = 'div',
+  as = 'div',
   ariaLabel,
   children,
   className,
 }) => {
+  const Component = as as React.ElementType;
   return (
     <Component
       id={id}

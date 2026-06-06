@@ -95,10 +95,10 @@ export const TurmasListPage: React.FC = () => {
 
   const handleSubmitForm = (data: TurmaFormData) => {
     if (selectedTurma) {
-      updateTurma(selectedTurma.id, data);
+      updateTurma(selectedTurma.id, data as any);
       toast.success('Turma atualizada com sucesso!');
     } else {
-      addTurma(data);
+      addTurma(data as any);
       toast.success('Turma criada com sucesso!');
     }
     setShowForm(false);

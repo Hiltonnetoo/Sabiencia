@@ -187,10 +187,10 @@ export const CursosListPage: React.FC = () => {
       await new Promise(resolve => setTimeout(resolve, 500)); // Simular delay
 
       if (selectedCurso) {
-        updateCurso(selectedCurso.id, data);
+        updateCurso(selectedCurso.id, data as any);
         toast.success('Curso atualizado com sucesso!');
       } else {
-        addCurso(data);
+        addCurso(data as any);
         toast.success('Curso criado com sucesso!');
       }
       
@@ -360,8 +360,8 @@ export const CursosListPage: React.FC = () => {
       {cursosFiltered.length === 0 ? (
         searchTerm || hasActiveFilters ? (
           <SearchEmptyState 
-            message="Nenhum curso encontrado"
-            onClear={() => {
+            searchTerm={searchTerm}
+            onClearSearch={() => {
               setSearchTerm('');
               handleClearFilters();
             }}
@@ -370,11 +370,9 @@ export const CursosListPage: React.FC = () => {
           <EmptyState
             icon={BookOpen}
             title="Nenhum curso cadastrado"
-            message="Comece criando o primeiro curso da instituição"
-            action={{
-              label: 'Criar Primeiro Curso',
-              onClick: handleCreateCurso,
-            }}
+            description="Comece criando o primeiro curso da instituição"
+            actionLabel="Criar Primeiro Curso"
+            onAction={handleCreateCurso}
           />
         )
       ) : (

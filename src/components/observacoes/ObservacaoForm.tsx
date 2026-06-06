@@ -2,7 +2,7 @@
 // OBSERVACAO FORM - Formulário de observação
 // ============================================
 
-import { useForm } from 'react-hook-form@7.55.0';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { observacaoSchema, type ObservacaoFormData } from '../../schemas/observacaoSchemas';
 import {

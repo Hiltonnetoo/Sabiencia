@@ -13,6 +13,7 @@ describe('useDebounce', () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.useRealTimers();
   });
 
   it('deve retornar valor inicial imediatamente', () => {

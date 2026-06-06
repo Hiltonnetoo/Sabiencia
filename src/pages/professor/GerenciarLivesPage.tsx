@@ -352,7 +352,7 @@ export const GerenciarLivesPage: React.FC = () => {
               <Label htmlFor="disciplina">Disciplina *</Label>
               <Select
                 value={formData.disciplina_id}
-                onValueChange={(value) => setFormData({ ...formData, disciplina_id: value })}
+                onValueChange={(value: string) => setFormData({ ...formData, disciplina_id: value })}
               >
                 <SelectTrigger id="disciplina">
                   <SelectValue placeholder="Selecione a disciplina" />
@@ -372,7 +372,7 @@ export const GerenciarLivesPage: React.FC = () => {
               <Label htmlFor="turma">Turma (opcional)</Label>
               <Select
                 value={formData.turma_id}
-                onValueChange={(value) => setFormData({ ...formData, turma_id: value })}
+                onValueChange={(value: string) => setFormData({ ...formData, turma_id: value })}
               >
                 <SelectTrigger id="turma">
                   <SelectValue placeholder="Todas as turmas" />
@@ -548,3 +548,5 @@ export const GerenciarLivesPage: React.FC = () => {
     </div>
   );
 };
+
+export default GerenciarLivesPage;

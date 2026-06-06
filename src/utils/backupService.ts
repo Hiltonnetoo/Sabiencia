@@ -501,7 +501,7 @@ export function createIncrementalBackup(
     const lastValue = lastBackup.data[key as keyof BackupData['data']];
 
     if (JSON.stringify(currentValue) !== JSON.stringify(lastValue)) {
-      incrementalData[key as keyof BackupData['data']] = currentValue;
+      incrementalData[key as keyof BackupData['data']] = currentValue as any;
       totalRecords += Array.isArray(currentValue) ? currentValue.length : 1;
     }
   });

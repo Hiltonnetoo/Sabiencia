@@ -137,7 +137,7 @@ export const ComunicadosProfessorPage: React.FC = () => {
       ...data,
       remetente_id: user.id,
       data_envio: new Date()
-    });
+    } as any);
 
     toast.success('Comunicado enviado com sucesso!');
     setShowForm(false);

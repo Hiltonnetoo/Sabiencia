@@ -35,7 +35,7 @@ export const useUndoableAction = <T,>({
   undoTimeoutMs = 10000, // 10 segundos para desfazer
 }: UndoableActionOptions<T>) => {
   const [isPending, setIsPending] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<any>(null);
   const pendingItemRef = useRef<T | null>(null);
 
   const executeAction = useCallback(

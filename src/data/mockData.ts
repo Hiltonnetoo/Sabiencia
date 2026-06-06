@@ -19,7 +19,10 @@ import type {
   Pagamento,
   Comunicado,
   ComunicadoLeitura,
-  LogAuditoria
+  LogAuditoria,
+  StatusFrequencia,
+  TipoObservacao,
+  StatusPagamento
 } from '../types';
 import { generateDocThumbnail, getYouTubeThumbnail } from '../utils/mediaThumbnails';
 

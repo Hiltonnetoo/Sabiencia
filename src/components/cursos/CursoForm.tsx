@@ -3,7 +3,7 @@
 // ============================================
 
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form@7.55.0';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cursoSchema, type CursoFormData } from '../../schemas/cursoSchemas';
 import {
@@ -253,7 +253,7 @@ export const CursoForm: React.FC<CursoFormProps> = ({
             </Button>
             <LoadingButton
               type="submit"
-              loading={isLoading}
+              isLoading={isLoading}
               disabled={isLoading || (!isDirty && isEditing)}
             >
               {isEditing ? 'Salvar Alterações' : 'Criar Curso'}

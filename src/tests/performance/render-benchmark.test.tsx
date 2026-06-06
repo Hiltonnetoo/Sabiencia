@@ -4,6 +4,7 @@
 // ============================================
 
 import { describe, it, expect, vi } from 'vitest';
+import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { MockDataProvider } from '../../contexts/MockDataContext';
@@ -277,12 +278,13 @@ describe('Memoization Effectiveness', () => {
       return <div>{expensive}</div>;
     };
 
-    const { rerender } = render(<TestComponent data={[1, 2, 3]} />);
+    const initialData = [1, 2, 3];
+    const { rerender } = render(<TestComponent data={initialData} />);
     
     expect(calculationCount).toBe(1);
     
-    // Re-render com mesmos dados
-    rerender(<TestComponent data={[1, 2, 3]} />);
+    // Re-render com mesmos dados (mesma referência)
+    rerender(<TestComponent data={initialData} />);
     
     // Não deve recalcular
     expect(calculationCount).toBe(1);

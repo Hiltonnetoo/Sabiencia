@@ -16,26 +16,6 @@ afterEach(() => {
   sessionStorage.clear();
 });
 
-// Mock do localStorage
-const localStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  removeItem: vi.fn(),
-  clear: vi.fn(),
-};
-
-global.localStorage = localStorageMock as any;
-
-// Mock do sessionStorage
-const sessionStorageMock = {
-  getItem: vi.fn(),
-  setItem: vi.fn(),
-  removeItem: vi.fn(),
-  clear: vi.fn(),
-};
-
-global.sessionStorage = sessionStorageMock as any;
-
 // Mock de window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

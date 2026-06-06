@@ -21,7 +21,8 @@
     "test:visual": "playwright test e2e/visual --config src/playwright.config.ts",
     "test:all": "npm run test && npm run test:e2e",
     "audit": "node src/scripts/audit-unused-code.js",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

@@ -16,7 +16,7 @@ export type PrioridadeComunicado = 'baixa' | 'normal' | 'alta' | 'urgente';
 
 export type TipoObservacao = 'pedagogica' | 'comportamental' | 'administrativa';
 
-export type Periodo = 'manha' | 'tarde' | 'noite';
+export type Periodo = 'manha' | 'tarde' | 'noite' | 'integral';
 
 export type TipoMaterial = 'pdf' | 'video';
 
@@ -41,6 +41,12 @@ export interface User {
   foto_url?: string;
   ativo: boolean;
   created_at: Date;
+  data_nascimento?: any;
+  celular?: string;
+  endereco?: any;
+  cidade?: string;
+  estado?: string;
+  cep?: string;
 }
 
 export interface Aluno extends User {
@@ -60,6 +66,10 @@ export interface Aluno extends User {
   };
   nome_responsavel?: string;
   telefone_responsavel?: string;
+  curso_nome?: string;
+  status?: string;
+  matricula?: any;
+  turma_id?: string;
 }
 
 export interface Professor extends User {
@@ -67,6 +77,9 @@ export interface Professor extends User {
   especialidades: string[];
   formacao: string;
   registro_profissional?: string;
+  especializacao?: string;
+  data_nascimento?: any;
+  status?: string;
 }
 
 export interface Gestor extends User {
@@ -98,17 +111,26 @@ export interface Disciplina {
   ordem: number;
   ementa?: string;
   created_at: Date;
+  codigo?: string;
+  curso_nome?: string;
 }
 
 export interface Turma {
   id: string;
+  Identity?: string;
   curso_id: string;
   nome: string;
   data_inicio: Date;
   data_fim: Date;
   periodo: Periodo;
   ativa: boolean;
+  ativo?: boolean;
   created_at: Date;
+  codigo?: string;
+  curso_nome?: string;
+  total_alunos?: number;
+  turno?: string;
+  professor_responsavel_id?: string;
 }
 
 export interface ProfessorTurmaDisciplina {
@@ -127,6 +149,7 @@ export interface Matricula {
   status: StatusMatricula;
   data_conclusao?: Date;
   created_at: Date;
+  numero_matricula?: string;
 }
 
 
@@ -144,6 +167,8 @@ export interface Frequencia {
   status: StatusFrequencia;
   observacao?: string;
   created_at: Date;
+  presencas?: number;
+  total_aulas?: number;
 }
 
 export interface Nota {
@@ -158,6 +183,9 @@ export interface Nota {
   data_avaliacao: Date;
   observacao?: string;
   created_at: Date;
+  av1?: number;
+  av2?: number;
+  av3?: number;
 }
 
 export interface Material {
@@ -167,15 +195,17 @@ export interface Material {
   titulo: string;
   descricao: string;
   tipo: TipoMaterial;
-  url: string; // URL do PDF ou YouTube
+  url?: string; // URL do PDF ou YouTube
   thumbnail_url?: string;
   tamanho_kb?: number; // Para PDFs
   duracao_segundos?: number; // Para vídeos
   modulo: string;
   tags: string[];
   visivel_para_alunos: boolean;
+  visivel_alunos?: boolean;
   permite_download: boolean;
   data_upload: Date;
+  disciplina_nome?: string;
 }
 
 export interface Observacao {
@@ -187,6 +217,8 @@ export interface Observacao {
   conteudo: string;
   visivel_aluno: boolean;
   created_at: Date;
+  titulo?: string;
+  aluno_nome?: string;
 }
 
 
@@ -205,6 +237,7 @@ export interface Pagamento {
   comprovante_url?: string;
   observacao?: string;
   created_at: Date;
+  aluno_nome?: string;
 }
 
 
@@ -224,6 +257,7 @@ export interface Comunicado {
   permitir_resposta: boolean;
   data_envio: Date;
   created_at: Date;
+  conteudo?: string;
 }
 
 export interface ComunicadoLeitura {
@@ -495,3 +529,19 @@ export interface Certificado {
 // ============================================
 
 export * from './videoaulas';
+
+// ============================================
+// COMPATIBILITY TYPES FOR SUPABASE DATA
+// ============================================
+export type MaterialDidatico = any;
+export type Atividade = any;
+export type AtividadeResposta = any;
+export type ChatMensagem = any;
+export type Ocorrencia = any;
+export type UsuarioNotificacao = any;
+export type Avaliacao = any;
+export type PlanoAula = any;
+export type RecursoEducativo = any;
+export type Relatorio = any;
+export type Usuario = User;
+

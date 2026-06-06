@@ -36,7 +36,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { extractYouTubeId, isValidYouTubeUrl, formatDuration } from '../../utils/youtube';
-import { validarTopico, validarVideoaula, validarMaterialAnexo, filtrarPorBusca } from '../../utils/validations';
+import { validarTopico, validarVideoaula } from '../../utils/validations';
 import type { Videoaula, TopicoDisciplina, MaterialAnexo } from '../../types/videoaulas';
 
 export const GerenciarVideoaulasPage: React.FC = () => {
@@ -751,7 +751,7 @@ export const GerenciarVideoaulasPage: React.FC = () => {
                         <div className="grid grid-cols-2 gap-2">
                           <Select
                             value={material.tipo}
-                            onValueChange={(v) => {
+                            onValueChange={(v: string) => {
                               const novos = [...materiaisAnexos];
                               novos[index].tipo = v as any;
                               setMateriaisAnexos(novos);

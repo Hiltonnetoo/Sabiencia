@@ -23,7 +23,7 @@ import type { Aluno, Matricula, Frequencia, Nota, Pagamento } from '../../types'
 export const AlunoDetailPage: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const { getAlunoById } = useMockData();
+  const { getAlunoById, matriculas, turmas, cursos, frequencias, notas, pagamentos } = useMockData();
 
   const [aluno, setAluno] = useState<Aluno | null>(null);
   const [matricula, setMatricula] = useState<Matricula | null>(null);
@@ -46,11 +46,11 @@ export const AlunoDetailPage: React.FC = () => {
     setAluno(alunoData);
 
     // Buscar matrícula
-    const matriculaData = mockData.matriculas.find(m => m.aluno_id === id);
+    const matriculaData = matriculas.find(m => m.aluno_id === id);
     setMatricula(matriculaData || null);
 
     setIsLoading(false);
-  }, [id, getAlunoById, navigate]);
+  }, [id, getAlunoById, navigate, matriculas]);
 
   if (isLoading) {
     return (
@@ -68,24 +68,24 @@ export const AlunoDetailPage: React.FC = () => {
   }
 
   // Buscar informações relacionadas
-  const turma = matricula ? mockData.turmas.find(t => t.id === matricula.turma_id) : null;
-  const curso = turma ? mockData.cursos.find(c => c.id === turma.curso_id) : null;
+  const turma = matricula ? turmas.find(t => t.id === matricula.turma_id) : null;
+  const curso = turma ? cursos.find(c => c.id === turma.curso_id) : null;
 
   // Calcular estatísticas
-  const frequencias = mockData.frequencias.filter(f => f.aluno_id === id);
-  const presencas = frequencias.filter(f => f.status === 'presente').length;
-  const frequenciaPercentual = frequencias.length > 0 
-    ? Math.round((presencas / frequencias.length) * 100)
+  const studentFrequencias = frequencias.filter(f => f.aluno_id === id);
+  const presencas = studentFrequencias.filter(f => f.status === 'presente').length;
+  const frequenciaPercentual = studentFrequencias.length > 0 
+    ? Math.round((presencas / studentFrequencias.length) * 100)
     : 0;
 
-  const notas = mockData.notas.filter(n => n.aluno_id === id);
-  const mediaGeral = notas.length > 0
-    ? notas.reduce((acc, n) => acc + n.nota, 0) / notas.length
+  const studentNotas = notas.filter(n => n.aluno_id === id);
+  const mediaGeral = studentNotas.length > 0
+    ? studentNotas.reduce((acc, n) => acc + n.nota, 0) / studentNotas.length
     : 0;
 
-  const pagamentos = mockData.pagamentos.filter(p => p.aluno_id === id);
-  const pagamentosPendentes = pagamentos.filter(p => p.status === 'pendente').length;
-  const pagamentosVencidos = pagamentos.filter(p => p.status === 'vencido').length;
+  const studentPagamentos = pagamentos.filter(p => p.aluno_id === id);
+  const pagamentosPendentes = studentPagamentos.filter(p => p.status === 'pendente').length;
+  const pagamentosVencidos = studentPagamentos.filter(p => p.status === 'vencido').length;
 
   return (
     <div className="space-y-6">
@@ -206,7 +206,7 @@ export const AlunoDetailPage: React.FC = () => {
           <CardContent>
             <div className="text-2xl font-bold">{frequenciaPercentual}%</div>
             <p className="text-xs text-gray-500 mt-1">
-              {presencas} de {frequencias.length} aulas
+              {presencas} de {studentFrequencias.length} aulas
             </p>
           </CardContent>
         </Card>
@@ -219,7 +219,7 @@ export const AlunoDetailPage: React.FC = () => {
           <CardContent>
             <div className="text-2xl font-bold">{mediaGeral.toFixed(1)}</div>
             <p className="text-xs text-gray-500 mt-1">
-              {notas.length} avaliações
+              {studentNotas.length} avaliações
             </p>
           </CardContent>
         </Card>

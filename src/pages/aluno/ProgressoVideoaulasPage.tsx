@@ -51,12 +51,7 @@ export const ProgressoVideoaulasPage: React.FC = () => {
   return (
     <div className="space-y-6 container mx-auto p-6">
       {/* Breadcrumb */}
-      <PageBreadcrumb
-        items={[
-          { label: 'Início', href: '/aluno/dashboard' },
-          { label: 'Progresso de Videoaulas', href: '/aluno/progresso-videoaulas' }
-        ]}
-      />
+      <PageBreadcrumb />
 
       {/* Header */}
       <div>

@@ -152,7 +152,7 @@ export class SearchService {
     return turmas
       .filter(turma => 
         turma.nome.toLowerCase().includes(query) ||
-        turma.codigo.toLowerCase().includes(query) ||
+        turma.codigo?.toLowerCase().includes(query) ||
         turma.curso_nome?.toLowerCase().includes(query)
       )
       .map(turma => ({
@@ -173,7 +173,7 @@ export class SearchService {
     return disciplinas
       .filter(disciplina => 
         disciplina.nome.toLowerCase().includes(query) ||
-        disciplina.codigo.toLowerCase().includes(query) ||
+        disciplina.codigo?.toLowerCase().includes(query) ||
         disciplina.curso_nome?.toLowerCase().includes(query)
       )
       .map(disciplina => ({
@@ -220,14 +220,14 @@ export class SearchService {
     return comunicados
       .filter(comunicado => 
         comunicado.titulo.toLowerCase().includes(query) ||
-        comunicado.conteudo.toLowerCase().includes(query)
+        comunicado.conteudo?.toLowerCase().includes(query)
       )
       .map(comunicado => ({
         id: comunicado.id,
         type: 'comunicados' as SearchCategory,
         title: comunicado.titulo,
         subtitle: `${comunicado.prioridade} • ${formatDate(comunicado.created_at)}`,
-        description: comunicado.conteudo.substring(0, 100) + (comunicado.conteudo.length > 100 ? '...' : ''),
+        description: (comunicado.conteudo || '').substring(0, 100) + ((comunicado.conteudo || '').length > 100 ? '...' : ''),
         url: userRole === 'gestor' 
           ? '/gestor/comunicados' 
           : userRole === 'professor'
@@ -246,14 +246,14 @@ export class SearchService {
 
     return observacoes
       .filter(observacao => 
-        observacao.titulo.toLowerCase().includes(query) ||
+        observacao.titulo?.toLowerCase().includes(query) ||
         observacao.conteudo.toLowerCase().includes(query) ||
         observacao.aluno_nome?.toLowerCase().includes(query)
       )
       .map(observacao => ({
         id: observacao.id,
         type: 'observacoes' as SearchCategory,
-        title: observacao.titulo,
+        title: observacao.titulo || '',
         subtitle: `${observacao.tipo} • ${observacao.aluno_nome}`,
         description: observacao.conteudo.substring(0, 100) + (observacao.conteudo.length > 100 ? '...' : ''),
         url: userRole === 'gestor' 

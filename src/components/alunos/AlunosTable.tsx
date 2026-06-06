@@ -120,7 +120,7 @@ export const AlunosTable: React.FC<AlunosTableProps> = ({
 
   // OTIMIZAÇÃO: Filtrar e ordenar alunos com useMemo
   const filteredAndSortedAlunos = useMemo(() => {
-    let filtered = alunos.filter(aluno => {
+    const filtered = alunos.filter(aluno => {
       // Filtro de busca
       const matchesSearch =
         aluno.nome_completo.toLowerCase().includes(searchTerm.toLowerCase()) ||

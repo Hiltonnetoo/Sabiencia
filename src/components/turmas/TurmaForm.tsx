@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm } from 'react-hook-form@7.55.0';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { turmaSchema, type TurmaFormData } from '../../schemas/turmaSchemas';
 import { Turma, Curso } from '../../types';

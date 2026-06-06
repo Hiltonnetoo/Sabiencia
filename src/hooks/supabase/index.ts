@@ -4,13 +4,10 @@
 // ============================================
 
 // Cliente Supabase
-export { supabase } from '../lib/supabase';
+export { supabase } from '../../lib/supabase';
 
 // Serviços de dados
-export * from '../services/supabaseData';
-
-// Hooks de dados
-export * from './useSupabaseData';
+export * from '../../services/supabaseData';
 
 // Tipos
-export type * from '../types';
+export type * from '../../types';

@@ -99,10 +99,10 @@ export const ObservacoesProfessorPage: React.FC = () => {
   const handleSubmit = (data: ObservacaoFormData) => {
     try {
       if (editingObservacao) {
-        updateObservacao(editingObservacao.id, data);
+        updateObservacao(editingObservacao.id, data as any);
         toast.success('Observação atualizada com sucesso!');
       } else {
-        addObservacao(data);
+        addObservacao(data as any);
         toast.success('Observação registrada com sucesso!');
       }
       setIsFormOpen(false);

@@ -265,12 +265,7 @@ export const EventosAlunoPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Breadcrumb */}
-      <PageBreadcrumb
-        items={[
-          { label: 'Início', href: '/aluno/dashboard' },
-          { label: 'Eventos', href: '/aluno/eventos' }
-        ]}
-      />
+      <PageBreadcrumb />
 
       {/* Header */}
       <div>

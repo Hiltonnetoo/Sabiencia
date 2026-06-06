@@ -52,7 +52,7 @@ export const AlunoFormPage: React.FC = () => {
         updateAluno(id, {
           ...data,
           role: 'aluno' as const,
-        });
+        } as any);
         toast.success('Aluno atualizado com sucesso!');
       } else {
         // Criar novo aluno
@@ -60,7 +60,7 @@ export const AlunoFormPage: React.FC = () => {
           ...data,
           role: 'aluno' as const,
           cpf: data.cpf.replace(/\D/g, ''), // Remover formatação do CPF
-        });
+        } as any);
         toast.success('Aluno cadastrado com sucesso!');
       }
 

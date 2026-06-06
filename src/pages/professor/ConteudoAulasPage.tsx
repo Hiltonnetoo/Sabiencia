@@ -162,12 +162,7 @@ export const ConteudoAulasPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Breadcrumb */}
-      <PageBreadcrumb
-        items={[
-          { label: 'Início', href: '/professor/dashboard' },
-          { label: 'Conteúdo das Aulas', href: '/professor/conteudo' }
-        ]}
-      />
+      <PageBreadcrumb />
 
       {/* Header */}
       <div>
@@ -399,7 +394,7 @@ export const ConteudoAulasPage: React.FC = () => {
             {/* Tipo de Conteúdo */}
             <div>
               <Label htmlFor="tipo">Tipo de Conteúdo *</Label>
-              <Tabs value={tipoConteudo} onValueChange={(v) => {
+              <Tabs value={tipoConteudo} onValueChange={(v: string) => {
                 setTipoConteudo(v as TipoConteudoAula);
                 setNovoConteudo({ ...novoConteudo, tipo: v as TipoConteudoAula });
               }}>
@@ -500,7 +495,7 @@ export const ConteudoAulasPage: React.FC = () => {
                 <Switch
                   id="visivel"
                   checked={novoConteudo.visivel}
-                  onCheckedChange={(checked) => setNovoConteudo({ ...novoConteudo, visivel: checked })}
+                  onCheckedChange={(checked: boolean) => setNovoConteudo({ ...novoConteudo, visivel: checked })}
                 />
               </div>
 
@@ -514,7 +509,7 @@ export const ConteudoAulasPage: React.FC = () => {
                 <Switch
                   id="obrigatorio"
                   checked={novoConteudo.obrigatorio}
-                  onCheckedChange={(checked) => setNovoConteudo({ ...novoConteudo, obrigatorio: checked })}
+                  onCheckedChange={(checked: boolean) => setNovoConteudo({ ...novoConteudo, obrigatorio: checked })}
                 />
               </div>
             </div>

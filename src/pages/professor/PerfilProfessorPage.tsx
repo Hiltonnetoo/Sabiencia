@@ -125,14 +125,14 @@ export const PerfilProfessorPage: React.FC = () => {
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <p className="text-sm text-gray-600 mb-2">Formação</p>
                   <p className="text-gray-900">
-                    {professor?.especialidade || 'Não informado'}
+                    {professor?.formacao || 'Não informado'}
                   </p>
                 </div>
 
                 <div className="p-4 bg-gray-50 rounded-lg">
                   <p className="text-sm text-gray-600 mb-2">Área de Especialização</p>
                   <p className="text-gray-900">
-                    {professor?.especialidade || 'Não informado'}
+                    {professor?.especialidades?.join(', ') || professor?.especializacao || 'Não informado'}
                   </p>
                 </div>
 

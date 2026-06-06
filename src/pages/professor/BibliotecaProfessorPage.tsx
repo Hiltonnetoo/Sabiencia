@@ -117,13 +117,13 @@ export const BibliotecaProfessorPage: React.FC = () => {
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       if (editMaterial) {
-        updateMaterial(editMaterial.id, data);
+        updateMaterial(editMaterial.id, data as any);
         toast.success('Material atualizado com sucesso!');
       } else {
         createMaterial({
           ...data,
           professor_id: user!.id,
-        });
+        } as any);
         toast.success('Material publicado com sucesso!');
       }
 
