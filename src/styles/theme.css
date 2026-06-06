@@ -1,0 +1,91 @@
+/* ============================================
+   THEME OVERRIDES — Dark mode & font scaling
+   Importado APÓS index.css (Tailwind v4 pré-compilado).
+   O dark mode é ativado pela classe `.dark` no <html> (ThemeContext).
+
+   Estratégia: como o CSS do Tailwind é pré-compilado (sem build step),
+   sobrescrevemos aqui (a) os design tokens semânticos e (b) as utilities
+   neutras mais usadas, escopadas em `.dark` — a especificidade `.dark .x`
+   (0,2,0) vence a utility `.x` (0,1,0) sem precisar de !important.
+   ============================================ */
+
+/* ---- Tokens semânticos no tema escuro ---- */
+.dark {
+  --color-background: #0f172a;
+  --color-text-primary: #e2e8f0;
+  --color-surface-1: #1e293b;
+  --color-surface-2: #334155;
+
+  --background: #0f172a;
+  --foreground: #e2e8f0;
+  --card: #1e293b;
+  --card-foreground: #e2e8f0;
+  --popover: #1e293b;
+  --popover-foreground: #e2e8f0;
+  --border: #334155;
+  --input-background: #1e293b;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --secondary: #334155;
+  --secondary-foreground: #e2e8f0;
+}
+
+.dark body {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+/* ---- Superfícies neutras ---- */
+.dark .bg-white { background-color: #1e293b; }
+.dark .bg-gray-50 { background-color: #0f172a; }
+.dark .bg-gray-100 { background-color: #1e293b; }
+.dark .bg-gray-200 { background-color: #334155; }
+
+/* Gradientes claros usados em cabeçalhos/áreas de destaque */
+.dark .from-gray-50,
+.dark .to-gray-50 { --tw-gradient-from: #0f172a; --tw-gradient-to: #0f172a; }
+
+/* ---- Texto ---- */
+.dark .text-gray-900 { color: #f1f5f9; }
+.dark .text-gray-800 { color: #e2e8f0; }
+.dark .text-gray-700 { color: #cbd5e1; }
+.dark .text-gray-600 { color: #94a3b8; }
+.dark .text-gray-500 { color: #94a3b8; }
+.dark .text-gray-400 { color: #64748b; }
+
+/* ---- Bordas ---- */
+.dark .border-gray-100 { border-color: #1e293b; }
+.dark .border-gray-200 { border-color: #334155; }
+.dark .border-gray-300 { border-color: #475569; }
+
+/* ---- Estados de hover neutros ---- */
+.dark .hover\:bg-gray-50:hover { background-color: #1e293b; }
+.dark .hover\:bg-gray-100:hover { background-color: #334155; }
+
+/* ---- Caixas de destaque (callouts) — leve ajuste para contraste ---- */
+.dark .bg-blue-50 { background-color: rgba(59, 130, 246, 0.12); }
+.dark .bg-green-50 { background-color: rgba(16, 185, 129, 0.12); }
+.dark .bg-yellow-50 { background-color: rgba(234, 179, 8, 0.12); }
+.dark .bg-red-50 { background-color: rgba(239, 68, 68, 0.12); }
+
+.dark .text-blue-900 { color: #bfdbfe; }
+.dark .text-blue-800 { color: #bfdbfe; }
+.dark .text-green-900 { color: #bbf7d0; }
+.dark .text-yellow-900 { color: #fde68a; }
+.dark .text-yellow-700 { color: #fde68a; }
+.dark .text-red-900 { color: #fecaca; }
+
+/* Transição suave ao alternar tema (sem animar layout). */
+body,
+.bg-white,
+.bg-gray-50,
+.bg-gray-100 {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+/* ============================================
+   FONT SCALING — controla o tamanho base via <html data-font-size>
+   ============================================ */
+html[data-font-size='sm'] { font-size: 14px; }
+html[data-font-size='md'] { font-size: 16px; }
+html[data-font-size='lg'] { font-size: 18px; }

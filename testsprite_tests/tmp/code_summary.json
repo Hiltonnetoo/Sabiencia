@@ -1,0 +1,97 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "React 18",
+    "Vite (plugin react-swc)",
+    "Supabase (Auth, PostgREST)",
+    "Vitest + Testing Library",
+    "Radix UI",
+    "Lucide Icons",
+    "Recharts",
+    "Zod",
+    "React Hook Form",
+    "PWA plugin",
+    "Sonner"
+  ],
+  "features": [
+    {
+      "name": "Autenticação e Sessão",
+      "description": "Contexto de autenticação com Supabase, fallback demo, expiração e assinatura de sessão.",
+      "files": [
+        "src/src/contexts/AuthContext.tsx",
+        "src/components/auth/ProtectedRoute.tsx",
+        "src/components/auth/LoginPage.tsx",
+        "src/src/pages/demo/DemoLoginAluno.tsx",
+        "src/src/pages/demo/DemoLoginProfessor.tsx",
+        "src/src/pages/demo/DemoLoginGestor.tsx",
+        "src/lib/supabase.ts",
+        "src/src/utils/permissions.ts"
+      ]
+    },
+    {
+      "name": "Dados Supabase",
+      "description": "Serviços e hooks para leitura/escrita de dados acadêmicos via Supabase.",
+      "files": [
+        "src/src/services/supabaseData.ts",
+        "src/src/hooks/useSupabaseData.ts",
+        "src/src/hooks/supabase/index.ts"
+      ]
+    },
+    {
+      "name": "Mock Data (Demo)",
+      "description": "Contexto de dados mock e usuários de demonstração para uso offline.",
+      "files": [
+        "src/src/contexts/MockDataContext.tsx",
+        "src/src/data/mockUsers.ts",
+        "src/src/data/mockData.ts"
+      ]
+    },
+    {
+      "name": "Tipos e Modelos",
+      "description": "Tipos principais do domínio acadêmico e do usuário.",
+      "files": [
+        "src/src/types/index.ts",
+        "src/src/types/search.ts"
+      ]
+    },
+    {
+      "name": "Utilidades",
+      "description": "Formatadores, busca global, helpers por papel e navegação.",
+      "files": [
+        "src/src/utils/formatters.ts",
+        "src/src/utils/permissions.ts",
+        "src/src/utils/searchService.ts",
+        "src/src/utils/professorHelpers.ts"
+      ]
+    },
+    {
+      "name": "Dashboards e Páginas",
+      "description": "Páginas principais por papel com navegação protegida.",
+      "files": [
+        "src/src/pages/gestor/GestorDashboard.tsx",
+        "src/src/pages/professor/ConteudoAulasPage.tsx",
+        "src/src/pages/aluno/PerfilAlunoPage.tsx"
+      ]
+    },
+    {
+      "name": "Testes",
+      "description": "Testes de integração e unidade para fluxo de login e gerenciamento acadêmico.",
+      "files": [
+        "src/src/components/auth/LoginPage.test.tsx",
+        "src/src/contexts/AuthContext.test.tsx",
+        "src/src/tests/integration/auth-flow.test.tsx",
+        "src/src/tests/integration/aluno-management.test.tsx",
+        "src/vitest.config.ts",
+        "src/src/test/setup.ts"
+      ]
+    },
+    {
+      "name": "Build e Dev Server",
+      "description": "Configuração do Vite com aliases, build e porta do servidor de desenvolvimento.",
+      "files": [
+        "vite.config.ts",
+        "package.json"
+      ]
+    }
+  ]
+}

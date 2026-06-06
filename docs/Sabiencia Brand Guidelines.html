@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<title>Sabiencia — Brand Guidelines · D02 Ponto de Convergência</title>
+<meta name="viewport" content="width=1320" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  /* ====================================================== */
+  /* ===== DESIGN TOKENS ================================== */
+  /* ====================================================== */
+  :root {
+    /* Colors — Brand */
+    --color-primary:        #3b82f6;   /* Azul principal — convergência, CTA, links */
+    --color-primary-hover:  #2563eb;
+    --color-primary-active: #1d4ed8;
+    --color-primary-dark:   #1e40af;   /* Núcleo do símbolo, hover de superfícies escuras */
+
+    /* Colors — Neutrals */
+    --color-ink:        #0f172a;       /* Fundo escuro / texto inverso */
+    --color-text:       #1e293b;       /* Texto principal */
+    --color-text-muted: #64748b;       /* Texto secundário, labels */
+    --color-paper:      #ffffff;       /* Fundo claro */
+    --color-parchment:  #f5f0e8;       /* Fundo editorial / documentos */
+    --color-surface:    #f8fafc;       /* Fundo de app */
+    --color-surface-2:  #f1f5f9;       /* Surface elevada */
+    --color-border:     #e2e8f0;       /* Bordas, divisores */
+
+    /* Colors — Feedback */
+    --color-success:    #059669;
+    --color-warning:    #d97706;
+    --color-danger:     #dc2626;
+
+    /* Typography */
+    --font-display:     'Poppins', system-ui, sans-serif;
+    --font-body:        'Inter', system-ui, sans-serif;
+    --font-mono:        'JetBrains Mono', ui-monospace, monospace;
+
+    /* Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-xl: 20px;
+
+    /* Spacing scale (4px base) */
+    --space-1: 4px;  --space-2: 8px;  --space-3: 12px;
+    --space-4: 16px; --space-5: 20px; --space-6: 24px;
+    --space-8: 32px; --space-10: 40px; --space-12: 48px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(15,23,42,0.05);
+    --shadow-md: 0 4px 12px -2px rgba(15,23,42,0.08), 0 1px 3px rgba(15,23,42,0.04);
+    --shadow-lg: 0 12px 32px -8px rgba(15,23,42,0.18), 0 2px 6px rgba(15,23,42,0.06);
+    --shadow-brand: 0 6px 20px -6px rgba(59,130,246,0.45);
+
+    /* Gradient — monograma */
+    --gradient-brand: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--color-surface); color: var(--color-text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+
+  /* ====================================================== */
+  /* ===== PAGE LAYOUT ==================================== */
+  /* ====================================================== */
+  .page { max-width: 1240px; margin: 0 auto; padding: 56px 40px 96px; }
+  .meta { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* Header */
+  header.page-header { border-bottom: 1px solid var(--color-border); padding-bottom: 40px; margin-bottom: 56px; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; }
+  header h1 { font-family: var(--font-display); font-weight: 600; font-size: 36px; letter-spacing: -0.025em; margin: 8px 0 10px; }
+  header p { font-size: 14.5px; color: var(--color-text-muted); line-height: 1.6; max-width: 660px; margin: 0; }
+  header .badges { margin-top: 18px; display: flex; gap: 8px; flex-wrap: wrap; }
+  header .badge { font-family: var(--font-mono); font-size: 10px; padding: 5px 11px; border-radius: 100px; background: var(--color-surface-2); color: var(--color-text); letter-spacing: 0.06em; text-transform: uppercase; }
+  header .badge.approved { background: var(--color-primary); color: white; }
+  header .badge.live { background: var(--color-success); color: white; }
+
+  .header-mark { display: flex; align-items: center; gap: 16px; }
+  .header-mark .word { font-family: var(--font-display); font-weight: 500; font-size: 28px; letter-spacing: -0.01em; color: var(--color-ink); }
+
+  /* Section */
+  section { margin-bottom: 80px; }
+  .section-head { margin-bottom: 28px; display: grid; grid-template-columns: 80px 1fr auto; gap: 24px; align-items: end; padding-bottom: 16px; border-bottom: 1px solid var(--color-border); }
+  .section-num { font-family: var(--font-mono); font-size: 48px; line-height: 0.9; letter-spacing: -0.03em; color: var(--color-primary); font-weight: 500; }
+  .section-head h2 { font-family: var(--font-display); font-weight: 600; font-size: 24px; letter-spacing: -0.02em; margin: 4px 0 6px; }
+  .section-head p { font-size: 13.5px; color: var(--color-text-muted); max-width: 620px; line-height: 1.55; margin: 0; }
+  .section-head .right-tag { font-family: var(--font-mono); font-size: 10.5px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ====================================================== */
+  /* ===== 01 — COLOR TOKENS ============================== */
+  /* ====================================================== */
+  .color-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 14px; }
+  .swatch-card { border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; background: white; display: flex; flex-direction: column; }
+  .swatch-card .swatch { height: 120px; }
+  .swatch-card .info { padding: 12px 14px 14px; }
+  .swatch-card .info .name { font-family: var(--font-display); font-weight: 500; font-size: 13.5px; color: var(--color-ink); margin: 0 0 2px; }
+  .swatch-card .info .hex { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); }
+  .swatch-card .info .var { font-family: var(--font-mono); font-size: 10.5px; color: var(--color-primary); margin-top: 4px; }
+  .swatch-card.bordered .swatch { border-bottom: 1px solid var(--color-border); }
+
+  .tokens-block { background: var(--color-ink); border-radius: var(--radius-lg); padding: 24px 26px; font-family: var(--font-mono); font-size: 12px; line-height: 1.75; color: #e2e8f0; overflow-x: auto; }
+  .tokens-block .kw { color: #93c5fd; }
+  .tokens-block .var { color: #fcd34d; }
+  .tokens-block .val { color: #fff; }
+  .tokens-block .com { color: #64748b; font-style: italic; }
+  .tokens-block .sect { color: #f0abfc; }
+
+  /* ====================================================== */
+  /* ===== 02 — TYPOGRAPHY ================================ */
+  /* ====================================================== */
+  .type-block { background: white; border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; }
+  .type-row { display: grid; grid-template-columns: 140px 1fr 280px; gap: 28px; padding: 22px 28px; border-bottom: 1px solid var(--color-border); align-items: baseline; }
+  .type-row:last-child { border-bottom: none; }
+  .type-row .tag { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; padding-top: 8px; }
+  .type-row .sample { font-family: var(--font-display); color: var(--color-ink); margin: 0; }
+  .type-row .sample.body { font-family: var(--font-body); }
+  .type-row .specs { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); line-height: 1.7; text-align: right; padding-top: 8px; }
+  .type-row .specs b { color: var(--color-text); font-weight: 500; }
+
+  .h1-sample { font-size: 48px; line-height: 56px; font-weight: 700; letter-spacing: -0.025em; }
+  .h2-sample { font-size: 36px; line-height: 44px; font-weight: 600; letter-spacing: -0.02em; }
+  .h3-sample { font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -0.01em; }
+  .body-sample { font-size: 16px; line-height: 24px; font-weight: 400; }
+  .label-sample { font-size: 14px; line-height: 20px; font-weight: 500; }
+
+  .type-pair-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+  .type-pair-card { background: white; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 22px 24px; }
+  .type-pair-card .pair-name { font-family: var(--font-mono); font-size: 10.5px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+  .type-pair-card .glyph { font-size: 72px; line-height: 1; color: var(--color-ink); margin: 0; }
+  .type-pair-card .glyph.display { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.04em; }
+  .type-pair-card .glyph.body { font-family: var(--font-body); font-weight: 500; letter-spacing: -0.03em; }
+  .type-pair-card .footing { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--color-border); font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); }
+  .type-pair-card .footing b { color: var(--color-ink); font-weight: 500; }
+
+  /* ====================================================== */
+  /* ===== 03 — COMPONENTS ================================ */
+  /* ====================================================== */
+  .comp-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+  .comp-card { background: white; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 16px; }
+  .comp-card .comp-head { display: flex; justify-content: space-between; align-items: baseline; }
+  .comp-card .comp-title { font-family: var(--font-display); font-weight: 600; font-size: 14.5px; }
+  .comp-card .comp-tag { font-family: var(--font-mono); font-size: 10px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .comp-card .comp-stage { background: var(--color-surface); border-radius: var(--radius-md); padding: 28px 24px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; min-height: 100px; }
+  .comp-card .comp-stage.center { align-items: center; justify-content: center; }
+  .comp-card .comp-stage.dark { background: var(--color-ink); }
+  .comp-card .comp-stage.parch { background: var(--color-parchment); }
+  .comp-card .comp-spec { font-family: var(--font-mono); font-size: 10.5px; color: var(--color-text-muted); line-height: 1.65; }
+  .comp-card .comp-spec b { color: var(--color-ink); font-weight: 500; }
+
+  .col-6 { grid-column: span 6; }
+  .col-4 { grid-column: span 4; }
+  .col-8 { grid-column: span 8; }
+  .col-12 { grid-column: span 12; }
+
+  /* ===== Buttons ===== */
+  .btn {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: -0.005em;
+    padding: 10px 18px;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+    transition: background 120ms ease, box-shadow 120ms ease, transform 80ms ease;
+  }
+  .btn-primary {
+    background: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-brand);
+  }
+  .btn-primary:hover { background: var(--color-primary-hover); }
+  .btn-primary:active { background: var(--color-primary-active); transform: translateY(1px); box-shadow: var(--shadow-sm); }
+  .btn-secondary {
+    background: white;
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  .btn-secondary:hover { background: rgba(59,130,246,0.06); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-primary);
+  }
+  .btn-ghost:hover { background: rgba(59,130,246,0.08); }
+  .btn-dark-inverse {
+    background: white;
+    color: var(--color-ink);
+  }
+  .btn .iconchev { font-family: var(--font-mono); font-size: 14px; line-height: 1; }
+
+  /* ===== Badges ===== */
+  .badge-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .b {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    line-height: 1.4;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .b-primary { background: rgba(59,130,246,0.12); color: var(--color-primary-active); }
+  .b-primary-solid { background: var(--color-primary); color: white; }
+  .b-outline { background: white; color: var(--color-primary); border: 1px solid rgba(59,130,246,0.3); }
+  .b-dot::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; display: inline-block; }
+  .b-success { background: rgba(5,150,105,0.12); color: var(--color-success); }
+  .b-warning { background: rgba(217,119,6,0.12); color: var(--color-warning); }
+  .b-neutral { background: var(--color-surface-2); color: var(--color-text-muted); }
+
+  /* ===== Card ===== */
+  .demo-card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 22px 24px;
+    box-shadow: var(--shadow-sm);
+    max-width: 380px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .demo-card .card-eyebrow { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--color-primary); text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; }
+  .demo-card .card-eyebrow::before { content: ''; width: 14px; height: 1.5px; background: var(--color-primary); display: inline-block; }
+  .demo-card .card-title { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: -0.015em; margin: 0; }
+  .demo-card .card-body { font-size: 13.5px; color: var(--color-text-muted); line-height: 1.55; margin: 0; }
+  .demo-card .card-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--color-border); }
+  .demo-card .card-meta .progress { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); }
+  .demo-card .card-meta .progress b { color: var(--color-ink); font-weight: 500; }
+  .demo-card .card-meta .arrow { font-family: var(--font-display); font-weight: 500; color: var(--color-primary); font-size: 13px; }
+  .progress-bar { height: 4px; background: var(--color-surface-2); border-radius: 100px; overflow: hidden; }
+  .progress-bar > span { display: block; height: 100%; background: var(--color-primary); border-radius: 100px; }
+
+  /* ===== Sidebar ===== */
+  .sidebar-demo {
+    background: var(--color-ink);
+    border-radius: var(--radius-lg);
+    padding: 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    width: 230px;
+  }
+  .sb-brand { display: flex; align-items: center; gap: 10px; padding: 6px 10px 16px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .sb-brand .word { font-family: var(--font-display); font-weight: 500; font-size: 17px; color: white; letter-spacing: -0.01em; }
+  .sb-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 13px;
+    color: rgba(255,255,255,0.62);
+    position: relative;
+    transition: background 120ms ease, color 120ms ease;
+  }
+  .sb-item .ico { width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; opacity: 0.7; }
+  .sb-item:hover { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.85); }
+  .sb-item.active {
+    background: linear-gradient(90deg, rgba(59,130,246,0.18) 0%, rgba(59,130,246,0.06) 100%);
+    color: white;
+  }
+  .sb-item.active .ico { opacity: 1; color: var(--color-primary); }
+  .sb-item.active::before {
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2.5px;
+    background: var(--color-primary);
+    border-radius: 0 2px 2px 0;
+  }
+  .sb-item .count { margin-left: auto; font-family: var(--font-mono); font-size: 10.5px; background: rgba(255,255,255,0.08); padding: 1px 7px; border-radius: 100px; color: rgba(255,255,255,0.65); }
+  .sb-item.active .count { background: var(--color-primary); color: white; }
+
+  /* ====================================================== */
+  /* ===== 04 — MONOGRAM USE ============================== */
+  /* ====================================================== */
+  .mono-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .mono-card { background: white; border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+  .mono-card .mono-head { padding: 18px 22px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: baseline; }
+  .mono-card .mono-head .t { font-family: var(--font-mono); font-size: 10.5px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .mono-card .mono-head .title { font-family: var(--font-display); font-weight: 600; font-size: 16px; margin: 4px 0 0; }
+  .mono-card .mono-stage { background: var(--color-surface); padding: 32px 22px; display: flex; align-items: center; justify-content: center; min-height: 200px; position: relative; }
+  .mono-card .mono-stage.dark { background: var(--color-ink); }
+  .mono-card .mono-spec { padding: 18px 22px; font-family: var(--font-mono); font-size: 11.5px; color: var(--color-text-muted); line-height: 1.7; border-top: 1px solid var(--color-border); }
+  .mono-card .mono-spec b { color: var(--color-ink); font-weight: 500; }
+
+  /* Topbar mock */
+  .topbar-mock {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: var(--shadow-sm);
+  }
+  .topbar-mock > svg { flex-shrink: 0; }
+  .topbar-mock .word { font-family: var(--font-display); font-weight: 500; font-size: 15px; letter-spacing: -0.005em; color: var(--color-ink); flex-shrink: 0; }
+  .topbar-mock .sep { width: 1px; height: 20px; background: var(--color-border); margin: 0 4px; }
+  .topbar-mock .crumb { font-family: var(--font-body); font-size: 12.5px; color: var(--color-text-muted); }
+  .topbar-mock .crumb b { color: var(--color-ink); font-weight: 500; }
+  .topbar-mock .right { margin-left: auto; display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); }
+  .topbar-mock .right .avatar { width: 26px; height: 26px; border-radius: 50%; background: linear-gradient(135deg,#94a3b8,#475569); }
+
+  /* Sidebar mock for monogram */
+  .sb-monogram-mock {
+    background: var(--color-ink);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 220px;
+  }
+  .sb-monogram-mock .header { display: flex; align-items: center; gap: 10px; padding: 4px 4px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 6px; }
+  .sb-monogram-mock .header .word { font-family: var(--font-display); font-weight: 500; font-size: 15px; color: white; }
+  .sb-monogram-mock .item { display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 6px; font-family: var(--font-body); font-size: 12px; color: rgba(255,255,255,0.55); }
+  .sb-monogram-mock .item .dot { width: 4px; height: 4px; background: rgba(255,255,255,0.4); border-radius: 50%; }
+
+  /* Monogram tile (40×40 gradient) */
+  .mono-tile {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: var(--gradient-brand);
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 6px rgba(30,64,175,0.35), inset 0 1px 0 rgba(255,255,255,0.12);
+    flex-shrink: 0;
+  }
+  .mono-tile.sm { width: 32px; height: 32px; border-radius: 8px; }
+  .mono-tile.lg { width: 64px; height: 64px; border-radius: 14px; }
+  .mono-tile.xl { width: 96px; height: 96px; border-radius: 22px; }
+
+  /* Favicon row */
+  .favicon-row { display: flex; align-items: end; gap: 22px; flex-wrap: wrap; justify-content: center; }
+  .favicon-row .item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .favicon-row .item .label { font-family: var(--font-mono); font-size: 10px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .favicon-row .item .label b { color: var(--color-ink); font-weight: 500; }
+  .favicon-tile { display: inline-flex; align-items: center; justify-content: center; }
+  .favicon-tile.f16 { width: 16px; height: 16px; }
+  .favicon-tile.f32 { width: 32px; height: 32px; }
+  .favicon-tile.f48 { width: 48px; height: 48px; }
+  .favicon-tile.f64 { width: 64px; height: 64px; }
+  .favicon-tile.pwa { width: 72px; height: 72px; border-radius: 16px; background: var(--gradient-brand); }
+  .favicon-tile.tab { background: white; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--color-border); display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 12px; color: var(--color-ink); }
+
+  /* Don'ts row */
+  .donts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 24px; }
+  .dont-tile { background: white; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 16px 18px; min-height: 140px; display: flex; flex-direction: column; gap: 12px; position: relative; }
+  .dont-tile .x { width: 22px; height: 22px; border-radius: 50%; background: var(--color-danger); color: white; font-family: var(--font-mono); font-size: 13px; display: inline-flex; align-items: center; justify-content: center; line-height: 1; align-self: flex-end; }
+  .dont-tile .stage { flex: 1; display: flex; align-items: center; justify-content: center; }
+  .dont-tile .caption { font-family: var(--font-mono); font-size: 10.5px; color: var(--color-text-muted); line-height: 1.5; text-align: center; }
+
+  /* Footer */
+  footer { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--color-border); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); letter-spacing: 0.04em; line-height: 1.7; }
+  footer b { color: var(--color-ink); font-weight: 500; }
+</style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ============================================================ -->
+    <!-- Page header                                                  -->
+    <!-- ============================================================ -->
+    <header class="page-header">
+      <div>
+        <div class="meta">Brand guidelines · v1.0 · D02 aprovada</div>
+        <h1>Sabiencia — sistema de identidade visual</h1>
+        <p>Documento de referência para a equipe de produto, marketing e engenharia. Cobre tokens de cor, escala tipográfica, componentes-chave e uso correto do monograma "Ponto de Convergência". Tudo aqui é fonte da verdade — não improvise variações.</p>
+        <div class="badges">
+          <span class="badge approved">✓ Direção aprovada · D02</span>
+          <span class="badge live">● Em uso · plataforma EAD</span>
+          <span class="badge">Poppins / Inter</span>
+          <span class="badge">Tokens · 32 vars</span>
+        </div>
+      </div>
+      <div class="header-mark">
+        <svg width="56" height="56" viewBox="0 0 32 32" aria-hidden="true">
+          <g stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none">
+            <line x1="16" y1="16" x2="6.47" y2="10.5"/>
+            <line x1="16" y1="16" x2="25.53" y2="10.5"/>
+            <line x1="16" y1="16" x2="16" y2="29.2"/>
+          </g>
+          <circle cx="16" cy="16" r="3" fill="#1e40af"/>
+        </svg>
+        <span class="word">Sabiencia</span>
+      </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- 01 — COLOR TOKENS                                            -->
+    <!-- ============================================================ -->
+    <section data-screen-label="01 Tokens de cor">
+      <div class="section-head">
+        <div class="section-num">01</div>
+        <div>
+          <div class="meta">Cores</div>
+          <h2>Tokens de cor</h2>
+          <p>11 cores nomeadas em duas famílias — Brand (azul + variações de estado) e Neutrals (papel, parchment, ink, surface). 3 cores de feedback para sucesso, atenção e erro. Use sempre via variável CSS, nunca hex direto.</p>
+        </div>
+        <div class="right-tag">--color-*<br/>CSS Variables</div>
+      </div>
+
+      <!-- Brand row -->
+      <div class="meta" style="margin-bottom: 12px;">Brand</div>
+      <div class="color-grid">
+        <div class="swatch-card"><div class="swatch" style="background:#3b82f6;"></div><div class="info"><p class="name">Primary</p><div class="hex">#3b82f6</div><div class="var">--color-primary</div></div></div>
+        <div class="swatch-card"><div class="swatch" style="background:#2563eb;"></div><div class="info"><p class="name">Primary · hover</p><div class="hex">#2563eb</div><div class="var">--color-primary-hover</div></div></div>
+        <div class="swatch-card"><div class="swatch" style="background:#1d4ed8;"></div><div class="info"><p class="name">Primary · active</p><div class="hex">#1d4ed8</div><div class="var">--color-primary-active</div></div></div>
+        <div class="swatch-card"><div class="swatch" style="background:#1e40af;"></div><div class="info"><p class="name">Primary dark</p><div class="hex">#1e40af</div><div class="var">--color-primary-dark</div></div></div>
+        <div class="swatch-card"><div class="swatch" style="background:linear-gradient(135deg,#3b82f6 0%,#1e40af 100%);"></div><div class="info"><p class="name">Brand gradient</p><div class="hex">135° · primary→dark</div><div class="var">--gradient-brand</div></div></div>
+      </div>
+
+      <!-- Neutrals row -->
+      <div class="meta" style="margin: 24px 0 12px;">Neutrals</div>
+      <div class="color-grid">
+        <div class="swatch-card bordered"><div class="swatch" style="background:#ffffff;"></div><div class="info"><p class="name">Paper</p><div class="hex">#ffffff</div><div class="var">--color-paper</div></div></div>
+        <div class="swatch-card bordered"><div class="swatch" style="background:#f5f0e8;"></div><div class="info"><p class="name">Parchment</p><div class="hex">#f5f0e8</div><div class="var">--color-parchment</div></div></div>
+        <div class="swatch-card bordered"><div class="swatch" style="background:#f8fafc;"></div><div class="info"><p class="name">Surface</p><div class="hex">#f8fafc</div><div class="var">--color-surface</div></div></div>
+        <div class="swatch-card bordered"><div class="swatch" style="background:#e2e8f0;"></div><div class="info"><p class="name">Border</p><div class="hex">#e2e8f0</div><div class="var">--color-border</div></div></div>
+        <div class="swatch-card"><div class="swatch" style="background:#64748b;"></div><div class="info"><p class="name">Text muted</p><div class="hex">#64748b</div><div class="var">--color-text-muted</div></div></div>
+        <div class="swatch-card"><div class="swatch" style="background:#1e293b;"></div><div class="info"><p class="name">Text</p><div class="hex">#1e293b</div><div class="var">--color-text</div></div></div>
+        <div class="swatch-card"><div class="swatch" style="background:#0f172a;"></div><div class="info"><p class="name">Ink</p><div class="hex">#0f172a</div><div class="var">--color-ink</div></div></div>
+        <div class="swatch-card"><div class="swatch" style="background:#059669;"></div><div class="info"><p class="name">Success</p><div class="hex">#059669</div><div class="var">--color-success</div></div></div>
+        <div class="swatch-card"><div class="swatch" style="background:#d97706;"></div><div class="info"><p class="name">Warning</p><div class="hex">#d97706</div><div class="var">--color-warning</div></div></div>
+        <div class="swatch-card"><div class="swatch" style="background:#dc2626;"></div><div class="info"><p class="name">Danger</p><div class="hex">#dc2626</div><div class="var">--color-danger</div></div></div>
+      </div>
+
+      <!-- CSS dump -->
+      <div style="margin-top: 24px;">
+        <div class="meta" style="margin-bottom: 10px;">Implementação · cole no :root global</div>
+        <pre class="tokens-block"><span class="sect">:root</span> {
+  <span class="com">/* Brand */</span>
+  <span class="var">--color-primary</span>:        <span class="val">#3b82f6</span>;   <span class="com">/* CTA, links, foco */</span>
+  <span class="var">--color-primary-hover</span>:  <span class="val">#2563eb</span>;
+  <span class="var">--color-primary-active</span>: <span class="val">#1d4ed8</span>;
+  <span class="var">--color-primary-dark</span>:   <span class="val">#1e40af</span>;   <span class="com">/* núcleo do símbolo, gradient end */</span>
+
+  <span class="com">/* Neutrals */</span>
+  <span class="var">--color-ink</span>:        <span class="val">#0f172a</span>;
+  <span class="var">--color-text</span>:       <span class="val">#1e293b</span>;
+  <span class="var">--color-text-muted</span>: <span class="val">#64748b</span>;
+  <span class="var">--color-paper</span>:      <span class="val">#ffffff</span>;
+  <span class="var">--color-parchment</span>:  <span class="val">#f5f0e8</span>;
+  <span class="var">--color-surface</span>:    <span class="val">#f8fafc</span>;
+  <span class="var">--color-surface-2</span>:  <span class="val">#f1f5f9</span>;
+  <span class="var">--color-border</span>:     <span class="val">#e2e8f0</span>;
+
+  <span class="com">/* Feedback */</span>
+  <span class="var">--color-success</span>:    <span class="val">#059669</span>;
+  <span class="var">--color-warning</span>:    <span class="val">#d97706</span>;
+  <span class="var">--color-danger</span>:     <span class="val">#dc2626</span>;
+
+  <span class="com">/* Gradient — usado em monogramas, hero, ícones de feature */</span>
+  <span class="var">--gradient-brand</span>: <span class="kw">linear-gradient</span>(<span class="val">135deg, #3b82f6 0%, #1e40af 100%</span>);
+}</pre>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 02 — TYPOGRAPHY                                              -->
+    <!-- ============================================================ -->
+    <section data-screen-label="02 Tipografia">
+      <div class="section-head">
+        <div class="section-num">02</div>
+        <div>
+          <div class="meta">Tipografia</div>
+          <h2>Escala tipográfica</h2>
+          <p>Poppins para títulos, eyebrows e marcas — geometria firme, peso editorial. Inter para corpo e UI — performática, ótimas métricas de leitura em telas. Cinco tamanhos canônicos; não invente intermediários.</p>
+        </div>
+        <div class="right-tag">Poppins + Inter<br/>Google Fonts</div>
+      </div>
+
+      <!-- Pair cards -->
+      <div class="type-pair-cards">
+        <div class="type-pair-card">
+          <div class="pair-name">Display · títulos · eyebrows</div>
+          <p class="glyph display">Aa Sa</p>
+          <div class="footing"><b>Poppins</b><span>400 · 500 · 600 · 700</span></div>
+        </div>
+        <div class="type-pair-card">
+          <div class="pair-name">Body · UI · texto longo</div>
+          <p class="glyph body">Aa Sa</p>
+          <div class="footing"><b>Inter</b><span>400 · 500 · 600 · 700</span></div>
+        </div>
+      </div>
+
+      <!-- Scale -->
+      <div class="type-block" style="margin-top: 18px;">
+        <div class="type-row">
+          <div class="tag">H1 · display</div>
+          <p class="sample h1-sample">Conhecimento elevado</p>
+          <div class="specs"><b>Poppins 700</b> · 48 / 56 px · -0.025em</div>
+        </div>
+        <div class="type-row">
+          <div class="tag">H2 · section</div>
+          <p class="sample h2-sample">Trilhas de aprendizagem</p>
+          <div class="specs"><b>Poppins 600</b> · 36 / 44 px · -0.020em</div>
+        </div>
+        <div class="type-row">
+          <div class="tag">H3 · subsection</div>
+          <p class="sample h3-sample">Métodos de avaliação contínua</p>
+          <div class="specs"><b>Poppins 600</b> · 24 / 32 px · -0.010em</div>
+        </div>
+        <div class="type-row">
+          <div class="tag">Body</div>
+          <p class="sample body-sample">A Sabiencia organiza conteúdos, trilhas e turmas em um único painel — sem fricção entre gestores, professores e alunos. Comece pela visão da turma e mergulhe até a aula específica em três cliques.</p>
+          <div class="specs"><b>Inter 400</b> · 16 / 24 px · 0em</div>
+        </div>
+        <div class="type-row">
+          <div class="tag">Label / UI</div>
+          <p class="sample label-sample">PROGRESSO DA TURMA · 76% CONCLUÍDO</p>
+          <div class="specs"><b>Inter 500</b> · 14 / 20 px · +0.04em opcional</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 03 — COMPONENTS                                              -->
+    <!-- ============================================================ -->
+    <section data-screen-label="03 Componentes">
+      <div class="section-head">
+        <div class="section-num">03</div>
+        <div>
+          <div class="meta">Componentes</div>
+          <h2>Componentes visuais da marca</h2>
+          <p>Quatro famílias de componentes que carregam o tom da identidade. Use estas como referência canônica — mesmas alturas, mesmos raios, mesmos estados. Os tokens já estão aplicados.</p>
+        </div>
+        <div class="right-tag">Botão · Badge<br/>Card · Sidebar</div>
+      </div>
+
+      <div class="comp-grid">
+
+        <!-- Buttons -->
+        <div class="comp-card col-6">
+          <div class="comp-head"><div class="comp-title">Botão CTA principal</div><div class="comp-tag">Button</div></div>
+          <div class="comp-stage">
+            <button class="btn btn-primary">Começar trilha <span class="iconchev">→</span></button>
+            <button class="btn btn-primary" style="opacity:0.85;">Começar trilha <span class="iconchev">→</span></button>
+            <button class="btn btn-primary" style="background:#1d4ed8;">Começar trilha <span class="iconchev">→</span></button>
+            <button class="btn btn-primary" disabled style="background:#94a3b8;cursor:not-allowed;box-shadow:none;">Começar trilha</button>
+          </div>
+          <div class="comp-spec">Estados <b>default · hover · active · disabled</b><br/>Altura <b>40px</b> · radius <b>10px</b> · padding <b>10px 18px</b><br/>Sombra <b>shadow-brand</b> (azul a 45% opacity) — destaca o CTA</div>
+        </div>
+
+        <div class="comp-card col-6">
+          <div class="comp-head"><div class="comp-title">Variações & inverso</div><div class="comp-tag">Button · variants</div></div>
+          <div class="comp-stage" style="background: var(--color-surface);">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="btn btn-primary">Primário</button>
+              <button class="btn btn-secondary">Secundário</button>
+              <button class="btn btn-ghost">Ghost</button>
+            </div>
+          </div>
+          <div class="comp-stage dark" style="padding:18px 24px;">
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button class="btn btn-dark-inverse">Sobre dark</button>
+              <button class="btn btn-primary">Sobre dark · primário</button>
+            </div>
+          </div>
+          <div class="comp-spec"><b>Hierarquia</b> · primário (1) · secundário (2) · ghost (3) — só 1 primário por viewport.</div>
+        </div>
+
+        <!-- Badges -->
+        <div class="comp-card col-6">
+          <div class="comp-head"><div class="comp-title">Badge / tag</div><div class="comp-tag">Badge</div></div>
+          <div class="comp-stage">
+            <div class="badge-row">
+              <span class="b b-primary b-dot">Ao vivo</span>
+              <span class="b b-primary">Curso · 12h</span>
+              <span class="b b-primary-solid">Premium</span>
+              <span class="b b-outline">Novo módulo</span>
+            </div>
+            <div class="badge-row">
+              <span class="b b-success b-dot">Aprovado</span>
+              <span class="b b-warning b-dot">Atrasado</span>
+              <span class="b b-neutral">Rascunho</span>
+            </div>
+          </div>
+          <div class="comp-spec">Padding <b>4 / 10px</b> · radius <b>100px</b> · font <b>Inter 500 · 12px</b><br/>Brand · soft <b>rgba(primary, 0.12)</b> + <b>primary-active</b> de texto</div>
+        </div>
+
+        <!-- Card -->
+        <div class="comp-card col-6">
+          <div class="comp-head"><div class="comp-title">Card de curso/trilha</div><div class="comp-tag">Card</div></div>
+          <div class="comp-stage center">
+            <div class="demo-card">
+              <span class="card-eyebrow">Trilha · ensino superior</span>
+              <h3 class="card-title">Metodologias ativas em sala</h3>
+              <p class="card-body">Como mover sua turma de uma postura passiva para a construção coletiva — 8 módulos, 14 horas.</p>
+              <div class="progress-bar"><span style="width:62%;"></span></div>
+              <div class="card-meta">
+                <span class="progress"><b>62%</b> · 5 de 8 módulos</span>
+                <span class="arrow">Continuar →</span>
+              </div>
+            </div>
+          </div>
+          <div class="comp-spec">Radius <b>14px</b> · padding <b>22 / 24px</b> · shadow-sm<br/>Eyebrow com traço primary 14px · barra de progresso <b>primary</b> sobre <b>surface-2</b></div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="comp-card col-12">
+          <div class="comp-head"><div class="comp-title">Sidebar · item ativo</div><div class="comp-tag">Sidebar</div></div>
+          <div class="comp-stage dark" style="padding: 24px; align-items: center; justify-content: flex-start; gap: 32px; flex-direction: row;">
+            <div class="sidebar-demo">
+              <div class="sb-brand">
+                <div class="mono-tile sm">
+                  <svg width="20" height="20" viewBox="0 0 32 32" aria-hidden="true">
+                    <g stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" fill="none">
+                      <line x1="16" y1="16" x2="6.47" y2="10.5"/>
+                      <line x1="16" y1="16" x2="25.53" y2="10.5"/>
+                      <line x1="16" y1="16" x2="16" y2="29.2"/>
+                    </g>
+                    <circle cx="16" cy="16" r="3" fill="#ffffff"/>
+                  </svg>
+                </div>
+                <span class="word">Sabiencia</span>
+              </div>
+              <div class="sb-item"><span class="ico">◇</span>Visão geral</div>
+              <div class="sb-item active"><span class="ico">▦</span>Minhas turmas<span class="count">12</span></div>
+              <div class="sb-item"><span class="ico">◯</span>Conteúdos</div>
+              <div class="sb-item"><span class="ico">△</span>Avaliações<span class="count">3</span></div>
+              <div class="sb-item"><span class="ico">▽</span>Relatórios</div>
+              <div class="sb-item"><span class="ico">◐</span>Mensagens</div>
+            </div>
+            <div style="flex:1; color: rgba(255,255,255,0.7); font-family: var(--font-body); font-size: 13px; line-height: 1.7; max-width: 380px;">
+              <div class="meta" style="color: rgba(255,255,255,0.5); margin-bottom: 10px;">Anatomia do item ativo</div>
+              <ul style="padding-left: 18px; margin: 0;">
+                <li>Barra vertical <code style="font-family:var(--font-mono);font-size:11.5px;color:#93c5fd;">2.5px</code> em <code style="font-family:var(--font-mono);font-size:11.5px;color:#93c5fd;">--color-primary</code> à esquerda</li>
+                <li>Fundo gradient horizontal — <code style="font-family:var(--font-mono);font-size:11.5px;color:#93c5fd;">rgba(primary, 0.18) → 0.06</code></li>
+                <li>Texto branco · ícone em <code style="font-family:var(--font-mono);font-size:11.5px;color:#93c5fd;">primary</code> · contador em <code style="font-family:var(--font-mono);font-size:11.5px;color:#93c5fd;">primary</code> solid</li>
+                <li>Hover de item inativo: <code style="font-family:var(--font-mono);font-size:11.5px;color:#93c5fd;">rgba(white, 0.04)</code></li>
+              </ul>
+            </div>
+          </div>
+          <div class="comp-spec">Padding item <b>9px 12px</b> · radius <b>10px</b> · gap <b>10px</b> · font <b>Inter 500 · 13px</b></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- 04 — MONOGRAM USE                                            -->
+    <!-- ============================================================ -->
+    <section data-screen-label="04 Monograma">
+      <div class="section-head">
+        <div class="section-num">04</div>
+        <div>
+          <div class="meta">Monograma</div>
+          <h2>Guia de uso do monograma</h2>
+          <p>Três contextos canônicos: topbar (símbolo + wordmark em cores planas), sidebar (tile 40×40 com gradient), favicon/PWA (símbolo isolado em múltiplas resoluções). Não use o monograma fora destes contextos sem consultar Marca.</p>
+        </div>
+        <div class="right-tag">Topbar · Sidebar<br/>Favicon · PWA</div>
+      </div>
+
+      <div class="mono-grid">
+
+        <!-- Topbar -->
+        <div class="mono-card">
+          <div class="mono-head">
+            <div>
+              <div class="t">Contexto 01</div>
+              <div class="title">Topbar · altura máx. 32px</div>
+            </div>
+          </div>
+          <div class="mono-stage" style="padding: 18px;">
+            <div class="topbar-mock">
+              <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true">
+                <g stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none">
+                  <line x1="16" y1="16" x2="6.47" y2="10.5"/>
+                  <line x1="16" y1="16" x2="25.53" y2="10.5"/>
+                  <line x1="16" y1="16" x2="16" y2="29.2"/>
+                </g>
+                <circle cx="16" cy="16" r="3" fill="#1e40af"/>
+              </svg>
+              <span class="word">Sabiencia</span>
+              <span class="sep"></span>
+              <span class="crumb">Cursos · <b>Metodologias ativas</b></span>
+              <span class="right">v 2.4 <span class="avatar"></span></span>
+            </div>
+          </div>
+          <div class="mono-spec">Símbolo <b>28px</b> (cap. 32px) · stroke <b>primary</b> + dot <b>primary-dark</b><br/>Wordmark <b>Poppins 500 · 15px</b> · color <b>ink</b><br/>Gap símbolo→texto <b>10px</b> · sem container ao redor</div>
+        </div>
+
+        <!-- Sidebar 40x40 -->
+        <div class="mono-card">
+          <div class="mono-head">
+            <div>
+              <div class="t">Contexto 02</div>
+              <div class="title">Sidebar · tile 40×40 gradient</div>
+            </div>
+          </div>
+          <div class="mono-stage dark">
+            <div class="sb-monogram-mock">
+              <div class="header">
+                <div class="mono-tile">
+                  <svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">
+                    <g stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" fill="none">
+                      <line x1="16" y1="16" x2="6.47" y2="10.5"/>
+                      <line x1="16" y1="16" x2="25.53" y2="10.5"/>
+                      <line x1="16" y1="16" x2="16" y2="29.2"/>
+                    </g>
+                    <circle cx="16" cy="16" r="3" fill="#ffffff"/>
+                  </svg>
+                </div>
+                <span class="word">Sabiencia</span>
+              </div>
+              <div class="item"><span class="dot"></span>Visão geral</div>
+              <div class="item"><span class="dot"></span>Minhas turmas</div>
+              <div class="item"><span class="dot"></span>Conteúdos</div>
+            </div>
+          </div>
+          <div class="mono-spec">Tile <b>40×40px</b> · radius <b>10px</b> · background <b>--gradient-brand</b><br/>Símbolo em <b>branco</b> dentro do tile · stroke 2.2 · dot fill branco<br/>Sombra <b>0 2px 6px rgba(30,64,175,0.35)</b> + inset highlight</div>
+        </div>
+
+        <!-- Favicon / PWA -->
+        <div class="mono-card">
+          <div class="mono-head">
+            <div>
+              <div class="t">Contexto 03</div>
+              <div class="title">Favicon · PWA · OG</div>
+            </div>
+          </div>
+          <div class="mono-stage">
+            <div class="favicon-row">
+              <div class="item">
+                <div class="favicon-tile pwa">
+                  <svg width="44" height="44" viewBox="0 0 32 32" aria-hidden="true">
+                    <g stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" fill="none">
+                      <line x1="16" y1="16" x2="6.47" y2="10.5"/>
+                      <line x1="16" y1="16" x2="25.53" y2="10.5"/>
+                      <line x1="16" y1="16" x2="16" y2="29.2"/>
+                    </g>
+                    <circle cx="16" cy="16" r="3" fill="#ffffff"/>
+                  </svg>
+                </div>
+                <span class="label"><b>192/512</b> · PWA</span>
+              </div>
+              <div class="item">
+                <div class="favicon-tile f48">
+                  <svg width="48" height="48" viewBox="0 0 32 32" aria-hidden="true">
+                    <g stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none">
+                      <line x1="16" y1="16" x2="6.47" y2="10.5"/>
+                      <line x1="16" y1="16" x2="25.53" y2="10.5"/>
+                      <line x1="16" y1="16" x2="16" y2="29.2"/>
+                    </g>
+                    <circle cx="16" cy="16" r="3" fill="#1e40af"/>
+                  </svg>
+                </div>
+                <span class="label"><b>48px</b></span>
+              </div>
+              <div class="item">
+                <div class="favicon-tile f32">
+                  <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+                    <g stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none">
+                      <line x1="16" y1="16" x2="6.47" y2="10.5"/>
+                      <line x1="16" y1="16" x2="25.53" y2="10.5"/>
+                      <line x1="16" y1="16" x2="16" y2="29.2"/>
+                    </g>
+                    <circle cx="16" cy="16" r="3" fill="#1e40af"/>
+                  </svg>
+                </div>
+                <span class="label"><b>32px</b></span>
+              </div>
+              <div class="item">
+                <div class="favicon-tile tab">
+                  <svg width="14" height="14" viewBox="0 0 32 32" aria-hidden="true" shape-rendering="geometricPrecision">
+                    <g stroke="#3b82f6" stroke-width="2.4" stroke-linecap="round" fill="none">
+                      <line x1="16" y1="16" x2="6.47" y2="10.5"/>
+                      <line x1="16" y1="16" x2="25.53" y2="10.5"/>
+                      <line x1="16" y1="16" x2="16" y2="29.2"/>
+                    </g>
+                    <circle cx="16" cy="16" r="3.4" fill="#1e40af"/>
+                  </svg>
+                  Sabiencia
+                </div>
+                <span class="label"><b>16px</b> · favicon</span>
+              </div>
+            </div>
+          </div>
+          <div class="mono-spec">PWA <b>192/512px</b> · tile com gradient + símbolo branco<br/>Favicon padrão <b>16 / 32 / 48px</b> · símbolo em primary + dot primary-dark sobre fundo transparente<br/>Tab <b>16px</b> · stroke aumenta para <b>2.4</b>, dot r=<b>3.4</b> — preserva legibilidade</div>
+        </div>
+
+      </div>
+
+      <!-- Don'ts -->
+      <div class="meta" style="margin-top: 36px; margin-bottom: 8px;">O que não fazer</div>
+      <div class="donts">
+        <div class="dont-tile">
+          <span class="x">×</span>
+          <div class="stage">
+            <svg width="48" height="48" viewBox="0 0 32 32" aria-hidden="true" style="transform: rotate(28deg);">
+              <g stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none">
+                <line x1="16" y1="16" x2="6.47" y2="10.5"/>
+                <line x1="16" y1="16" x2="25.53" y2="10.5"/>
+                <line x1="16" y1="16" x2="16" y2="29.2"/>
+              </g>
+              <circle cx="16" cy="16" r="3" fill="#1e40af"/>
+            </svg>
+          </div>
+          <div class="caption">Não rotacionar — a haste inferior é o ponto de ancoragem fixo.</div>
+        </div>
+        <div class="dont-tile">
+          <span class="x">×</span>
+          <div class="stage">
+            <svg width="48" height="48" viewBox="0 0 32 32" aria-hidden="true">
+              <g stroke="#a855f7" stroke-width="2" stroke-linecap="round" fill="none">
+                <line x1="16" y1="16" x2="6.47" y2="10.5"/>
+                <line x1="16" y1="16" x2="25.53" y2="10.5"/>
+                <line x1="16" y1="16" x2="16" y2="29.2"/>
+              </g>
+              <circle cx="16" cy="16" r="3" fill="#dc2626"/>
+            </svg>
+          </div>
+          <div class="caption">Não substituir cores — só primary, primary-dark, branco ou ink.</div>
+        </div>
+        <div class="dont-tile">
+          <span class="x">×</span>
+          <div class="stage">
+            <div style="width:54px;height:54px;border-radius:50%;border:2px dashed #94a3b8; display:inline-flex;align-items:center;justify-content:center;">
+              <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+                <g stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none">
+                  <line x1="16" y1="16" x2="6.47" y2="10.5"/>
+                  <line x1="16" y1="16" x2="25.53" y2="10.5"/>
+                  <line x1="16" y1="16" x2="16" y2="29.2"/>
+                </g>
+                <circle cx="16" cy="16" r="3" fill="#1e40af"/>
+              </svg>
+            </div>
+          </div>
+          <div class="caption">Não adicionar molduras circulares — quebra a leitura aberta.</div>
+        </div>
+        <div class="dont-tile">
+          <span class="x">×</span>
+          <div class="stage">
+            <svg width="60" height="36" viewBox="0 0 60 32" aria-hidden="true">
+              <g stroke="#3b82f6" stroke-width="2" stroke-linecap="round" fill="none">
+                <line x1="30" y1="16" x2="14" y2="10.5"/>
+                <line x1="30" y1="16" x2="46" y2="10.5"/>
+                <line x1="30" y1="16" x2="30" y2="29.2"/>
+              </g>
+              <circle cx="30" cy="16" r="3" fill="#1e40af"/>
+            </svg>
+          </div>
+          <div class="caption">Não esticar — manter proporção 1:1 (32×32 viewBox).</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>
+        <b>Sabiencia · Brand v1.0</b><br/>
+        Direção D02 · Ponto de Convergência<br/>
+        Maio 2026
+      </div>
+      <div>
+        <b>Contato</b><br/>
+        Time de Marca · brand@sabiencia.app<br/>
+        Time de Produto · design@sabiencia.app
+      </div>
+      <div>
+        <b>Próximos passos</b><br/>
+        v1.1 · ícone-família para features<br/>
+        v1.2 · ilustração editorial parchment
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

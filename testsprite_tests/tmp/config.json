@@ -1,0 +1,15 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "executionArgs": {
+    "projectName": "Sistema da Britos Educação",
+    "projectPath": "c:\\Users\\Hilton Neto\\Desktop\\Aplicativos desenvolvendo\\Sistema da Britos Educação",
+    "testIds": [],
+    "additionalInstruction": "Use generated code_summary.json and PRD to design integration tests for login and role-based routing; generate raw_report and final test report files.",
+    "envs": {
+      "API_KEY": "sk-user-Q-oId1ashrXcgCSn17QxGWBOX51t6lD-cIKKrpK4w57XApkM0wvVlQTuUzS32ViThT_oj8BuMzzk96uf1pQzdohMusvkxQobyxSWlZf3jeM17akpoC5OtxUTikNXIY-zZ8Y"
+    }
+  }
+}

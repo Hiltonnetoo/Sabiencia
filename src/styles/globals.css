@@ -1,0 +1,320 @@
+:root {
+  /* Identidade Visual Sabiencia */
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-primary-active: #1d4ed8;
+  --color-text-primary: #1e293b;
+  --color-background: #f8fafc;
+  --color-surface-1: #ffffff;
+  --color-surface-2: #f1f5f9;
+  --color-success: #059669;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+
+  --font-titles: 'Poppins', Inter, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Escola Técnica Color System */
+  --font-size: 16px;
+  --background: var(--color-background);
+  --foreground: var(--color-text-primary);
+  
+  /* Cores Primárias */
+  --blue-50: #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --blue-900: #1e40af;
+  
+  /* Cores Secundárias */
+  --green-50: #f0fdf4;
+  --green-500: #059669;
+  --green-600: #047857;
+  
+  /* Cores Terciárias */
+  --orange-500: #ea580c;
+  --orange-600: #dc2626;
+  
+  /* Cores Neutras */
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-400: #94a3b8;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-900: #0f172a;
+  
+  /* Design Tokens */
+  --primary: var(--color-primary);
+  --primary-hover: var(--color-primary-hover);
+  --primary-active: var(--color-primary-active);
+  --primary-foreground: #ffffff;
+  
+  --secondary: var(--color-surface-2);
+  --secondary-hover: var(--gray-200);
+  --secondary-foreground: var(--color-text-primary);
+  
+  --success: var(--color-success);
+  --success-foreground: #ffffff;
+  
+  --warning: var(--color-warning);
+  --warning-foreground: #ffffff;
+  
+  --error: var(--color-error);
+  --error-foreground: #ffffff;
+  
+  --card: #ffffff;
+  --card-foreground: var(--gray-900);
+  --border: var(--gray-200);
+  --input-background: var(--gray-50);
+  --muted: var(--gray-100);
+  --muted-foreground: var(--gray-600);
+  
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+    outline: none;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body);
+  }
+  
+  /* Enhanced Focus Indicators for WCAG AA Compliance */
+  *:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+  
+  button:focus-visible,
+  a:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  }
+  
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 0px;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  /* Garantir que focus nunca seja escondido */
+  *:focus {
+    outline: none;
+  }
+  
+  *:focus-visible {
+    outline: 2px solid var(--primary);
+  }
+}
+
+/* Typography Scale */
+@layer base {
+  :where(:not(:has([class*=" text-"]), :not(:has([class^="text-"])))) {
+    h1 {
+      font-size: 3rem; /* 48px */
+      line-height: 3.5rem; /* 56px */
+      font-weight: 700;
+      font-family: var(--font-titles);
+      color: var(--color-text-primary);
+    }
+
+    h2 {
+      font-size: 2.25rem; /* 36px */
+      line-height: 2.75rem; /* 44px */
+      font-weight: 600;
+      font-family: var(--font-titles);
+      color: var(--color-text-primary);
+    }
+
+    h3 {
+      font-size: 1.5rem; /* 24px */
+      line-height: 2rem; /* 32px */
+      font-weight: 600;
+      font-family: var(--font-titles);
+      color: var(--color-text-primary);
+    }
+
+    h4 {
+      font-size: 1.25rem; /* 20px */
+      line-height: 1.75rem; /* 28px */
+      font-weight: 500;
+      color: var(--gray-900);
+    }
+
+    p {
+      font-size: 1rem; /* 16px */
+      line-height: 1.5rem; /* 24px */
+      font-weight: 400;
+      color: var(--gray-700);
+    }
+
+    .text-large {
+      font-size: 1.125rem; /* 18px */
+      line-height: 1.75rem; /* 28px */
+    }
+
+    .text-small {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.25rem; /* 20px */
+    }
+
+    .text-caption {
+      font-size: 0.75rem; /* 12px */
+      line-height: 1rem; /* 16px */
+    }
+
+    label {
+      font-size: 0.875rem; /* 14px */
+      line-height: 1.25rem; /* 20px */
+      font-weight: 500;
+      color: var(--gray-700);
+    }
+
+    button {
+      font-size: 1rem; /* 16px */
+      line-height: 1.5rem; /* 24px */
+      font-weight: 500;
+    }
+
+    input, textarea, select {
+      font-size: 1rem; /* 16px */
+      line-height: 1.5rem; /* 24px */
+      font-weight: 400;
+    }
+  }
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .shadow-custom-sm { box-shadow: var(--shadow-sm); }
+  .shadow-custom-md { box-shadow: var(--shadow-md); }
+  .shadow-custom-lg { box-shadow: var(--shadow-lg); }
+  .shadow-custom-xl { box-shadow: var(--shadow-xl); }
+  
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.0, 0.0, 0.2, 1);
+  }
+  
+  /* Screen reader only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  
+  .transition-fast {
+    transition: all 0.15s cubic-bezier(0.0, 0.0, 0.2, 1);
+  }
+  
+  .sr-only:focus,
+  .sr-only:active {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+  
+  .not-sr-only {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+  
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+}
+
+/* ============================================
+   REDUCED MOTION - Acessibilidade
+   ============================================ */
+
+/* Respeita preferência de animações reduzidas */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Mantém feedback visual importante sem movimento */
+  *:focus-visible {
+    transition: outline 0s;
+  }
+}
+
+/* ============================================
+   HIGH CONTRAST MODE - Acessibilidade
+   ============================================ */
+
+@media (prefers-contrast: high) {
+  :root {
+    --primary: #0066cc;
+    --background: #ffffff;
+    --foreground: #000000;
+  }
+  
+  * {
+    border-color: currentColor !important;
+  }
+  
+  button,
+  a {
+    text-decoration: underline;
+  }
+}
+
+html {
+  font-size: var(--font-size);
+  scroll-behavior: smooth;
+}
+
+/* Desabilita scroll suave se usuário prefere sem movimento */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
