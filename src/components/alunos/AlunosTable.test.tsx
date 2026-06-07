@@ -3,6 +3,7 @@
 // ============================================
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import '@testing-library/jest-dom';
 import { render, screen, within } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
@@ -11,15 +12,22 @@ import { MockDataProvider } from '../../contexts/MockDataContext';
 import type { Aluno } from '../../types';
 
 // Mock de alunos para teste
-const mockAlunos: Aluno[] = [
+const mockAlunos: (Aluno & { curso_id?: string; data_matricula?: string })[] = [
   {
     id: '1',
     nome_completo: 'João Silva',
     cpf: '111.111.111-11',
     email: 'joao@exemplo.com',
     telefone: '11987654321',
-    data_nascimento: '2000-01-01',
-    endereco: 'Rua A, 123',
+    data_nascimento: new Date('2000-01-01'),
+    endereco: {
+      cep: '01310-100',
+      rua: 'Rua A',
+      numero: '123',
+      bairro: 'Centro',
+      cidade: 'São Paulo',
+      estado: 'SP'
+    },
     cidade: 'São Paulo',
     estado: 'SP',
     cep: '01310-100',
@@ -30,7 +38,9 @@ const mockAlunos: Aluno[] = [
     responsavel_nome: 'Maria Silva',
     responsavel_telefone: '11987654322',
     observacoes: '',
-    foto_url: ''
+    foto_url: '',
+    role: 'aluno',
+    created_at: new Date('2024-01-01')
   },
   {
     id: '2',
@@ -38,8 +48,15 @@ const mockAlunos: Aluno[] = [
     cpf: '222.222.222-22',
     email: 'maria@exemplo.com',
     telefone: '11987654323',
-    data_nascimento: '2001-02-02',
-    endereco: 'Rua B, 456',
+    data_nascimento: new Date('2001-02-02'),
+    endereco: {
+      cep: '01310-200',
+      rua: 'Rua B',
+      numero: '456',
+      bairro: 'Centro',
+      cidade: 'São Paulo',
+      estado: 'SP'
+    },
     cidade: 'São Paulo',
     estado: 'SP',
     cep: '01310-200',
@@ -50,7 +67,9 @@ const mockAlunos: Aluno[] = [
     responsavel_nome: 'José Santos',
     responsavel_telefone: '11987654324',
     observacoes: '',
-    foto_url: ''
+    foto_url: '',
+    role: 'aluno',
+    created_at: new Date('2024-01-01')
   }
 ];
 

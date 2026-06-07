@@ -2,7 +2,8 @@
 // ALUNO FORM TESTS - Testes do formulário de alunos
 // ============================================
 
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
@@ -158,7 +159,7 @@ describe('AlunoForm', () => {
       await user.type(cepInput, '01310100');
 
       await waitFor(() => {
-        expect(cepInput.value).toMatch(/\d{5}-\d{3}/ || cepInput.value.length > 0);
+        expect(cepInput.value).toBe('01310-100');
       });
     });
   });
