@@ -30,39 +30,44 @@ import { useKeyboardShortcuts, commonShortcuts } from '../../hooks/useKeyboardSh
 
 interface AlunoFormProps {
   aluno?: Aluno;
-  onSubmit: (data: AlunoFormData) => void;
-  onCancel: () => void;
+  initialData?: Aluno;
+  onSubmit?: (data: AlunoFormData) => void;
+  onSuccess?: () => void;
+  onCancel?: () => void;
   isLoading?: boolean;
   onDirtyChange?: (isDirty: boolean) => void;
 }
 
 export const AlunoForm: React.FC<AlunoFormProps> = ({
   aluno,
+  initialData,
   onSubmit,
+  onSuccess,
   onCancel,
   isLoading = false,
   onDirtyChange,
 }) => {
   const { cursos, turmas } = useMockData();
   const [selectedCurso, setSelectedCurso] = useState<string>('');
+  const activeAluno = aluno || initialData;
 
   const form = useForm<AlunoFormData>({
     resolver: zodResolver(alunoSchema),
     mode: 'onChange', // Validação em tempo real
-    defaultValues: aluno ? {
-      nome_completo: aluno.nome_completo,
-      cpf: aluno.cpf,
-      rg: aluno.rg,
-      data_nascimento: aluno.data_nascimento,
-      sexo: aluno.sexo,
-      estado_civil: aluno.estado_civil,
-      email: aluno.email,
-      telefone: aluno.telefone,
-      nome_responsavel: aluno.nome_responsavel,
-      telefone_responsavel: aluno.telefone_responsavel,
-      endereco: aluno.endereco,
-      foto_url: aluno.foto_url,
-      ativo: aluno.ativo,
+    defaultValues: activeAluno ? {
+      nome_completo: activeAluno.nome_completo,
+      cpf: activeAluno.cpf,
+      rg: activeAluno.rg,
+      data_nascimento: typeof activeAluno.data_nascimento === 'string' ? new Date(activeAluno.data_nascimento) : activeAluno.data_nascimento,
+      sexo: activeAluno.sexo,
+      estado_civil: activeAluno.estado_civil,
+      email: activeAluno.email,
+      telefone: activeAluno.telefone,
+      nome_responsavel: activeAluno.nome_responsavel,
+      telefone_responsavel: activeAluno.telefone_responsavel,
+      endereco: activeAluno.endereco,
+      foto_url: activeAluno.foto_url,
+      ativo: activeAluno.ativo,
     } : {
       ativo: true,
     },
@@ -82,6 +87,14 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
     onDirtyChange?.(isDirty);
   }, [isDirty, onDirtyChange]);
 
+  const activeOnSubmit = (data: AlunoFormData) => {
+    if (onSubmit) {
+      onSubmit(data);
+    } else if (onSuccess) {
+      onSuccess();
+    }
+  };
+
   const validation = useFormValidation(form);
 
   const dataNascimento = watch('data_nascimento');
@@ -95,14 +108,14 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
   useKeyboardShortcuts([
     commonShortcuts.save(() => {
       if (!isLoading) {
-        handleSubmit(onSubmit)();
+        handleSubmit(activeOnSubmit)();
       }
     }),
     commonShortcuts.cancel(onCancel),
   ]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(activeOnSubmit)} className="space-y-6" noValidate>
       {/* SEÇÃO 1: DADOS PESSOAIS */}
       <Card>
         <CardHeader>
@@ -121,6 +134,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
             >
               <InputWithValidation
                 id="nome_completo"
+                required
                 {...register('nome_completo')}
                 placeholder="Nome completo do aluno"
                 error={errors.nome_completo?.message}
@@ -137,6 +151,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
             >
               <CPFInput
                 id="cpf"
+                required
                 {...register('cpf')}
                 error={errors.cpf?.message}
               />
@@ -162,6 +177,19 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
               <Label htmlFor="data_nascimento">
                 Data de Nascimento <span className="text-red-500">*</span>
               </Label>
+              <input
+                type="text"
+                id="data_nascimento"
+                required
+                className="sr-only"
+                {...register('data_nascimento', {
+                  setValueAs: (v) => {
+                    if (!v) return undefined;
+                    const d = new Date(v);
+                    return isNaN(d.getTime()) ? undefined : d;
+                  }
+                })}
+              />
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -180,7 +208,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
                   <Calendar
                     mode="single"
                     selected={dataNascimento}
-                    onSelect={(date) => setValue('data_nascimento', date!)}
+                    onSelect={(date) => setValue('data_nascimento', date!, { shouldDirty: true, shouldValidate: true })}
                     initialFocus
                   />
                 </PopoverContent>
@@ -249,6 +277,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
             >
               <EmailInput
                 id="email"
+                required
                 {...register('email')}
                 error={errors.email?.message}
               />
@@ -263,6 +292,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
             >
               <PhoneInput
                 id="telefone"
+                required
                 {...register('telefone')}
                 error={errors.telefone?.message}
               />

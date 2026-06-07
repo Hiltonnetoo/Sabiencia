@@ -122,18 +122,19 @@ export const AlunosTable: React.FC<AlunosTableProps> = ({
   const filteredAndSortedAlunos = useMemo(() => {
     const filtered = alunos.filter(aluno => {
       // Filtro de busca
+      const cleanCPFSearch = searchTerm.replace(/\D/g, '');
       const matchesSearch =
         aluno.nome_completo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        aluno.cpf.includes(searchTerm.replace(/\D/g, ''));
+        (cleanCPFSearch !== '' && aluno.cpf.includes(cleanCPFSearch));
 
       // Filtro de status
       const details = getAlunoDetailsMemo(aluno.id);
       const matchesStatus =
-        statusFilter === 'all' || details.status === statusFilter;
+        statusFilter === 'all' || statusFilter === 'todos' || details.status === statusFilter;
 
       // Filtro de curso
       const matchesCurso =
-        cursoFilter === 'all' || details.curso?.id === cursoFilter;
+        cursoFilter === 'all' || cursoFilter === 'todos' || details.curso?.id === cursoFilter;
 
       return matchesSearch && matchesStatus && matchesCurso;
     });
@@ -211,7 +212,7 @@ export const AlunosTable: React.FC<AlunosTableProps> = ({
     }
 
     // Caso 3: Tem alunos mas nenhum corresponde aos filtros
-    if ((statusFilter !== 'all' || cursoFilter !== 'all') && filteredAndSortedAlunos.length === 0) {
+    if ((statusFilter !== 'all' && statusFilter !== 'todos' || cursoFilter !== 'all' && cursoFilter !== 'todos') && filteredAndSortedAlunos.length === 0) {
       return (
         <FilterEmptyState
           onClearFilters={() => window.location.reload()} // Temporário, idealmente seria um callback prop

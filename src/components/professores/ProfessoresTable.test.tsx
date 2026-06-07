@@ -7,7 +7,42 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { ProfessoresTable } from './ProfessoresTable';
-import { MockDataProvider } from '../../contexts/MockDataContext';
+import React from 'react';
+import { MockDataProvider, useMockData } from '../../contexts/MockDataContext';
+
+const mockProfessores = [
+  {
+    id: 'prof1',
+    nome_completo: 'Carlos Silva',
+    cpf: '456.789.012-34',
+    email: 'carlos@exemplo.com',
+    telefone: '11987654321',
+    especialidades: ['Matemática'],
+    formacao: 'Licenciatura em Matemática',
+    ativo: true,
+    created_at: new Date()
+  },
+  {
+    id: 'prof2',
+    nome_completo: 'Ana Paula',
+    cpf: '987.654.321-02',
+    email: 'ana@exemplo.com',
+    telefone: '11987654322',
+    especialidades: ['Português'],
+    formacao: 'Letras',
+    ativo: false,
+    created_at: new Date()
+  }
+];
+
+vi.mock('../../contexts/MockDataContext', () => ({
+  useMockData: () => ({
+    professores: mockProfessores,
+    turmas: [],
+    professorTurmaDisciplina: []
+  }),
+  MockDataProvider: ({ children }: any) => <>{children}</>
+}));
 
 // Wrapper com providers necessários
 const renderWithProviders = (component: React.ReactElement) => {
@@ -38,9 +73,9 @@ describe('ProfessoresTable', () => {
         />
       );
 
-      expect(screen.getByText('Professor')).toBeInTheDocument();
+      expect(screen.getByText('Nome')).toBeInTheDocument();
       expect(screen.getByText('CPF')).toBeInTheDocument();
-      expect(screen.getByText('Contato')).toBeInTheDocument();
+      expect(screen.getByText('Email')).toBeInTheDocument();
       expect(screen.getByText('Especialidades')).toBeInTheDocument();
       expect(screen.getByText('Turmas')).toBeInTheDocument();
       expect(screen.getByText('Status')).toBeInTheDocument();

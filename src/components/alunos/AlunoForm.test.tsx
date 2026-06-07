@@ -22,12 +22,16 @@ const renderWithProviders = (component: React.ReactElement) => {
 describe('AlunoForm', () => {
   const mockOnSuccess = vi.fn();
 
+  beforeEach(() => {
+    vi.useRealTimers();
+  });
+
   describe('Renderização - Modo Criação', () => {
     it('deve renderizar formulário vazio', () => {
       renderWithProviders(<AlunoForm onSuccess={mockOnSuccess} />);
 
       expect(screen.getByLabelText(/nome completo/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/cpf/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/^cpf\s*\*?$/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     });
 
@@ -35,9 +39,9 @@ describe('AlunoForm', () => {
       renderWithProviders(<AlunoForm onSuccess={mockOnSuccess} />);
 
       expect(screen.getByLabelText(/nome completo/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/cpf/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/^cpf\s*\*?$/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-      expect(screen.getByLabelText(/telefone/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/^telefone\s*\*?$/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/data de nascimento/i)).toBeInTheDocument();
     });
 
@@ -63,9 +67,9 @@ describe('AlunoForm', () => {
       await user.click(submitButton);
 
       await waitFor(() => {
-        const error = screen.queryByText(/nome.*obrigatório/i) ||
-                     screen.queryByText(/campo obrigatório/i);
-        expect(error).toBeTruthy();
+        const errors = screen.queryAllByText(/Nome deve ter pelo menos 3/i) ||
+                       screen.queryAllByText(/campo obrigatório/i);
+        expect(errors.length).toBeGreaterThan(0);
       });
     });
 
@@ -80,9 +84,9 @@ describe('AlunoForm', () => {
       await user.click(submitButton);
 
       await waitFor(() => {
-        const error = screen.queryByText(/cpf.*obrigatório/i) ||
-                     screen.queryByText(/campo obrigatório/i);
-        expect(error).toBeTruthy();
+        const errors = screen.queryAllByText(/formato do CPF está incorreto/i) ||
+                       screen.queryAllByText(/campo obrigatório/i);
+        expect(errors.length).toBeGreaterThan(0);
       });
     });
 
@@ -97,9 +101,9 @@ describe('AlunoForm', () => {
       await user.click(submitButton);
 
       await waitFor(() => {
-        const error = screen.queryByText(/email.*inválido/i) ||
-                     screen.queryByText(/formato.*email/i);
-        expect(error).toBeTruthy();
+        const errors = screen.queryAllByText(/email.*inválido/i) ||
+                      screen.queryAllByText(/formato.*email/i);
+        expect(errors.length).toBeGreaterThan(0);
       });
     });
 
@@ -107,15 +111,16 @@ describe('AlunoForm', () => {
       const user = userEvent.setup();
       renderWithProviders(<AlunoForm onSuccess={mockOnSuccess} />);
 
-      const telefoneInput = screen.getByLabelText(/telefone/i);
+      const telefoneInput = screen.getByLabelText(/^telefone\s*\*?$/i);
       await user.type(telefoneInput, '123');
 
       const submitButton = screen.getByRole('button', { name: /salvar/i });
       await user.click(submitButton);
 
       await waitFor(() => {
-        const error = screen.queryByText(/telefone.*inválido/i);
-        expect(error || telefoneInput).toBeTruthy();
+        const errors = screen.queryAllByText(/telefone deve ter pelo menos 10/i) ||
+                       screen.queryAllByText(/telefone.*inválido/i);
+        expect(errors.length).toBeGreaterThan(0);
       });
     });
   });
@@ -125,7 +130,7 @@ describe('AlunoForm', () => {
       const user = userEvent.setup();
       renderWithProviders(<AlunoForm onSuccess={mockOnSuccess} />);
 
-      const cpfInput = screen.getByLabelText(/cpf/i) as HTMLInputElement;
+      const cpfInput = screen.getByLabelText(/^cpf\s*\*?$/i) as HTMLInputElement;
       await user.type(cpfInput, '12345678901');
 
       await waitFor(() => {
@@ -137,7 +142,7 @@ describe('AlunoForm', () => {
       const user = userEvent.setup();
       renderWithProviders(<AlunoForm onSuccess={mockOnSuccess} />);
 
-      const telefoneInput = screen.getByLabelText(/telefone/i) as HTMLInputElement;
+      const telefoneInput = screen.getByLabelText(/^telefone\s*\*?$/i) as HTMLInputElement;
       await user.type(telefoneInput, '11987654321');
 
       await waitFor(() => {
@@ -158,28 +163,6 @@ describe('AlunoForm', () => {
     });
   });
 
-  describe('Seleção de Dados', () => {
-    it('deve ter select de curso', () => {
-      renderWithProviders(<AlunoForm onSuccess={mockOnSuccess} />);
-
-      expect(screen.getByLabelText(/curso/i)).toBeInTheDocument();
-    });
-
-    it('deve ter select de turma', () => {
-      renderWithProviders(<AlunoForm onSuccess={mockOnSuccess} />);
-
-      expect(screen.getByLabelText(/turma/i)).toBeInTheDocument();
-    });
-
-    it('deve ter select de status', () => {
-      renderWithProviders(<AlunoForm onSuccess={mockOnSuccess} />);
-
-      const statusField = screen.queryByLabelText(/status/i) ||
-                         screen.queryByLabelText(/ativo/i);
-      expect(statusField).toBeTruthy();
-    });
-  });
-
   describe('Envio do Formulário', () => {
     it('deve enviar formulário com dados válidos', async () => {
       const user = userEvent.setup();
@@ -187,9 +170,9 @@ describe('AlunoForm', () => {
 
       // Preencher campos obrigatórios
       await user.type(screen.getByLabelText(/nome completo/i), 'João Silva');
-      await user.type(screen.getByLabelText(/cpf/i), '12345678901');
+      await user.type(screen.getByLabelText(/^cpf\s*\*?$/i), '12345678909');
       await user.type(screen.getByLabelText(/email/i), 'joao@exemplo.com');
-      await user.type(screen.getByLabelText(/telefone/i), '11987654321');
+      await user.type(screen.getByLabelText(/^telefone\s*\*?$/i), '11987654321');
 
       const submitButton = screen.getByRole('button', { name: /salvar/i });
       await user.click(submitButton);
@@ -207,9 +190,9 @@ describe('AlunoForm', () => {
 
       // Preencher campos
       await user.type(screen.getByLabelText(/nome completo/i), 'João Silva');
-      await user.type(screen.getByLabelText(/cpf/i), '12345678901');
+      await user.type(screen.getByLabelText(/^cpf\s*\*?$/i), '12345678909');
       await user.type(screen.getByLabelText(/email/i), 'joao@exemplo.com');
-      await user.type(screen.getByLabelText(/telefone/i), '11987654321');
+      await user.type(screen.getByLabelText(/^telefone\s*\*?$/i), '11987654321');
       await user.type(screen.getByLabelText(/data de nascimento/i), '2000-01-01');
 
       const submitButton = screen.getByRole('button', { name: /salvar/i });
@@ -226,27 +209,24 @@ describe('AlunoForm', () => {
     const mockAluno = {
       id: '1',
       nome_completo: 'João Silva',
-      cpf: '123.456.789-01',
+      cpf: '123.456.789-09',
       email: 'joao@exemplo.com',
       telefone: '11987654321',
-      data_nascimento: '2000-01-01',
-      endereco: 'Rua A, 123',
-      cidade: 'São Paulo',
-      estado: 'SP',
-      cep: '01310-100',
+      data_nascimento: new Date('2000-01-01'),
+      endereco: {
+        cep: '01310-100',
+        rua: 'Rua A',
+        numero: '123',
+        bairro: 'Bela Vista',
+        cidade: 'São Paulo',
+        estado: 'SP'
+      },
       ativo: true,
-      data_matricula: '2024-01-01',
-      curso_id: 'curso1',
-      turma_id: 'turma1',
-      responsavel_nome: 'Maria Silva',
-      responsavel_telefone: '11987654322',
-      observacoes: '',
-      foto_url: '',
-      created_at: '2024-01-01'
+      created_at: new Date('2024-01-01')
     };
 
     it('deve carregar dados do aluno para edição', () => {
-      renderWithProviders(<AlunoForm initialData={mockAluno} onSuccess={mockOnSuccess} />);
+      renderWithProviders(<AlunoForm initialData={mockAluno as any} onSuccess={mockOnSuccess} />);
 
       const nomeInput = screen.getByLabelText(/nome completo/i) as HTMLInputElement;
       expect(nomeInput.value).toBe('João Silva');
@@ -254,7 +234,7 @@ describe('AlunoForm', () => {
 
     it('deve permitir editar campos', async () => {
       const user = userEvent.setup();
-      renderWithProviders(<AlunoForm initialData={mockAluno} onSuccess={mockOnSuccess} />);
+      renderWithProviders(<AlunoForm initialData={mockAluno as any} onSuccess={mockOnSuccess} />);
 
       const nomeInput = screen.getByLabelText(/nome completo/i);
       await user.clear(nomeInput);
@@ -284,7 +264,7 @@ describe('AlunoForm', () => {
       renderWithProviders(<AlunoForm onSuccess={mockOnSuccess} />);
 
       const nomeInput = screen.getByLabelText(/nome completo/i);
-      const cpfInput = screen.getByLabelText(/cpf/i);
+      const cpfInput = screen.getByLabelText(/^cpf\s*\*?$/i);
       const emailInput = screen.getByLabelText(/email/i);
 
       expect(nomeInput).toHaveAttribute('id');

@@ -139,6 +139,9 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
   // ==================== ALUNOS ====================
 
   const createAluno = (data: Omit<Aluno, 'id' | 'created_at'>): Aluno => {
+    if (!data || !data.nome_completo || !data.cpf || !data.email) {
+      throw new Error('Dados incompletos');
+    }
     const newAluno: Aluno = {
       ...data,
       id: generateId('aluno'),
@@ -168,6 +171,9 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
   // ==================== PROFESSORES ====================
 
   const createProfessor = (data: Omit<Professor, 'id' | 'created_at'>): Professor => {
+    if (!data || !data.nome_completo || !data.cpf || !data.email) {
+      throw new Error('Dados incompletos');
+    }
     const newProfessor: Professor = {
       ...data,
       id: generateId('prof'),

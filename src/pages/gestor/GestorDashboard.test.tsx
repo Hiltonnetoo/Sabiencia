@@ -24,14 +24,14 @@ describe('GestorDashboard', () => {
     it('deve renderizar o título do dashboard', () => {
       renderWithProviders(<GestorDashboard />);
 
-      expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+      expect(screen.getByText(/painel|dashboard/i)).toBeInTheDocument();
     });
 
     it('deve renderizar breadcrumb', () => {
       renderWithProviders(<GestorDashboard />);
 
       const breadcrumb = screen.queryByRole('navigation');
-      expect(breadcrumb || screen.getByText(/dashboard/i)).toBeTruthy();
+      expect(breadcrumb || screen.getByText(/painel|dashboard/i)).toBeTruthy();
     });
   });
 
@@ -45,7 +45,7 @@ describe('GestorDashboard', () => {
     it('deve exibir card de professores', () => {
       renderWithProviders(<GestorDashboard />);
 
-      expect(screen.getByText(/professores/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/professores/i)[0]).toBeInTheDocument();
     });
 
     it('deve exibir card de turmas', () => {

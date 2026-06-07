@@ -54,6 +54,21 @@ const mockAlunos: Aluno[] = [
   }
 ];
 
+vi.mock('../../hooks/useAlunosComMatricula', () => ({
+  useAlunosComMatricula: () => ({
+    alunos: mockAlunos,
+    getDetails: (id: string) => {
+      const aluno = mockAlunos.find(a => a.id === id);
+      return {
+        status: aluno?.ativo ? 'ativo' : 'inativo',
+        curso: aluno?.curso_id ? { id: aluno.curso_id, nome: aluno.curso_id === 'curso1' ? 'Curso Teste 1' : 'Curso Teste 2' } : null,
+        turma: aluno?.turma_id ? { id: aluno.turma_id, nome: 'Turma Teste' } : null
+      };
+    }
+  })
+}));
+
+
 // Wrapper com providers necessários
 const renderWithProviders = (component: React.ReactElement) => {
   return render(
@@ -83,9 +98,9 @@ describe('AlunosTable', () => {
         />
       );
 
-      expect(screen.getByText('Aluno')).toBeInTheDocument();
+      expect(screen.getByText('Nome')).toBeInTheDocument();
       expect(screen.getByText('CPF')).toBeInTheDocument();
-      expect(screen.getByText('Contato')).toBeInTheDocument();
+      expect(screen.getByText('Email')).toBeInTheDocument();
       expect(screen.getByText('Curso')).toBeInTheDocument();
       expect(screen.getByText('Turma')).toBeInTheDocument();
       expect(screen.getByText('Status')).toBeInTheDocument();

@@ -151,7 +151,7 @@ describe('FilterEmptyState', () => {
     it('deve renderizar mensagem de filtro vazio', () => {
       render(<FilterEmptyState />);
 
-      expect(screen.getByText(/nenhum.*resultado/i) || screen.getByText(/filtro/i)).toBeInTheDocument();
+      expect(screen.getByText(/Nenhum item corresponde aos filtros/i)).toBeInTheDocument();
     });
 
     it('deve ter botão para limpar filtros', () => {
@@ -186,12 +186,11 @@ describe('FilterEmptyState', () => {
     it('deve mostrar mensagem diferente quando há filtros ativos', () => {
       const { rerender } = render(<FilterEmptyState activeFiltersCount={0} />);
 
-      const messageNoFilters = screen.queryByText(/filtro/i);
+      expect(screen.queryByText(/filtros ativos/i)).toBeNull();
 
       rerender(<FilterEmptyState activeFiltersCount={2} />);
 
-      const messageWithFilters = screen.queryByText(/filtro/i) || screen.queryByText(/2/);
-      expect(messageWithFilters).toBeTruthy();
+      expect(screen.getByText(/2 filtros ativos/i)).toBeInTheDocument();
     });
   });
 });
@@ -209,7 +208,7 @@ describe('Acessibilidade', () => {
     render(<SearchEmptyState searchTerm="teste" onClearSearch={mockClear} />);
 
     const button = screen.getByRole('button', { name: /limpar/i });
-    expect(button).toBeAccessible || expect(button).toBeDefined();
+    expect(button).toBeInTheDocument();
   });
 
   it('FilterEmptyState deve ter labels descritivos', () => {

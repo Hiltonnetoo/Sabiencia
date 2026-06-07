@@ -2,7 +2,7 @@
 // USE PAGINATION - Hook para paginação client-side
 // ============================================
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 
 export interface PaginationConfig {
   initialPage?: number;
@@ -51,8 +51,14 @@ export function usePagination<T>(
   const [currentPage, setCurrentPage] = useState(initialPage);
   const [pageSize, setPageSizeState] = useState(initialPageSize);
 
+  const isFirstRender = useRef(true);
+
   // Resetar para primeira página quando itens mudarem (ex: ao filtrar)
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     setCurrentPage(1);
   }, [items.length]);
 

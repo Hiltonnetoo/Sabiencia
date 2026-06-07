@@ -74,7 +74,8 @@ describe('StatusBadge', () => {
       it(`deve renderizar status ${status} corretamente`, () => {
         render(<StatusBadge status={status} />);
 
-        const badge = screen.getByText(new RegExp(status.replace('_', ' '), 'i'));
+        const expectedText = status === 'concluido' ? 'concluído' : status.replace('_', ' ');
+        const badge = screen.getByText(new RegExp(expectedText, 'i'));
         expect(badge).toBeInTheDocument();
       });
     });
@@ -99,7 +100,7 @@ describe('StatusBadge', () => {
     it('deve lidar com status inexistente graciosamente', () => {
       render(<StatusBadge status="status_inexistente" />);
 
-      const badge = screen.getByText(/status_inexistente/i);
+      const badge = screen.getByText(/status inexistente/i);
       expect(badge).toBeInTheDocument();
     });
 

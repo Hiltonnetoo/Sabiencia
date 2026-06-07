@@ -26,7 +26,7 @@ export default defineConfig({
       ]
     },
     include: ['**/*.{test,spec}.{ts,tsx}'],
-    exclude: ['node_modules', 'dist', '.git', '.cache']
+    exclude: ['node_modules', 'dist', '.git', '.cache', 'src/e2e/**/*']
   },
   resolve: {
     alias: {

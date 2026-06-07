@@ -8,12 +8,14 @@ interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg';
   text?: string;
   fullScreen?: boolean;
+  className?: string;
 }
 
 export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   size = 'md',
   text,
-  fullScreen = false
+  fullScreen = false,
+  className = ''
 }) => {
   const sizeClasses = {
     sm: 'h-6 w-6',
@@ -22,7 +24,7 @@ export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
   };
 
   const spinnerContent = (
-    <div className="text-center">
+    <div className={`text-center ${className}`}>
       <div
         className={`animate-spin rounded-full border-b-2 border-blue-600 mx-auto mb-4 ${sizeClasses[size]}`}
       />

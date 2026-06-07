@@ -194,7 +194,7 @@ export const GestorDashboard: React.FC = () => {
           <CardDescription>Acesso rápido às funcionalidades principais</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             <Button 
               variant="outline" 
               className="justify-start"
@@ -202,6 +202,14 @@ export const GestorDashboard: React.FC = () => {
             >
               <UserPlus className="h-4 w-4 mr-2" />
               Novo Aluno
+            </Button>
+            <Button 
+              variant="outline" 
+              className="justify-start"
+              onClick={() => navigate('/gestor/professores')}
+            >
+              <GraduationCap className="h-4 w-4 mr-2" />
+              Professores
             </Button>
             <Button 
               variant="outline" 

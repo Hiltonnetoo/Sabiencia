@@ -15,7 +15,7 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 describe('AuthContext', () => {
   beforeEach(() => {
     localStorage.clear();
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe('Estado Inicial', () => {
@@ -40,7 +40,7 @@ describe('AuthContext', () => {
       expect(loginResult.success).toBe(true);
       expect(result.current.isAuthenticated).toBe(true);
       expect(result.current.user?.role).toBe('gestor');
-      expect(result.current.user?.nome).toBe('Maria Clara Santos');
+      expect(result.current.user?.nome_completo).toBe('Gestor Demo');
     });
 
     it('deve fazer login com credenciais de professor válidas', async () => {
@@ -54,7 +54,7 @@ describe('AuthContext', () => {
       expect(loginResult.success).toBe(true);
       expect(result.current.isAuthenticated).toBe(true);
       expect(result.current.user?.role).toBe('professor');
-      expect(result.current.user?.nome).toBe('Ana Paula Costa');
+      expect(result.current.user?.nome_completo).toBe('Professor Demo');
     });
 
     it('deve fazer login com credenciais de aluno válidas', async () => {
@@ -68,7 +68,7 @@ describe('AuthContext', () => {
       expect(loginResult.success).toBe(true);
       expect(result.current.isAuthenticated).toBe(true);
       expect(result.current.user?.role).toBe('aluno');
-      expect(result.current.user?.nome).toBe('João Pedro Santos');
+      expect(result.current.user?.nome_completo).toBe('Aluno Demo');
     });
 
     it('deve falhar com CPF inválido', async () => {
@@ -80,7 +80,7 @@ describe('AuthContext', () => {
       });
 
       expect(loginResult.success).toBe(false);
-      expect(loginResult.error).toBe('CPF ou senha inválidos');
+      expect(loginResult.error).toBe('CPF não encontrado');
       expect(result.current.isAuthenticated).toBe(false);
       expect(result.current.user).toBeNull();
     });
@@ -99,18 +99,20 @@ describe('AuthContext', () => {
     });
 
     it('deve salvar sessão no localStorage após login bem-sucedido', async () => {
+      const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
       const { result } = renderHook(() => useAuth(), { wrapper });
 
       await act(async () => {
         await result.current.login('000.000.000-01', 'gestor123');
       });
 
-      expect(localStorage.setItem).toHaveBeenCalled();
+      expect(setItemSpy).toHaveBeenCalled();
     });
   });
 
   describe('Logout', () => {
     it('deve fazer logout e limpar sessão', async () => {
+      const removeItemSpy = vi.spyOn(Storage.prototype, 'removeItem');
       const { result } = renderHook(() => useAuth(), { wrapper });
 
       // Fazer login primeiro
@@ -121,13 +123,13 @@ describe('AuthContext', () => {
       expect(result.current.isAuthenticated).toBe(true);
 
       // Fazer logout
-      act(() => {
-        result.current.logout();
+      await act(async () => {
+        await result.current.logout();
       });
 
       expect(result.current.isAuthenticated).toBe(false);
       expect(result.current.user).toBeNull();
-      expect(localStorage.removeItem).toHaveBeenCalled();
+      expect(removeItemSpy).toHaveBeenCalled();
     });
   });
 
@@ -136,22 +138,23 @@ describe('AuthContext', () => {
       const mockUser = {
         id: '1',
         cpf: '000.000.000-01',
-        nome: 'Maria Clara Santos',
+        nome_completo: 'Maria Clara Santos',
         email: 'maria@sabiencia.com.br',
         role: 'gestor' as const,
-        ativo: true
+        ativo: true,
+        created_at: new Date()
       };
 
-      // Mock do localStorage com sessão válida
-      localStorage.getItem = vi.fn((key) => {
-        if (key === 'sabiencia_auth_user') {
-          return JSON.stringify(mockUser);
-        }
-        if (key === 'sabiencia_auth_token') {
-          return 'mock-token';
-        }
-        return null;
-      });
+      const secureStorageObj = {
+        token: {
+          user: mockUser,
+          expiresAt: Date.now() + 1000 * 60 * 60 * 8, // 8h
+          createdAt: Date.now()
+        },
+        signature: 'mock-signature'
+      };
+
+      localStorage.setItem('sabiencia_auth_user', JSON.stringify(secureStorageObj));
 
       const { result } = renderHook(() => useAuth(), { wrapper });
 
@@ -159,17 +162,13 @@ describe('AuthContext', () => {
         expect(result.current.isAuthenticated).toBe(true);
       });
 
-      expect(result.current.user?.nome).toBe('Maria Clara Santos');
+      expect(result.current.user?.nome_completo).toBe('Maria Clara Santos');
       expect(result.current.user?.role).toBe('gestor');
     });
 
     it('deve limpar sessão inválida do localStorage', async () => {
-      localStorage.getItem = vi.fn((key) => {
-        if (key === 'sabiencia_auth_user') {
-          return 'invalid-json';
-        }
-        return null;
-      });
+      const removeItemSpy = vi.spyOn(Storage.prototype, 'removeItem');
+      localStorage.setItem('sabiencia_auth_user', 'invalid-json');
 
       const { result } = renderHook(() => useAuth(), { wrapper });
 
@@ -177,7 +176,7 @@ describe('AuthContext', () => {
         expect(result.current.isAuthenticated).toBe(false);
       });
 
-      expect(localStorage.removeItem).toHaveBeenCalled();
+      expect(removeItemSpy).toHaveBeenCalled();
     });
   });
 
@@ -215,9 +214,6 @@ describe('AuthContext', () => {
       const loginPromise = act(async () => {
         return result.current.login('000.000.000-01', 'gestor123');
       });
-
-      // Durante o login, isLoading pode ser true
-      // (dependendo do timing, pode não ser capturado)
 
       await loginPromise;
 

@@ -8,12 +8,10 @@
 export const formatCPF = (cpf: string): string => {
   if (!cpf) return '';
   const cleaned = cpf.replace(/\D/g, '');
-  if (cleaned.length !== 11) return '';
-  const match = cleaned.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
-  if (match) {
-    return `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
-  }
-  return '';
+  if (cleaned.length <= 3) return cleaned;
+  if (cleaned.length <= 6) return `${cleaned.slice(0, 3)}.${cleaned.slice(3)}`;
+  if (cleaned.length <= 9) return `${cleaned.slice(0, 3)}.${cleaned.slice(3, 6)}.${cleaned.slice(6)}`;
+  return `${cleaned.slice(0, 3)}.${cleaned.slice(3, 6)}.${cleaned.slice(6, 9)}-${cleaned.slice(9, 11)}`;
 };
 
 /**

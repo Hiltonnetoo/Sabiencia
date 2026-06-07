@@ -9,9 +9,9 @@ import { Card, CardContent } from '../ui/card';
 
 interface EmptyStateProps {
   /**
-   * Ícone a ser exibido (do lucide-react)
+   * Ícone a ser exibido (do lucide-react ou JSX customizado)
    */
-  icon: LucideIcon;
+  icon?: any;
   
   /**
    * Título principal
@@ -21,7 +21,7 @@ interface EmptyStateProps {
   /**
    * Descrição/subtítulo
    */
-  description: string;
+  description?: string;
   
   /**
    * Texto do botão de ação (opcional)
@@ -65,27 +65,16 @@ interface EmptyStateProps {
    * Classes CSS adicionais
    */
   className?: string;
+
+  /**
+   * Objeto de ação (legado para testes)
+   */
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
 }
 
-/**
- * EmptyState Component
- * 
- * Componente reutilizável para exibir estados vazios em listas,
- * tabelas e outras áreas onde não há dados para mostrar.
- * 
- * @example
- * ```tsx
- * import { Users } from 'lucide-react';
- * 
- * <EmptyState
- *   icon={Users}
- *   title="Nenhum aluno cadastrado"
- *   description="Comece adicionando o primeiro aluno do sistema"
- *   actionLabel="Adicionar Aluno"
- *   onAction={() => navigate('/gestor/alunos/novo')}
- * />
- * ```
- */
 export function EmptyState({
   icon: Icon,
   title,
@@ -98,6 +87,7 @@ export function EmptyState({
   iconSize = 'default',
   iconColor = 'gray',
   className = '',
+  action,
 }: EmptyStateProps) {
   // Tamanhos do ícone
   const iconSizeClasses = {
@@ -126,12 +116,26 @@ export function EmptyState({
     purple: 'bg-purple-50',
   };
 
+  const finalActionLabel = actionLabel || action?.label;
+  const finalOnAction = onAction || action?.onClick;
+
+  const renderIcon = () => {
+    if (!Icon) return null;
+    if (React.isValidElement(Icon)) {
+      return Icon;
+    }
+    const IconComponent = Icon as React.ComponentType<{ className?: string }>;
+    return <IconComponent className={`${iconSizeClasses[iconSize]} ${iconColorClasses[iconColor]}`} />;
+  };
+
   const content = (
     <div className={`flex flex-col items-center justify-center text-center py-12 px-6 ${className}`}>
       {/* Ícone */}
-      <div className={`rounded-full p-4 mb-4 ${iconBgClasses[iconColor]}`}>
-        <Icon className={`${iconSizeClasses[iconSize]} ${iconColorClasses[iconColor]}`} />
-      </div>
+      {Icon && (
+        <div className={`rounded-full p-4 mb-4 ${iconBgClasses[iconColor]}`}>
+          {renderIcon()}
+        </div>
+      )}
 
       {/* Título */}
       <h3 className="text-lg text-gray-900 mb-2">
@@ -139,16 +143,18 @@ export function EmptyState({
       </h3>
 
       {/* Descrição */}
-      <p className="text-sm text-gray-600 mb-6 max-w-md">
-        {description}
-      </p>
+      {description && (
+        <p className="text-sm text-gray-600 mb-6 max-w-md">
+          {description}
+        </p>
+      )}
 
       {/* Botões de ação */}
-      {(actionLabel || secondaryActionLabel) && (
+      {(finalActionLabel || secondaryActionLabel) && (
         <div className="flex flex-col sm:flex-row gap-3">
-          {actionLabel && onAction && (
-            <Button onClick={onAction}>
-              {actionLabel}
+          {finalActionLabel && finalOnAction && (
+            <Button onClick={finalOnAction}>
+              {finalActionLabel}
             </Button>
           )}
           {secondaryActionLabel && onSecondaryAction && (
@@ -183,7 +189,7 @@ export function EmptyStateSimple({
   iconColor = 'gray',
   className = '',
 }: {
-  icon: LucideIcon;
+  icon: any;
   message: string;
   iconColor?: EmptyStateProps['iconColor'];
   className?: string;
@@ -197,9 +203,18 @@ export function EmptyStateSimple({
     purple: 'text-purple-400',
   };
 
+  const renderIcon = () => {
+    if (!Icon) return null;
+    if (React.isValidElement(Icon)) {
+      return Icon;
+    }
+    const IconComponent = Icon as React.ComponentType<{ className?: string }>;
+    return <IconComponent className={`w-12 h-12 ${iconColorClasses[iconColor]} mb-3`} />;
+  };
+
   return (
     <div className={`flex flex-col items-center justify-center py-8 px-4 ${className}`}>
-      <Icon className={`w-12 h-12 ${iconColorClasses[iconColor]} mb-3`} />
+      {renderIcon()}
       <p className="text-sm text-gray-600">{message}</p>
     </div>
   );
@@ -213,7 +228,7 @@ export function SearchEmptyState({
   onClearSearch,
 }: {
   searchTerm: string;
-  onClearSearch: () => void;
+  onClearSearch?: () => void;
 }) {
   return (
     <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
@@ -245,9 +260,11 @@ export function SearchEmptyState({
         Tente usar palavras-chave diferentes ou remover filtros.
       </p>
 
-      <Button variant="outline" onClick={onClearSearch}>
-        Limpar Busca
-      </Button>
+      {onClearSearch && (
+        <Button variant="outline" onClick={onClearSearch}>
+          Limpar Busca
+        </Button>
+      )}
     </div>
   );
 }
@@ -257,8 +274,10 @@ export function SearchEmptyState({
  */
 export function FilterEmptyState({
   onClearFilters,
+  activeFiltersCount,
 }: {
-  onClearFilters: () => void;
+  onClearFilters?: () => void;
+  activeFiltersCount?: number;
 }) {
   return (
     <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
@@ -282,13 +301,21 @@ export function FilterEmptyState({
         Nenhum item corresponde aos filtros
       </h3>
 
+      {activeFiltersCount !== undefined && activeFiltersCount > 0 && (
+        <p className="text-sm text-gray-500 mb-2">
+          {activeFiltersCount} filtros ativos
+        </p>
+      )}
+
       <p className="text-sm text-gray-600 mb-6 max-w-md">
         Ajuste os filtros aplicados para ver mais resultados
       </p>
 
-      <Button variant="outline" onClick={onClearFilters}>
-        Limpar Filtros
-      </Button>
+      {onClearFilters && (
+        <Button variant="outline" onClick={onClearFilters}>
+          Limpar Filtros
+        </Button>
+      )}
     </div>
   );
 }

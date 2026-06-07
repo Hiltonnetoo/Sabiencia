@@ -67,8 +67,8 @@ describe('Authentication Flow - Integration', () => {
     });
 
     // Fazer login
-    await user.type(screen.getByLabelText(/cpf/i), '00000000001');
-    await user.type(screen.getByLabelText(/senha/i), 'gestor123');
+    await user.type(screen.getByLabelText(/cpf ou/i), '00000000001');
+    await user.type(screen.getByLabelText(/^senha$/i), 'gestor123');
     await user.click(screen.getByRole('button', { name: /entrar/i }));
 
     // Aguardar o redirecionamento (na prática o navigate direcionará para /redirect)
@@ -253,8 +253,8 @@ describe('Auth + MockData Integration', () => {
     );
 
     // Login
-    await user.type(screen.getByLabelText(/cpf/i), '00000000001');
-    await user.type(screen.getByLabelText(/senha/i), 'gestor123');
+    await user.type(screen.getByLabelText(/cpf ou/i), '00000000001');
+    await user.type(screen.getByLabelText(/^senha$/i), 'gestor123');
     await user.click(screen.getByRole('button', { name: /entrar/i }));
 
     // Verificar que dados do usuário foram carregados

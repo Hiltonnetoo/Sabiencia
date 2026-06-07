@@ -1,26 +1,43 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-// ─── mock do cliente Supabase ─────────────────────────────────────────────────
+// ─── mock do cliente Supabase usando vi.hoisted ───────────────────────────────
 
-const mockSingle = vi.fn();
-const mockOrder = vi.fn();
-const mockEq = vi.fn();
-const mockSelect = vi.fn();
-const mockInsert = vi.fn();
-const mockUpdate = vi.fn();
-const mockFrom = vi.fn();
+const { mockFrom, mockSingle, mockOrder, mockEq, mockSelect, mockInsert, mockUpdate, chain } = vi.hoisted(() => {
+  const mockSingle = vi.fn();
+  const mockOrder = vi.fn();
+  const mockEq = vi.fn();
+  const mockSelect = vi.fn();
+  const mockInsert = vi.fn();
+  const mockUpdate = vi.fn();
+  const mockFrom = vi.fn();
 
-// A cadeia retorna `this` para métodos intermediários e uma Promise nos terminais
-const chain = {
-  select: (...args: unknown[]) => { mockSelect(...args); return chain; },
-  eq: (...args: unknown[]) => { mockEq(...args); return chain; },
-  order: (...args: unknown[]) => { mockOrder(...args); return chain; },
-  single: () => mockSingle(),
-  insert: (...args: unknown[]) => { mockInsert(...args); return chain; },
-  update: (...args: unknown[]) => { mockUpdate(...args); return chain; },
-};
+  let lastMockPromise: any = Promise.resolve({ data: null, error: null });
 
-mockFrom.mockReturnValue(chain);
+  const chainObj = {
+    select: (...args: unknown[]) => { lastMockPromise = mockSelect(...args); return chainObj; },
+    eq: (...args: unknown[]) => { lastMockPromise = mockEq(...args); return chainObj; },
+    order: (...args: unknown[]) => { lastMockPromise = mockOrder(...args); return chainObj; },
+    single: () => mockSingle(),
+    insert: (...args: unknown[]) => { lastMockPromise = mockInsert(...args); return chainObj; },
+    update: (...args: unknown[]) => { lastMockPromise = mockUpdate(...args); return chainObj; },
+    then: (resolve: any, reject: any) => {
+      return Promise.resolve(lastMockPromise).then(resolve, reject);
+    }
+  };
+
+  mockFrom.mockReturnValue(chainObj);
+
+  return {
+    mockFrom,
+    mockSingle,
+    mockOrder,
+    mockEq,
+    mockSelect,
+    mockInsert,
+    mockUpdate,
+    chain: chainObj
+  };
+});
 
 vi.mock('../../lib/supabase', () => ({
   supabase: { from: mockFrom },

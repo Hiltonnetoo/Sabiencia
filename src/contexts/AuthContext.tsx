@@ -257,27 +257,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           if (cpfError || !usuario) {
             // Fallback DEMO: só ativo quando VITE_DEMO_MODE=true
             if (import.meta.env.VITE_DEMO_MODE === 'true') {
-              const mock = validateLogin(cpf, senha);
-              if (mock) {
-                const userData: User = {
-                  id: mock.user_id,
-                  cpf: mock.cpf,
-                  email: `${unformatCPF(mock.cpf)}@demo.local`,
-                  role: mock.role as Role,
-                  nome_completo: mock.role === 'gestor' ? 'Gestor Demo' : mock.role === 'professor' ? 'Professor Demo' : 'Aluno Demo',
-                  ativo: true,
-                  created_at: new Date(),
-                };
-                const token: AuthToken = {
-                  user: userData,
-                  expiresAt: Date.now() + SESSION_DURATION,
-                  createdAt: Date.now(),
-                };
-                const signature = await createSignature(token);
-                const secureStorage: SecureStorage = { token, signature };
-                setUser(userData);
-                localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(secureStorage));
-                return { success: true };
+              const cleanedCpf = unformatCPF(cpf);
+              const existsInMock = mockUsers.some(u => unformatCPF(u.cpf) === cleanedCpf);
+              if (existsInMock) {
+                const mock = validateLogin(cpf, senha);
+                if (mock) {
+                  const userData: User = {
+                    id: mock.user_id,
+                    cpf: mock.cpf,
+                    email: `${unformatCPF(mock.cpf)}@demo.local`,
+                    role: mock.role as Role,
+                    nome_completo: mock.role === 'gestor' ? 'Gestor Demo' : mock.role === 'professor' ? 'Professor Demo' : 'Aluno Demo',
+                    ativo: true,
+                    created_at: new Date(),
+                  };
+                  const token: AuthToken = {
+                    user: userData,
+                    expiresAt: Date.now() + SESSION_DURATION,
+                    createdAt: Date.now(),
+                  };
+                  const signature = await createSignature(token);
+                  const secureStorage: SecureStorage = { token, signature };
+                  setUser(userData);
+                  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(secureStorage));
+                  return { success: true };
+                } else {
+                  return { success: false, error: 'CPF ou senha inválidos' };
+                }
               }
             }
             return { success: false, error: 'CPF não encontrado' };

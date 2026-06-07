@@ -4,64 +4,107 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { Input } from '../ui/input';
-import { Search, X } from 'lucide-react';
+import { Search, X, Loader2 } from 'lucide-react';
 import { Button } from '../ui/button';
 
 interface SearchBarProps {
-  value: string;
-  onChange: (value: string) => void;
+  value?: string;
+  onChange?: (value: string) => void;
+  onSearch?: (value: string) => void;
+  onClear?: () => void;
   placeholder?: string;
   className?: string;
-  debounceDelay?: number; // Delay para debounce (padrão: 300ms)
+  debounceDelay?: number;
+  debounceTime?: number;
+  isLoading?: boolean;
+  disabled?: boolean;
+  error?: string;
+  label?: string;
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 export const SearchBar: React.FC<SearchBarProps> = ({
-  value,
+  value = '',
   onChange,
+  onSearch,
+  onClear,
   placeholder = 'Buscar...',
   className = '',
-  debounceDelay = 300,
+  debounceDelay,
+  debounceTime,
+  isLoading = false,
+  disabled = false,
+  error,
+  label,
+  onFocus,
+  onBlur,
 }) => {
   const [localValue, setLocalValue] = useState(value);
+  const delay = debounceTime !== undefined ? debounceTime : (debounceDelay !== undefined ? debounceDelay : 300);
 
   // Sincronizar valor externo com interno
   useEffect(() => {
     setLocalValue(value);
   }, [value]);
 
-  // Debounce: Só chama onChange após parar de digitar
+  // Debounce: Só chama onSearch após parar de digitar
   useEffect(() => {
     const handler = setTimeout(() => {
       if (localValue !== value) {
-        onChange(localValue);
+        if (onSearch) {
+          onSearch(localValue);
+        }
       }
-    }, debounceDelay);
+    }, delay);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [localValue, debounceDelay]);
+  }, [localValue, delay, value, onSearch]);
 
   const handleClear = useCallback(() => {
     setLocalValue('');
-    onChange('');
-  }, [onChange]);
+    if (onChange) onChange('');
+    if (onSearch) onSearch('');
+    if (onClear) onClear();
+  }, [onChange, onSearch, onClear]);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalValue(e.target.value);
-  }, []);
+    const val = e.target.value;
+    setLocalValue(val);
+    if (onChange) {
+      onChange(val);
+    }
+  }, [onChange]);
 
   return (
     <div className={`relative ${className}`}>
+      {label && <label className="sr-only">{label}</label>}
       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
       <Input
-        type="text"
+        type="search"
+        role="searchbox"
         placeholder={placeholder}
         value={localValue}
         onChange={handleChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        disabled={disabled}
         className="pl-10 pr-10"
       />
-      {localValue && (
+      {isLoading && (
+        <div role="status" className="absolute right-8 top-1/2 transform -translate-y-1/2">
+          <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+          <span className="sr-only">Carregando...</span>
+        </div>
+      )}
+      {error && (
+        <div className="text-red-500 text-xs mt-1" role="alert">
+          {error}
+        </div>
+      )}
+      {localValue && !disabled && (
         <Button
           variant="ghost"
           size="sm"
@@ -75,3 +118,4 @@ export const SearchBar: React.FC<SearchBarProps> = ({
     </div>
   );
 };
+

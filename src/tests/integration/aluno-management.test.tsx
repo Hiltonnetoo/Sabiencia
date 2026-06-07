@@ -13,17 +13,26 @@ import { AlunosTable } from '../../components/alunos/AlunosTable';
 import React from 'react';
 
 describe('Aluno Management - Integration', () => {
+  beforeEach(() => {
+    vi.useRealTimers();
+  });
+
   it('deve criar aluno e exibi-lo na lista', async () => {
     const user = userEvent.setup();
     
     const TestApp = () => {
       const [showForm, setShowForm] = React.useState(true);
-      const { alunos } = useMockData();
+      const { alunos, createAluno } = useMockData();
+
+      const handleSubmit = (data: any) => {
+        createAluno(data);
+        setShowForm(false);
+      };
 
       return (
         <div>
           {showForm && (
-            <AlunoForm onSuccess={() => setShowForm(false)} />
+            <AlunoForm onSubmit={handleSubmit} onCancel={() => setShowForm(false)} />
           )}
           {!showForm && (
             <div>
@@ -50,10 +59,18 @@ describe('Aluno Management - Integration', () => {
 
     // Preencher formulário
     await user.type(screen.getByLabelText(/nome completo/i), 'Novo Aluno Teste');
-    await user.type(screen.getByLabelText(/cpf/i), '12345678901');
+    await user.type(screen.getByLabelText(/^cpf\s*\*?$/i), '12345678909');
     await user.type(screen.getByLabelText(/email/i), 'novo@teste.com');
-    await user.type(screen.getByLabelText(/telefone/i), '11999999999');
+    await user.type(screen.getByLabelText(/^telefone\s*\*?$/i), '11999999999');
     await user.type(screen.getByLabelText(/data de nascimento/i), '2000-01-01');
+
+    // Preencher endereço
+    await user.type(screen.getByLabelText(/cep/i), '65800000');
+    await user.type(screen.getByLabelText(/rua/i), 'Rua de Teste');
+    await user.type(screen.getByLabelText(/número/i), '123');
+    await user.type(screen.getByLabelText(/bairro/i), 'Bairro de Teste');
+    await user.type(screen.getByLabelText(/cidade/i), 'Cidade de Teste');
+    await user.type(screen.getByLabelText(/^estado$/i), 'SP');
 
     // Salvar
     await user.click(screen.getByRole('button', { name: /salvar/i }));
@@ -125,14 +142,20 @@ describe('Aluno Management - Integration', () => {
     
     const TestApp = () => {
       const { alunos, updateAluno } = useMockData();
-      const [editingAluno, setEditingAluno] = React.useState(alunos[0]);
+      const [editingAluno, setEditingAluno] = React.useState<any>({ ...alunos[0], cpf: '123.456.789-09' });
+
+      const handleSubmit = (data: any) => {
+        updateAluno(editingAluno.id, data);
+        setEditingAluno(null);
+      };
 
       return (
         <div>
           {editingAluno && (
             <AlunoForm
-              initialData={editingAluno}
-              onSuccess={() => setEditingAluno(null)}
+              aluno={editingAluno}
+              onSubmit={handleSubmit}
+              onCancel={() => setEditingAluno(null)}
             />
           )}
           {!editingAluno && <div>Aluno atualizado!</div>}
@@ -209,14 +232,18 @@ describe('Aluno Management - Integration', () => {
 });
 
 describe('Validação de Dados - Integration', () => {
+  beforeEach(() => {
+    vi.useRealTimers();
+  });
+
   it('deve validar formulário completo antes de salvar', async () => {
     const user = userEvent.setup();
-    const mockOnSuccess = vi.fn();
+    const mockOnSubmit = vi.fn();
 
     render(
       <BrowserRouter>
         <MockDataProvider>
-          <AlunoForm onSuccess={mockOnSuccess} />
+          <AlunoForm onSubmit={mockOnSubmit} onCancel={() => {}} />
         </MockDataProvider>
       </BrowserRouter>
     );
@@ -230,8 +257,8 @@ describe('Validação de Dados - Integration', () => {
       expect(errors.length).toBeGreaterThan(0);
     });
 
-    // onSuccess não deve ser chamado
-    expect(mockOnSuccess).not.toHaveBeenCalled();
+    // mockOnSubmit não deve ser chamado
+    expect(mockOnSubmit).not.toHaveBeenCalled();
   });
 
   it('deve formatar CPF durante digitação', async () => {
@@ -240,16 +267,16 @@ describe('Validação de Dados - Integration', () => {
     render(
       <BrowserRouter>
         <MockDataProvider>
-          <AlunoForm onSuccess={() => {}} />
+          <AlunoForm onSubmit={() => {}} onCancel={() => {}} />
         </MockDataProvider>
       </BrowserRouter>
     );
 
-    const cpfInput = screen.getByLabelText(/cpf/i);
+    const cpfInput = screen.getByLabelText(/^cpf\s*\*?$/i);
     await user.type(cpfInput, '12345678901');
 
     await waitFor(() => {
-      expect(cpfInput).toHaveValue(/\d{3}\.\d{3}\.\d{3}-\d{2}/.source);
+      expect(cpfInput).toHaveValue('123.456.789-01');
     });
   });
 });

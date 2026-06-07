@@ -148,20 +148,24 @@ export const ProfessoresTable: React.FC<ProfessoresTableProps> = ({
   const filteredAndSortedProfessores = useMemo(() => {
     const filtered = professores.filter(professor => {
       // Filtro de busca
+      const cleanCPFSearch = searchTerm.replace(/\D/g, '');
       const matchesSearch =
         professor.nome_completo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        professor.cpf.includes(searchTerm.replace(/\D/g, ''));
+        (cleanCPFSearch !== '' && professor.cpf.includes(cleanCPFSearch));
 
       // Filtro de status
       const matchesStatus =
-        statusFilter === 'all' || 
+        statusFilter === 'all' || statusFilter === 'todos' || 
         (statusFilter === 'ativo' && professor.ativo) ||
         (statusFilter === 'inativo' && !professor.ativo);
 
       // Filtro de especialidade
+      const normalizeStr = (str: string) =>
+        str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
       const matchesEspecialidade =
-        especialidadeFilter === 'all' ||
-        professor.especialidades.includes(especialidadeFilter);
+        especialidadeFilter === 'all' || especialidadeFilter === 'todos' ||
+        professor.especialidades.some(esp => normalizeStr(esp) === normalizeStr(especialidadeFilter));
 
       return matchesSearch && matchesStatus && matchesEspecialidade;
     });
@@ -235,7 +239,7 @@ export const ProfessoresTable: React.FC<ProfessoresTableProps> = ({
       );
     }
 
-    if ((statusFilter !== 'all' || especialidadeFilter !== 'all') && filteredAndSortedProfessores.length === 0) {
+    if ((statusFilter !== 'all' && statusFilter !== 'todos' || especialidadeFilter !== 'all' && especialidadeFilter !== 'todos') && filteredAndSortedProfessores.length === 0) {
       return (
         <FilterEmptyState
           onClearFilters={() => window.location.reload()}
