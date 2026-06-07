@@ -1,13 +1,23 @@
 # Sabiencia — EAD Learning Management System
 
+![CI](https://github.com/Hiltonnetoo/Sabiencia/actions/workflows/ci.yml/badge.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![TypeScript](https://img.shields.io/badge/TypeScript-strict%20type--check-blue.svg)
+![i18n](https://img.shields.io/badge/i18n-EN%20%2F%20PT-informational.svg)
+
 A modern, role-based learning management platform (LMS) for online education, built as a
 single-page application with React, TypeScript and Vite. Sabiencia covers the full academic
 workflow — students, teachers, classes, content, grades, attendance, announcements and
 finance — with a tailored experience for each of its three user roles.
 
-> **Note on language:** the product UI is currently in Brazilian Portuguese (its target
-> market). The codebase, documentation and commit history are maintained in English. A full
-> English/Portuguese internationalization layer is on the roadmap (see [Roadmap](#roadmap)).
+> **Internationalization:** the app is **English-first** with a one-click Portuguese toggle
+> (persisted per browser). The entry surfaces (landing, demo, login) and the authenticated
+> chrome (top bar, sidebar navigation) are translated; deeper page bodies are being migrated
+> incrementally. See [ARCHITECTURE.md](docs/ARCHITECTURE.md).
+>
+> **Project origin:** the visual scaffold started from a Figma Make export; the engineering
+> (RBAC, auth/session, routing, mock data layer, theming, i18n, exports, tests, CI) was built
+> on top. Details in [ARCHITECTURE.md §8](docs/ARCHITECTURE.md#8-project-origin--honest-notes).
 
 ---
 
@@ -87,6 +97,7 @@ announcements, financial status, events and certificates.
 | Styling | Tailwind CSS v4, shadcn/ui (Radix UI primitives) |
 | Routing | React Router v6 (lazy-loaded, role-guarded routes) |
 | Forms & validation | React Hook Form + Zod |
+| Internationalization | react-i18next (English-first, PT toggle) |
 | Charts | Recharts |
 | Data export | jsPDF, jspdf-autotable, SheetJS (xlsx) |
 | Backend (optional) | Supabase (Auth, Postgres, Storage) |
@@ -188,15 +199,19 @@ src/
 ## Testing
 
 The project uses Vitest + Testing Library for unit/integration tests and Playwright for E2E
-and visual regression. Run `npm test` for the unit suite and `npm run test:e2e` for
-end-to-end flows.
+and visual regression.
+
+- `npm test` — unit/integration suite (includes RBAC/permissions, formatters, calculations).
+- `npm run test:coverage` — coverage report (output in `coverage/`, uploaded as a CI artifact).
+- `npm run test:e2e` — end-to-end flows, including the three role login journeys.
 
 ## Roadmap
 
-- Full **English/Portuguese i18n** with an in-app language switcher (English-first).
+- Extend i18n coverage to all deep page bodies (entry surfaces + app chrome already done).
 - Storage-backed material uploads via Supabase Storage.
 - Payment integration (invoices/receipts).
-- Expanded automated test coverage and CI gating.
+- Re-tighten `tsconfig` to `strict: true` across the codebase (currently relaxed; see
+  [ARCHITECTURE.md](docs/ARCHITECTURE.md)).
 
 ## License
 

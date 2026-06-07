@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **English-first internationalization** (`react-i18next`) with a one-click PT/EN switcher
+  (persisted). Landing, demo and login surfaces plus the app chrome (top bar, sidebar) are
+  translated.
+- `docs/ARCHITECTURE.md` documenting data layer, RBAC, routing, theming, i18n and tooling.
+- Unit tests for RBAC permissions and media-thumbnail helpers; README test/coverage docs.
 - Appearance settings (light/dark/system theme + font scale) with a theme toggle in the top bar.
 - Reusable `Callout` component (info/warning/success/error) using design-system icons.
 - "Demo Mode" badge shown across the authenticated app when `VITE_DEMO_MODE=true`.
