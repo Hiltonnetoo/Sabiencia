@@ -3,12 +3,12 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { MaterialCard } from '../../components/biblioteca/MaterialCard';
 import { MaterialFilters } from '../../components/biblioteca/MaterialFilters';
 import { MaterialViewDialog } from '../../components/biblioteca/MaterialViewDialog';
-import { BookOpen, FileText, Video, Heart, Download } from 'lucide-react';
+import { BookOpen, FileText, Video, Heart } from 'lucide-react';
 import { useMockData } from '../../contexts/MockDataContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { toast } from 'sonner';

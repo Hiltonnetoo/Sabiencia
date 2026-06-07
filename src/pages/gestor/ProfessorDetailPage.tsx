@@ -5,15 +5,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMockData } from '../../contexts/MockDataContext';
-import { getTurmasProfessor } from '../../utils/professorHelpers';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/avatar';
 import { Badge } from '../../components/ui/badge';
 import { Separator } from '../../components/ui/separator';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../../components/ui/dialog';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
-import { ArrowLeft, Edit, Mail, Phone, GraduationCap, BookOpen, Users, FileText, Plus, Trash2, UserCog } from 'lucide-react';
+import { ArrowLeft, Edit, Mail, Phone, GraduationCap } from 'lucide-react';
 import { toast } from 'sonner';
 import { formatCPF, getInitials } from '../../utils/formatters';
 import type { Professor } from '../../types';

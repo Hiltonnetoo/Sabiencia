@@ -34,7 +34,7 @@ interface ComunicadoFormProps {
 
 export function ComunicadoForm({ onSubmit, onCancel, userRole, userId }: ComunicadoFormProps) {
   const { turmas, alunos, professores } = useMockData();
-  const [selectedDestinatarios, setSelectedDestinatarios] = useState<string>('todos_alunos');
+  const [, setSelectedDestinatarios] = useState<string>('todos_alunos');
   
   const {
     register,

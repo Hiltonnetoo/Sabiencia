@@ -3,7 +3,7 @@
 // ============================================
 
 import { useState } from 'react';
-import { Camera, User } from 'lucide-react';
+import { Camera } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';

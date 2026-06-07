@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
-import { Menu, X, Play } from 'lucide-react';
+import { Menu, Play } from 'lucide-react';
 import EnrollmentFlow from './EnrollmentFlow';
 import LoginFlow from './LoginFlow';
 import { SabienciaSymbol } from '../brand/SabienciaBrand';
@@ -16,18 +16,11 @@ const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isEnrollmentOpen, setIsEnrollmentOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [studentName, setStudentName] = useState('');
 
   const handleLoginSuccess = (name: string) => {
     if (onLoginSuccess) {
       onLoginSuccess(name);
     }
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setStudentName('');
   };
 
   const navigation = [

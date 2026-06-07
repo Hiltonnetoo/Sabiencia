@@ -4,11 +4,6 @@
 
 import { useEffect, useRef } from 'react';
 
-interface PerformanceMetrics {
-  componentName: string;
-  renderTime: number;
-  renderCount: number;
-}
 
 /**
  * Hook para monitorar performance de componentes

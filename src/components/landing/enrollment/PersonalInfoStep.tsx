@@ -5,7 +5,7 @@ import { Label } from '../../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
 import { EnrollmentData } from '../EnrollmentFlow';
-import { User, Calendar, FileText, ArrowRight } from 'lucide-react';
+import { User, ArrowRight } from 'lucide-react';
 
 interface PersonalInfoStepProps {
   data: EnrollmentData;

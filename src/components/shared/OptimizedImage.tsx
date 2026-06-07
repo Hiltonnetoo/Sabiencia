@@ -4,7 +4,6 @@
 
 import React, { useState } from 'react';
 import { cn } from '../ui/utils';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
 
 interface OptimizedImageProps {
   src: string;

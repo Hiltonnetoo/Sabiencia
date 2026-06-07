@@ -38,9 +38,6 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
   const percentualGeral = totalVideoaulas > 0 ? (totalConcluidas / totalVideoaulas) * 100 : 0;
   
   const tempoTotalSegundos = videoaulas.reduce((sum, v) => sum + v.duracao_segundos, 0);
-  const tempoAssistidoSegundos = progressos
-    .filter(p => p.aluno_id === alunoId)
-    .reduce((sum, p) => sum + p.tempo_assistido_segundos, 0);
 
   // Estatísticas por tópico
   const estatisticasTopicos = topicos

@@ -4,7 +4,6 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
 import { cn } from '../ui/utils';
 import { ScrollArea } from '../ui/scroll-area';
 import { Button } from '../ui/button';
@@ -28,7 +27,6 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ items, isOpen = true, onClose }) => {
-  const { user } = useAuth();
 
   return (
     <>

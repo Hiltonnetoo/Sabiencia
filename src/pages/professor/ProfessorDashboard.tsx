@@ -15,13 +15,11 @@ import {
   FileCheck,
   Calendar,
   ArrowRight,
-  TrendingUp,
   FileText,
   MessageSquare
 } from 'lucide-react';
 import { mockData } from '../../data/mockData';
-import { calculateFrequenciaPercentual, calculateMedia } from '../../utils/calculations';
-import { formatDate, formatRelativeTime } from '../../utils/formatters';
+import { formatRelativeTime } from '../../utils/formatters';
 import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
 
 export const ProfessorDashboard: React.FC = () => {
@@ -100,7 +98,6 @@ export const ProfessorDashboard: React.FC = () => {
     meusMateriais,
     minhasObservacoes,
     totalObservacoes,
-    comunicados,
     cursosMap,
     alunosMap,
     alunosPorTurmaMap,

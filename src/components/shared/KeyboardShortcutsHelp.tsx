@@ -12,7 +12,7 @@ import {
 } from '../ui/dialog';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
-import { Keyboard, X } from 'lucide-react';
+import { Keyboard } from 'lucide-react';
 import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
 
 interface ShortcutItem {

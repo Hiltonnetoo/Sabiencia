@@ -7,8 +7,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Lock, Eye, EyeOff, Save, X } from 'lucide-react';
 import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { Label } from '../ui/label';
 import { toast } from 'sonner';
 import { alterarSenhaSchema, type AlterarSenhaFormData } from '../../schemas/perfilSchemas';
 import { LoadingButton } from '../shared/LoadingButton';

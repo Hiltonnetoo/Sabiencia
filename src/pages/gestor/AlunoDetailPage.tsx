@@ -5,20 +5,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMockData } from '../../contexts/MockDataContext';
-import { getAlunoDetails } from '../../utils/alunoHelpers';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/avatar';
 import { Badge } from '../../components/ui/badge';
 import { Separator } from '../../components/ui/separator';
 import { StatusBadge } from '../../components/shared/StatusBadge';
-import { ArrowLeft, Edit, Mail, Phone, MapPin, Calendar, User, GraduationCap, DollarSign, BookOpen } from 'lucide-react';
+import { ArrowLeft, Edit, Mail, Phone, MapPin, Calendar, User, GraduationCap, BookOpen } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { formatCPF, getInitials } from '../../utils/formatters';
 import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
-import type { Aluno, Matricula, Frequencia, Nota, Pagamento } from '../../types';
+import type { Aluno, Matricula } from '../../types';
 
 export const AlunoDetailPage: React.FC = () => {
   const navigate = useNavigate();

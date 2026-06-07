@@ -4,7 +4,7 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, Check, CheckCheck, Filter, Settings } from 'lucide-react';
+import { Bell, CheckCheck, Filter, Settings } from 'lucide-react';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,

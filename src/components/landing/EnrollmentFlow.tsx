@@ -6,7 +6,7 @@ import PersonalInfoStep from './enrollment/PersonalInfoStep';
 import CourseSelectionStep from './enrollment/CourseSelectionStep';
 import ContactInfoStep from './enrollment/ContactInfoStep';
 import ConfirmationStep from './enrollment/ConfirmationStep';
-import { ArrowLeft, ArrowRight, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 export interface EnrollmentData {
   // Informações Pessoais

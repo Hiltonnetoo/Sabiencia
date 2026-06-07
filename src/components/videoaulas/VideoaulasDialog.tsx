@@ -13,8 +13,7 @@ import { Input } from '../ui/input';
 import { VideoPlayer } from './VideoPlayer';
 import { NotasAula } from './NotasAula';
 import { QuizAulaComponent } from './QuizAula';
-import { EstatisticasVideoaulas } from './EstatisticasVideoaulas';
-import { PlayCircle, Clock, Download, FileText, ArrowLeft, CheckCircle, Star, Search, X, BarChart3 } from 'lucide-react';
+import { PlayCircle, Clock, Download, FileText, ArrowLeft, CheckCircle, Search, X } from 'lucide-react';
 import { formatDuration } from '../../utils/youtube';
 import type { Videoaula, TopicoDisciplina } from '../../types/videoaulas';
 
@@ -62,7 +61,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
   const [videoaulaSelecionada, setVideoaulaSelecionada] = useState<Videoaula | null>(null);
   const [abaSelecionada, setAbaSelecionada] = useState('video');
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
+  const [, setDuration] = useState(0);
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSelectVideoaula = (videoaula: Videoaula) => {

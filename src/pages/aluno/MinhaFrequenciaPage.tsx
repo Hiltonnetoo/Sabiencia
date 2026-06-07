@@ -13,7 +13,7 @@ import { calcularPercentualPresenca, obterStatusFrequencia } from '../../schemas
 
 export const MinhaFrequenciaPage: React.FC = () => {
   const { user } = useAuth();
-  const { frequencias, disciplinas, matriculas } = useMockData();
+  const { frequencias, disciplinas } = useMockData();
 
   // Filtrar frequências do aluno
   const minhasFrequencias = useMemo(() => {

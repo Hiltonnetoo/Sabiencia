@@ -11,7 +11,6 @@ import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
 import { Progress } from '../../components/ui/progress';
 import { 
-  BookOpen, 
   FileCheck,
   Calendar,
   DollarSign,
@@ -20,8 +19,7 @@ import {
   FileText,
   Award,
   AlertCircle,
-  CheckCircle,
-  Bell
+  CheckCircle
 } from 'lucide-react';
 import { mockData } from '../../data/mockData';
 import { 
@@ -110,18 +108,14 @@ export const AlunoDashboard: React.FC = () => {
   }, [user.id]);
 
   const {
-    matricula,
     turma,
     curso,
     disciplinasCurso,
     minhasNotas,
     mediaGeral,
     situacao,
-    minhaFrequencia,
     percentualFrequencia,
     materiaisDisponiveis,
-    meusPagamentos,
-    pagamentosPendentes,
     proximoPagamento,
     comunicadosParaMim,
     progressoCurso

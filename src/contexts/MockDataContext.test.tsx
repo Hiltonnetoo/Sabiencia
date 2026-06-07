@@ -2,7 +2,7 @@
 // MOCK DATA CONTEXT TESTS - Testes do contexto de dados mockados
 // ============================================
 
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { MockDataProvider, useMockData } from './MockDataContext';
 import React from 'react';

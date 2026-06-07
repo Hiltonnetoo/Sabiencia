@@ -3,8 +3,6 @@
 // ============================================
 
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
@@ -24,9 +22,8 @@ import { Textarea } from '../ui/textarea';
 import { CalendarIcon, Check, X, FileQuestion, Save } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { listaPresencaSchema, type ListaPresencaFormData } from '../../schemas/frequenciaSchemas';
 import { useMockData } from '../../contexts/MockDataContext';
-import type { Aluno, Matricula } from '../../types';
+import type { Aluno } from '../../types';
 
 interface ListaPresencaFormProps {
   professorId: string;

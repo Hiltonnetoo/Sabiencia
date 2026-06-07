@@ -29,7 +29,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
-import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { Button } from '../ui/button';
 import { Switch } from '../ui/switch';

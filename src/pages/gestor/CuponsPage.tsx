@@ -20,7 +20,6 @@ import {
   Copy,
   Percent,
   DollarSign,
-  Calendar,
   Users,
   TrendingUp,
   Tag,

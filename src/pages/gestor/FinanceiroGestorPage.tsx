@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { useMockData } from '../../contexts/MockDataContext';
-import { useAuth } from '../../contexts/AuthContext';
 import { PagamentoCard } from '../../components/financeiro/PagamentoCard';
 import { FinanceiroStats } from '../../components/financeiro/FinanceiroStats';
 import { PagamentoFilters } from '../../components/financeiro/PagamentoFilters';
@@ -13,8 +12,7 @@ import { toast } from 'sonner';
 import { 
   DollarSign, 
   Download, 
-  FileText, 
-  TrendingUp,
+  FileText,
   AlertCircle
 } from 'lucide-react';
 import type { Pagamento } from '../../types';
@@ -23,7 +21,6 @@ import { exportToPDF, type ExportColumn } from '../../utils/exportService';
 import { formatCurrency, formatDate } from '../../utils/formatters';
 
 export const FinanceiroGestorPage: React.FC = () => {
-  const { user } = useAuth();
   const { pagamentos, alunos, registrarPagamento, cancelarPagamento } = useMockData();
   
   const [busca, setBusca] = useState('');

@@ -212,8 +212,6 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     }
   };
 
-  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
-
   return (
     <div 
       className={`relative bg-black rounded-lg overflow-hidden group ${className}`}

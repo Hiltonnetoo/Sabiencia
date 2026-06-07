@@ -3,13 +3,10 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
-import { FileText, Download, TrendingUp, Users, DollarSign, BookOpen, BarChart3, PieChart, Calendar, Award } from 'lucide-react';
+import { Download, TrendingUp, Users, DollarSign, BookOpen } from 'lucide-react';
 import { Button } from '../../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
 import { RelatorioFilters } from '../../components/relatorios/RelatorioFilters';
-import { RelatorioCard } from '../../components/relatorios/RelatorioCard';
 import { GraficoDesempenho } from '../../components/relatorios/GraficoDesempenho';
 import { TabelaRelatorio } from '../../components/relatorios/TabelaRelatorio';
 import { useMockData } from '../../contexts/MockDataContext';
@@ -242,10 +239,6 @@ export const RelatoriosGestorPage: React.FC = () => {
 
   const handleExportarRelatorio = () => {
     toast.success('Relatório exportado com sucesso! (Simulado)');
-  };
-
-  const handleGerarRelatorio = () => {
-    toast.success('Relatório gerado com sucesso!');
   };
 
   return (

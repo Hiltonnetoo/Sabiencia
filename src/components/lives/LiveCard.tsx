@@ -79,7 +79,6 @@ export const LiveCard: React.FC<LiveCardProps> = ({
     }
   };
 
-  const isPast = new Date(aula.data_inicio) < new Date();
   const isLive = aula.status === 'ao_vivo';
   const canJoin = (aula.status === 'agendada' || aula.status === 'ao_vivo') && onEntrarSala;
 

@@ -10,8 +10,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import type { User, Role } from '../types';
 import { mockUsers, validateLogin } from '../data/mockUsers';
-import { mockData } from '../data/mockData';
-import { getDefaultRoute } from '../utils/permissions';
 import { toast } from 'sonner';
 import { supabase } from '../lib/supabase';
 import { unformatCPF } from '../utils/formatters';
@@ -422,7 +420,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     try {
       // Atualizar no Supabase primeiro
-      const { role, id } = user;
+      const { id } = user;
       const updateData: any = {};
 
       // Filtrar apenas campos permitidos para atualização

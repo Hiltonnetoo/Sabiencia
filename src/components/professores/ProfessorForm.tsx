@@ -3,7 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -11,7 +11,7 @@ import { Label } from '../ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { professorSchema, type ProfessorFormData } from '../../schemas/userSchemas';
-import { Loader2, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import type { Professor } from '../../types';
 import { LoadingButton } from '../shared/LoadingButton';
 
@@ -56,7 +56,6 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
     formState: { errors, isDirty },
     setValue,
     watch,
-    control,
   } = useForm<ProfessorFormData>({
     resolver: zodResolver(professorSchema),
     defaultValues: professor ? {

@@ -42,17 +42,6 @@ const validatePDFURL = (url: string): boolean => {
 
 // ==================== SCHEMAS ====================
 
-// Schema base de endereço comum
-const enderecoSchema = z.object({
-  cep: z.string().optional(),
-  rua: z.string().optional(),
-  numero: z.string().optional(),
-  complemento: z.string().optional(),
-  bairro: z.string().optional(),
-  cidade: z.string().optional(),
-  estado: z.string().optional(),
-});
-
 // Schema de Material
 export const materialSchema = z.object({
   titulo: z

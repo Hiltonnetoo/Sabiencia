@@ -41,7 +41,7 @@ export const CPFInput = forwardRef<HTMLInputElement, CPFInputProps>(
   ({ error, showValidation = true, onChange, onValidCPF, value, ...props }, ref) => {
     const { applyMask } = useInputMask();
     const [isValid, setIsValid] = useState(false);
-    const [internalValue, setInternalValue] = useState('');
+    const [, setInternalValue] = useState('');
 
     useEffect(() => {
       const cpfValue = (value as string) || '';

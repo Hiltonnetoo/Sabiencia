@@ -2,7 +2,7 @@
 // ALUNO FORM - Formulário de criação/edição de aluno
 // ============================================
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../ui/button';
@@ -13,11 +13,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui
 import { Calendar } from '../ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { alunoSchema, type AlunoFormData } from '../../schemas/userSchemas';
-import { CalendarIcon, Loader2, Search } from 'lucide-react';
+import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import type { Aluno } from '../../types';
-import { useMockData } from '../../contexts/MockDataContext';
 import { LoadingButton } from '../shared/LoadingButton';
 import { FormField } from '../shared/FormField';
 import { InputWithValidation } from '../shared/InputWithValidation';
@@ -47,8 +46,6 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
   isLoading = false,
   onDirtyChange,
 }) => {
-  const { cursos, turmas } = useMockData();
-  const [selectedCurso, setSelectedCurso] = useState<string>('');
   const activeAluno = aluno || initialData;
 
   const form = useForm<AlunoFormData>({
@@ -79,7 +76,6 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
     formState: { errors, isDirty },
     setValue,
     watch,
-    reset,
   } = form;
 
   // Notificar componente pai sobre alteração no estado dirty do formulário
@@ -100,10 +96,6 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
   const dataNascimento = watch('data_nascimento');
 
   // Filtrar turmas por curso selecionado
-  const turmasFiltradas = selectedCurso
-    ? turmas.filter(t => t.curso_id === selectedCurso)
-    : turmas;
-
   // Atalhos de teclado
   useKeyboardShortcuts([
     commonShortcuts.save(() => {

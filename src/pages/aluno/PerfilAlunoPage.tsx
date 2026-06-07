@@ -2,7 +2,7 @@
 // PERFIL ALUNO PAGE
 // ============================================
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { PerfilHeader } from '../../components/perfil/PerfilHeader';
 import { PerfilForm } from '../../components/perfil/PerfilForm';

@@ -9,7 +9,7 @@ import { NotificationPreferences } from '../../components/notifications/Notifica
 import { PrivacidadeSettings } from '../../components/shared/PrivacidadeSettings';
 import { SistemaSettings } from '../../components/shared/SistemaSettings';
 import { AparenciaSettings } from '../../components/shared/AparenciaSettings';
-import { Settings, Bell, Shield, Palette, Database } from 'lucide-react';
+import { Bell, Shield, Palette, Database } from 'lucide-react';
 
 export const ConfiguracoesGestorPage: React.FC = () => {
   return (

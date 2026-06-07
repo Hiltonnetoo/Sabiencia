@@ -5,7 +5,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { canAccessRoute, getDefaultRoute } from '../../utils/permissions';
+import { getDefaultRoute } from '../../utils/permissions';
 import type { Role } from '../../types';
 
 interface ProtectedRouteProps {

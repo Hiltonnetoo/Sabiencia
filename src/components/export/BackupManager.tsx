@@ -7,7 +7,6 @@ import {
   DialogTitle,
 } from '../ui/dialog';
 import { Button } from '../ui/button';
-import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { ScrollArea } from '../ui/scroll-area';
@@ -45,7 +44,6 @@ import {
   BackupMetadata,
 } from '../../utils/backupService';
 import { toast } from 'sonner';
-import { useAuth } from '../../contexts/AuthContext';
 
 interface BackupManagerProps {
   open: boolean;
@@ -53,7 +51,6 @@ interface BackupManagerProps {
 }
 
 export function BackupManager({ open, onOpenChange }: BackupManagerProps) {
-  const { user } = useAuth();
   const [backups, setBackups] = useState<BackupMetadata[]>([]);
   const [selectedBackup, setSelectedBackup] = useState<string | null>(null);
   const [showCreateDialog, setShowCreateDialog] = useState(false);

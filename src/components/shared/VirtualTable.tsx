@@ -2,7 +2,7 @@
 // VIRTUAL TABLE - Performance para Listas Grandes
 // ============================================
 
-import React, { useRef, useState, useEffect, ReactNode } from 'react';
+import React, { useRef, useState, ReactNode } from 'react';
 
 interface VirtualTableProps<T> {
   items: T[];

@@ -4,7 +4,7 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Save, Mail, Smartphone, Bell, Calendar } from 'lucide-react';
+import { Save, Mail, Smartphone, Calendar } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Switch } from '../ui/switch';

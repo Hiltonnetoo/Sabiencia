@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
-import { Badge } from '../../ui/badge';
 import { Checkbox } from '../../ui/checkbox';
-import { Separator } from '../../ui/separator';
 import { toast } from 'sonner';
 import { EnrollmentData } from '../EnrollmentFlow';
 import { 
@@ -12,10 +10,7 @@ import {
   CheckCircle, 
   User, 
   Mail, 
-  Phone, 
-  MapPin, 
   BookOpen,
-  Calendar,
   Clock,
   Award,
   Send

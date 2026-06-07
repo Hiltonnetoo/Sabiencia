@@ -2,7 +2,6 @@
 // RELATÓRIO FILTERS - Filtros para relatórios
 // ============================================
 
-import { Search } from 'lucide-react';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import {
@@ -13,7 +12,7 @@ import {
   SelectValue,
 } from '../ui/select';
 import type { Curso, Turma, Disciplina, Aluno, Professor } from '../../types';
-import type { RelatorioFiltros, TipoRelatorio } from '../../schemas/relatorioSchemas';
+import type { RelatorioFiltros } from '../../schemas/relatorioSchemas';
 
 interface RelatorioFiltersProps {
   filters: Partial<RelatorioFiltros>;

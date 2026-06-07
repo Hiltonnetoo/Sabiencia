@@ -10,7 +10,7 @@ import { PasswordChangeForm } from '../../components/perfil/PasswordChangeForm';
 import { AtividadesRecentes } from '../../components/perfil/AtividadesRecentes';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMockData } from '../../contexts/MockDataContext';
-import { Users, GraduationCap, BookOpen, DollarSign } from 'lucide-react';
+import { Users, GraduationCap, BookOpen } from 'lucide-react';
 import { Callout } from '../../components/shared/Callout';
 import type { PerfilPessoalFormData, AlterarSenhaFormData } from '../../schemas/perfilSchemas';
 

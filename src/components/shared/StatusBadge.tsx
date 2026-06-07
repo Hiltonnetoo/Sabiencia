@@ -4,7 +4,6 @@
 
 import React from 'react';
 import { Badge } from '../ui/badge';
-import type { StatusMatricula } from '../../types';
 
 interface StatusBadgeProps {
   status: any;

@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { Progress } from '../ui/progress';
-import { Separator } from '../ui/separator';
 import { 
   BookOpen, 
   Play, 
@@ -11,13 +10,11 @@ import {
   Award, 
   Calendar, 
   Users,
-  Download,
   MessageSquare,
   FileText,
   TrendingUp,
   CheckCircle,
-  AlertCircle,
-  User
+  AlertCircle
 } from 'lucide-react';
 
 interface StudentDashboardProps {

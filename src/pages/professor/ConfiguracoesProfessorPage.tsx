@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/ta
 import { NotificationPreferences } from '../../components/notifications/NotificationPreferences';
 import { PrivacidadeSettings } from '../../components/shared/PrivacidadeSettings';
 import { AparenciaSettings } from '../../components/shared/AparenciaSettings';
-import { Settings, Bell, Shield, Palette } from 'lucide-react';
+import { Bell, Shield, Palette } from 'lucide-react';
 
 export const ConfiguracoesProfessorPage: React.FC = () => {
   return (

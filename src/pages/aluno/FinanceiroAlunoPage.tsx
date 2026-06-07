@@ -12,7 +12,6 @@ import {
   CheckCircle2, 
   AlertCircle, 
   Clock,
-  TrendingDown,
   Calendar
 } from 'lucide-react';
 

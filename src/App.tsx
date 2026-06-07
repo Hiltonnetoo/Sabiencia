@@ -77,25 +77,6 @@ const LandingPage: React.FC = () => {
 };
 
 // ============================================
-// PLACEHOLDER PAGES (serão criadas nas próximas fases)
-// ============================================
-const PlaceholderPage: React.FC<{ title: string }> = ({ title }) => {
-  return (
-    <div className="text-center py-12">
-      <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-        <svg className="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-        </svg>
-      </div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-2">{title}</h2>
-      <p className="text-gray-600 mb-4">
-        Esta seção está sendo preparada para você! Em breve a funcionalidade estará ativa.
-      </p>
-    </div>
-  );
-};
-
-// ============================================
 // APP ROUTES
 // ============================================
 function AppRoutes() {

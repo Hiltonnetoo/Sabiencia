@@ -15,7 +15,7 @@ import type { PerfilPessoalFormData, AlterarSenhaFormData } from '../../schemas/
 
 export const PerfilProfessorPage: React.FC = () => {
   const { user } = useAuth();
-  const { professores, turmas, disciplinas, professorTurmaDisciplina, observacoes } = useMockData();
+  const { professores, professorTurmaDisciplina, observacoes } = useMockData();
 
   if (!user) return null;
 

@@ -635,7 +635,7 @@ export const useChat = (turmaId: string) => {
   const [mensagens, setMensagens] = useState<ChatMensagem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [subscription, setSubscription] = useState<any>(null);
+  const [, setSubscription] = useState<any>(null);
 
   const fetchMensagens = useCallback(async () => {
     try {
@@ -744,7 +744,7 @@ export const useNotificacoes = () => {
   const [notificacoes, setNotificacoes] = useState<UsuarioNotificacao[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [subscription, setSubscription] = useState<any>(null);
+  const [, setSubscription] = useState<any>(null);
 
   const fetchNotificacoes = useCallback(async () => {
     if (!user?.id) return;

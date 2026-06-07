@@ -21,7 +21,7 @@ import {
   getYouTubeThumbnail,
   isValidYouTubeURL
 } from '../../schemas/materialSchemas';
-import { Loader2, X, FileText, Video, Link as LinkIcon, Upload } from 'lucide-react';
+import { X, FileText, Video, Link as LinkIcon, Upload } from 'lucide-react';
 import type { Material } from '../../types';
 import { useMockData } from '../../contexts/MockDataContext';
 import { LoadingButton } from '../shared/LoadingButton';

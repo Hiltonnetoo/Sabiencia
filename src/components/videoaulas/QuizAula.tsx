@@ -13,7 +13,7 @@ import { CheckCircle, XCircle, Trophy, RefreshCw, Info } from 'lucide-react';
 import { Alert, AlertDescription } from '../ui/alert';
 import { Progress } from '../ui/progress';
 import { toast } from 'sonner';
-import type { QuizAula, QuestaoQuiz, RespostaQuiz, RespostaPergunta } from '../../types/videoaulas';
+import type { QuizAula, RespostaQuiz, RespostaPergunta } from '../../types/videoaulas';
 
 interface QuizAulaProps {
   quiz: QuizAula;

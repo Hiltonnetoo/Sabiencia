@@ -24,7 +24,7 @@ import { KeyboardShortcutsHelp } from '../../components/shared/KeyboardShortcuts
 
 export const AlunosListPage: React.FC = () => {
   const navigate = useNavigate();
-  const { alunos, cursos, turmas, matriculas, deleteAluno } = useMockData();
+  const { alunos, turmas, matriculas, deleteAluno } = useMockData();
 
   // Estados de filtros
   const [filters, setFilters] = useState<AlunosFilterConfig>({

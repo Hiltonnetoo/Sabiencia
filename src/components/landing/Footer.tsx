@@ -1,8 +1,7 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { Separator } from '../ui/separator';
-import { MapPin, Phone, Mail, MessageCircle, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import { SabienciaSymbol } from '../brand/SabienciaBrand';
 
 const Footer = () => {

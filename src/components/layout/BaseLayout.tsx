@@ -5,7 +5,6 @@
 import React, { useState } from 'react';
 import { TopBar } from './TopBar';
 import { Sidebar, NavItem } from './Sidebar';
-import { PageBreadcrumb } from '../shared/PageBreadcrumb';
 
 interface BaseLayoutProps {
   children: React.ReactNode;

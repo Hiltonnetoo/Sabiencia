@@ -12,7 +12,7 @@ import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { Textarea } from '../../components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../../components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '../../components/ui/dialog';
 import { Badge } from '../../components/ui/badge';
 import { Alert, AlertDescription } from '../../components/ui/alert';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../components/ui/accordion';
@@ -21,7 +21,6 @@ import {
   Plus, 
   Edit, 
   Trash2, 
-  Video, 
   Eye, 
   EyeOff,
   CheckCircle,
@@ -35,16 +34,15 @@ import {
   MoveDown
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { extractYouTubeId, isValidYouTubeUrl, formatDuration } from '../../utils/youtube';
+import { extractYouTubeId, formatDuration } from '../../utils/youtube';
 import { validarTopico, validarVideoaula } from '../../utils/validations';
 import type { Videoaula, TopicoDisciplina, MaterialAnexo } from '../../types/videoaulas';
 
 export const GerenciarVideoaulasPage: React.FC = () => {
   const { user } = useAuth();
   const { disciplinas } = useMockData();
-  const { 
-    topicos,
-    videoaulas, 
+  const {
+    videoaulas,
     getTopicosPorDisciplina,
     getVideoaulasPorTopico,
     criarTopico,

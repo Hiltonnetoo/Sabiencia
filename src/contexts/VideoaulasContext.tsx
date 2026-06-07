@@ -13,8 +13,7 @@ import type {
   AulaAoVivo,
   MensagemChatAoVivo,
   ParticipanteAulaAoVivo,
-  TopicoDisciplina,
-  NotificacaoVideoaula
+  TopicoDisciplina
 } from '../types/videoaulas';
 
 // ============================================

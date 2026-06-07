@@ -13,7 +13,6 @@ import { Badge } from '../../components/ui/badge';
 import { Progress } from '../../components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { VideoaulasDialog } from '../../components/videoaulas/VideoaulasDialog';
-import { EstatisticasVideoaulas } from '../../components/videoaulas/EstatisticasVideoaulas';
 import { 
   Video, 
   Clock, 
@@ -23,16 +22,12 @@ import {
   FileText,
   PlayCircle,
   CheckCircle,
-  XCircle,
-  AlertCircle,
-  BarChart3
+  AlertCircle
 } from 'lucide-react';
 import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
 import { EmptyState } from '../../components/shared/EmptyState';
 import { formatDate, formatPercent } from '../../utils/formatters';
-import { formatDuration } from '../../utils/youtube';
-import { calculateFrequenciaPercentual } from '../../utils/calculations';
-import type { Disciplina, Professor, Frequencia, Material } from '../../types';
+import type { Disciplina, Professor, Material } from '../../types';
 import type { Videoaula } from '../../types/videoaulas';
 
 interface AulaData {
@@ -64,7 +59,6 @@ export const MinhasAulasPage: React.FC = () => {
   const { videoaulas } = useVideoaulas();
 
   const {
-    topicos,
     progressos,
     getTopicosPorDisciplina,
     getVideoaulasPorTopico,

@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { ProfessoresTable } from './ProfessoresTable';
 import React from 'react';
-import { MockDataProvider, useMockData } from '../../contexts/MockDataContext';
+import { MockDataProvider } from '../../contexts/MockDataContext';
 
 const mockProfessores = [
   {

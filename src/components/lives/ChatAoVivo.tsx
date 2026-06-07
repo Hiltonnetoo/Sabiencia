@@ -9,7 +9,6 @@ import { Input } from '../ui/input';
 import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
 import { Send, User, Users } from 'lucide-react';
-import { toast } from 'sonner';
 import type { MensagemChatAoVivo } from '../../types/videoaulas';
 
 interface ChatAoVivoProps {

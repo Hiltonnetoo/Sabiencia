@@ -14,7 +14,6 @@ import {
 } from '../ui/select';
 import { Card, CardContent } from '../ui/card';
 import { Search, Filter } from 'lucide-react';
-import type { TipoComunicado, PrioridadeComunicado } from '../../types';
 
 interface ComunicadoFiltersProps {
   searchTerm: string;

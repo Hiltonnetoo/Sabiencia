@@ -3,7 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '../../components/ui/dialog';
@@ -43,8 +43,6 @@ export const QuestionariosPage: React.FC = () => {
   const [tipo, setTipo] = useState<Questionario['tipo']>('satisfacao_curso');
   const [anonimo, setAnonimo] = useState(false);
   const [obrigatorio, setObrigatorio] = useState(false);
-  const [dataInicio, setDataInicio] = useState('');
-  const [dataFim, setDataFim] = useState('');
   const [publico, setPublico] = useState<Questionario['publico']>('todos');
 
   // Perguntas

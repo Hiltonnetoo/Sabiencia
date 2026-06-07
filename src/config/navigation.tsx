@@ -20,7 +20,6 @@ import {
   Bell,
   FileCheck,
   Briefcase,
-  Shield,
   User,
   CalendarDays,
   Tag,

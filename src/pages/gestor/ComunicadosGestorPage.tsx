@@ -6,8 +6,6 @@ import React, { useState, useMemo } from 'react';
 import { Send, TrendingUp, Users, Eye, Plus } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
-import { Progress } from '../../components/ui/progress';
 import { ComunicadoCard } from '../../components/comunicados/ComunicadoCard';
 import { ComunicadoViewDialog } from '../../components/comunicados/ComunicadoViewDialog';
 import { ComunicadoFilters } from '../../components/comunicados/ComunicadoFilters';

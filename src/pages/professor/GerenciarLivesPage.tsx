@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMockData } from '../../contexts/MockDataContext';
 import { useVideoaulas } from '../../contexts/VideoaulasContext';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
+import { Card, CardContent } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
@@ -27,13 +27,11 @@ import type { AulaAoVivo } from '../../types/videoaulas';
 export const GerenciarLivesPage: React.FC = () => {
   const { user } = useAuth();
   const { disciplinas, turmas } = useMockData();
-  const { 
-    aulasAoVivo, 
-    criarAulaAoVivo, 
-    editarAulaAoVivo, 
-    deletarAulaAoVivo,
-    iniciarAula,
-    finalizarAula
+  const {
+    aulasAoVivo,
+    criarAulaAoVivo,
+    editarAulaAoVivo,
+    deletarAulaAoVivo
   } = useVideoaulas();
 
   const [dialogAberto, setDialogAberto] = useState(false);
@@ -161,18 +159,6 @@ export const GerenciarLivesPage: React.FC = () => {
     }
 
     handleFecharDialog();
-  };
-
-  const handleIniciar = (aulaId: string) => {
-    if (confirm('Deseja iniciar esta aula ao vivo agora?')) {
-      iniciarAula(aulaId);
-    }
-  };
-
-  const handleFinalizar = (aulaId: string) => {
-    if (confirm('Deseja finalizar esta aula ao vivo?')) {
-      finalizarAula(aulaId);
-    }
   };
 
   const handleDeletar = (aulaId: string) => {

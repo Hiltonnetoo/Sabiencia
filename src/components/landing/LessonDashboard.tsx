@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { Progress } from '../ui/progress';
@@ -8,31 +7,23 @@ import { ScrollArea } from '../ui/scroll-area';
 import { Separator } from '../ui/separator';
 import { toast } from 'sonner';
 import { Toaster } from '../ui/sonner';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
 import {
   Play,
   Pause,
-  RotateCcw,
   Volume2,
   VolumeX,
   Maximize,
   Minimize,
   ChevronLeft,
   ChevronRight,
-  BookOpen,
   Clock,
   CheckCircle,
   Circle,
-  Edit3,
   Save,
   ArrowLeft,
-  Settings,
-  Download,
-  Share,
   MoreVertical,
   Users,
-  Star,
-  MessageSquare
+  Star
 } from 'lucide-react';
 
 interface Note {

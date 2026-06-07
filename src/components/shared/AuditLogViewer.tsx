@@ -8,8 +8,7 @@ import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
 import { 
   getAuditLogs, 
-  getActionDescription, 
-  AuditLogEntry,
+  getActionDescription,
   AuditAction,
   AuditResource 
 } from '../../utils/auditLog';

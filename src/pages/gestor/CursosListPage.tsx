@@ -4,8 +4,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
 import { Badge } from '../../components/ui/badge';
@@ -16,8 +15,7 @@ import {
   TrendingUp,
   Clock,
   Users,
-  Filter,
-  Eye
+  Filter
 } from 'lucide-react';
 import { useMockData } from '../../contexts/MockDataContext';
 import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
@@ -38,8 +36,7 @@ import {
 } from '../../components/ui/dialog';
 
 export const CursosListPage: React.FC = () => {
-  const navigate = useNavigate();
-  const { 
+  const {
     cursos, 
     turmas, 
     matriculas, 

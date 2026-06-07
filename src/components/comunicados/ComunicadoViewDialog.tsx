@@ -14,7 +14,6 @@ import { Button } from '../ui/button';
 import { Separator } from '../ui/separator';
 import { 
   Mail, 
-  Clock, 
   Users, 
   CheckCircle2,
   User,

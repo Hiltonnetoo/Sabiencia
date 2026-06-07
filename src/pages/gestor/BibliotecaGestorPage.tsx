@@ -3,7 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { Button } from '../../components/ui/button';
 import { MaterialCard } from '../../components/biblioteca/MaterialCard';
@@ -11,12 +11,11 @@ import { MaterialFilters } from '../../components/biblioteca/MaterialFilters';
 import { MaterialViewDialog } from '../../components/biblioteca/MaterialViewDialog';
 import { DeleteConfirmDialog } from '../../components/shared/DeleteConfirmDialog';
 import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
-import { BookOpen, FileText, Video, Users, Eye, EyeOff, TrendingUp, Upload } from 'lucide-react';
+import { BookOpen, FileText, Video, Users, Eye, EyeOff, TrendingUp } from 'lucide-react';
 import { useMockData } from '../../contexts/MockDataContext';
 import { toast } from 'sonner';
 import type { Material } from '../../types';
 import { Badge } from '../../components/ui/badge';
-import { EmptyState, SearchEmptyState, FilterEmptyState } from '../../components/shared/EmptyState';
 
 export const BibliotecaGestorPage: React.FC = () => {
   const { materiais: allMateriais, disciplinas, professores, updateMaterial, deleteMaterial } = useMockData();
@@ -34,7 +33,7 @@ export const BibliotecaGestorPage: React.FC = () => {
   const [viewDialogOpen, setViewDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [materialToDelete, setMaterialToDelete] = useState<Material | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setIsLoading] = useState(false);
 
   // Extrair tags e módulos
   const allTags = useMemo(() => {

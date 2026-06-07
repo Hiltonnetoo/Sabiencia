@@ -45,7 +45,6 @@ export function usePagination<T>(
   const {
     initialPage = 1,
     initialPageSize = 25,
-    pageSizeOptions = [10, 25, 50, 100],
   } = config;
 
   const [currentPage, setCurrentPage] = useState(initialPage);

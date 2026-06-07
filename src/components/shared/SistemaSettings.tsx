@@ -7,13 +7,10 @@ import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
-import { Separator } from '../ui/separator';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { 
   Building2,
   Globe,
-  Mail,
-  Phone,
   Clock,
   Save,
   Download,
@@ -40,11 +37,6 @@ export const SistemaSettings: React.FC = () => {
   const [notaMinima, setNotaMinima] = useState('7.0');
   const [sistemaNotas, setSistemaNotas] = useState('0-10');
   const [duracaoSemestre, setDuracaoSemestre] = useState('6');
-
-  // Notificações
-  const [emailBoasVindas, setEmailBoasVindas] = useState(true);
-  const [lembretePagamento, setLembretePagamento] = useState('5');
-  const [lembreteAulas, setLembreteAulas] = useState(true);
 
   const [salvando, setSalvando] = useState(false);
 

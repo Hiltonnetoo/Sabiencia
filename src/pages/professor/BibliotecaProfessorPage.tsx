@@ -3,8 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { Button } from '../../components/ui/button';
 import { MaterialCard } from '../../components/biblioteca/MaterialCard';
@@ -22,7 +21,6 @@ import type { MaterialFormData } from '../../schemas/materialSchemas';
 
 export const BibliotecaProfessorPage: React.FC = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const { materiais: allMateriais, disciplinas, createMaterial, updateMaterial, deleteMaterial } = useMockData();
 
   // Estados de filtros

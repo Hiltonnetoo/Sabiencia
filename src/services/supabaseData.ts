@@ -24,8 +24,7 @@ import type {
   Avaliacao,
   PlanoAula,
   RecursoEducativo,
-  Relatorio,
-  Usuario
+  Relatorio
 } from '../types';
 
 // ============================================
