@@ -14,10 +14,6 @@ finance — with a tailored experience for each of its three user roles.
 > (persisted per browser). The entry surfaces (landing, demo, login) and the authenticated
 > chrome (top bar, sidebar navigation) are translated; deeper page bodies are being migrated
 > incrementally. See [ARCHITECTURE.md](docs/ARCHITECTURE.md).
->
-> **Project origin:** the visual scaffold started from a Figma Make export; the engineering
-> (RBAC, auth/session, routing, mock data layer, theming, i18n, exports, tests, CI) was built
-> on top. Details in [ARCHITECTURE.md §8](docs/ARCHITECTURE.md#8-project-origin--honest-notes).
 
 ---
 
@@ -210,8 +206,6 @@ and visual regression.
 - Extend i18n coverage to all deep page bodies (entry surfaces + app chrome already done).
 - Storage-backed material uploads via Supabase Storage.
 - Payment integration (invoices/receipts).
-- Re-tighten `tsconfig` to `strict: true` across the codebase (currently relaxed; see
-  [ARCHITECTURE.md](docs/ARCHITECTURE.md)).
 
 ## License
 

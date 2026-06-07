@@ -87,9 +87,9 @@ routes (landing, login, demo) and the three guarded role trees.
 
 ## 7. Quality & tooling
 
-- **Type safety:** `npm run type-check` (`tsc --noEmit`) is clean and gated in CI.
-  ⚠️ `tsconfig` is currently relaxed (`strict: false`, tests excluded) — re-tightening to
-  `strict: true` across the codebase is a tracked follow-up (see README roadmap).
+- **Type safety:** `strict: true` TypeScript; `npm run type-check` (`tsc --noEmit`) is clean
+  and gated in CI. Test files are validated by running them (Vitest) rather than by the app
+  `tsconfig`.
 - **Linting:** ESLint with `eslint-plugin-unused-imports` (auto-removes unused imports, reports
   unused vars); CI runs with `--max-warnings 0`.
 - **Tests:** Vitest + Testing Library (unit/integration), Playwright (E2E + visual). Critical
@@ -99,17 +99,13 @@ routes (landing, login, demo) and the three guarded role trees.
 - **Build/Deploy:** `vite build` outputs to `build/`; `vercel.json`/`netlify.toml` configure
   SPA rewrites and the output directory.
 
-## 8. Project origin & honest notes
+## 8. Styling delivery notes
 
-Transparency for reviewers:
-
-- The visual scaffold originated from a **Figma Make** export. As a result, the repository
-  ships a **pre-compiled Tailwind v4 stylesheet** (`src/index.css`) rather than a
-  PostCSS/Tailwind build step, and a few imports historically carried version suffixes. The
-  **engineering layered on top** — RBAC, auth/session flow, routing, the mock data layer,
-  theming/dark mode, i18n, the export service, tests and CI — is the substance of this project.
-- A dead duplicate stylesheet (`src/styles/globals.css`) was removed; the active design tokens
-  live in `src/index.css` (`:root`) and dark-mode overrides in `src/styles/theme.css`.
+- The repository ships a **pre-compiled Tailwind v4 stylesheet** (`src/index.css`) rather than
+  a PostCSS/Tailwind build step. New runtime styles (e.g. dark-mode overrides and font scaling)
+  are added in `src/styles/theme.css`, imported after `index.css`.
+- The active design tokens live in `src/index.css` (`:root`); dark-mode token and utility
+  overrides live in `src/styles/theme.css`.
 
 ## 9. Key directories
 
