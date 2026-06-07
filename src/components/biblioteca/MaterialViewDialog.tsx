@@ -77,7 +77,7 @@ export const MaterialViewDialog: React.FC<MaterialViewDialogProps> = ({
         <div className="space-y-6 mt-4">
           {/* Player de Vídeo ou Thumbnail de PDF */}
           {material.tipo === 'video' ? (
-            <YouTubePlayer url={material.url} title={material.titulo} />
+            <YouTubePlayer url={material.url ?? ''} title={material.titulo} />
           ) : material.thumbnail_url ? (
             <img
               src={material.thumbnail_url}

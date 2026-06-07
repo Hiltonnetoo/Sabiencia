@@ -62,7 +62,7 @@ const statusConfig = {
 };
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({ status, className = '' }) => {
-  const config = statusConfig[status];
+  const config = statusConfig[status as keyof typeof statusConfig];
   const label = config ? config.label : (status ? String(status).replace('_', ' ') : '');
   const badgeClass = config ? config.className : 'bg-gray-100 text-gray-800 hover:bg-gray-100';
 

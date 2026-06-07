@@ -33,14 +33,14 @@ export const calculateMediaSimples = (notas: number[]): number => {
  * Usado para cálculos em relatórios
  */
 export const calcularMediaNotas = (
-  av1: number | null,
-  av2: number | null,
-  av3: number | null
+  av1: number | null | undefined,
+  av2: number | null | undefined,
+  av3: number | null | undefined
 ): number => {
-  const notas = [av1, av2, av3].filter((n): n is number => n !== null);
-  
+  const notas = [av1, av2, av3].filter((n): n is number => n != null);
+
   if (notas.length === 0) return 0;
-  
+
   const soma = notas.reduce((acc, nota) => acc + nota, 0);
   return Number((soma / notas.length).toFixed(2));
 };
@@ -50,12 +50,14 @@ export const calcularMediaNotas = (
  * Usado para cálculos em relatórios
  */
 export const calcularPercentualFrequencia = (
-  presencas: number,
-  total_aulas: number
+  presencas: number | null | undefined,
+  total_aulas: number | null | undefined
 ): number => {
-  if (total_aulas === 0) return 0;
-  
-  return Number(((presencas / total_aulas) * 100).toFixed(1));
+  const p = presencas ?? 0;
+  const total = total_aulas ?? 0;
+  if (total === 0) return 0;
+
+  return Number(((p / total) * 100).toFixed(1));
 };
 
 /**

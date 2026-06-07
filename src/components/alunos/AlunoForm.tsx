@@ -103,7 +103,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
         handleSubmit(activeOnSubmit)();
       }
     }),
-    commonShortcuts.cancel(onCancel),
+    commonShortcuts.cancel(onCancel ?? (() => {})),
   ]);
 
   return (

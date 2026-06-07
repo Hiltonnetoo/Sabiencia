@@ -190,7 +190,24 @@ const TestimonialsSection = () => {
 };
 
 // Testimonial Card Component
-const TestimonialCard = ({ testimonial, featured = false }) => {
+interface Testimonial {
+  name: string;
+  role: string;
+  company: string;
+  course: string;
+  image: string;
+  rating: number;
+  salaryIncrease: string;
+  testimony: string;
+}
+
+const TestimonialCard = ({
+  testimonial,
+  featured = false,
+}: {
+  testimonial: Testimonial;
+  featured?: boolean;
+}) => {
   return (
     <div className="relative h-full flex flex-col">
       {/* Quote Icon */}

@@ -64,7 +64,7 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
   } = useAdvancedFilters({
     storageKey: 'alunos-filters',
     defaultFilters,
-    onFilterChange: onFiltersChange,
+    onFilterChange: onFiltersChange as (filters: FilterConfig) => void,
   });
 
   // Calcular contadores para quick filters
@@ -168,7 +168,7 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
       {/* Quick Filters */}
       <QuickFilters
         filters={quickFilters}
-        activeFilterId={activeFilterId}
+        activeFilterId={activeFilterId ?? undefined}
         onFilterClick={handleQuickFilterClick}
       />
 
