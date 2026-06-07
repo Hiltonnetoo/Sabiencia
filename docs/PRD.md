@@ -111,8 +111,12 @@
 
 ## 13. Segurança e Conformidade
 - Sanitização de entradas, sem logar dados sensíveis.
-- Assinatura de sessão no cliente e expiração forçada.
-- Políticas RLS no Supabase para leituras e atualizações de perfil.
+- Assinatura de sessão no cliente (HMAC) e expiração forçada. **Observação:** como
+  `VITE_AUTH_SECRET` é embutida no bundle do cliente, essa assinatura serve apenas para
+  validar a integridade do estado no `localStorage` (evitar adulteração ingênua de papel na
+  UI). **Ela não é uma barreira criptográfica contra atacantes** — a real segurança reside
+  na validação de JWT e nas políticas RLS do Supabase.
+- Políticas RLS no Supabase como camada de segurança efetiva para leituras e atualizações.
 - Não expor chaves secretas no cliente; usar somente chave `anon` pública.
 
 ## 14. Roadmap e Marcos
