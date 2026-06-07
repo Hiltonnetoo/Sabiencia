@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../ui/utils';
 import { ScrollArea } from '../ui/scroll-area';
 import { Button } from '../ui/button';
@@ -13,6 +14,8 @@ import { SabienciaMonogramBadge } from '../brand/SabienciaBrand';
 
 export interface NavItem {
   title: string;
+  /** i18n key; falls back to `title` when absent or untranslated. */
+  titleKey?: string;
   href?: string;
   icon?: LucideIcon;
   badge?: string;
@@ -27,6 +30,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ items, isOpen = true, onClose }) => {
+  const { t } = useTranslation();
 
   return (
     <>
@@ -73,7 +77,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ items, isOpen = true, onClose 
                     key={index}
                     className="px-3 pt-5 pb-1 text-xs font-semibold text-gray-400 uppercase tracking-wider select-none"
                   >
-                    {item.title}
+                    {item.titleKey ? t(item.titleKey) : item.title}
                   </div>
                 );
               }
@@ -86,11 +90,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ items, isOpen = true, onClose 
   );
 };
 
-const SidebarItem: React.FC<{ item: NavItem; onClose?: () => void }> = ({ 
-  item, 
-  onClose 
+const SidebarItem: React.FC<{ item: NavItem; onClose?: () => void }> = ({
+  item,
+  onClose
 }) => {
+  const { t } = useTranslation();
   const Icon = item.icon;
+  const label = item.titleKey ? t(item.titleKey) : item.title;
 
   return (
     <NavLink
@@ -106,7 +112,7 @@ const SidebarItem: React.FC<{ item: NavItem; onClose?: () => void }> = ({
       }
     >
       {Icon && <Icon className="h-5 w-5" />}
-      <span className="flex-1">{item.title}</span>
+      <span className="flex-1">{label}</span>
       {item.badge && (
         <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-700">
           {item.badge}

@@ -1,0 +1,142 @@
+{
+  "landing": {
+    "nav": {
+      "home": "Home",
+      "courses": "Courses",
+      "about": "About",
+      "contact": "Contact",
+      "blog": "Blog"
+    },
+    "viewDemo": "View Demo",
+    "login": "Login",
+    "enroll": "Enroll",
+    "openMenu": "Open menu"
+  },
+  "demo": {
+    "subtitle": "Explore the platform through its three access profiles",
+    "chooseProfile": "Choose a profile below to enter the matching environment",
+    "accessComplete": "Full access:",
+    "features": "Features:",
+    "studentAccess": "Student access:",
+    "viewManagerDashboard": "View Manager Dashboard",
+    "viewTeacherDashboard": "View Teacher Dashboard",
+    "viewStudentDashboard": "View Student Dashboard",
+    "aboutTitle": "About this demo",
+    "aboutData": "Realistic data: the environments are populated with a sample dataset — students, teachers, courses and classes — that mirrors a real academic operation.",
+    "aboutNav": "Full navigation: explore the sidebar and walk through each profile's flows freely.",
+    "aboutResponsive": "Fully responsive: resize the window to see the interface adapt to desktop, tablet and mobile.",
+    "aboutMetrics": "Dynamic metrics: averages, attendance and indicators are computed in real time from the data.",
+    "backToLanding": "Back to Landing Page",
+    "footerTagline": "Sabiencia — EAD Learning Management Platform",
+    "builtWith": "Built with React + TypeScript + Tailwind CSS + shadcn/ui",
+    "roles": {
+      "managerTitle": "Manager / CEO",
+      "managerSubtitle": "System Administrator",
+      "teacherTitle": "Teacher",
+      "studentTitle": "Student"
+    },
+    "managerFeatures": [
+      "Student and teacher management",
+      "Financial control",
+      "Managerial reports",
+      "System audit",
+      "General settings"
+    ],
+    "teacherFeatures": [
+      "My classes and students",
+      "Grade entry",
+      "Attendance tracking",
+      "Material uploads",
+      "Student observations"
+    ],
+    "studentFeatures": [
+      "Video lessons (YouTube)",
+      "Material downloads",
+      "Grade lookup",
+      "Attendance history",
+      "Financial status"
+    ]
+  },
+  "auth": {
+    "cpfOrEmail": "CPF or e-mail",
+    "cpfPlaceholder": "000.000.000-00 or email@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "signIn": "Sign in",
+    "signingIn": "Signing in...",
+    "or": "or",
+    "enterAs": "Enter as {{role}} (demo)",
+    "quickHint": "Instant access to the demo environment — no credentials required.",
+    "forgotPassword": "Forgot my password",
+    "forgotTitle": "Password recovery",
+    "forgotDescription": "If an account exists, you'll receive a reset link by e-mail.",
+    "noAccountStudent": "Don't have an account yet? Enroll",
+    "noAccountTeacher": "Don't have an account?",
+    "registerHere": "Register here",
+    "backToHome": "Back to home page",
+    "loginSuccess": "Signed in successfully!",
+    "redirecting": "Redirecting to your dashboard...",
+    "enteringDemo": "Entering the demo...",
+    "invalidCredentials": "Invalid CPF or password",
+    "genericError": "Could not sign in. Please try again.",
+    "demoError": "Could not start the demo. Please try again.",
+    "roles": {
+      "managerTitle": "Manager / CEO",
+      "managerSubtitle": "EAD System - Manager/CEO Login",
+      "managerDescription": "Enter your credentials to access the admin panel",
+      "teacherTitle": "Teacher Access",
+      "teacherSubtitle": "EAD System - Teacher Login",
+      "teacherDescription": "Enter your credentials to access your teaching area",
+      "studentTitle": "Student Access",
+      "studentSubtitle": "EAD System - Student Login",
+      "studentDescription": "Enter your credentials to access your study area"
+    },
+    "managerFeaturesLabel": "Full access:",
+    "teacherFeaturesLabel": "Features:"
+  },
+  "topbar": {
+    "systemSubtitle": "EAD System",
+    "search": "Search...",
+    "backup": "Backup and Restore",
+    "myProfile": "My Profile",
+    "settings": "Settings",
+    "logout": "Sign out"
+  },
+  "nav": {
+    "groups": {
+      "registers": "Registers",
+      "academic": "Academic",
+      "administrative": "Administrative",
+      "account": "Account"
+    },
+    "dashboard": "Dashboard",
+    "home": "Home",
+    "students": "Students",
+    "teachers": "Teachers",
+    "courses": "Courses",
+    "classes": "Classes",
+    "myClasses": "My Classes",
+    "subjects": "Subjects",
+    "library": "Library",
+    "announcements": "Announcements",
+    "observations": "Observations",
+    "questionnaires": "Questionnaires",
+    "events": "Events",
+    "financial": "Financial",
+    "reports": "Reports",
+    "coupons": "Coupons",
+    "grades": "Grades",
+    "enterGrades": "Enter Grades",
+    "attendance": "Attendance",
+    "lessonContent": "Lesson Content",
+    "myLessons": "My Lessons",
+    "certificates": "Certificates",
+    "profile": "My Profile",
+    "settings": "Settings"
+  },
+  "language": {
+    "switchTo": "Switch to {{lang}}",
+    "english": "English",
+    "portuguese": "Portuguese"
+  }
+}

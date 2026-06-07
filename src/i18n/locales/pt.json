@@ -1,0 +1,142 @@
+{
+  "landing": {
+    "nav": {
+      "home": "Início",
+      "courses": "Cursos",
+      "about": "Sobre",
+      "contact": "Contato",
+      "blog": "Blog"
+    },
+    "viewDemo": "Ver Demonstração",
+    "login": "Login",
+    "enroll": "Matricule-se",
+    "openMenu": "Abrir menu"
+  },
+  "demo": {
+    "subtitle": "Explore a plataforma pelos três perfis de acesso",
+    "chooseProfile": "Escolha um perfil abaixo para entrar no ambiente correspondente",
+    "accessComplete": "Acesso completo:",
+    "features": "Funcionalidades:",
+    "studentAccess": "Acesso do estudante:",
+    "viewManagerDashboard": "Ver Dashboard Gestor",
+    "viewTeacherDashboard": "Ver Dashboard Professor",
+    "viewStudentDashboard": "Ver Dashboard Aluno",
+    "aboutTitle": "Sobre esta demonstração",
+    "aboutData": "Dados realistas: os ambientes são populados com um conjunto de dados de exemplo — alunos, professores, cursos e turmas — que reproduz uma operação acadêmica real.",
+    "aboutNav": "Navegação completa: explore o menu lateral e percorra os fluxos de cada perfil livremente.",
+    "aboutResponsive": "Totalmente responsivo: redimensione a janela para ver a interface se adaptar a desktop, tablet e mobile.",
+    "aboutMetrics": "Métricas dinâmicas: médias, frequências e indicadores são calculados em tempo real a partir dos dados.",
+    "backToLanding": "Voltar para Landing Page",
+    "footerTagline": "Sabiencia — Plataforma de Gestão Educacional EAD",
+    "builtWith": "Desenvolvido com React + TypeScript + Tailwind CSS + shadcn/ui",
+    "roles": {
+      "managerTitle": "Gestor / CEO",
+      "managerSubtitle": "Administrador do Sistema",
+      "teacherTitle": "Professor",
+      "studentTitle": "Aluno"
+    },
+    "managerFeatures": [
+      "Gestão de alunos e professores",
+      "Controle financeiro",
+      "Relatórios gerenciais",
+      "Auditoria do sistema",
+      "Configurações gerais"
+    ],
+    "teacherFeatures": [
+      "Minhas turmas e alunos",
+      "Lançamento de notas",
+      "Registro de frequência",
+      "Upload de materiais",
+      "Observações sobre alunos"
+    ],
+    "studentFeatures": [
+      "Aulas em vídeo (YouTube)",
+      "Download de materiais",
+      "Consulta de notas",
+      "Histórico de frequência",
+      "Situação financeira"
+    ]
+  },
+  "auth": {
+    "cpfOrEmail": "CPF ou e-mail",
+    "cpfPlaceholder": "000.000.000-00 ou email@exemplo.com",
+    "password": "Senha",
+    "passwordPlaceholder": "Digite sua senha",
+    "signIn": "Entrar",
+    "signingIn": "Entrando...",
+    "or": "ou",
+    "enterAs": "Entrar como {{role}} (demo)",
+    "quickHint": "Acesso instantâneo ao ambiente de demonstração, sem precisar digitar credenciais.",
+    "forgotPassword": "Esqueci minha senha",
+    "forgotTitle": "Recuperação de senha",
+    "forgotDescription": "Se houver uma conta associada, você receberá um link de redefinição por e-mail.",
+    "noAccountStudent": "Ainda não tem conta? Matricule-se",
+    "noAccountTeacher": "Não tem uma conta?",
+    "registerHere": "Cadastre-se aqui",
+    "backToHome": "Voltar para página inicial",
+    "loginSuccess": "Login realizado com sucesso!",
+    "redirecting": "Redirecionando para sua dashboard...",
+    "enteringDemo": "Entrando na demonstração...",
+    "invalidCredentials": "CPF ou senha inválidos",
+    "genericError": "Erro ao fazer login. Tente novamente.",
+    "demoError": "Erro ao iniciar a demonstração. Tente novamente.",
+    "roles": {
+      "managerTitle": "Gestor / CEO",
+      "managerSubtitle": "Sistema EAD - Login do Gestor/CEO",
+      "managerDescription": "Entre com suas credenciais para acessar o painel administrativo",
+      "teacherTitle": "Acesso do Professor",
+      "teacherSubtitle": "Sistema EAD - Login do Professor",
+      "teacherDescription": "Entre com suas credenciais para acessar sua área de ensino",
+      "studentTitle": "Acesso do Aluno",
+      "studentSubtitle": "Sistema EAD - Login do Aluno",
+      "studentDescription": "Entre com suas credenciais para acessar sua área de estudos"
+    },
+    "managerFeaturesLabel": "Acesso completo:",
+    "teacherFeaturesLabel": "Funcionalidades:"
+  },
+  "topbar": {
+    "systemSubtitle": "Sistema EAD",
+    "search": "Buscar...",
+    "backup": "Backup e Restauração",
+    "myProfile": "Meu Perfil",
+    "settings": "Configurações",
+    "logout": "Sair"
+  },
+  "nav": {
+    "groups": {
+      "registers": "Cadastros",
+      "academic": "Acadêmico",
+      "administrative": "Administrativo",
+      "account": "Conta"
+    },
+    "dashboard": "Dashboard",
+    "home": "Início",
+    "students": "Alunos",
+    "teachers": "Professores",
+    "courses": "Cursos",
+    "classes": "Turmas",
+    "myClasses": "Minhas Turmas",
+    "subjects": "Disciplinas",
+    "library": "Biblioteca Virtual",
+    "announcements": "Comunicados",
+    "observations": "Observações",
+    "questionnaires": "Questionários",
+    "events": "Eventos",
+    "financial": "Financeiro",
+    "reports": "Relatórios",
+    "coupons": "Cupons",
+    "grades": "Notas",
+    "enterGrades": "Lançar Notas",
+    "attendance": "Frequência",
+    "lessonContent": "Conteúdo das Aulas",
+    "myLessons": "Minhas Aulas",
+    "certificates": "Certificados",
+    "profile": "Meu Perfil",
+    "settings": "Configurações"
+  },
+  "language": {
+    "switchTo": "Mudar para {{lang}}",
+    "english": "English",
+    "portuguese": "Português"
+  }
+}

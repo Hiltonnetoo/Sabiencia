@@ -28,6 +28,8 @@ import { BackupManager } from '../export/BackupManager';
 import { SabienciaMonogramBadge } from '../brand/SabienciaBrand';
 import { DemoModeBadge } from '../shared/DemoModeBadge';
 import { ThemeToggle } from '../shared/ThemeToggle';
+import { LanguageSwitcher } from '../shared/LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 interface TopBarProps {
   onMenuClick?: () => void;
@@ -41,6 +43,7 @@ export const TopBar: React.FC<TopBarProps> = ({
   const { user, logout } = useAuth();
   const { getNotificationsByUser, markNotificationAsRead, markAllNotificationsAsRead } = useMockData();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [showPreferences, setShowPreferences] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showBackupManager, setShowBackupManager] = useState(false);
@@ -94,7 +97,7 @@ export const TopBar: React.FC<TopBarProps> = ({
           <SabienciaMonogramBadge className="h-8 w-8 rounded-full" labelClassName="text-xs" />
           <div className="hidden md:block">
             <h2 className="font-semibold text-gray-900">Sabiencia</h2>
-            <p className="text-xs text-gray-500">Sistema EAD</p>
+            <p className="text-xs text-gray-500">{t('topbar.systemSubtitle')}</p>
           </div>
           <DemoModeBadge />
         </div>
@@ -106,6 +109,9 @@ export const TopBar: React.FC<TopBarProps> = ({
 
         {/* Ações da direita */}
         <div className="flex items-center gap-2 ml-auto">
+          {/* Idioma */}
+          <LanguageSwitcher />
+
           {/* Alternar tema */}
           <ThemeToggle />
 
@@ -115,8 +121,8 @@ export const TopBar: React.FC<TopBarProps> = ({
               variant="ghost"
               size="icon"
               onClick={() => setShowBackupManager(true)}
-              title="Backup e Restauração"
-              aria-label="Abrir gerenciador de backup e restauração"
+              title={t('topbar.backup')}
+              aria-label={t('topbar.backup')}
             >
               <Database className="h-5 w-5" />
             </Button>
@@ -165,7 +171,7 @@ export const TopBar: React.FC<TopBarProps> = ({
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleProfile}>
                 <User className="mr-2 h-4 w-4" />
-                <span>Meu Perfil</span>
+                <span>{t('topbar.myProfile')}</span>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => {
                 if (user?.role === 'gestor') navigate('/gestor/configuracoes');
@@ -173,12 +179,12 @@ export const TopBar: React.FC<TopBarProps> = ({
                 if (user?.role === 'aluno') navigate('/aluno/configuracoes');
               }}>
                 <Settings className="mr-2 h-4 w-4" />
-                <span>Configurações</span>
+                <span>{t('topbar.settings')}</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout} className="text-red-600">
                 <LogOut className="mr-2 h-4 w-4" />
-                <span>Sair</span>
+                <span>{t('topbar.logout')}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

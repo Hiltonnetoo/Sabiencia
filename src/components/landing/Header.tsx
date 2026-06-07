@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { Menu, Play } from 'lucide-react';
 import EnrollmentFlow from './EnrollmentFlow';
 import LoginFlow from './LoginFlow';
 import { SabienciaSymbol } from '../brand/SabienciaBrand';
+import { LanguageSwitcher } from '../shared/LanguageSwitcher';
 
 interface HeaderProps {
   onLoginSuccess?: (studentName: string) => void;
@@ -13,6 +15,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isEnrollmentOpen, setIsEnrollmentOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -24,11 +27,11 @@ const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
   };
 
   const navigation = [
-    { name: 'Início', href: '#home' },
-    { name: 'Cursos', href: '#cursos' },
-    { name: 'Sobre', href: '#sobre' },
-    { name: 'Contato', href: '#contato' },
-    { name: 'Blog', href: '#blog' },
+    { name: t('landing.nav.home'), href: '#home' },
+    { name: t('landing.nav.courses'), href: '#cursos' },
+    { name: t('landing.nav.about'), href: '#sobre' },
+    { name: t('landing.nav.contact'), href: '#contato' },
+    { name: t('landing.nav.blog'), href: '#blog' },
   ];
 
   return (
@@ -61,6 +64,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
 
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center space-x-3">
+              <LanguageSwitcher variant="ghost" />
               <Button
                 variant="ghost"
                 size="sm"
@@ -68,21 +72,21 @@ const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
                 onClick={() => navigate('/demo')}
               >
                 <Play className="h-4 w-4 mr-2" />
-                Ver Demonstração
+                {t('landing.viewDemo')}
               </Button>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => navigate('/demo/loginaluno')}
               >
-                Login
+                {t('landing.login')}
               </Button>
-              <Button 
-                size="sm" 
+              <Button
+                size="sm"
                 className="bg-blue-500 hover:bg-blue-600"
                 onClick={() => setIsEnrollmentOpen(true)}
               >
-                Matricule-se
+                {t('landing.enroll')}
               </Button>
             </div>
 
@@ -92,7 +96,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
                 <SheetTrigger asChild>
                   <Button variant="ghost" size="icon">
                     <Menu className="h-6 w-6" />
-                    <span className="sr-only">Abrir menu</span>
+                    <span className="sr-only">{t('landing.openMenu')}</span>
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="w-80 px-6 py-6">
@@ -121,7 +125,10 @@ const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
                     
                     {/* Mobile Actions */}
                     <div className="flex flex-col space-y-3 pt-4 border-t border-gray-200">
-                      <Button 
+                      <div className="flex justify-center pb-1">
+                        <LanguageSwitcher variant="outline" />
+                      </div>
+                      <Button
                         className="w-full bg-gradient-to-r from-blue-500 to-green-500 text-white hover:from-blue-600 hover:to-green-600"
                         onClick={() => {
                           setIsOpen(false);
@@ -129,26 +136,26 @@ const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
                         }}
                       >
                         <Play className="h-4 w-4 mr-2" />
-                        Ver Demonstração
+                        {t('landing.viewDemo')}
                       </Button>
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         className="w-full"
                         onClick={() => {
                           setIsOpen(false);
                           setIsLoginOpen(true);
                         }}
                       >
-                        Login
+                        {t('landing.login')}
                       </Button>
-                      <Button 
+                      <Button
                         className="w-full bg-blue-500 hover:bg-blue-600"
                         onClick={() => {
                           setIsOpen(false);
                           setIsEnrollmentOpen(true);
                         }}
                       >
-                        Matricule-se
+                        {t('landing.enroll')}
                       </Button>
                     </div>
                   </div>
