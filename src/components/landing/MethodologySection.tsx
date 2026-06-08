@@ -1,6 +1,6 @@
 import React from 'react';
 import { Badge } from '../ui/badge';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { ImageWithFallback } from '../shared/ImageWithFallback';
 import { Play, BookOpen, PenTool, Award, ArrowRight } from 'lucide-react';
 
 const MethodologySection = () => {
