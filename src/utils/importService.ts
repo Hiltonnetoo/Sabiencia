@@ -1,9 +1,9 @@
 /**
  * Serviço de Importação de Dados
- * Suporta importação de CSV e Excel
+ * Suporta importação de CSV e Excel.
+ * A biblioteca `xlsx` (~143KB gzip) é carregada sob demanda via import dinâmico
+ * para não pesar no bundle de quem não importa planilhas.
  */
-
-import * as XLSX from 'xlsx';
 
 export interface ImportResult {
   success: boolean;
@@ -108,8 +108,9 @@ export function importFromExcel(
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
+        const XLSX = await import('xlsx');
         const data = e.target?.result;
         const workbook = XLSX.read(data, { type: 'binary' });
 
@@ -296,8 +297,9 @@ export function getExcelSheets(file: File): Promise<string[]> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
-    reader.onload = (e) => {
+    reader.onload = async (e) => {
       try {
+        const XLSX = await import('xlsx');
         const data = e.target?.result;
         const workbook = XLSX.read(data, { type: 'binary' });
         resolve(workbook.SheetNames);

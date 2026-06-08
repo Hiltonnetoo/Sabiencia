@@ -21,13 +21,16 @@ finance — with a tailored experience for each of its three user roles.
 
 - [Highlights](#highlights)
 - [Live demo](#live-demo)
+- [Screenshots](#screenshots)
 - [Roles & features](#roles--features)
 - [Tech stack](#tech-stack)
 - [Architecture](#architecture)
+- [Engineering decisions](#engineering-decisions)
 - [Getting started](#getting-started)
 - [Environment variables](#environment-variables)
 - [Available scripts](#available-scripts)
 - [Project structure](#project-structure)
+- [Performance](#performance)
 - [Theming & accessibility](#theming--accessibility)
 - [Testing](#testing)
 - [Roadmap](#roadmap)
@@ -68,6 +71,17 @@ From the landing page, use **“Ver Demonstração”** (top bar) to open the ro
 authenticates with one click.
 
 While demo mode is active, a discreet **Demo** badge is shown in the top bar.
+
+## Screenshots
+
+> The images below are placeholders. Capture the three dashboards from the
+> [live demo](#live-demo) and replace the files in `docs/screenshots/` (keep the names).
+
+| Manager dashboard | Teacher dashboard | Student dashboard |
+| --- | --- | --- |
+| ![Manager dashboard](docs/screenshots/manager.svg) | ![Teacher dashboard](docs/screenshots/teacher.svg) | ![Student dashboard](docs/screenshots/student.svg) |
+
+Light & dark themes and the EN/PT switch are available across the app.
 
 ## Roles & features
 
@@ -118,6 +132,27 @@ own bundle.
 **Theming.** A custom `ThemeProvider` (`src/contexts/ThemeContext.tsx`) toggles light/dark/
 system themes and font scale, persisted to `localStorage` and applied via a `.dark` class and
 `data-font-size` attribute on `<html>`.
+
+**Resilience.** An app-level `ErrorBoundary` catches render-time errors and shows a friendly
+recovery screen instead of a blank page. Shared `EmptyState`, `LoadingSpinner`/`LoadingFallback`
+and `ErrorDisplay` components standardize empty/loading/error UI.
+
+## Engineering decisions
+
+- **Mock-first, backend-ready.** Decoupling the UI from a specific backend lets reviewers run
+  the app instantly while still demonstrating a production path (Supabase + RLS). Swapping the
+  source is a layer change, not a rewrite.
+- **English-first i18n.** The target audience is international; `react-i18next` defaults to
+  English with a persisted PT toggle, rather than auto-detecting the browser locale, so the
+  first impression is consistent.
+- **Centralized RBAC.** Authorization rules live in one module (`utils/permissions.ts`) and are
+  enforced at the routing layer, keeping permission logic testable and out of components.
+- **Honest client-side security.** Client HMAC only guards local-state integrity; the real
+  boundary is Supabase RLS. This is documented rather than implied (see PRD §13).
+- **Lazy everything heavy.** Routes are code-split per role; `jsPDF` and `xlsx` load via dynamic
+  `import()` so the initial bundle stays lean.
+- **Pre-compiled stylesheet.** Tailwind ships pre-compiled (`src/index.css`); runtime additions
+  (dark mode, font scaling) live in `src/styles/theme.css` imported afterwards.
 
 ## Getting started
 
@@ -184,6 +219,15 @@ src/
 ├── styles/          # theme.css (dark mode & font scaling)
 └── design-system/   # Brand & design tokens (see SABIENCIA_BRAND.md)
 ```
+
+## Performance
+
+- **Route-based code splitting:** each role area is lazy-loaded, so a user only downloads the
+  screens they visit.
+- **On-demand heavy libraries:** `jsPDF` and `xlsx` are imported dynamically (only when a user
+  exports/imports), keeping them out of the initial bundle.
+- **Vendor chunking:** React, Radix, Supabase, charts, PDF and spreadsheet code are emitted as
+  separate cacheable chunks (see `npm run build` output).
 
 ## Theming & accessibility
 

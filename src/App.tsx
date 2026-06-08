@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { MockDataProvider } from './contexts/MockDataContext';
 import { VideoaulasProvider } from './contexts/VideoaulasContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { ErrorBoundary } from './components/shared/ErrorBoundary';
 import { LoginPage } from './components/auth/LoginPage';
 import { LoginDebug } from './components/auth/LoginDebug';
 import { getDefaultRoute } from './utils/permissions';
@@ -121,15 +122,17 @@ function AppRoutes() {
 // ============================================
 export default function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <MockDataProvider>
-          <VideoaulasProvider>
-            <ToastProvider />
-            <AppRoutes />
-          </VideoaulasProvider>
-        </MockDataProvider>
-      </AuthProvider>
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <AuthProvider>
+          <MockDataProvider>
+            <VideoaulasProvider>
+              <ToastProvider />
+              <AppRoutes />
+            </VideoaulasProvider>
+          </MockDataProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
