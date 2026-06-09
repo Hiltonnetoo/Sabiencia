@@ -5,9 +5,13 @@
 import { expect, afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
+import i18n from '../i18n';
 
 // Estender matchers do vitest com jest-dom
 expect.extend(matchers);
+
+// i18n nos testes: as asserções usam textos em português, então forçamos PT.
+i18n.changeLanguage('pt');
 
 // Limpar após cada teste
 afterEach(() => {
