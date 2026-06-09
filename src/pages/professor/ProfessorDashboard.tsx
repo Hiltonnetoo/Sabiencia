@@ -5,6 +5,7 @@
 
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
@@ -24,6 +25,7 @@ import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
 
 export const ProfessorDashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user } = useAuth();
 
   if (!user) return null;
@@ -110,8 +112,8 @@ export const ProfessorDashboard: React.FC = () => {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Bem-vindo, Professor(a)!</h1>
-        <p className="text-gray-500 mt-1">Visão geral das suas turmas e atividades</p>
+        <h1 className="text-3xl font-bold text-gray-900">{t('dashboard.professor.welcome')}</h1>
+        <p className="text-gray-500 mt-1">{t('dashboard.professor.subtitle')}</p>
       </div>
 
       {/* Cards de Estatísticas */}
@@ -119,13 +121,13 @@ export const ProfessorDashboard: React.FC = () => {
         {/* Minhas Turmas */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Minhas Turmas</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.professor.myClasses')}</CardTitle>
             <Users className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{minhasTurmas.length}</div>
             <p className="text-xs text-gray-500 mt-1">
-              {meusAlunos.length} alunos no total
+              {t('dashboard.professor.studentsTotal', { count: meusAlunos.length })}
             </p>
           </CardContent>
         </Card>
@@ -133,13 +135,13 @@ export const ProfessorDashboard: React.FC = () => {
         {/* Disciplinas */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Disciplinas</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.professor.subjects')}</CardTitle>
             <BookOpen className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{minhasDisciplinas.length}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Que você leciona
+              {t('dashboard.professor.youTeach')}
             </p>
           </CardContent>
         </Card>
@@ -147,13 +149,13 @@ export const ProfessorDashboard: React.FC = () => {
         {/* Materiais */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Materiais</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.professor.materials')}</CardTitle>
             <FileText className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{meusMateriais.length}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Materiais postados
+              {t('dashboard.professor.materialsPosted')}
             </p>
           </CardContent>
         </Card>
@@ -161,13 +163,13 @@ export const ProfessorDashboard: React.FC = () => {
         {/* Observações */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Observações</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.professor.observations')}</CardTitle>
             <MessageSquare className="h-4 w-4 text-orange-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{totalObservacoes}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Registradas
+              {t('dashboard.professor.registered')}
             </p>
           </CardContent>
         </Card>
@@ -177,8 +179,8 @@ export const ProfessorDashboard: React.FC = () => {
       <div className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Minhas Turmas</CardTitle>
-            <CardDescription>Turmas onde você leciona</CardDescription>
+            <CardTitle>{t('dashboard.professor.myClasses')}</CardTitle>
+            <CardDescription>{t('dashboard.professor.myClassesDesc')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -205,7 +207,7 @@ export const ProfessorDashboard: React.FC = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <Badge variant="secondary">{alunosTurma} alunos</Badge>
+                      <Badge variant="secondary">{t('dashboard.professor.studentsCount', { count: alunosTurma })}</Badge>
                     </div>
                   </div>
                 );
@@ -216,7 +218,7 @@ export const ProfessorDashboard: React.FC = () => {
               className="w-full mt-4"
               onClick={() => navigate('/professor/turmas')}
             >
-              Ver todas as turmas
+              {t('dashboard.professor.viewAllClasses')}
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </CardContent>
@@ -225,8 +227,8 @@ export const ProfessorDashboard: React.FC = () => {
         {/* Últimas Observações */}
         <Card>
           <CardHeader>
-            <CardTitle>Observações Recentes</CardTitle>
-            <CardDescription>Últimas anotações sobre alunos</CardDescription>
+            <CardTitle>{t('dashboard.professor.recentObservations')}</CardTitle>
+            <CardDescription>{t('dashboard.professor.recentObservationsDesc')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -258,7 +260,7 @@ export const ProfessorDashboard: React.FC = () => {
               className="w-full mt-4"
               onClick={() => navigate('/professor/observacoes')}
             >
-              Ver todas
+              {t('dashboard.professor.viewAll')}
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </CardContent>
@@ -268,8 +270,8 @@ export const ProfessorDashboard: React.FC = () => {
       {/* Ações Rápidas */}
       <Card>
         <CardHeader>
-          <CardTitle>Ações Rápidas</CardTitle>
-          <CardDescription>Acesso rápido às funcionalidades</CardDescription>
+          <CardTitle>{t('dashboard.professor.quickActions')}</CardTitle>
+          <CardDescription>{t('dashboard.professor.quickActionsDesc')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -279,7 +281,7 @@ export const ProfessorDashboard: React.FC = () => {
               onClick={() => navigate('/professor/notas')}
             >
               <FileCheck className="h-4 w-4 mr-2" />
-              Lançar Notas
+              {t('dashboard.professor.enterGrades')}
             </Button>
             <Button
               variant="outline"
@@ -287,7 +289,7 @@ export const ProfessorDashboard: React.FC = () => {
               onClick={() => navigate('/professor/frequencia')}
             >
               <Calendar className="h-4 w-4 mr-2" />
-              Registrar Frequência
+              {t('dashboard.professor.recordAttendance')}
             </Button>
             <Button
               variant="outline"
@@ -295,7 +297,7 @@ export const ProfessorDashboard: React.FC = () => {
               onClick={() => navigate('/professor/materiais')}
             >
               <FileText className="h-4 w-4 mr-2" />
-              Adicionar Material
+              {t('dashboard.professor.addMaterial')}
             </Button>
             <Button
               variant="outline"
@@ -303,7 +305,7 @@ export const ProfessorDashboard: React.FC = () => {
               onClick={() => navigate('/professor/comunicados')}
             >
               <MessageSquare className="h-4 w-4 mr-2" />
-              Enviar Comunicado
+              {t('dashboard.professor.sendAnnouncement')}
             </Button>
           </div>
         </CardContent>

@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
@@ -26,6 +27,7 @@ import { useDashboardStats } from '../../hooks/useDashboardStats';
 
 export const GestorDashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { estatisticas, ultimasMatriculas, ultimosComunicados, alunos, turmas } = useDashboardStats();
 
   return (
@@ -35,8 +37,8 @@ export const GestorDashboard: React.FC = () => {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Painel</h1>
-        <p className="text-gray-600 mt-1">Visão geral do sistema</p>
+        <h1 className="text-3xl font-bold text-gray-900">{t('dashboard.gestor.title')}</h1>
+        <p className="text-gray-600 mt-1">{t('dashboard.gestor.subtitle')}</p>
       </div>
 
       {/* Cards de Estatísticas */}
@@ -44,14 +46,14 @@ export const GestorDashboard: React.FC = () => {
         {/* Total Alunos */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total de Alunos</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.gestor.totalStudents')}</CardTitle>
             <Users className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{estatisticas.totalAlunos}</div>
             <p className="text-xs text-green-600 flex items-center gap-1 mt-1">
               <TrendingUp className="h-3 w-3" />
-              +{estatisticas.novosAlunosMes} este mês
+              {t('dashboard.gestor.newThisMonth', { count: estatisticas.novosAlunosMes })}
             </p>
           </CardContent>
         </Card>
@@ -59,13 +61,13 @@ export const GestorDashboard: React.FC = () => {
         {/* Total Professores */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Professores</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.gestor.teachers')}</CardTitle>
             <GraduationCap className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{estatisticas.totalProfessores}</div>
             <p className="text-xs text-gray-500 mt-1">
-              {estatisticas.totalTurmas} turmas ativas
+              {t('dashboard.gestor.activeClasses', { count: estatisticas.totalTurmas })}
             </p>
           </CardContent>
         </Card>
@@ -73,13 +75,13 @@ export const GestorDashboard: React.FC = () => {
         {/* Frequência Geral */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Frequência Geral</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.gestor.attendance')}</CardTitle>
             <Calendar className="h-4 w-4 text-purple-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{estatisticas.frequenciaGeral.toFixed(1)}%</div>
             <p className="text-xs text-gray-500 mt-1">
-              Últimos 60 dias
+              {t('dashboard.gestor.last60')}
             </p>
           </CardContent>
         </Card>
@@ -87,14 +89,14 @@ export const GestorDashboard: React.FC = () => {
         {/* Financeiro */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">A Receber</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.gestor.toReceive')}</CardTitle>
             <DollarSign className="h-4 w-4 text-orange-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{formatCurrency(estatisticas.totalReceber)}</div>
             <p className="text-xs text-red-600 flex items-center gap-1 mt-1">
               <AlertCircle className="h-3 w-3" />
-              {estatisticas.pagamentosVencidos} vencidos
+              {t('dashboard.gestor.overdue', { count: estatisticas.pagamentosVencidos })}
             </p>
           </CardContent>
         </Card>
@@ -105,8 +107,8 @@ export const GestorDashboard: React.FC = () => {
         {/* Últimas Matrículas */}
         <Card>
           <CardHeader>
-            <CardTitle>Últimas Matrículas</CardTitle>
-            <CardDescription>Novos alunos matriculados recentemente</CardDescription>
+            <CardTitle>{t('dashboard.gestor.latestEnrollments')}</CardTitle>
+            <CardDescription>{t('dashboard.gestor.latestEnrollmentsDesc')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -144,7 +146,7 @@ export const GestorDashboard: React.FC = () => {
               className="w-full mt-4"
               onClick={() => navigate('/gestor/alunos')}
             >
-              Ver todos os alunos
+              {t('dashboard.gestor.viewAllStudents')}
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </CardContent>
@@ -153,8 +155,8 @@ export const GestorDashboard: React.FC = () => {
         {/* Últimos Comunicados */}
         <Card>
           <CardHeader>
-            <CardTitle>Comunicados Recentes</CardTitle>
-            <CardDescription>Últimas mensagens enviadas</CardDescription>
+            <CardTitle>{t('dashboard.gestor.recentAnnouncements')}</CardTitle>
+            <CardDescription>{t('dashboard.gestor.recentAnnouncementsDesc')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -180,7 +182,7 @@ export const GestorDashboard: React.FC = () => {
               className="w-full mt-4"
               onClick={() => navigate('/gestor/comunicados')}
             >
-              Ver todos
+              {t('dashboard.gestor.viewAll')}
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </CardContent>
@@ -190,8 +192,8 @@ export const GestorDashboard: React.FC = () => {
       {/* Ações Rápidas */}
       <Card>
         <CardHeader>
-          <CardTitle>Ações Rápidas</CardTitle>
-          <CardDescription>Acesso rápido às funcionalidades principais</CardDescription>
+          <CardTitle>{t('dashboard.gestor.quickActions')}</CardTitle>
+          <CardDescription>{t('dashboard.gestor.quickActionsDesc')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
@@ -201,7 +203,7 @@ export const GestorDashboard: React.FC = () => {
               onClick={() => navigate('/gestor/alunos')}
             >
               <UserPlus className="h-4 w-4 mr-2" />
-              Novo Aluno
+              {t('dashboard.gestor.newStudent')}
             </Button>
             <Button 
               variant="outline" 
@@ -209,7 +211,7 @@ export const GestorDashboard: React.FC = () => {
               onClick={() => navigate('/gestor/professores')}
             >
               <GraduationCap className="h-4 w-4 mr-2" />
-              Professores
+              {t('dashboard.gestor.teachers')}
             </Button>
             <Button 
               variant="outline" 
@@ -217,7 +219,7 @@ export const GestorDashboard: React.FC = () => {
               onClick={() => navigate('/gestor/comunicados')}
             >
               <FileText className="h-4 w-4 mr-2" />
-              Enviar Comunicado
+              {t('dashboard.gestor.sendAnnouncement')}
             </Button>
             <Button 
               variant="outline" 
@@ -225,7 +227,7 @@ export const GestorDashboard: React.FC = () => {
               onClick={() => navigate('/gestor/relatorios')}
             >
               <BookOpen className="h-4 w-4 mr-2" />
-              Gerar Relatório
+              {t('dashboard.gestor.generateReport')}
             </Button>
             <Button 
               variant="outline" 
@@ -233,7 +235,7 @@ export const GestorDashboard: React.FC = () => {
               onClick={() => navigate('/gestor/financeiro')}
             >
               <DollarSign className="h-4 w-4 mr-2" />
-              Ver Financeiro
+              {t('dashboard.gestor.viewFinance')}
             </Button>
           </div>
         </CardContent>

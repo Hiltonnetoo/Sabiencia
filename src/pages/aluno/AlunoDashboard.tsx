@@ -5,6 +5,7 @@
 
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
@@ -33,6 +34,7 @@ import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
 
 export const AlunoDashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user } = useAuth();
 
   if (!user) return null;
@@ -129,7 +131,7 @@ export const AlunoDashboard: React.FC = () => {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900">
-          Olá, {user.nome_completo.split(' ')[0]}! 👋
+          {t('dashboard.aluno.greeting', { name: user.nome_completo.split(' ')[0] })}
         </h1>
         <p className="text-gray-500 mt-1">
           {curso?.nome} - {turma?.nome}
@@ -141,7 +143,7 @@ export const AlunoDashboard: React.FC = () => {
         {/* Média Geral */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Média Geral</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.aluno.overallGrade')}</CardTitle>
             <Award className="h-4 w-4 text-yellow-600" />
           </CardHeader>
           <CardContent>
@@ -155,7 +157,7 @@ export const AlunoDashboard: React.FC = () => {
               <p className={`text-xs ${
                 situacao === 'aprovado' ? 'text-green-600' : 'text-yellow-600'
               }`}>
-                {situacao === 'aprovado' ? 'Aprovado' : 'Recuperação'}
+                {situacao === 'aprovado' ? t('dashboard.aluno.approved') : t('dashboard.aluno.recovery')}
               </p>
             </div>
           </CardContent>
@@ -164,7 +166,7 @@ export const AlunoDashboard: React.FC = () => {
         {/* Frequência */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Frequência</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.aluno.attendance')}</CardTitle>
             <Calendar className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
@@ -172,7 +174,7 @@ export const AlunoDashboard: React.FC = () => {
             <p className={`text-xs mt-1 ${
               percentualFrequencia >= 75 ? 'text-green-600' : 'text-red-600'
             }`}>
-              {percentualFrequencia >= 75 ? 'Dentro do mínimo' : 'Abaixo do mínimo'}
+              {percentualFrequencia >= 75 ? t('dashboard.aluno.withinMin') : t('dashboard.aluno.belowMin')}
             </p>
           </CardContent>
         </Card>
@@ -180,13 +182,13 @@ export const AlunoDashboard: React.FC = () => {
         {/* Materiais */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Materiais</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.aluno.materials')}</CardTitle>
             <FileText className="h-4 w-4 text-purple-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{materiaisDisponiveis.length}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Disponíveis para download
+              {t('dashboard.aluno.availableDownload')}
             </p>
           </CardContent>
         </Card>
@@ -194,7 +196,7 @@ export const AlunoDashboard: React.FC = () => {
         {/* Financeiro */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Próximo Pagamento</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('dashboard.aluno.nextPayment')}</CardTitle>
             <DollarSign className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
@@ -204,9 +206,9 @@ export const AlunoDashboard: React.FC = () => {
             <p className={`text-xs mt-1 ${
               proximoPagamento?.status === 'vencido' ? 'text-red-600' : 'text-gray-500'
             }`}>
-              {proximoPagamento 
-                ? `Venc: ${formatDate(proximoPagamento.data_vencimento)}`
-                : 'Nenhum pendente'
+              {proximoPagamento
+                ? t('dashboard.aluno.due', { date: formatDate(proximoPagamento.data_vencimento) })
+                : t('dashboard.aluno.nonePending')
               }
             </p>
           </CardContent>
@@ -218,7 +220,7 @@ export const AlunoDashboard: React.FC = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Progresso do Curso</CardTitle>
+              <CardTitle>{t('dashboard.aluno.courseProgress')}</CardTitle>
               <CardDescription>{curso?.nome}</CardDescription>
             </div>
             <Badge variant="secondary">{formatPercent(progressoCurso)}</Badge>
@@ -227,8 +229,8 @@ export const AlunoDashboard: React.FC = () => {
         <CardContent>
           <Progress value={progressoCurso} className="h-2 mb-2" />
           <div className="flex justify-between text-xs text-gray-500">
-            <span>Início: {turma && formatDate(turma.data_inicio)}</span>
-            <span>Término: {turma && formatDate(turma.data_fim)}</span>
+            <span>{t('dashboard.aluno.start')}: {turma && formatDate(turma.data_inicio)}</span>
+            <span>{t('dashboard.aluno.end')}: {turma && formatDate(turma.data_fim)}</span>
           </div>
         </CardContent>
       </Card>
@@ -238,8 +240,8 @@ export const AlunoDashboard: React.FC = () => {
         {/* Desempenho por Disciplina */}
         <Card>
           <CardHeader>
-            <CardTitle>Desempenho por Disciplina</CardTitle>
-            <CardDescription>Suas notas nas disciplinas</CardDescription>
+            <CardTitle>{t('dashboard.aluno.performanceBySubject')}</CardTitle>
+            <CardDescription>{t('dashboard.aluno.performanceBySubjectDesc')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -274,7 +276,7 @@ export const AlunoDashboard: React.FC = () => {
               className="w-full mt-4"
               onClick={() => navigate('/aluno/notas')}
             >
-              Ver todas as notas
+              {t('dashboard.aluno.viewAllGrades')}
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </CardContent>
@@ -283,8 +285,8 @@ export const AlunoDashboard: React.FC = () => {
         {/* Comunicados */}
         <Card>
           <CardHeader>
-            <CardTitle>Comunicados</CardTitle>
-            <CardDescription>Mensagens da escola</CardDescription>
+            <CardTitle>{t('dashboard.aluno.announcements')}</CardTitle>
+            <CardDescription>{t('dashboard.aluno.announcementsDesc')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -311,7 +313,7 @@ export const AlunoDashboard: React.FC = () => {
               className="w-full mt-4"
               onClick={() => navigate('/aluno/comunicados')}
             >
-              Ver todos
+              {t('dashboard.aluno.viewAll')}
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </CardContent>
@@ -321,8 +323,8 @@ export const AlunoDashboard: React.FC = () => {
       {/* Ações Rápidas */}
       <Card>
         <CardHeader>
-          <CardTitle>Acesso Rápido</CardTitle>
-          <CardDescription>Navegue rapidamente pelas funcionalidades</CardDescription>
+          <CardTitle>{t('dashboard.aluno.quickAccess')}</CardTitle>
+          <CardDescription>{t('dashboard.aluno.quickAccessDesc')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -332,7 +334,7 @@ export const AlunoDashboard: React.FC = () => {
               onClick={() => navigate('/aluno/aulas')}
             >
               <Video className="h-4 w-4 mr-2" />
-              Assistir Aulas
+              {t('dashboard.aluno.watchClasses')}
             </Button>
             <Button 
               variant="outline" 
@@ -340,7 +342,7 @@ export const AlunoDashboard: React.FC = () => {
               onClick={() => navigate('/aluno/materiais')}
             >
               <FileText className="h-4 w-4 mr-2" />
-              Baixar Materiais
+              {t('dashboard.aluno.downloadMaterials')}
             </Button>
             <Button 
               variant="outline" 
@@ -348,7 +350,7 @@ export const AlunoDashboard: React.FC = () => {
               onClick={() => navigate('/aluno/notas')}
             >
               <FileCheck className="h-4 w-4 mr-2" />
-              Ver Notas
+              {t('dashboard.aluno.viewGrades')}
             </Button>
             <Button 
               variant="outline" 
@@ -356,7 +358,7 @@ export const AlunoDashboard: React.FC = () => {
               onClick={() => navigate('/aluno/financeiro')}
             >
               <DollarSign className="h-4 w-4 mr-2" />
-              Pagamentos
+              {t('dashboard.aluno.payments')}
             </Button>
           </div>
         </CardContent>
