@@ -1,63 +1,29 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '../ui/badge';
 import { ImageWithFallback } from '../shared/ImageWithFallback';
 import { Play, BookOpen, PenTool, Award, ArrowRight } from 'lucide-react';
 
+const STEP_META = [
+  { number: '01', icon: Play },
+  { number: '02', icon: BookOpen },
+  { number: '03', icon: PenTool },
+  { number: '04', icon: Award },
+];
+
+interface StepItem {
+  title: string;
+  subtitle: string;
+  description: string;
+  features: string[];
+}
+
 const MethodologySection = () => {
-  const steps = [
-    {
-      number: '01',
-      icon: Play,
-      title: 'Estude Online',
-      subtitle: 'Flexibilidade total',
-      description: 'Acesse aulas gravadas e ao vivo a qualquer hora, em qualquer lugar. Nossa plataforma está disponível 24h.',
-      features: [
-        'Aulas em vídeo HD',
-        'Material PDF interativo',
-        'Exercícios práticos',
-        'Fórum de dúvidas'
-      ]
-    },
-    {
-      number: '02',
-      icon: BookOpen,
-      title: 'Pratique',
-      subtitle: 'Aprendizado ativo',
-      description: 'Desenvolva projetos reais e execute exercícios práticos que simulam situações do mercado de trabalho.',
-      features: [
-        'Projetos práticos',
-        'Simuladores',
-        'Estudos de caso',
-        'Laboratórios virtuais'
-      ]
-    },
-    {
-      number: '03',
-      icon: PenTool,
-      title: 'Comprove',
-      subtitle: 'Avaliação presencial',
-      description: 'Realize provas presenciais em nossa sede para validar seu aprendizado e garantir a credibilidade do certificado.',
-      features: [
-        'Provas presenciais',
-        'Avaliação técnica',
-        'Feedback individual',
-        'Segunda chamada'
-      ]
-    },
-    {
-      number: '04',
-      icon: Award,
-      title: 'Certifique-se',
-      subtitle: 'Reconhecimento oficial',
-      description: 'Receba seu certificado técnico reconhecido pelo MEC e aceito em todo o território nacional.',
-      features: [
-        'Certificado MEC',
-        'Versão digital',
-        'Versão impressa',
-        'Histórico escolar'
-      ]
-    }
-  ];
+  const { t } = useTranslation();
+
+  const steps = (t('landing.methodology.steps', { returnObjects: true }) as StepItem[]).map(
+    (step, i) => ({ ...step, number: STEP_META[i].number, icon: STEP_META[i].icon })
+  );
 
   return (
     <section className="py-16 lg:py-24 bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -65,13 +31,13 @@ const MethodologySection = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <Badge variant="outline" className="mb-4 bg-blue-50 border-blue-200 text-blue-700">
-            Nossa Metodologia
+            {t('landing.methodology.badge')}
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-            Como funciona nosso método de ensino
+            {t('landing.methodology.title')}
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed">
-            Uma metodologia inovadora que combina a flexibilidade do ensino online com a credibilidade das avaliações presenciais.
+            {t('landing.methodology.subtitle')}
           </p>
         </div>
 
@@ -87,7 +53,7 @@ const MethodologySection = () => {
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-blue-600 mb-1">
-                      ETAPA {step.number}
+                      {t('landing.methodology.stepLabel')} {step.number}
                     </div>
                     <div className="text-xs text-gray-500 uppercase tracking-wide">
                       {step.subtitle}
@@ -120,7 +86,7 @@ const MethodologySection = () => {
                     <div className="flex items-center space-x-2 text-blue-500">
                       <div className="w-px h-8 bg-blue-200"></div>
                       <ArrowRight className="w-5 h-5" />
-                      <div className="text-sm font-medium">Próxima etapa</div>
+                      <div className="text-sm font-medium">{t('landing.methodology.nextStep')}</div>
                     </div>
                   </div>
                 )}
@@ -140,7 +106,7 @@ const MethodologySection = () => {
                           ? "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                           : "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                       }
-                      alt={`Etapa ${step.number}: ${step.title}`}
+                      alt={`${t('landing.methodology.stepLabel')} ${step.number}: ${step.title}`}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -164,17 +130,17 @@ const MethodologySection = () => {
         <div className="text-center mt-16 pt-16 border-t border-gray-200">
           <div className="bg-white rounded-2xl p-8 lg:p-12 shadow-lg max-w-4xl mx-auto">
             <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-              Pronto para começar sua jornada?
+              {t('landing.methodology.ctaTitle')}
             </h3>
             <p className="text-lg text-gray-600 mb-8">
-              Junte-se aos mais de 500 profissionais que já transformaram suas carreiras com nossos cursos técnicos.
+              {t('landing.methodology.ctaText')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
-                Matricule-se Agora
+                {t('landing.methodology.ctaEnroll')}
               </button>
               <button className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-xl font-semibold transition-all duration-300">
-                Falar com Consultor
+                {t('landing.methodology.ctaConsultant')}
               </button>
             </div>
           </div>

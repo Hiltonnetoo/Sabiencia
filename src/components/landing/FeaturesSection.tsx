@@ -1,43 +1,29 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '../ui/badge';
 import { Calendar, Monitor, Award, Headphones, Clock, Users, MapPin, CheckCircle } from 'lucide-react';
 
-const FeaturesSection = () => {
-  const features = [
-    {
-      icon: Calendar,
-      title: '2 Anos de Experiência',
-      description: 'Escola consolidada no mercado com histórico comprovado de formação de profissionais qualificados.',
-      color: 'bg-blue-100 text-blue-600'
-    },
-    {
-      icon: Monitor,
-      title: '100% Online',
-      description: 'Estude quando e onde quiser. Aulas gravadas e ao vivo, disponíveis 24h na nossa plataforma.',
-      color: 'bg-green-100 text-green-600'
-    },
-    {
-      icon: Award,
-      title: 'Certificação Reconhecida',
-      description: 'Certificados válidos em todo território nacional, reconhecidos pelo MEC e aceitos pelo mercado.',
-      color: 'bg-orange-100 text-orange-600'
-    },
-    {
-      icon: Headphones,
-      title: 'Suporte Personalizado',
-      description: 'Acompanhamento individual com tutores especializados e suporte técnico sempre disponível.',
-      color: 'bg-purple-100 text-purple-600'
-    }
-  ];
+const FEATURE_META = [
+  { icon: Calendar, color: 'bg-blue-100 text-blue-600' },
+  { icon: Monitor, color: 'bg-green-100 text-green-600' },
+  { icon: Award, color: 'bg-orange-100 text-orange-600' },
+  { icon: Headphones, color: 'bg-purple-100 text-purple-600' },
+];
 
-  const benefits = [
-    { text: 'Aulas ao vivo e gravadas', icon: Clock },
-    { text: 'Professores especializados', icon: Users },
-    { text: 'Provas presenciais em nossa sede', icon: MapPin },
-    { text: 'Material didático incluso', icon: CheckCircle },
-    { text: 'Acesso vitalício ao conteúdo', icon: CheckCircle },
-    { text: 'Certificado digital e impresso', icon: Award }
-  ];
+const BENEFIT_ICONS = [Clock, Users, MapPin, CheckCircle, CheckCircle, Award];
+const STAT_COLORS = ['text-blue-600', 'text-green-600', 'text-orange-600', 'text-purple-600'];
+
+const FeaturesSection = () => {
+  const { t } = useTranslation();
+
+  const features = (t('landing.features.items', { returnObjects: true }) as { title: string; description: string }[])
+    .map((f, i) => ({ ...f, icon: FEATURE_META[i].icon, color: FEATURE_META[i].color }));
+
+  const benefits = (t('landing.features.benefits', { returnObjects: true }) as string[])
+    .map((text, i) => ({ text, icon: BENEFIT_ICONS[i] }));
+
+  const stats = (t('landing.features.stats', { returnObjects: true }) as { value: string; label: string }[])
+    .map((s, i) => ({ ...s, color: STAT_COLORS[i] }));
 
   return (
     <section className="py-16 lg:py-24 bg-white">
@@ -45,13 +31,13 @@ const FeaturesSection = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <Badge variant="outline" className="mb-4 bg-blue-50 border-blue-200 text-blue-700">
-            Nossos Diferenciais
+            {t('landing.features.badge')}
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-            Por que escolher nossa escola?
+            {t('landing.features.title')}
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed">
-            Conheça os diferenciais que fazem da nossa escola a melhor escolha para sua formação técnica profissional.
+            {t('landing.features.subtitle')}
           </p>
         </div>
 
@@ -88,11 +74,10 @@ const FeaturesSection = () => {
             <div className="space-y-6">
               <div>
                 <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                  Metodologia que funciona
+                  {t('landing.features.methodTitle')}
                 </h3>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  Nossa abordagem combina flexibilidade do ensino online com a credibilidade das avaliações presenciais. 
-                  Você estuda no seu ritmo e comprova seu conhecimento de forma consistente.
+                  {t('landing.features.methodText')}
                 </p>
               </div>
 
@@ -113,22 +98,12 @@ const FeaturesSection = () => {
 
             {/* Stats */}
             <div className="grid grid-cols-2 gap-6">
-              <div className="text-center p-6 bg-white rounded-2xl shadow-sm">
-                <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
-                <div className="text-gray-600 text-sm font-medium">Alunos Formados</div>
-              </div>
-              <div className="text-center p-6 bg-white rounded-2xl shadow-sm">
-                <div className="text-3xl font-bold text-green-600 mb-2">95%</div>
-                <div className="text-gray-600 text-sm font-medium">Taxa de Aprovação</div>
-              </div>
-              <div className="text-center p-6 bg-white rounded-2xl shadow-sm">
-                <div className="text-3xl font-bold text-orange-600 mb-2">3</div>
-                <div className="text-gray-600 text-sm font-medium">Cursos Disponíveis</div>
-              </div>
-              <div className="text-center p-6 bg-white rounded-2xl shadow-sm">
-                <div className="text-3xl font-bold text-purple-600 mb-2">2</div>
-                <div className="text-gray-600 text-sm font-medium">Anos de Experiência</div>
-              </div>
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center p-6 bg-white rounded-2xl shadow-sm">
+                  <div className={`text-3xl font-bold ${stat.color} mb-2`}>{stat.value}</div>
+                  <div className="text-gray-600 text-sm font-medium">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>

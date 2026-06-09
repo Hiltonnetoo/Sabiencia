@@ -10,7 +10,144 @@
     "viewDemo": "Ver Demonstração",
     "login": "Login",
     "enroll": "Matricule-se",
-    "openMenu": "Abrir menu"
+    "openMenu": "Abrir menu",
+    "hero": {
+      "badge": "🚀 Escola com 2 anos de experiência",
+      "titleStart": "Transforme sua",
+      "titleHighlight": "carreira",
+      "titleEnd": "com cursos técnicos",
+      "subtitle": "Aprenda online com flexibilidade total e comprove seu conhecimento em provas presenciais. Nossa escola tem 2 anos de experiência formando profissionais qualificados para o mercado de trabalho.",
+      "ctaCourses": "Ver Cursos",
+      "ctaStudentArea": "Área do Estudante",
+      "ctaFreeClass": "Aula grátis",
+      "stats": ["2 anos de experiência", "+500 alunos formados", "3 cursos disponíveis"]
+    },
+    "courses": {
+      "badge": "Nossos Cursos",
+      "title": "Cursos Técnicos que Transformam Carreiras",
+      "subtitle": "3 cursos cuidadosamente desenvolvidos para formar profissionais qualificados. Metodologia 100% online com certificação reconhecida pelo mercado.",
+      "online": "100% Online",
+      "newClass": "Nova Turma",
+      "learnLabel": "O que você vai aprender:",
+      "levelLabel": "Nível",
+      "knowMore": "Saiba Mais",
+      "footerText": "Quer conhecer todos os detalhes dos nossos cursos?",
+      "viewAll": "Ver Todos os Cursos",
+      "items": [
+        {
+          "title": "Técnico em Enfermagem",
+          "description": "Cuidados de enfermagem, anatomia e fisiologia, administração de medicamentos e procedimentos técnicos. Forme-se na área da saúde.",
+          "duration": "18 meses",
+          "hours": "1200h",
+          "nextClass": "Março/2025",
+          "price": "A partir de R$ 299/mês",
+          "category": "Saúde",
+          "level": "Iniciante ao Avançado",
+          "highlights": ["Cuidados de Enfermagem", "Administração de Medicamentos", "Procedimentos Técnicos", "Primeiros Socorros"]
+        },
+        {
+          "title": "Técnico em Administração",
+          "description": "Gestão empresarial, recursos humanos, finanças e marketing. Prepare-se para liderar equipes e processos.",
+          "duration": "15 meses",
+          "hours": "1000h",
+          "nextClass": "Abril/2025",
+          "price": "A partir de R$ 249/mês",
+          "category": "Gestão",
+          "level": "Iniciante ao Intermediário",
+          "highlights": ["Gestão de Pessoas", "Planejamento Estratégico", "Finanças Empresariais", "Marketing Digital"]
+        },
+        {
+          "title": "Técnico em Contabilidade",
+          "description": "Escrituração fiscal, demonstrações financeiras, análise contábil e compliance. Torne-se um especialista em números.",
+          "duration": "20 meses",
+          "hours": "1400h",
+          "nextClass": "Maio/2025",
+          "price": "A partir de R$ 279/mês",
+          "category": "Finanças",
+          "level": "Intermediário ao Avançado",
+          "highlights": ["Escrituração Fiscal", "Análise Financeira", "Auditoria", "Compliance"]
+        }
+      ]
+    },
+    "features": {
+      "badge": "Nossos Diferenciais",
+      "title": "Por que escolher nossa escola?",
+      "subtitle": "Conheça os diferenciais que fazem da nossa escola a melhor escolha para sua formação técnica profissional.",
+      "items": [
+        { "title": "2 Anos de Experiência", "description": "Escola consolidada no mercado com histórico comprovado de formação de profissionais qualificados." },
+        { "title": "100% Online", "description": "Estude quando e onde quiser. Aulas gravadas e ao vivo, disponíveis 24h na nossa plataforma." },
+        { "title": "Certificação Reconhecida", "description": "Certificados válidos em todo território nacional, reconhecidos pelo MEC e aceitos pelo mercado." },
+        { "title": "Suporte Personalizado", "description": "Acompanhamento individual com tutores especializados e suporte técnico sempre disponível." }
+      ],
+      "methodTitle": "Metodologia que funciona",
+      "methodText": "Nossa abordagem combina flexibilidade do ensino online com a credibilidade das avaliações presenciais. Você estuda no seu ritmo e comprova seu conhecimento de forma consistente.",
+      "benefits": ["Aulas ao vivo e gravadas", "Professores especializados", "Provas presenciais em nossa sede", "Material didático incluso", "Acesso vitalício ao conteúdo", "Certificado digital e impresso"],
+      "stats": [
+        { "value": "500+", "label": "Alunos Formados" },
+        { "value": "95%", "label": "Taxa de Aprovação" },
+        { "value": "3", "label": "Cursos Disponíveis" },
+        { "value": "2", "label": "Anos de Experiência" }
+      ]
+    },
+    "methodology": {
+      "badge": "Nossa Metodologia",
+      "title": "Como funciona nosso método de ensino",
+      "subtitle": "Uma metodologia inovadora que combina a flexibilidade do ensino online com a credibilidade das avaliações presenciais.",
+      "stepLabel": "ETAPA",
+      "nextStep": "Próxima etapa",
+      "steps": [
+        { "title": "Estude Online", "subtitle": "Flexibilidade total", "description": "Acesse aulas gravadas e ao vivo a qualquer hora, em qualquer lugar. Nossa plataforma está disponível 24h.", "features": ["Aulas em vídeo HD", "Material PDF interativo", "Exercícios práticos", "Fórum de dúvidas"] },
+        { "title": "Pratique", "subtitle": "Aprendizado ativo", "description": "Desenvolva projetos reais e execute exercícios práticos que simulam situações do mercado de trabalho.", "features": ["Projetos práticos", "Simuladores", "Estudos de caso", "Laboratórios virtuais"] },
+        { "title": "Comprove", "subtitle": "Avaliação presencial", "description": "Realize provas presenciais em nossa sede para validar seu aprendizado e garantir a credibilidade do certificado.", "features": ["Provas presenciais", "Avaliação técnica", "Feedback individual", "Segunda chamada"] },
+        { "title": "Certifique-se", "subtitle": "Reconhecimento oficial", "description": "Receba seu certificado técnico reconhecido pelo MEC e aceito em todo o território nacional.", "features": ["Certificado MEC", "Versão digital", "Versão impressa", "Histórico escolar"] }
+      ],
+      "ctaTitle": "Pronto para começar sua jornada?",
+      "ctaText": "Junte-se aos mais de 500 profissionais que já transformaram suas carreiras com nossos cursos técnicos.",
+      "ctaEnroll": "Matricule-se Agora",
+      "ctaConsultant": "Falar com Consultor"
+    },
+    "testimonials": {
+      "badge": "Depoimentos",
+      "title": "O que nossos alunos dizem",
+      "subtitle": "Mais de 500 profissionais já transformaram suas carreiras. Conheça algumas histórias de sucesso.",
+      "items": [
+        { "name": "Maria Silva Santos", "course": "Técnico em Informática", "role": "Desenvolvedora Web", "company": "TechStart Solutions", "testimony": "O curso superou minhas expectativas! A metodologia online com provas presenciais me deu confiança total no certificado. Hoje trabalho como desenvolvedora e consegui aumentar meu salário em 80%. Os professores são excelentes e o suporte é incomparável." },
+        { "name": "João Pedro Costa", "course": "Técnico em Administração", "role": "Coordenador Administrativo", "company": "Empresa Nacional Ltda", "testimony": "Flexibilidade total para estudar! Como pai de família, consegui conciliar trabalho, estudos e família. O material é muito completo e as aulas são dinâmicas. Após me formar, assumi a coordenação do setor administrativo da empresa onde trabalho." },
+        { "name": "Ana Carolina Ferreira", "course": "Técnico em Contabilidade", "role": "Contadora Plena", "company": "Consultoria Fiscal ABC", "testimony": "A qualidade do ensino é excepcional. Saí do curso preparada para o mercado de trabalho real. Os casos práticos fizeram toda diferença na minha formação. Recomendo para todos que buscam uma educação técnica de qualidade e reconhecimento profissional." },
+        { "name": "Rafael Oliveira", "course": "Técnico em Informática", "role": "Analista de Suporte", "company": "TI Solutions Corp", "testimony": "Mudei completamente de área profissional através do curso. Saí da área comercial para TI e não me arrependo. O acompanhamento dos tutores foi fundamental para meu sucesso. Hoje trabalho em uma empresa de tecnologia e tenho uma carreira sólida pela frente." },
+        { "name": "Patrícia Mendes", "course": "Técnico em Administração", "role": "Gestora de Projetos", "company": "Inovação Empresarial", "testimony": "Curso muito bem estruturado! A parte de gestão de pessoas e planejamento estratégico transformou minha visão empresarial. Consegui uma promoção antes mesmo de terminar o curso. A escola realmente prepara para o mercado de trabalho atual." }
+      ],
+      "stats": [
+        { "value": "500+", "label": "Alunos Formados" },
+        { "value": "95%", "label": "Taxa de Aprovação" },
+        { "value": "4.9", "label": "Avaliação Média" },
+        { "value": "85%", "label": "Ascensão Profissional" }
+      ]
+    },
+    "footer": {
+      "companyDesc": "Formando profissionais qualificados há 2 anos. Cursos técnicos 100% online com certificação reconhecida pelo MEC e comprovação presencial.",
+      "follow": "Siga-nos",
+      "quickLinks": "Links Rápidos",
+      "studentArea": "Área do Aluno",
+      "coursesTitle": "Nossos Cursos",
+      "viewAll": "Ver Todos os Cursos",
+      "contact": "Contato",
+      "addressLine1": "Rua Paulo Ramos, 225",
+      "addressLine2": "Centro - Balsas/MA",
+      "whatsapp": "WhatsApp disponível",
+      "hoursTitle": "Horários de Atendimento",
+      "hoursWeek": "Segunda a Sexta: 8h às 18h",
+      "hoursSat": "Sábados: 8h às 12h",
+      "hoursWhats": "WhatsApp: 24h",
+      "newsletterTitle": "Fique por dentro das novidades",
+      "newsletterText": "Receba informações sobre novos cursos, datas de matrícula e dicas para sua carreira profissional.",
+      "emailPlaceholder": "Seu melhor e-mail",
+      "subscribe": "Inscrever-se",
+      "copyright": "Sabiencia. Todos os direitos reservados.",
+      "accreditation": "CNPJ: 12.345.678/0001-90 | Credenciamento MEC nº 12345",
+      "legal": ["Política de Privacidade", "Termos de Uso", "Política de Cookies", "LGPD"],
+      "disclaimer": "Esta escola segue todas as diretrizes do MEC para educação técnica profissional. Os certificados emitidos têm validade nacional e são reconhecidos pelo mercado de trabalho."
+    }
   },
   "demo": {
     "subtitle": "Explore a plataforma pelos três perfis de acesso",

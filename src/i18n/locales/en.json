@@ -10,7 +10,144 @@
     "viewDemo": "View Demo",
     "login": "Login",
     "enroll": "Enroll",
-    "openMenu": "Open menu"
+    "openMenu": "Open menu",
+    "hero": {
+      "badge": "🚀 School with 2 years of experience",
+      "titleStart": "Transform your",
+      "titleHighlight": "career",
+      "titleEnd": "with technical courses",
+      "subtitle": "Learn online with total flexibility and prove your knowledge in in-person exams. Our school has 2 years of experience training qualified professionals for the job market.",
+      "ctaCourses": "View Courses",
+      "ctaStudentArea": "Student Area",
+      "ctaFreeClass": "Free class",
+      "stats": ["2 years of experience", "+500 graduates", "3 available courses"]
+    },
+    "courses": {
+      "badge": "Our Courses",
+      "title": "Technical Courses That Transform Careers",
+      "subtitle": "3 carefully designed courses to train qualified professionals. 100% online methodology with market-recognized certification.",
+      "online": "100% Online",
+      "newClass": "New Class",
+      "learnLabel": "What you will learn:",
+      "levelLabel": "Level",
+      "knowMore": "Learn More",
+      "footerText": "Want to know all the details of our courses?",
+      "viewAll": "View All Courses",
+      "items": [
+        {
+          "title": "Nursing Technician",
+          "description": "Nursing care, anatomy and physiology, medication administration and technical procedures. Build your career in healthcare.",
+          "duration": "18 months",
+          "hours": "1200h",
+          "nextClass": "March/2025",
+          "price": "From $299/month",
+          "category": "Health",
+          "level": "Beginner to Advanced",
+          "highlights": ["Nursing Care", "Medication Administration", "Technical Procedures", "First Aid"]
+        },
+        {
+          "title": "Administration Technician",
+          "description": "Business management, human resources, finance and marketing. Get ready to lead teams and processes.",
+          "duration": "15 months",
+          "hours": "1000h",
+          "nextClass": "April/2025",
+          "price": "From $249/month",
+          "category": "Management",
+          "level": "Beginner to Intermediate",
+          "highlights": ["People Management", "Strategic Planning", "Business Finance", "Digital Marketing"]
+        },
+        {
+          "title": "Accounting Technician",
+          "description": "Tax bookkeeping, financial statements, accounting analysis and compliance. Become a numbers specialist.",
+          "duration": "20 months",
+          "hours": "1400h",
+          "nextClass": "May/2025",
+          "price": "From $279/month",
+          "category": "Finance",
+          "level": "Intermediate to Advanced",
+          "highlights": ["Tax Bookkeeping", "Financial Analysis", "Auditing", "Compliance"]
+        }
+      ]
+    },
+    "features": {
+      "badge": "Our Differentials",
+      "title": "Why choose our school?",
+      "subtitle": "Discover the differentials that make our school the best choice for your professional technical training.",
+      "items": [
+        { "title": "2 Years of Experience", "description": "An established school with a proven track record of training qualified professionals." },
+        { "title": "100% Online", "description": "Study whenever and wherever you want. Recorded and live classes, available 24/7 on our platform." },
+        { "title": "Recognized Certification", "description": "Certificates valid nationwide, recognized by the Ministry of Education and accepted by the market." },
+        { "title": "Personalized Support", "description": "Individual guidance from specialized tutors and technical support always available." }
+      ],
+      "methodTitle": "A methodology that works",
+      "methodText": "Our approach combines the flexibility of online learning with the credibility of in-person assessments. You study at your own pace and prove your knowledge consistently.",
+      "benefits": ["Live and recorded classes", "Specialized teachers", "In-person exams at our campus", "Course materials included", "Lifetime access to content", "Digital and printed certificate"],
+      "stats": [
+        { "value": "500+", "label": "Graduates" },
+        { "value": "95%", "label": "Approval Rate" },
+        { "value": "3", "label": "Available Courses" },
+        { "value": "2", "label": "Years of Experience" }
+      ]
+    },
+    "methodology": {
+      "badge": "Our Methodology",
+      "title": "How our teaching method works",
+      "subtitle": "An innovative methodology that combines the flexibility of online learning with the credibility of in-person assessments.",
+      "stepLabel": "STEP",
+      "nextStep": "Next step",
+      "steps": [
+        { "title": "Study Online", "subtitle": "Total flexibility", "description": "Access recorded and live classes anytime, anywhere. Our platform is available 24/7.", "features": ["HD video classes", "Interactive PDF material", "Practical exercises", "Q&A forum"] },
+        { "title": "Practice", "subtitle": "Active learning", "description": "Develop real projects and complete practical exercises that simulate job-market situations.", "features": ["Practical projects", "Simulators", "Case studies", "Virtual labs"] },
+        { "title": "Prove It", "subtitle": "In-person assessment", "description": "Take in-person exams at our campus to validate your learning and ensure the credibility of the certificate.", "features": ["In-person exams", "Technical assessment", "Individual feedback", "Make-up exam"] },
+        { "title": "Get Certified", "subtitle": "Official recognition", "description": "Receive your technical certificate recognized by the Ministry of Education and accepted nationwide.", "features": ["Official certificate", "Digital version", "Printed version", "Academic transcript"] }
+      ],
+      "ctaTitle": "Ready to start your journey?",
+      "ctaText": "Join the 500+ professionals who have already transformed their careers with our technical courses.",
+      "ctaEnroll": "Enroll Now",
+      "ctaConsultant": "Talk to a Consultant"
+    },
+    "testimonials": {
+      "badge": "Testimonials",
+      "title": "What our students say",
+      "subtitle": "Over 500 professionals have already transformed their careers. Discover some success stories.",
+      "items": [
+        { "name": "Maria Silva Santos", "course": "Computing Technician", "role": "Web Developer", "company": "TechStart Solutions", "testimony": "The course exceeded my expectations! The online methodology with in-person exams gave me full confidence in the certificate. Today I work as a developer and increased my salary by 80%. The teachers are excellent and the support is incomparable." },
+        { "name": "João Pedro Costa", "course": "Administration Technician", "role": "Administrative Coordinator", "company": "Empresa Nacional Ltda", "testimony": "Total flexibility to study! As a father, I managed to balance work, studies and family. The material is very complete and the classes are dynamic. After graduating, I took over the administrative department where I work." },
+        { "name": "Ana Carolina Ferreira", "course": "Accounting Technician", "role": "Senior Accountant", "company": "Consultoria Fiscal ABC", "testimony": "The teaching quality is exceptional. I left the course prepared for the real job market. The practical cases made all the difference in my training. I recommend it to everyone seeking quality technical education and professional recognition." },
+        { "name": "Rafael Oliveira", "course": "Computing Technician", "role": "Support Analyst", "company": "TI Solutions Corp", "testimony": "I completely changed careers through the course. I moved from sales to IT and have no regrets. The tutors' guidance was key to my success. Today I work at a tech company with a solid career ahead." },
+        { "name": "Patrícia Mendes", "course": "Administration Technician", "role": "Project Manager", "company": "Inovação Empresarial", "testimony": "A very well-structured course! The people management and strategic planning content transformed my business vision. I got a promotion before even finishing the course. The school truly prepares you for today's job market." }
+      ],
+      "stats": [
+        { "value": "500+", "label": "Graduates" },
+        { "value": "95%", "label": "Approval Rate" },
+        { "value": "4.9", "label": "Average Rating" },
+        { "value": "85%", "label": "Career Advancement" }
+      ]
+    },
+    "footer": {
+      "companyDesc": "Training qualified professionals for 2 years. 100% online technical courses with certification recognized by the Ministry of Education and in-person validation.",
+      "follow": "Follow us",
+      "quickLinks": "Quick Links",
+      "studentArea": "Student Area",
+      "coursesTitle": "Our Courses",
+      "viewAll": "View All Courses",
+      "contact": "Contact",
+      "addressLine1": "Rua Paulo Ramos, 225",
+      "addressLine2": "Centro - Balsas/MA",
+      "whatsapp": "WhatsApp available",
+      "hoursTitle": "Opening Hours",
+      "hoursWeek": "Monday to Friday: 8am to 6pm",
+      "hoursSat": "Saturdays: 8am to 12pm",
+      "hoursWhats": "WhatsApp: 24/7",
+      "newsletterTitle": "Stay up to date",
+      "newsletterText": "Receive information about new courses, enrollment dates and tips for your professional career.",
+      "emailPlaceholder": "Your best e-mail",
+      "subscribe": "Subscribe",
+      "copyright": "Sabiencia. All rights reserved.",
+      "accreditation": "Tax ID: 12.345.678/0001-90 | Ministry of Education accreditation no. 12345",
+      "legal": ["Privacy Policy", "Terms of Use", "Cookie Policy", "Data Protection (LGPD)"],
+      "disclaimer": "This school follows all Ministry of Education guidelines for professional technical education. Issued certificates are valid nationwide and recognized by the job market."
+    }
   },
   "demo": {
     "subtitle": "Explore the platform through its three access profiles",

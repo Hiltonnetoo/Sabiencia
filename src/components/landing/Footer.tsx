@@ -1,25 +1,25 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { MapPin, Phone, Mail, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import { SabienciaSymbol } from '../brand/SabienciaBrand';
 
 const Footer = () => {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
-  const courses = [
-    'Técnico em Enfermagem',
-    'Técnico em Administração',
-    'Técnico em Contabilidade'
-  ];
+  const courses = (t('landing.courses.items', { returnObjects: true }) as { title: string }[]).map(
+    (c) => c.title
+  );
 
   const quickLinks = [
-    { name: 'Início', href: '#home' },
-    { name: 'Cursos', href: '#cursos' },
-    { name: 'Sobre', href: '#sobre' },
-    { name: 'Contato', href: '#contato' },
-    { name: 'Blog', href: '#blog' },
-    { name: 'Área do Aluno', href: '#login' }
+    { name: t('landing.nav.home'), href: '#home' },
+    { name: t('landing.nav.courses'), href: '#cursos' },
+    { name: t('landing.nav.about'), href: '#sobre' },
+    { name: t('landing.nav.contact'), href: '#contato' },
+    { name: t('landing.nav.blog'), href: '#blog' },
+    { name: t('landing.footer.studentArea'), href: '#login' }
   ];
 
   const socialLinks = [
@@ -29,12 +29,10 @@ const Footer = () => {
     { name: 'YouTube', icon: Youtube, href: '#', color: 'hover:text-red-500' }
   ];
 
-  const legalLinks = [
-    { name: 'Política de Privacidade', href: '#' },
-    { name: 'Termos de Uso', href: '#' },
-    { name: 'Política de Cookies', href: '#' },
-    { name: 'LGPD', href: '#' }
-  ];
+  const legalLinks = (t('landing.footer.legal', { returnObjects: true }) as string[]).map((name) => ({
+    name,
+    href: '#',
+  }));
 
   return (
     <footer role="contentinfo" className="bg-gray-900 text-white">
@@ -53,14 +51,13 @@ const Footer = () => {
               </div>
 
               <p className="text-gray-300 leading-relaxed text-sm">
-                Formando profissionais qualificados há 2 anos. Cursos técnicos 100% online 
-                com certificação reconhecida pelo MEC e comprovação presencial.
+                {t('landing.footer.companyDesc')}
               </p>
             </div>
 
             {/* Social Links */}
             <div>
-              <h4 className="font-semibold text-white mb-3">Siga-nos</h4>
+              <h4 className="font-semibold text-white mb-3">{t('landing.footer.follow')}</h4>
               <div className="flex space-x-3">
                 {socialLinks.map((social) => (
                   <a
@@ -78,7 +75,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-white mb-6">Links Rápidos</h4>
+            <h4 className="font-semibold text-white mb-6">{t('landing.footer.quickLinks')}</h4>
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -95,7 +92,7 @@ const Footer = () => {
 
           {/* Courses */}
           <div>
-            <h4 className="font-semibold text-white mb-6">Nossos Cursos</h4>
+            <h4 className="font-semibold text-white mb-6">{t('landing.footer.coursesTitle')}</h4>
             <ul className="space-y-3">
               {courses.map((course) => (
                 <li key={course}>
@@ -114,21 +111,21 @@ const Footer = () => {
                 size="sm" 
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white"
               >
-                Ver Todos os Cursos
+                {t('landing.footer.viewAll')}
               </Button>
             </div>
           </div>
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-semibold text-white mb-6">Contato</h4>
+            <h4 className="font-semibold text-white mb-6">{t('landing.footer.contact')}</h4>
             <div className="space-y-4">
               {/* Address */}
               <div className="flex items-start space-x-3">
                 <MapPin className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                 <div className="text-sm text-gray-300">
-                  <p>Rua Paulo Ramos, 225</p>
-                  <p>Centro - Balsas/MA</p>
+                  <p>{t('landing.footer.addressLine1')}</p>
+                  <p>{t('landing.footer.addressLine2')}</p>
                 </div>
               </div>
 
@@ -137,7 +134,7 @@ const Footer = () => {
                 <Phone className="w-5 h-5 text-green-400 flex-shrink-0" />
                 <div className="text-sm text-gray-300">
                   <p>(99) 98510-4312</p>
-                  <p className="text-xs text-green-400">WhatsApp disponível</p>
+                  <p className="text-xs text-green-400">{t('landing.footer.whatsapp')}</p>
                 </div>
               </div>
 
@@ -152,11 +149,11 @@ const Footer = () => {
 
               {/* Operating Hours */}
               <div className="pt-4 border-t border-gray-800">
-                <h5 className="font-medium text-white text-sm mb-2">Horários de Atendimento</h5>
+                <h5 className="font-medium text-white text-sm mb-2">{t('landing.footer.hoursTitle')}</h5>
                 <div className="text-sm text-gray-300 space-y-1">
-                  <p>Segunda a Sexta: 8h às 18h</p>
-                  <p>Sábados: 8h às 12h</p>
-                  <p>WhatsApp: 24h</p>
+                  <p>{t('landing.footer.hoursWeek')}</p>
+                  <p>{t('landing.footer.hoursSat')}</p>
+                  <p>{t('landing.footer.hoursWhats')}</p>
                 </div>
               </div>
             </div>
@@ -167,19 +164,19 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="bg-gradient-to-r from-blue-900/50 to-purple-900/50 rounded-2xl p-8 text-center">
             <h3 className="text-2xl font-bold text-white mb-4">
-              Fique por dentro das novidades
+              {t('landing.footer.newsletterTitle')}
             </h3>
             <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
-              Receba informações sobre novos cursos, datas de matrícula e dicas para sua carreira profissional.
+              {t('landing.footer.newsletterText')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <Input
                 type="email"
-                placeholder="Seu melhor e-mail"
+                placeholder={t('landing.footer.emailPlaceholder')}
                 className="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 h-auto"
               />
               <Button className="bg-blue-600 hover:bg-blue-700 px-6 py-3">
-                Inscrever-se
+                {t('landing.footer.subscribe')}
               </Button>
             </div>
           </div>
@@ -192,9 +189,9 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             {/* Copyright */}
             <div className="text-sm text-gray-300">
-              <p>&copy; {currentYear} Sabiencia. Todos os direitos reservados.</p>
+              <p>&copy; {currentYear} {t('landing.footer.copyright')}</p>
               <p className="text-xs text-gray-400 mt-1">
-                CNPJ: 12.345.678/0001-90 | Credenciamento MEC nº 12345
+                {t('landing.footer.accreditation')}
               </p>
             </div>
 
@@ -219,8 +216,7 @@ const Footer = () => {
           {/* Additional Info */}
           <div className="mt-4 pt-4 border-t border-gray-800 text-center">
             <p className="text-xs text-gray-500">
-              Esta escola segue todas as diretrizes do MEC para educação técnica profissional. 
-              Os certificados emitidos têm validade nacional e são reconhecidos pelo mercado de trabalho.
+              {t('landing.footer.disclaimer')}
             </p>
           </div>
         </div>

@@ -1,74 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { ImageWithFallback } from '../shared/ImageWithFallback';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 
+const TESTIMONIAL_META = [
+  { image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', salaryIncrease: '80%' },
+  { image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', salaryIncrease: '45%' },
+  { image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', salaryIncrease: '60%' },
+  { image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', salaryIncrease: '120%' },
+  { image: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80', salaryIncrease: '50%' },
+];
+
 const TestimonialsSection = () => {
+  const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const testimonials = [
-    {
-      id: 1,
-      name: 'Maria Silva Santos',
-      course: 'Técnico em Informática',
-      role: 'Desenvolvedora Web',
-      company: 'TechStart Solutions',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
-      rating: 5,
-      testimony: 'O curso superou minhas expectativas! A metodologia online com provas presenciais me deu confiança total no certificado. Hoje trabalho como desenvolvedora e consegui aumentar meu salário em 80%. Os professores são excelentes e o suporte é incomparável.',
-      completedYear: '2024',
-      salaryIncrease: '80%'
-    },
-    {
-      id: 2,
-      name: 'João Pedro Costa',
-      course: 'Técnico em Administração',
-      role: 'Coordenador Administrativo',
-      company: 'Empresa Nacional Ltda',
-      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
-      rating: 5,
-      testimony: 'Flexibilidade total para estudar! Como pai de família, consegui conciliar trabalho, estudos e família. O material é muito completo e as aulas são dinâmicas. Após me formar, assumi a coordenação do setor administrativo da empresa onde trabalho.',
-      completedYear: '2023',
-      salaryIncrease: '45%'
-    },
-    {
-      id: 3,
-      name: 'Ana Carolina Ferreira',
-      course: 'Técnico em Contabilidade',
-      role: 'Contadora Plena',
-      company: 'Consultoria Fiscal ABC',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
-      rating: 5,
-      testimony: 'A qualidade do ensino é excepcional. Saí do curso preparada para o mercado de trabalho real. Os casos práticos fizeram toda diferença na minha formação. Recomendo para todos que buscam uma educação técnica de qualidade e reconhecimento profissional.',
-      completedYear: '2024',
-      salaryIncrease: '60%'
-    },
-    {
-      id: 4,
-      name: 'Rafael Oliveira',
-      course: 'Técnico em Informática',
-      role: 'Analista de Suporte',
-      company: 'TI Solutions Corp',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
-      rating: 5,
-      testimony: 'Mudei completamente de área profissional através do curso. Saí da área comercial para TI e não me arrependo. O acompanhamento dos tutores foi fundamental para meu sucesso. Hoje trabalho em uma empresa de tecnologia e tenho uma carreira sólida pela frente.',
-      completedYear: '2023',
-      salaryIncrease: '120%'
-    },
-    {
-      id: 5,
-      name: 'Patrícia Mendes',
-      course: 'Técnico em Administração',
-      role: 'Gestora de Projetos',
-      company: 'Inovação Empresarial',
-      image: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80',
-      rating: 5,
-      testimony: 'Curso muito bem estruturado! A parte de gestão de pessoas e planejamento estratégico transformou minha visão empresarial. Consegui uma promoção antes mesmo de terminar o curso. A escola realmente prepara para o mercado de trabalho atual.',
-      completedYear: '2024',
-      salaryIncrease: '50%'
-    }
-  ];
+  const testimonials = (
+    t('landing.testimonials.items', { returnObjects: true }) as Omit<Testimonial, 'image' | 'rating' | 'salaryIncrease'>[]
+  ).map((item, i) => ({
+    ...item,
+    id: i + 1,
+    rating: 5,
+    image: TESTIMONIAL_META[i].image,
+    salaryIncrease: TESTIMONIAL_META[i].salaryIncrease,
+  }));
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % testimonials.length);
@@ -99,13 +56,13 @@ const TestimonialsSection = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <Badge variant="outline" className="mb-4 bg-white/10 border-white/20 text-white">
-            Depoimentos
+            {t('landing.testimonials.badge')}
           </Badge>
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
-            O que nossos alunos dizem
+            {t('landing.testimonials.title')}
           </h2>
           <p className="text-lg text-blue-100 leading-relaxed">
-            Mais de 500 profissionais já transformaram suas carreiras. Conheça algumas histórias de sucesso.
+            {t('landing.testimonials.subtitle')}
           </p>
         </div>
 
@@ -167,22 +124,14 @@ const TestimonialsSection = () => {
 
         {/* Stats Section */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mt-16 pt-16 border-t border-white/20">
-          <div className="text-center">
-            <div className="text-3xl lg:text-4xl font-bold text-white mb-2">500+</div>
-            <div className="text-blue-200 text-sm">Alunos Formados</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl lg:text-4xl font-bold text-white mb-2">95%</div>
-            <div className="text-blue-200 text-sm">Aprovação</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl lg:text-4xl font-bold text-white mb-2">4.8</div>
-            <div className="text-blue-200 text-sm">Nota Média</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl lg:text-4xl font-bold text-white mb-2">85%</div>
-            <div className="text-blue-200 text-sm">Empregabilidade</div>
-          </div>
+          {(t('landing.testimonials.stats', { returnObjects: true }) as { value: string; label: string }[]).map(
+            (stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-3xl lg:text-4xl font-bold text-white mb-2">{stat.value}</div>
+                <div className="text-blue-200 text-sm">{stat.label}</div>
+              </div>
+            )
+          )}
         </div>
       </div>
     </section>

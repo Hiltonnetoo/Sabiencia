@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ImageWithFallback } from '../shared/ImageWithFallback';
 import { Play, Users, Calendar, BookOpen, LogIn } from 'lucide-react';
 import EnrollmentFlow from './EnrollmentFlow';
 
+const STAT_ICONS = [Calendar, Users, BookOpen];
+
 const HeroSection: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [isEnrollmentOpen, setIsEnrollmentOpen] = useState(false);
 
-  const stats = [
-    { icon: Calendar, label: '2 anos de experiência' },
-    { icon: Users, label: '+500 alunos formados' },
-    { icon: BookOpen, label: '3 cursos disponíveis' },
-  ];
+  const statLabels = t('landing.hero.stats', { returnObjects: true }) as string[];
+  const stats = statLabels.map((label, i) => ({ icon: STAT_ICONS[i], label }));
 
   return (
     <section className="relative bg-gradient-to-br from-blue-50 via-white to-blue-50 py-16 lg:py-24 overflow-hidden">
@@ -27,21 +28,20 @@ const HeroSection: React.FC = () => {
           <div className="space-y-8">
             <div className="space-y-6">
               <Badge variant="outline" className="w-fit bg-blue-50 border-blue-200 text-blue-700 px-4 py-2">
-                🚀 Escola com 2 anos de experiência
+                {t('landing.hero.badge')}
               </Badge>
-              
+
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Transforme sua{' '}
+                {t('landing.hero.titleStart')}{' '}
                 <span className="text-blue-600 relative">
-                  carreira
+                  {t('landing.hero.titleHighlight')}
                   <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"></div>
                 </span>{' '}
-                com cursos técnicos
+                {t('landing.hero.titleEnd')}
               </h1>
-              
+
               <p className="text-lg lg:text-xl text-gray-600 leading-relaxed max-w-2xl">
-                Aprenda online com flexibilidade total e comprove seu conhecimento em provas presenciais. 
-                Nossa escola tem 2 anos de experiência formando profissionais qualificados para o mercado de trabalho.
+                {t('landing.hero.subtitle')}
               </p>
             </div>
 
@@ -57,7 +57,7 @@ const HeroSection: React.FC = () => {
                   }
                 }}
               >
-                Ver Cursos
+                {t('landing.hero.ctaCourses')}
               </Button>
               <div className="flex flex-col sm:flex-row gap-2">
                 <Button 
@@ -67,7 +67,7 @@ const HeroSection: React.FC = () => {
                   onClick={() => navigate('/login/aluno')}
                 >
                   <LogIn className="w-5 h-5 mr-2" />
-                  Área do Estudante
+                  {t('landing.hero.ctaStudentArea')}
                 </Button>
                 <Button 
                   size="lg" 
@@ -75,7 +75,7 @@ const HeroSection: React.FC = () => {
                   className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-4 text-lg transition-all duration-300"
                 >
                   <Play className="w-5 h-5 mr-2" />
-                  Aula grátis
+                  {t('landing.hero.ctaFreeClass')}
                 </Button>
               </div>
             </div>
