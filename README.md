@@ -75,9 +75,9 @@ While demo mode is active, a discreet **Demo** badge is shown in the top bar.
 > The images below are placeholders. Capture the three dashboards from the
 > [live demo](#live-demo) and replace the files in `docs/screenshots/` (keep the names).
 
-| Manager dashboard | Teacher dashboard | Student dashboard |
+| CEO dashboard | Teacher dashboard | Student dashboard |
 | --- | --- | --- |
-| ![Manager dashboard](docs/screenshots/manager.svg) | ![Teacher dashboard](docs/screenshots/teacher.svg) | ![Student dashboard](docs/screenshots/student.svg) |
+| ![CEO dashboard](docs/screenshots/manager.png) | ![Teacher dashboard](docs/screenshots/teacher.png) | ![Student dashboard](docs/screenshots/student.png) |
 
 Light & dark themes and the EN/PT switch are available across the app.
 
