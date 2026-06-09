@@ -6,8 +6,6 @@ const DemoIndex = lazy(() => import('../pages/demo/DemoIndex'));
 const DemoGestor = lazy(() => import('../pages/demo/DemoGestor'));
 const DemoProfessor = lazy(() => import('../pages/demo/DemoProfessor'));
 const DemoAluno = lazy(() => import('../pages/demo/DemoAluno'));
-const DemoLoginAluno = lazy(() => import('../pages/demo/DemoLoginAluno'));
-const DemoLoginGestor = lazy(() => import('../pages/demo/DemoLoginGestor'));
 
 export function DemoRoutes() {
   return (
@@ -20,9 +18,9 @@ export function DemoRoutes() {
         <Route path="professor" element={<DemoProfessor />} />
         <Route path="aluno" element={<DemoAluno />} />
 
-        {/* Telas de login de demonstração */}
-        <Route path="loginaluno" element={<DemoLoginAluno />} />
-        <Route path="logingestor" element={<DemoLoginGestor />} />
+        {/* Telas de login antigas -> rotas consolidadas /login/:role */}
+        <Route path="loginaluno" element={<Navigate to="/login/aluno" replace />} />
+        <Route path="logingestor" element={<Navigate to="/login/gestor" replace />} />
 
         {/* Aliases legados */}
         <Route path="demo-gestor" element={<Navigate to="/demo/gestor" replace />} />

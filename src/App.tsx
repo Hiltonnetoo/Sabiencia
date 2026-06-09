@@ -1,11 +1,10 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { MockDataProvider } from './contexts/MockDataContext';
 import { VideoaulasProvider } from './contexts/VideoaulasContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ErrorBoundary } from './components/shared/ErrorBoundary';
-import { LoginPage } from './components/auth/LoginPage';
 import { LoginDebug } from './components/auth/LoginDebug';
 import { getDefaultRoute } from './utils/permissions';
 import { ToastProvider } from './components/shared/ToastProvider';
@@ -25,9 +24,28 @@ const MethodologySection = lazy(() => import('./components/landing/MethodologySe
 const TestimonialsSection = lazy(() => import('./components/landing/TestimonialsSection'));
 const Footer = lazy(() => import('./components/landing/Footer'));
 
-// Lazy Load Demo professor pages (used outside /demo/* prefix)
-const DemoLoginProfessor = lazy(() => import('./pages/demo/DemoLoginProfessor'));
+// Login por papel (3 telas: /login/gestor · /login/professor · /login/aluno)
+const DemoLogin = lazy(() =>
+  import('./components/auth/DemoLogin').then((m) => ({ default: m.DemoLogin }))
+);
 const ProfessorRegisterPage = lazy(() => import('./pages/demo/ProfessorRegisterPage'));
+
+// ============================================
+// LOGIN BY ROLE
+// ============================================
+const VALID_LOGIN_ROLES = ['gestor', 'professor', 'aluno'] as const;
+
+const LoginByRole: React.FC = () => {
+  const { role } = useParams<{ role: string }>();
+  if (!role || !VALID_LOGIN_ROLES.includes(role as (typeof VALID_LOGIN_ROLES)[number])) {
+    return <Navigate to="/login/aluno" replace />;
+  }
+  return (
+    <Suspense fallback={<AppPreloader message="Carregando..." />}>
+      <DemoLogin role={role as (typeof VALID_LOGIN_ROLES)[number]} />
+    </Suspense>
+  );
+};
 
 // ============================================
 // REDIRECT BY ROLE
@@ -59,8 +77,8 @@ const LandingPage: React.FC = () => {
 
       {/* Header e Hero carregam primeiro */}
       <Suspense fallback={<AppPreloader message="Carregando página inicial..." />}>
-        <Header onLoginSuccess={() => {}} />
-        <HeroSection onLoginSuccess={() => {}} />
+        <Header />
+        <HeroSection />
       </Suspense>
 
       {/* ✅ ACESSIBILIDADE: Main landmark com ID para skip link */}
@@ -86,19 +104,19 @@ function AppRoutes() {
       <Routes>
         {/* Rotas públicas */}
         <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
+
+        {/* Login: 3 telas por papel + alias /login -> aluno */}
+        <Route path="/login" element={<Navigate to="/login/aluno" replace />} />
+        <Route path="/login/:role" element={<LoginByRole />} />
+
         <Route path="/debug" element={<LoginDebug />} />
         <Route path="/redirect" element={<RedirectByRole />} />
 
         {/* Rotas de demonstração */}
         <Route path="/demo/*" element={<DemoRoutes />} />
 
-        {/* Rota de login/cadastro do professor (pública) */}
-        <Route path="/professor" element={
-          <Suspense fallback={<AppPreloader message="Carregando..." />}>
-            <DemoLoginProfessor />
-          </Suspense>
-        } />
+        {/* Login antigo do professor -> nova rota consolidada */}
+        <Route path="/professor" element={<Navigate to="/login/professor" replace />} />
         <Route path="/professor/cadastro" element={
           <Suspense fallback={<AppPreloader message="Carregando..." />}>
             <ProfessorRegisterPage />

@@ -5,26 +5,14 @@ import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { Menu, Play } from 'lucide-react';
 import EnrollmentFlow from './EnrollmentFlow';
-import LoginFlow from './LoginFlow';
 import { SabienciaSymbol } from '../brand/SabienciaBrand';
 import { LanguageSwitcher } from '../shared/LanguageSwitcher';
 
-interface HeaderProps {
-  onLoginSuccess?: (studentName: string) => void;
-}
-
-const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
+const Header: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isEnrollmentOpen, setIsEnrollmentOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-
-  const handleLoginSuccess = (name: string) => {
-    if (onLoginSuccess) {
-      onLoginSuccess(name);
-    }
-  };
 
   const navigation = [
     { name: t('landing.nav.home'), href: '#home' },
@@ -77,7 +65,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => navigate('/demo/loginaluno')}
+                onClick={() => navigate('/login/aluno')}
               >
                 {t('landing.login')}
               </Button>
@@ -143,7 +131,7 @@ const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
                         className="w-full"
                         onClick={() => {
                           setIsOpen(false);
-                          setIsLoginOpen(true);
+                          navigate('/login/aluno');
                         }}
                       >
                         {t('landing.login')}
@@ -167,20 +155,9 @@ const Header: React.FC<HeaderProps> = ({ onLoginSuccess }) => {
       </header>
       
       {/* Enrollment Flow Modal */}
-      <EnrollmentFlow 
-        isOpen={isEnrollmentOpen} 
-        onClose={() => setIsEnrollmentOpen(false)} 
-      />
-      
-      {/* Login Flow Modal */}
-      <LoginFlow 
-        isOpen={isLoginOpen} 
-        onClose={() => setIsLoginOpen(false)}
-        onOpenEnrollment={() => {
-          setIsLoginOpen(false);
-          setIsEnrollmentOpen(true);
-        }}
-        onLoginSuccess={handleLoginSuccess}
+      <EnrollmentFlow
+        isOpen={isEnrollmentOpen}
+        onClose={() => setIsEnrollmentOpen(false)}
       />
     </>
   );

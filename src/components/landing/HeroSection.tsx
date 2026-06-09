@@ -1,24 +1,14 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { ImageWithFallback } from '../shared/ImageWithFallback';
 import { Play, Users, Calendar, BookOpen, LogIn } from 'lucide-react';
 import EnrollmentFlow from './EnrollmentFlow';
-import LoginFlow from './LoginFlow';
 
-interface HeroSectionProps {
-  onLoginSuccess?: (studentName: string) => void;
-}
-
-const HeroSection: React.FC<HeroSectionProps> = ({ onLoginSuccess }) => {
+const HeroSection: React.FC = () => {
+  const navigate = useNavigate();
   const [isEnrollmentOpen, setIsEnrollmentOpen] = useState(false);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-
-  const handleLoginSuccess = (name: string) => {
-    if (onLoginSuccess) {
-      onLoginSuccess(name);
-    }
-  };
 
   const stats = [
     { icon: Calendar, label: '2 anos de experiência' },
@@ -74,7 +64,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLoginSuccess }) => {
                   size="lg" 
                   variant="outline" 
                   className="border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-4 text-lg transition-all duration-300"
-                  onClick={() => setIsLoginOpen(true)}
+                  onClick={() => navigate('/login/aluno')}
                 >
                   <LogIn className="w-5 h-5 mr-2" />
                   Área do Estudante
@@ -145,20 +135,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onLoginSuccess }) => {
       </div>
       
       {/* Enrollment Flow Modal */}
-      <EnrollmentFlow 
-        isOpen={isEnrollmentOpen} 
-        onClose={() => setIsEnrollmentOpen(false)} 
-      />
-      
-      {/* Login Flow Modal */}
-      <LoginFlow 
-        isOpen={isLoginOpen} 
-        onClose={() => setIsLoginOpen(false)}
-        onOpenEnrollment={() => {
-          setIsLoginOpen(false);
-          setIsEnrollmentOpen(true);
-        }}
-        onLoginSuccess={handleLoginSuccess}
+      <EnrollmentFlow
+        isOpen={isEnrollmentOpen}
+        onClose={() => setIsEnrollmentOpen(false)}
       />
     </section>
   );
