@@ -32,9 +32,23 @@ const escapeXml = (value: string): string =>
  */
 export const generateDocThumbnail = (
   title: string,
-  kind: 'PDF' | 'DOC' | 'MATERIAL' = 'PDF'
+  kind: 'PDF' | 'DOC' | 'MATERIAL' | 'VIDEO' = 'PDF'
 ): string => {
   const label = escapeXml(title.length > 48 ? `${title.slice(0, 45)}…` : title);
+  
+  const iconMarkup = kind === 'VIDEO'
+    ? `<g transform="translate(640 280)" fill="rgba(255,255,255,0.12)" stroke="#ffffff" stroke-width="10" stroke-linejoin="round" opacity="0.95">
+    <circle cx="0" cy="0" r="80" fill="rgba(255,255,255,0.12)"/>
+    <polygon points="-20,-30 35,0 -20,30" fill="#ffffff" stroke="#ffffff" stroke-width="5"/>
+  </g>`
+    : `<g transform="translate(540 230)" fill="none" stroke="#ffffff" stroke-width="10" stroke-linejoin="round" opacity="0.95">
+    <path d="M40 0 H150 L200 50 V210 H40 Z" fill="rgba(255,255,255,0.12)"/>
+    <path d="M150 0 V50 H200"/>
+    <line x1="70" y1="90" x2="170" y2="90"/>
+    <line x1="70" y1="125" x2="170" y2="125"/>
+    <line x1="70" y1="160" x2="140" y2="160"/>
+  </g>`;
+
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
@@ -43,13 +57,7 @@ export const generateDocThumbnail = (
     </linearGradient>
   </defs>
   <rect width="1280" height="720" fill="url(#bg)"/>
-  <g transform="translate(540 230)" fill="none" stroke="#ffffff" stroke-width="10" stroke-linejoin="round" opacity="0.95">
-    <path d="M40 0 H150 L200 50 V210 H40 Z" fill="rgba(255,255,255,0.12)"/>
-    <path d="M150 0 V50 H200"/>
-    <line x1="70" y1="90" x2="170" y2="90"/>
-    <line x1="70" y1="125" x2="170" y2="125"/>
-    <line x1="70" y1="160" x2="140" y2="160"/>
-  </g>
+  ${iconMarkup}
   <text x="640" y="540" font-family="Inter, Arial, sans-serif" font-size="40" font-weight="700"
         fill="#ffffff" text-anchor="middle">${label}</text>
   <text x="640" y="600" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600"

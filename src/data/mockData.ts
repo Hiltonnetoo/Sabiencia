@@ -24,7 +24,7 @@ import type {
   TipoObservacao,
   StatusPagamento
 } from '../types';
-import { generateDocThumbnail, getYouTubeThumbnail } from '../utils/mediaThumbnails';
+import { generateDocThumbnail } from '../utils/mediaThumbnails';
 
 // ============================================
 // CURSOS (3)
@@ -745,7 +745,7 @@ const generateMateriais = (): Material[] => {
       descricao: `Aula completa sobre ${disc.nome} ministrada pelo professor. Inclui demonstrações práticas e exemplos do dia a dia.`,
       tipo: 'video',
       url: video.url,
-      thumbnail_url: getYouTubeThumbnail(video.url),
+      thumbnail_url: generateDocThumbnail(disc.nome, 'VIDEO'),
       duracao_segundos: video.duracao,
       modulo: 'Módulo 1 - Introdução',
       tags: ['videoaula', 'introdução', disc.nome.toLowerCase()],

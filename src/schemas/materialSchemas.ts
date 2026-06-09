@@ -80,7 +80,19 @@ export const materialSchema = z.object({
   
   thumbnail_url: z
     .string()
-    .url('URL da thumbnail inválida')
+    .refine(
+      (val) => {
+        if (!val) return true;
+        if (val.startsWith('data:image/')) return true;
+        try {
+          new URL(val);
+          return true;
+        } catch {
+          return false;
+        }
+      },
+      { message: 'URL da thumbnail inválida' }
+    )
     .optional()
     .or(z.literal('')),
   

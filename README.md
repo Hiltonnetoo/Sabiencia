@@ -1,7 +1,7 @@
 # Sabiencia — EAD Learning Management System
 
 ![CI](https://github.com/Hiltonnetoo/Sabiencia/actions/workflows/ci.yml/badge.svg)
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![License](https://img.shields.io/badge/License-Proprietary--NC-orange.svg)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict%20type--check-blue.svg)
 ![i18n](https://img.shields.io/badge/i18n-EN%20%2F%20PT-informational.svg)
 
@@ -60,15 +60,13 @@ credentials to type.
 | Entry point | Path |
 | --- | --- |
 | Demo home (choose a role) | `/demo` |
-| Manager dashboard | `/demo/gestor` |
-| Teacher dashboard | `/demo/professor` |
-| Student dashboard | `/demo/aluno` |
-| Student login screen | `/demo/loginaluno` |
-| Manager login screen | `/demo/logingestor` |
+| Student login screen | `/login/aluno` |
+| Teacher login screen | `/login/professor` |
+| Manager login screen | `/login/gestor` |
 
-From the landing page, use **“Ver Demonstração”** (top bar) to open the role chooser, or
-**“Login”** to reach a login screen. On any demo login screen, the **“Entrar como …”** button
-authenticates with one click.
+From the landing page, use **“Ver Demonstração”** (top bar) to open the role chooser `/demo`, or
+**“Login”** to reach the login screen `/login/aluno`. On any of the login screens, the
+**“Entrar como ...”** button authenticates the demo user with one click.
 
 While demo mode is active, a discreet **Demo** badge is shown in the top bar.
 
@@ -253,4 +251,4 @@ and visual regression.
 
 ## License
 
-MIT
+Proprietary Non-Commercial License (see [LICENSE](LICENSE) file for full details).

@@ -17,10 +17,9 @@ import { Progress } from '../ui/progress';
 import { 
   materialSchema, 
   type MaterialFormData,
-  extractYouTubeID,
-  getYouTubeThumbnail,
   isValidYouTubeURL
 } from '../../schemas/materialSchemas';
+import { generateDocThumbnail } from '../../utils/mediaThumbnails';
 import { X, FileText, Video, Link as LinkIcon, Upload } from 'lucide-react';
 import type { Material } from '../../types';
 import { useMockData } from '../../contexts/MockDataContext';
@@ -76,21 +75,23 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
 
   const tipo = watch('tipo');
   const url = watch('url');
+  const titulo = watch('titulo');
   const tags = watch('tags') || [];
   const visivel_para_alunos = watch('visivel_para_alunos');
   const permite_download = watch('permite_download');
 
-  // Auto-gerar thumbnail do YouTube
+  // Auto-gerar thumbnail
   useEffect(() => {
-    if (tipo === 'video' && url) {
-      const videoId = extractYouTubeID(url);
-      if (videoId) {
-        const thumbnail = getYouTubeThumbnail(videoId);
-        setValue('thumbnail_url', thumbnail);
-        setPreviewThumbnail(thumbnail);
-      }
+    if (tipo === 'video') {
+      const thumbnail = generateDocThumbnail(titulo || 'Videoaula', 'VIDEO');
+      setValue('thumbnail_url', thumbnail);
+      setPreviewThumbnail(thumbnail);
+    } else if (tipo === 'pdf') {
+      const thumbnail = generateDocThumbnail(titulo || 'Apostila', 'PDF');
+      setValue('thumbnail_url', thumbnail);
+      setPreviewThumbnail(thumbnail);
     }
-  }, [tipo, url, setValue]);
+  }, [tipo, titulo, setValue]);
 
   // Adicionar tag
   const handleAddTag = (tag: string) => {

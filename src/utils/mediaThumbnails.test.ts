@@ -36,6 +36,13 @@ describe('mediaThumbnails', () => {
       expect(uri.startsWith('data:image/svg+xml')).toBe(true);
       expect(uri).toContain('SABIENCIA');
     });
+    it('returns a video thumbnail SVG data URI', () => {
+      const uri = generateDocThumbnail('Videoaula 01', 'VIDEO');
+      expect(uri.startsWith('data:image/svg+xml')).toBe(true);
+      expect(uri).toContain('VIDEO');
+      const decoded = decodeURIComponent(uri);
+      expect(decoded).toContain('polygon');
+    });
     it('escapes special characters in the title', () => {
       const uri = generateDocThumbnail('A & B <test>');
       const decoded = decodeURIComponent(uri);
