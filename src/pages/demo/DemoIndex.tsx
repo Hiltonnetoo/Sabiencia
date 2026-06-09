@@ -40,6 +40,21 @@ export const DemoIndex: React.FC = () => {
           </p>
         </div>
 
+        {/* Aviso / contexto da demonstração (no topo, antes dos cards) */}
+        <Card className="bg-blue-50 border-blue-200 mb-8">
+          <CardContent className="p-6">
+            <h3 className="font-semibold text-lg mb-3 text-blue-900">
+              {t('demo.aboutTitle')}
+            </h3>
+            <div className="space-y-2 text-sm text-blue-800">
+              <p>{t('demo.aboutData')}</p>
+              <p>{t('demo.aboutNav')}</p>
+              <p>{t('demo.aboutResponsive')}</p>
+              <p>{t('demo.aboutMetrics')}</p>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Cards de Demonstração */}
         <div className="grid gap-6 md:grid-cols-3 mb-8">
           {/* Gestor */}
@@ -132,21 +147,6 @@ export const DemoIndex: React.FC = () => {
             </CardContent>
           </Card>
         </div>
-
-        {/* Informações Adicionais */}
-        <Card className="bg-blue-50 border-blue-200">
-          <CardContent className="p-6">
-            <h3 className="font-semibold text-lg mb-3 text-blue-900">
-              {t('demo.aboutTitle')}
-            </h3>
-            <div className="space-y-2 text-sm text-blue-800">
-              <p>{t('demo.aboutData')}</p>
-              <p>{t('demo.aboutNav')}</p>
-              <p>{t('demo.aboutResponsive')}</p>
-              <p>{t('demo.aboutMetrics')}</p>
-            </div>
-          </CardContent>
-        </Card>
 
         {/* Botão voltar */}
         <div className="text-center mt-8">

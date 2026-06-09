@@ -119,6 +119,27 @@ export const CertificadosPage: React.FC = () => {
         </p>
       </div>
 
+      {/* Aviso: como validar (no topo, logo após o título) */}
+      <Card className="bg-blue-50 border-blue-200">
+        <CardContent className="pt-6">
+          <div className="flex items-start gap-3">
+            <FileText className="h-5 w-5 text-blue-600 mt-1" />
+            <div>
+              <h3 className="font-medium text-blue-900 mb-2">Como validar meu certificado?</h3>
+              <p className="text-sm text-blue-700 mb-3">
+                Todos os certificados emitidos possuem um código de validação único. Para validar a autenticidade
+                de um certificado:
+              </p>
+              <ol className="text-sm text-blue-700 space-y-1 ml-4">
+                <li>1. Acesse o site da instituição na página de validação de certificados</li>
+                <li>2. Insira o código de validação do certificado</li>
+                <li>3. O sistema confirmará os dados e a autenticidade do documento</li>
+              </ol>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Estatísticas */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
@@ -286,26 +307,6 @@ export const CertificadosPage: React.FC = () => {
         ))}
       </div>
 
-      {/* Informações sobre Validação */}
-      <Card className="bg-blue-50 border-blue-200">
-        <CardContent className="pt-6">
-          <div className="flex items-start gap-3">
-            <FileText className="h-5 w-5 text-blue-600 mt-1" />
-            <div>
-              <h3 className="font-medium text-blue-900 mb-2">Como validar meu certificado?</h3>
-              <p className="text-sm text-blue-700 mb-3">
-                Todos os certificados emitidos possuem um código de validação único. Para validar a autenticidade
-                de um certificado:
-              </p>
-              <ol className="text-sm text-blue-700 space-y-1 ml-4">
-                <li>1. Acesse o site da instituição na página de validação de certificados</li>
-                <li>2. Insira o código de validação do certificado</li>
-                <li>3. O sistema confirmará os dados e a autenticidade do documento</li>
-              </ol>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 };

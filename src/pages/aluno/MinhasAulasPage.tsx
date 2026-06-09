@@ -201,6 +201,47 @@ export const MinhasAulasPage: React.FC = () => {
         </p>
       </div>
 
+      {/* Aviso de Frequência (no topo, logo após o título) */}
+      {minhasAulas.some(aula => aula.percentualFrequencia < 75) && (
+        <Card className="border-yellow-200 bg-yellow-50">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <AlertCircle className="w-5 h-5 text-yellow-600" />
+              <div>
+                <CardTitle className="text-base text-yellow-900">
+                  Atenção à Frequência
+                </CardTitle>
+                <CardDescription className="text-yellow-700">
+                  Você possui disciplinas com frequência abaixo de 75%
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {minhasAulas
+                .filter(aula => aula.percentualFrequencia < 75)
+                .map(aula => (
+                  <div
+                    key={aula.disciplina.id}
+                    className="flex items-center justify-between p-3 bg-white rounded-lg"
+                  >
+                    <div>
+                      <p className="font-medium text-gray-900">{aula.disciplina.nome}</p>
+                      <p className="text-sm text-gray-600">
+                        Frequência: {formatPercent(aula.percentualFrequencia)}
+                      </p>
+                    </div>
+                    <Badge variant="destructive">
+                      Atenção
+                    </Badge>
+                  </div>
+                ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Cards de Estatísticas */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
@@ -432,47 +473,6 @@ export const MinhasAulasPage: React.FC = () => {
           )}
         </TabsContent>
       </Tabs>
-
-      {/* Avisos de Frequência */}
-      {minhasAulas.some(aula => aula.percentualFrequencia < 75) && (
-        <Card className="border-yellow-200 bg-yellow-50">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <AlertCircle className="w-5 h-5 text-yellow-600" />
-              <div>
-                <CardTitle className="text-base text-yellow-900">
-                  Atenção à Frequência
-                </CardTitle>
-                <CardDescription className="text-yellow-700">
-                  Você possui disciplinas com frequência abaixo de 75%
-                </CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {minhasAulas
-                .filter(aula => aula.percentualFrequencia < 75)
-                .map(aula => (
-                  <div 
-                    key={aula.disciplina.id} 
-                    className="flex items-center justify-between p-3 bg-white rounded-lg"
-                  >
-                    <div>
-                      <p className="font-medium text-gray-900">{aula.disciplina.nome}</p>
-                      <p className="text-sm text-gray-600">
-                        Frequência: {formatPercent(aula.percentualFrequencia)}
-                      </p>
-                    </div>
-                    <Badge variant="destructive">
-                      Atenção
-                    </Badge>
-                  </div>
-                ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Dialog de Videoaulas */}
       {disciplinaDialog && user && (
