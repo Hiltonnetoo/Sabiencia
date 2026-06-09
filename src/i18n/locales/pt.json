@@ -218,8 +218,8 @@
     "genericError": "Erro ao fazer login. Tente novamente.",
     "demoError": "Erro ao iniciar a demonstração. Tente novamente.",
     "roles": {
-      "managerTitle": "Gestor / CEO",
-      "managerSubtitle": "Sistema EAD - Login do Gestor/CEO",
+      "managerTitle": "CEO",
+      "managerSubtitle": "Sistema EAD - Login do CEO",
       "managerDescription": "Entre com suas credenciais para acessar o painel administrativo",
       "teacherTitle": "Acesso do Professor",
       "teacherSubtitle": "Sistema EAD - Login do Professor",

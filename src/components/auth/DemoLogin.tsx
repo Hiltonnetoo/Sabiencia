@@ -11,7 +11,7 @@ import { toast } from 'sonner';
 import { SabienciaMonogramBadge } from '../brand/SabienciaBrand';
 import { LanguageSwitcher } from '../shared/LanguageSwitcher';
 
-type DemoRole = 'aluno' | 'professor' | 'gestor';
+type DemoRole = 'aluno' | 'professor' | 'ceo';
 
 interface RoleConfig {
   bg: string;
@@ -63,7 +63,7 @@ const ROLE_CONFIGS: Record<DemoRole, RoleConfig> = {
       itemClass: 'text-blue-800',
     },
   },
-  gestor: {
+  ceo: {
     bg: 'from-yellow-50 via-white to-orange-50',
     iconBg: 'bg-yellow-100',
     iconColor: 'text-yellow-600',

@@ -173,7 +173,7 @@ export const LoginPage: React.FC = () => {
                 }}
                 className="w-full bg-gray-50 p-2.5 rounded hover:bg-gray-100 transition-colors text-left border"
               >
-                <p className="font-semibold text-gray-700">Gestor</p>
+                <p className="font-semibold text-gray-700">CEO</p>
                 <p className="text-gray-500">CPF: 000.000.000-01 | Senha: gestor123</p>
               </button>
               <button

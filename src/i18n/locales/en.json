@@ -218,8 +218,8 @@
     "genericError": "Could not sign in. Please try again.",
     "demoError": "Could not start the demo. Please try again.",
     "roles": {
-      "managerTitle": "Manager / CEO",
-      "managerSubtitle": "EAD System - Manager/CEO Login",
+      "managerTitle": "CEO",
+      "managerSubtitle": "EAD System - CEO Login",
       "managerDescription": "Enter your credentials to access the admin panel",
       "teacherTitle": "Teacher Access",
       "teacherSubtitle": "EAD System - Teacher Login",

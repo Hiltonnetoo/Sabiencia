@@ -20,7 +20,7 @@ export function DemoRoutes() {
 
         {/* Telas de login antigas -> rotas consolidadas /login/:role */}
         <Route path="loginaluno" element={<Navigate to="/login/aluno" replace />} />
-        <Route path="logingestor" element={<Navigate to="/login/gestor" replace />} />
+        <Route path="logingestor" element={<Navigate to="/login/ceo" replace />} />
 
         {/* Aliases legados */}
         <Route path="demo-gestor" element={<Navigate to="/demo/gestor" replace />} />

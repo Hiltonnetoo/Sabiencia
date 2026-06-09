@@ -24,7 +24,7 @@ const MethodologySection = lazy(() => import('./components/landing/MethodologySe
 const TestimonialsSection = lazy(() => import('./components/landing/TestimonialsSection'));
 const Footer = lazy(() => import('./components/landing/Footer'));
 
-// Login por papel (3 telas: /login/gestor · /login/professor · /login/aluno)
+// Login por papel (3 telas: /login/ceo · /login/professor · /login/aluno)
 const DemoLogin = lazy(() =>
   import('./components/auth/DemoLogin').then((m) => ({ default: m.DemoLogin }))
 );
@@ -33,7 +33,7 @@ const ProfessorRegisterPage = lazy(() => import('./pages/demo/ProfessorRegisterP
 // ============================================
 // LOGIN BY ROLE
 // ============================================
-const VALID_LOGIN_ROLES = ['gestor', 'professor', 'aluno'] as const;
+const VALID_LOGIN_ROLES = ['ceo', 'professor', 'aluno'] as const;
 
 const LoginByRole: React.FC = () => {
   const { role } = useParams<{ role: string }>();

@@ -62,7 +62,7 @@ credentials to type.
 | Demo home (choose a role) | `/demo` |
 | Student login screen | `/login/aluno` |
 | Teacher login screen | `/login/professor` |
-| Manager login screen | `/login/gestor` |
+| CEO login screen | `/login/ceo` |
 
 From the landing page, use **“Ver Demonstração”** (top bar) to open the role chooser `/demo`, or
 **“Login”** to reach the login screen `/login/aluno`. On any of the login screens, the
