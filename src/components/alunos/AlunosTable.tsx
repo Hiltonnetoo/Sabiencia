@@ -5,6 +5,7 @@
 
 import React, { useMemo, useState, memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Table,
   TableBody,
@@ -42,6 +43,7 @@ const AlunoRow = memo<{
   onEdit: (id: string) => void;
   onDelete: (aluno: Aluno) => void;
 }>(({ aluno, details, onView, onEdit, onDelete }) => {
+  const { t } = useTranslation();
   return (
     <TableRow>
       <TableCell>
@@ -77,7 +79,7 @@ const AlunoRow = memo<{
             size="sm"
             onClick={() => onView(aluno.id)}
             className="h-11 w-11 p-0"
-            aria-label={`Visualizar detalhes de ${aluno.nome_completo}`}
+            aria-label={t('components.alunosTable.viewAria', { name: aluno.nome_completo })}
           >
             <Eye className="h-5 w-5" />
           </Button>
@@ -86,7 +88,7 @@ const AlunoRow = memo<{
             size="sm"
             onClick={() => onEdit(aluno.id)}
             className="h-11 w-11 p-0"
-            aria-label={`Editar cadastro de ${aluno.nome_completo}`}
+            aria-label={t('components.alunosTable.editAria', { name: aluno.nome_completo })}
           >
             <Pencil className="h-5 w-5" />
           </Button>
@@ -95,7 +97,7 @@ const AlunoRow = memo<{
             size="sm"
             onClick={() => onDelete(aluno)}
             className="h-11 w-11 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-            aria-label={`Excluir aluno ${aluno.nome_completo}`}
+            aria-label={t('components.alunosTable.deleteAria', { name: aluno.nome_completo })}
           >
             <Trash2 className="h-5 w-5" />
           </Button>
@@ -114,6 +116,7 @@ export const AlunosTable: React.FC<AlunosTableProps> = ({
   onDelete,
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { alunos, getDetails: getAlunoDetailsMemo } = useAlunosComMatricula();
   const [sortColumn, setSortColumn] = useState<SortColumn>('nome_completo');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
@@ -191,9 +194,9 @@ export const AlunosTable: React.FC<AlunosTableProps> = ({
       return (
         <EmptyState
           icon={Users}
-          title="Nenhum aluno cadastrado"
-          description="Comece adicionando o primeiro aluno ao sistema. Você pode cadastrar alunos individualmente ou importar em lote."
-          actionLabel="Adicionar Primeiro Aluno"
+          title={t('components.alunosTable.emptyTitle')}
+          description={t('components.alunosTable.emptyDescription')}
+          actionLabel={t('components.alunosTable.emptyAction')}
           onAction={() => navigate('/gestor/alunos/novo')}
           iconColor="blue"
           showCard={false}
@@ -223,7 +226,7 @@ export const AlunosTable: React.FC<AlunosTableProps> = ({
     // Caso padrão
     return (
       <div className="text-center py-8 text-gray-500">
-        Nenhum aluno encontrado
+        {t('components.alunosTable.noStudentsFound')}
       </div>
     );
   };
@@ -240,7 +243,7 @@ export const AlunosTable: React.FC<AlunosTableProps> = ({
             onClick={() => toggleSort('nome_completo')}
             className="h-8 px-2 -ml-2"
           >
-            Nome
+            {t('components.alunosTable.name')}
             <ArrowUpDown className="ml-2 h-3 w-3" />
           </Button>
         </TableHead>
@@ -251,7 +254,7 @@ export const AlunosTable: React.FC<AlunosTableProps> = ({
             onClick={() => toggleSort('cpf')}
             className="h-8 px-2 -ml-2"
           >
-            CPF
+            {t('components.alunosTable.cpf')}
             <ArrowUpDown className="ml-2 h-3 w-3" />
           </Button>
         </TableHead>
@@ -262,14 +265,14 @@ export const AlunosTable: React.FC<AlunosTableProps> = ({
             onClick={() => toggleSort('email')}
             className="h-8 px-2 -ml-2"
           >
-            Email
+            {t('components.alunosTable.email')}
             <ArrowUpDown className="ml-2 h-3 w-3" />
           </Button>
         </TableHead>
-        <TableHead>Curso</TableHead>
-        <TableHead>Turma</TableHead>
-        <TableHead>Status</TableHead>
-        <TableHead className="text-right">Ações</TableHead>
+        <TableHead>{t('components.alunosTable.course')}</TableHead>
+        <TableHead>{t('components.alunosTable.class')}</TableHead>
+        <TableHead>{t('components.alunosTable.status')}</TableHead>
+        <TableHead className="text-right">{t('components.alunosTable.actions')}</TableHead>
       </TableRow>
     </TableHeader>
   );

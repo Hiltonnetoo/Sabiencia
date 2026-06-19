@@ -5,6 +5,7 @@
 
 import React, { useMemo, useState, memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Table,
   TableBody,
@@ -44,6 +45,7 @@ interface ProfessorRowProps {
 }
 
 const ProfessorRow = memo<ProfessorRowProps>(({ professor, turmas, onView, onEdit, onDelete }) => {
+  const { t } = useTranslation();
   return (
     <TableRow>
       <TableCell>
@@ -79,16 +81,16 @@ const ProfessorRow = memo<ProfessorRowProps>(({ professor, turmas, onView, onEdi
       </TableCell>
       <TableCell className="text-sm">
         {turmas.length > 0 ? (
-          <Badge variant="outline">{turmas.length} turma(s)</Badge>
+          <Badge variant="outline">{t('components.professoresTable.classesCount', { count: turmas.length })}</Badge>
         ) : (
           <span className="text-gray-600">-</span>
         )}
       </TableCell>
       <TableCell>
         {professor.ativo ? (
-          <Badge className="bg-green-100 text-green-800">Ativo</Badge>
+          <Badge className="bg-green-100 text-green-800">{t('components.professoresTable.statusActive')}</Badge>
         ) : (
-          <Badge className="bg-gray-100 text-gray-800">Inativo</Badge>
+          <Badge className="bg-gray-100 text-gray-800">{t('components.professoresTable.statusInactive')}</Badge>
         )}
       </TableCell>
       <TableCell className="text-right">
@@ -98,7 +100,7 @@ const ProfessorRow = memo<ProfessorRowProps>(({ professor, turmas, onView, onEdi
             size="sm"
             onClick={() => onView(professor.id)}
             className="h-11 w-11 p-0"
-            aria-label={`Visualizar detalhes de ${professor.nome_completo}`}
+            aria-label={t('components.professoresTable.viewAria', { name: professor.nome_completo })}
           >
             <Eye className="h-5 w-5" />
           </Button>
@@ -107,7 +109,7 @@ const ProfessorRow = memo<ProfessorRowProps>(({ professor, turmas, onView, onEdi
             size="sm"
             onClick={() => onEdit(professor.id)}
             className="h-11 w-11 p-0"
-            aria-label={`Editar cadastro de ${professor.nome_completo}`}
+            aria-label={t('components.professoresTable.editAria', { name: professor.nome_completo })}
           >
             <Pencil className="h-5 w-5" />
           </Button>
@@ -116,7 +118,7 @@ const ProfessorRow = memo<ProfessorRowProps>(({ professor, turmas, onView, onEdi
             size="sm"
             onClick={() => onDelete(professor)}
             className="h-11 w-11 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-            aria-label={`Excluir professor ${professor.nome_completo}`}
+            aria-label={t('components.professoresTable.deleteAria', { name: professor.nome_completo })}
           >
             <Trash2 className="h-5 w-5" />
           </Button>
@@ -135,6 +137,7 @@ export const ProfessoresTable: React.FC<ProfessoresTableProps> = ({
   onDelete,
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { professores, turmas, professorTurmaDisciplina } = useMockData();
   const [sortColumn, setSortColumn] = useState<SortColumn>('nome_completo');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
@@ -220,9 +223,9 @@ export const ProfessoresTable: React.FC<ProfessoresTableProps> = ({
       return (
         <EmptyState
           icon={GraduationCap}
-          title="Nenhum professor cadastrado"
-          description="Comece adicionando professores ao sistema para que possam gerenciar turmas e disciplinas."
-          actionLabel="Adicionar Professor"
+          title={t('components.professoresTable.emptyTitle')}
+          description={t('components.professoresTable.emptyDescription')}
+          actionLabel={t('components.professoresTable.emptyAction')}
           onAction={() => navigate('/gestor/professores/novo')}
           iconColor="purple"
           showCard={false}
@@ -262,7 +265,7 @@ export const ProfessoresTable: React.FC<ProfessoresTableProps> = ({
             onClick={() => toggleSort('nome_completo')}
             className="h-8 px-2 -ml-2"
           >
-            Nome
+            {t('components.professoresTable.name')}
             <ArrowUpDown className="ml-2 h-3 w-3" />
           </Button>
         </TableHead>
@@ -273,7 +276,7 @@ export const ProfessoresTable: React.FC<ProfessoresTableProps> = ({
             onClick={() => toggleSort('cpf')}
             className="h-8 px-2 -ml-2"
           >
-            CPF
+            {t('components.professoresTable.cpf')}
             <ArrowUpDown className="ml-2 h-3 w-3" />
           </Button>
         </TableHead>
@@ -284,14 +287,14 @@ export const ProfessoresTable: React.FC<ProfessoresTableProps> = ({
             onClick={() => toggleSort('email')}
             className="h-8 px-2 -ml-2"
           >
-            Email
+            {t('components.professoresTable.email')}
             <ArrowUpDown className="ml-2 h-3 w-3" />
           </Button>
         </TableHead>
-        <TableHead>Especialidades</TableHead>
-        <TableHead>Turmas</TableHead>
-        <TableHead>Status</TableHead>
-        <TableHead className="text-right">Ações</TableHead>
+        <TableHead>{t('components.professoresTable.specialties')}</TableHead>
+        <TableHead>{t('components.professoresTable.classes')}</TableHead>
+        <TableHead>{t('components.professoresTable.status')}</TableHead>
+        <TableHead className="text-right">{t('components.professoresTable.actions')}</TableHead>
       </TableRow>
     </TableHeader>
   );

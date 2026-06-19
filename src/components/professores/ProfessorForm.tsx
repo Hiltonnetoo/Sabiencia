@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../ui/button';
@@ -48,6 +49,7 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
   isLoading = false,
   onDirtyChange,
 }) => {
+  const { t } = useTranslation();
   const [especialidadesInput, setEspecialidadesInput] = useState('');
 
   const {
@@ -110,20 +112,20 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
       {/* SEÇÃO 1: DADOS PESSOAIS */}
       <Card>
         <CardHeader>
-          <CardTitle>Dados Pessoais</CardTitle>
-          <CardDescription>Informações básicas do professor</CardDescription>
+          <CardTitle>{t('components.professorForm.personalData')}</CardTitle>
+          <CardDescription>{t('components.professorForm.personalDataDesc')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             {/* Nome Completo */}
             <div className="md:col-span-2">
               <Label htmlFor="nome_completo">
-                Nome Completo <span className="text-red-500">*</span>
+                {t('components.professorForm.fullName')} <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="nome_completo"
                 {...register('nome_completo')}
-                placeholder="Nome completo do professor"
+                placeholder={t('components.professorForm.fullNamePlaceholder')}
               />
               {errors.nome_completo && (
                 <p className="text-sm text-red-500 mt-1">
@@ -135,12 +137,12 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
             {/* CPF */}
             <div>
               <Label htmlFor="cpf">
-                CPF <span className="text-red-500">*</span>
+                {t('components.professorForm.cpf')} <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="cpf"
                 {...register('cpf')}
-                placeholder="000.000.000-00"
+                placeholder={t('components.professorForm.cpfPlaceholder')}
                 maxLength={14}
               />
               {errors.cpf && (
@@ -152,11 +154,11 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
 
             {/* Registro Profissional */}
             <div>
-              <Label htmlFor="registro_profissional">Registro Profissional</Label>
+              <Label htmlFor="registro_profissional">{t('components.professorForm.professionalRegistration')}</Label>
               <Input
                 id="registro_profissional"
                 {...register('registro_profissional')}
-                placeholder="Ex: COREN, CRA, etc."
+                placeholder={t('components.professorForm.professionalRegistrationPlaceholder')}
               />
             </div>
           </div>
@@ -166,21 +168,21 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
       {/* SEÇÃO 2: CONTATO */}
       <Card>
         <CardHeader>
-          <CardTitle>Contato</CardTitle>
-          <CardDescription>Informações de contato do professor</CardDescription>
+          <CardTitle>{t('components.professorForm.contact')}</CardTitle>
+          <CardDescription>{t('components.professorForm.contactDesc')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             {/* Email */}
             <div>
               <Label htmlFor="email">
-                Email <span className="text-red-500">*</span>
+                {t('components.professorForm.email')} <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="email"
                 type="email"
                 {...register('email')}
-                placeholder="email@exemplo.com"
+                placeholder={t('components.professorForm.emailPlaceholder')}
               />
               {errors.email && (
                 <p className="text-sm text-red-500 mt-1">
@@ -192,12 +194,12 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
             {/* Telefone */}
             <div>
               <Label htmlFor="telefone">
-                Telefone <span className="text-red-500">*</span>
+                {t('components.professorForm.phone')} <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="telefone"
                 {...register('telefone')}
-                placeholder="(00) 00000-0000"
+                placeholder={t('components.professorForm.phonePlaceholder')}
                 maxLength={15}
               />
               {errors.telefone && (
@@ -213,19 +215,19 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
       {/* SEÇÃO 3: FORMAÇÃO E ESPECIALIDADES */}
       <Card>
         <CardHeader>
-          <CardTitle>Formação e Especialidades</CardTitle>
-          <CardDescription>Qualificações profissionais</CardDescription>
+          <CardTitle>{t('components.professorForm.educationAndSpecialties')}</CardTitle>
+          <CardDescription>{t('components.professorForm.educationAndSpecialtiesDesc')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Formação */}
           <div>
             <Label htmlFor="formacao">
-              Formação <span className="text-red-500">*</span>
+              {t('components.professorForm.education')} <span className="text-red-500">*</span>
             </Label>
             <Input
               id="formacao"
               {...register('formacao')}
-              placeholder="Ex: Graduação em Enfermagem, Mestrado em..."
+              placeholder={t('components.professorForm.educationPlaceholder')}
             />
             {errors.formacao && (
               <p className="text-sm text-red-500 mt-1">
@@ -237,7 +239,7 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
           {/* Especialidades */}
           <div>
             <Label htmlFor="especialidades">
-              Especialidades <span className="text-red-500">*</span>
+              {t('components.professorForm.specialties')} <span className="text-red-500">*</span>
             </Label>
             <div className="space-y-2">
               {/* Input com sugestões */}
@@ -246,7 +248,7 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
                   id="especialidades_input"
                   value={especialidadesInput}
                   onChange={(e) => setEspecialidadesInput(e.target.value)}
-                  placeholder="Digite para buscar ou adicionar especialidade..."
+                  placeholder={t('components.professorForm.specialtiesPlaceholder')}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       e.preventDefault();
@@ -297,7 +299,7 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
               )}
 
               <p className="text-xs text-gray-500">
-                Digite e pressione Enter ou clique em uma sugestão para adicionar
+                {t('components.professorForm.specialtiesHint')}
               </p>
             </div>
           </div>
@@ -307,16 +309,16 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
       {/* SEÇÃO 4: FOTO (OPCIONAL) */}
       <Card>
         <CardHeader>
-          <CardTitle>Foto do Professor</CardTitle>
-          <CardDescription>URL da foto de perfil (opcional)</CardDescription>
+          <CardTitle>{t('components.professorForm.photo')}</CardTitle>
+          <CardDescription>{t('components.professorForm.photoDesc')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div>
-            <Label htmlFor="foto_url">URL da Foto</Label>
+            <Label htmlFor="foto_url">{t('components.professorForm.photoUrl')}</Label>
             <Input
               id="foto_url"
               {...register('foto_url')}
-              placeholder="https://exemplo.com/foto.jpg"
+              placeholder={t('components.professorForm.photoUrlPlaceholder')}
             />
             {errors.foto_url && (
               <p className="text-sm text-red-500 mt-1">
@@ -335,14 +337,14 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
           onClick={onCancel}
           disabled={isLoading}
         >
-          Cancelar
+          {t('common.actions.cancel')}
         </Button>
         <LoadingButton 
           type="submit" 
           isLoading={isLoading}
-          loadingText="Salvando..."
+          loadingText={t('common.actions.saving')}
         >
-          Salvar Professor
+          {t('components.professorForm.saveTeacher')}
         </LoadingButton>
       </div>
     </form>
