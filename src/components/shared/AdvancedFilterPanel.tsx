@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import {
@@ -60,26 +61,27 @@ export function AdvancedFilterPanel({
   onSetDefault,
   activeFilterId,
 }: AdvancedFilterPanelProps) {
+  const { t, i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isSaveDialogOpen, setIsSaveDialogOpen] = useState(false);
   const [filterName, setFilterName] = useState('');
 
   const handleSaveFilter = () => {
     if (!filterName.trim()) {
-      toast.error('Digite um nome para o filtro');
+      toast.error(t('components.advancedFilterPanel.filterNameRequired'));
       return;
     }
 
     onSaveFilter(filterName);
     setFilterName('');
     setIsSaveDialogOpen(false);
-    toast.success('Filtro salvo com sucesso!');
+    toast.success(t('components.advancedFilterPanel.filterSaved'));
   };
 
   const handleDeleteFilter = (filterId: string, filterName: string) => {
-    if (confirm(`Deseja realmente excluir o filtro "${filterName}"?`)) {
+    if (confirm(t('components.advancedFilterPanel.confirmDelete', { name: filterName }))) {
       onDeleteFilter(filterId);
-      toast.success('Filtro excluído');
+      toast.success(t('components.advancedFilterPanel.filterDeleted'));
     }
   };
 
@@ -93,7 +95,7 @@ export function AdvancedFilterPanel({
             <PopoverTrigger asChild>
               <Button variant="outline" className="gap-2">
                 <Filter className="w-4 h-4" />
-                Filtros
+                {t('components.advancedFilterPanel.filters')}
                 {activeFiltersCount > 0 && (
                   <Badge variant="default" className="ml-1">
                     {activeFiltersCount}
@@ -108,12 +110,12 @@ export function AdvancedFilterPanel({
             <PopoverContent className="w-[600px] p-0" align="start">
               <div className="p-4 border-b">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-semibold">Filtros Avançados</h3>
+                  <h3 className="font-semibold">{t('components.advancedFilterPanel.advancedFilters')}</h3>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setIsOpen(false)}
-                    aria-label="Fechar filtros avançados"
+                    aria-label={t('components.advancedFilterPanel.closeAdvancedFilters')}
                   >
                     <X className="w-4 h-4" />
                   </Button>
@@ -132,7 +134,7 @@ export function AdvancedFilterPanel({
                   disabled={!hasActiveFilters}
                 >
                   <RotateCcw className="w-4 h-4 mr-2" />
-                  Limpar Tudo
+                  {t('components.advancedFilterPanel.clearAll')}
                 </Button>
                 
                 <div className="flex items-center gap-2">
@@ -146,14 +148,14 @@ export function AdvancedFilterPanel({
                     disabled={!hasActiveFilters}
                   >
                     <Save className="w-4 h-4 mr-2" />
-                    Salvar Filtro
+                    {t('components.advancedFilterPanel.saveFilter')}
                   </Button>
                   
                   <Button
                     size="sm"
                     onClick={() => setIsOpen(false)}
                   >
-                    Aplicar
+                    {t('components.advancedFilterPanel.apply')}
                   </Button>
                 </div>
               </div>
@@ -166,7 +168,7 @@ export function AdvancedFilterPanel({
               <PopoverTrigger asChild>
                 <Button variant="outline" className="gap-2">
                   <Star className="w-4 h-4" />
-                  Meus Filtros
+                  {t('components.advancedFilterPanel.myFilters')}
                   <Badge variant="secondary">
                     {savedFilters.length}
                   </Badge>
@@ -174,11 +176,11 @@ export function AdvancedFilterPanel({
               </PopoverTrigger>
               <PopoverContent className="w-80" align="start">
                 <div className="space-y-2">
-                  <h4 className="font-semibold text-sm">Filtros Salvos</h4>
+                  <h4 className="font-semibold text-sm">{t('components.advancedFilterPanel.savedFilters')}</h4>
                   
                   {savedFilters.length === 0 ? (
                     <p className="text-sm text-gray-500 py-4 text-center">
-                      Nenhum filtro salvo
+                      {t('components.advancedFilterPanel.noSavedFilters')}
                     </p>
                   ) : (
                     <div className="space-y-1">
@@ -202,12 +204,12 @@ export function AdvancedFilterPanel({
                               </span>
                               {filter.isDefault && (
                                 <Badge variant="secondary" className="text-xs">
-                                  Padrão
+                                  {t('components.advancedFilterPanel.default')}
                                 </Badge>
                               )}
                             </div>
                             <p className="text-xs text-gray-500">
-                              {new Date(filter.createdAt).toLocaleDateString('pt-BR')}
+                              {new Date(filter.createdAt).toLocaleDateString(i18n.language === 'en' ? 'en-US' : 'pt-BR')}
                             </p>
                           </button>
                           
@@ -217,8 +219,8 @@ export function AdvancedFilterPanel({
                               size="sm"
                               onClick={() => onSetDefault(filter.id)}
                               className="h-7 w-7 p-0"
-                              title="Definir como padrão"
-                              aria-label={`Definir filtro ${filter.name} como padrão`}
+                              title={t('components.advancedFilterPanel.setAsDefault')}
+                              aria-label={t('components.advancedFilterPanel.setFilterAsDefault', { name: filter.name })}
                             >
                               <Star
                                 className={cn(
@@ -232,8 +234,8 @@ export function AdvancedFilterPanel({
                               size="sm"
                               onClick={() => handleDeleteFilter(filter.id, filter.name)}
                               className="h-7 w-7 p-0"
-                              title="Excluir"
-                              aria-label={`Excluir filtro ${filter.name}`}
+                              title={t('components.advancedFilterPanel.delete')}
+                              aria-label={t('components.advancedFilterPanel.deleteFilter', { name: filter.name })}
                             >
                               <Trash2 className="w-3 h-3 text-red-600" />
                             </Button>
@@ -252,7 +254,7 @@ export function AdvancedFilterPanel({
         {hasActiveFilters && (
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-600">
-              {activeFiltersCount} filtro{activeFiltersCount !== 1 ? 's' : ''} ativo{activeFiltersCount !== 1 ? 's' : ''}
+              {t('components.advancedFilterPanel.activeFilters', { count: activeFiltersCount })}
             </span>
             {activeFiltersLabels.length > 0 && (
               <div className="flex flex-wrap gap-1">
@@ -276,18 +278,18 @@ export function AdvancedFilterPanel({
       <Dialog open={isSaveDialogOpen} onOpenChange={setIsSaveDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Salvar Filtro</DialogTitle>
+            <DialogTitle>{t('components.advancedFilterPanel.saveDialogTitle')}</DialogTitle>
             <DialogDescription>
-              Dê um nome para este filtro para poder reutilizá-lo depois.
+              {t('components.advancedFilterPanel.saveDialogDescription')}
             </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="filter-name">Nome do Filtro</Label>
+              <Label htmlFor="filter-name">{t('components.advancedFilterPanel.filterNameLabel')}</Label>
               <Input
                 id="filter-name"
-                placeholder="Ex: Alunos Ativos 2025.2"
+                placeholder={t('components.advancedFilterPanel.filterNamePlaceholder')}
                 value={filterName}
                 onChange={(e) => setFilterName(e.target.value)}
                 onKeyDown={(e) => {
@@ -301,7 +303,7 @@ export function AdvancedFilterPanel({
 
             {activeFiltersLabels.length > 0 && (
               <div className="space-y-2">
-                <Label className="text-sm text-gray-600">Filtros incluídos:</Label>
+                <Label className="text-sm text-gray-600">{t('components.advancedFilterPanel.includedFilters')}</Label>
                 <div className="flex flex-wrap gap-1">
                   {activeFiltersLabels.map((label, index) => (
                     <Badge key={index} variant="secondary">
@@ -321,11 +323,11 @@ export function AdvancedFilterPanel({
                 setFilterName('');
               }}
             >
-              Cancelar
+              {t('common.actions.cancel')}
             </Button>
             <Button onClick={handleSaveFilter}>
               <Save className="w-4 h-4 mr-2" />
-              Salvar
+              {t('components.advancedFilterPanel.saveFilter')}
             </Button>
           </DialogFooter>
         </DialogContent>

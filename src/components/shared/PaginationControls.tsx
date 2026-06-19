@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import {
   Select,
@@ -64,6 +65,7 @@ export function PaginationControls({
   showPageInfo = true,
   compact = false,
 }: PaginationControlsProps) {
+  const { t } = useTranslation();
   const pageNumbers = getPageNumbers();
 
   if (totalItems === 0) {
@@ -82,20 +84,20 @@ export function PaginationControls({
         {/* Info de itens */}
         {showPageInfo && (
           <div className="text-sm text-gray-600">
-            Mostrando{' '}
+            {t('components.pagination.showing')}{' '}
             <span className="font-semibold">
               {startIndex + 1}-{endIndex}
             </span>{' '}
-            de{' '}
+            {t('components.pagination.of')}{' '}
             <span className="font-semibold">{totalItems}</span>{' '}
-            {totalItems === 1 ? 'item' : 'itens'}
+            {t('components.pagination.item', { count: totalItems })}
           </div>
         )}
 
         {/* Seletor de itens por página */}
         {showPageSizeSelector && (
           <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">Itens por página:</span>
+            <span className="text-sm text-gray-600">{t('components.pagination.itemsPerPage')}</span>
             <Select
               value={String(pageSize)}
               onValueChange={(value) => onPageSizeChange(Number(value))}
@@ -125,7 +127,8 @@ export function PaginationControls({
               size="sm"
               onClick={onFirstPage}
               disabled={!hasPreviousPage}
-              title="Primeira página"
+              title={t('components.pagination.firstPage')}
+              aria-label={t('components.pagination.firstPage')}
               className="h-9 w-9 p-0"
             >
               <ChevronsLeft className="h-4 w-4" />
@@ -138,7 +141,8 @@ export function PaginationControls({
             size="sm"
             onClick={onPreviousPage}
             disabled={!hasPreviousPage}
-            title="Página anterior"
+            title={t('components.pagination.previousPage')}
+            aria-label={t('components.pagination.previousPage')}
             className="h-9 w-9 p-0"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -194,7 +198,8 @@ export function PaginationControls({
             size="sm"
             onClick={onNextPage}
             disabled={!hasNextPage}
-            title="Próxima página"
+            title={t('components.pagination.nextPage')}
+            aria-label={t('components.pagination.nextPage')}
             className="h-9 w-9 p-0"
           >
             <ChevronRight className="h-4 w-4" />
@@ -207,7 +212,8 @@ export function PaginationControls({
               size="sm"
               onClick={onLastPage}
               disabled={!hasNextPage}
-              title="Última página"
+              title={t('components.pagination.lastPage')}
+              aria-label={t('components.pagination.lastPage')}
               className="h-9 w-9 p-0"
             >
               <ChevronsRight className="h-4 w-4" />

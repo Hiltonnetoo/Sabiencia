@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
@@ -28,7 +29,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { ptBR, enUS } from 'date-fns/locale';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 
 interface AuditLogViewerProps {
@@ -84,6 +85,8 @@ export const AuditLogViewer: React.FC<AuditLogViewerProps> = ({
   limit = 50,
   showFilters = true,
 }) => {
+  const { t, i18n } = useTranslation();
+  const dateLocale = i18n.language?.startsWith('en') ? enUS : ptBR;
   const [actionFilter, setActionFilter] = useState<AuditAction | 'all'>('all');
   const [resourceFilter, setResourceFilter] = useState<AuditResource | 'all'>('all');
 
@@ -121,9 +124,9 @@ export const AuditLogViewer: React.FC<AuditLogViewerProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Histórico de Atividades</CardTitle>
+        <CardTitle>{t('components.auditLogViewer.title')}</CardTitle>
         <CardDescription>
-          {logs.length} {logs.length === 1 ? 'ação registrada' : 'ações registradas'}
+          {t('components.auditLogViewer.actionsCount', { count: logs.length })}
         </CardDescription>
         
         {showFilters && (
@@ -131,15 +134,15 @@ export const AuditLogViewer: React.FC<AuditLogViewerProps> = ({
             <div className="w-full max-w-xs">
               <Select value={actionFilter} onValueChange={(value) => setActionFilter(value as AuditAction | 'all')}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Filtrar por ação" />
+                  <SelectValue placeholder={t('components.auditLogViewer.filterByAction')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Todas as ações</SelectItem>
-                  <SelectItem value={AuditAction.CREATE}>Criação</SelectItem>
-                  <SelectItem value={AuditAction.UPDATE}>Edição</SelectItem>
-                  <SelectItem value={AuditAction.DELETE}>Exclusão</SelectItem>
-                  <SelectItem value={AuditAction.LOGIN}>Login</SelectItem>
-                  <SelectItem value={AuditAction.EXPORT}>Exportação</SelectItem>
+                  <SelectItem value="all">{t('components.auditLogViewer.allActions')}</SelectItem>
+                  <SelectItem value={AuditAction.CREATE}>{t('components.auditLogViewer.actionCreate')}</SelectItem>
+                  <SelectItem value={AuditAction.UPDATE}>{t('components.auditLogViewer.actionUpdate')}</SelectItem>
+                  <SelectItem value={AuditAction.DELETE}>{t('components.auditLogViewer.actionDelete')}</SelectItem>
+                  <SelectItem value={AuditAction.LOGIN}>{t('components.auditLogViewer.actionLogin')}</SelectItem>
+                  <SelectItem value={AuditAction.EXPORT}>{t('components.auditLogViewer.actionExport')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -147,15 +150,15 @@ export const AuditLogViewer: React.FC<AuditLogViewerProps> = ({
             <div className="w-full max-w-xs">
               <Select value={resourceFilter} onValueChange={(value) => setResourceFilter(value as AuditResource | 'all')}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Filtrar por recurso" />
+                  <SelectValue placeholder={t('components.auditLogViewer.filterByResource')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Todos os recursos</SelectItem>
-                  <SelectItem value={AuditResource.ALUNO}>Alunos</SelectItem>
-                  <SelectItem value={AuditResource.PROFESSOR}>Professores</SelectItem>
-                  <SelectItem value={AuditResource.TURMA}>Turmas</SelectItem>
-                  <SelectItem value={AuditResource.MATERIAL}>Materiais</SelectItem>
-                  <SelectItem value={AuditResource.NOTA}>Notas</SelectItem>
+                  <SelectItem value="all">{t('components.auditLogViewer.allResources')}</SelectItem>
+                  <SelectItem value={AuditResource.ALUNO}>{t('components.auditLogViewer.resourceStudents')}</SelectItem>
+                  <SelectItem value={AuditResource.PROFESSOR}>{t('components.auditLogViewer.resourceTeachers')}</SelectItem>
+                  <SelectItem value={AuditResource.TURMA}>{t('components.auditLogViewer.resourceClasses')}</SelectItem>
+                  <SelectItem value={AuditResource.MATERIAL}>{t('components.auditLogViewer.resourceMaterials')}</SelectItem>
+                  <SelectItem value={AuditResource.NOTA}>{t('components.auditLogViewer.resourceGrades')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -167,7 +170,7 @@ export const AuditLogViewer: React.FC<AuditLogViewerProps> = ({
           {logs.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
               <Clock className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-              <p>Nenhuma atividade registrada</p>
+              <p>{t('components.auditLogViewer.noActivity')}</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -202,7 +205,7 @@ export const AuditLogViewer: React.FC<AuditLogViewerProps> = ({
                           <Clock className="h-3 w-3" />
                           {formatDistanceToNow(log.timestamp, { 
                             addSuffix: true, 
-                            locale: ptBR 
+                            locale: dateLocale 
                           })}
                         </div>
                       </div>
@@ -210,7 +213,7 @@ export const AuditLogViewer: React.FC<AuditLogViewerProps> = ({
                       {log.details && Object.keys(log.details).length > 0 && (
                         <details className="text-xs text-gray-600 mt-2">
                           <summary className="cursor-pointer hover:text-gray-900">
-                            Ver detalhes
+                            {t('components.auditLogViewer.viewDetails')}
                           </summary>
                           <pre className="mt-2 p-2 bg-gray-100 rounded overflow-x-auto">
                             {JSON.stringify(log.details, null, 2)}

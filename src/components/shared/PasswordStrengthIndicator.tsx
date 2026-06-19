@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '../ui/utils';
 
 interface PasswordStrengthIndicatorProps {
@@ -28,6 +29,8 @@ export function PasswordStrengthIndicator({
   password, 
   showDetails = true 
 }: PasswordStrengthIndicatorProps) {
+  const { t } = useTranslation();
+
   const calculateStrength = (pwd: string): StrengthResult => {
     const checks = {
       length: pwd.length >= 8,
@@ -39,28 +42,28 @@ export function PasswordStrengthIndicator({
 
     const score = Object.values(checks).filter(Boolean).length;
 
-    let label = 'Muito Fraca';
+    let label = t('components.passwordStrength.veryWeak');
     let color = 'text-red-600';
     let bgColor = 'bg-red-600';
 
     if (score === 0) {
-      label = 'Muito Fraca';
+      label = t('components.passwordStrength.veryWeak');
       color = 'text-red-600';
       bgColor = 'bg-red-600';
     } else if (score <= 2) {
-      label = 'Fraca';
+      label = t('components.passwordStrength.weak');
       color = 'text-orange-600';
       bgColor = 'bg-orange-600';
     } else if (score === 3) {
-      label = 'Média';
+      label = t('components.passwordStrength.medium');
       color = 'text-yellow-600';
       bgColor = 'bg-yellow-600';
     } else if (score === 4) {
-      label = 'Boa';
+      label = t('components.passwordStrength.good');
       color = 'text-blue-600';
       bgColor = 'bg-blue-600';
     } else {
-      label = 'Forte';
+      label = t('components.passwordStrength.strong');
       color = 'text-green-600';
       bgColor = 'bg-green-600';
     }
@@ -78,7 +81,7 @@ export function PasswordStrengthIndicator({
       {/* Barra de progresso */}
       <div className="space-y-1">
         <div className="flex items-center justify-between">
-          <span className="text-xs text-gray-600">Força da senha:</span>
+          <span className="text-xs text-gray-600">{t('components.passwordStrength.strengthLabel')}</span>
           <span className={cn('text-xs font-semibold', strength.color)}>
             {strength.label}
           </span>
@@ -94,27 +97,27 @@ export function PasswordStrengthIndicator({
       {/* Detalhes dos requisitos */}
       {showDetails && (
         <div className="space-y-1">
-          <p className="text-xs text-gray-600">Requisitos:</p>
+          <p className="text-xs text-gray-600">{t('components.passwordStrength.requirements')}</p>
           <ul className="space-y-1">
             <RequirementItem
               met={strength.checks.length}
-              text="Mínimo de 8 caracteres"
+              text={t('components.passwordStrength.minLength')}
             />
             <RequirementItem
               met={strength.checks.lowercase}
-              text="Letras minúsculas (a-z)"
+              text={t('components.passwordStrength.lowercase')}
             />
             <RequirementItem
               met={strength.checks.uppercase}
-              text="Letras maiúsculas (A-Z)"
+              text={t('components.passwordStrength.uppercase')}
             />
             <RequirementItem
               met={strength.checks.number}
-              text="Números (0-9)"
+              text={t('components.passwordStrength.number')}
             />
             <RequirementItem
               met={strength.checks.special}
-              text="Caracteres especiais (!@#$%)"
+              text={t('components.passwordStrength.special')}
             />
           </ul>
         </div>

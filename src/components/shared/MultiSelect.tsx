@@ -1,8 +1,5 @@
-// ============================================
-// MULTI SELECT - Seleção múltipla com checkbox
-// ============================================
-
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
 import { Checkbox } from '../ui/checkbox';
@@ -36,11 +33,13 @@ export function MultiSelect({
   options,
   value,
   onChange,
-  placeholder = 'Selecione...',
+  placeholder,
   maxDisplay = 2,
   className,
 }: MultiSelectProps) {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const resolvedPlaceholder = placeholder ?? t('components.multiSelect.selectOptions');
 
   const handleToggle = (optionValue: string) => {
     const newValue = value.includes(optionValue)
@@ -71,7 +70,7 @@ export function MultiSelect({
           >
             <span className="flex items-center gap-2 flex-1 min-w-0">
               {selectedCount === 0 ? (
-                <span className="text-gray-500">{placeholder}</span>
+                <span className="text-gray-500">{resolvedPlaceholder}</span>
               ) : (
                 <>
                   <span className="truncate">
@@ -107,8 +106,8 @@ export function MultiSelect({
           <div className="p-3 border-b bg-gray-50 flex items-center justify-between">
             <span className="text-sm font-semibold">
               {selectedCount > 0
-                ? `${selectedCount} selecionado${selectedCount !== 1 ? 's' : ''}`
-                : 'Selecione opções'}
+                ? t('components.multiSelect.selected', { count: selectedCount })
+                : t('components.multiSelect.selectOptions')}
             </span>
             
             {selectedCount > 0 && (
@@ -119,7 +118,7 @@ export function MultiSelect({
                 className="h-7 text-xs"
               >
                 <X className="w-3 h-3 mr-1" />
-                Limpar
+                {t('common.actions.clear')}
               </Button>
             )}
           </div>
@@ -127,7 +126,7 @@ export function MultiSelect({
           <div className="p-2 max-h-[300px] overflow-y-auto">
             {options.length === 0 ? (
               <div className="text-sm text-gray-500 text-center py-4">
-                Nenhuma opção disponível
+                {t('components.multiSelect.noOptions')}
               </div>
             ) : (
               <div className="space-y-1">
