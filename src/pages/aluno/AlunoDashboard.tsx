@@ -7,6 +7,7 @@ import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
+import { useMockData } from '../../contexts/MockDataContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
@@ -22,7 +23,6 @@ import {
   AlertCircle,
   CheckCircle
 } from 'lucide-react';
-import { mockData } from '../../data/mockData';
 import { 
   calculateFrequenciaPercentual, 
   calculateMedia,
@@ -36,39 +36,40 @@ export const AlunoDashboard: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user } = useAuth();
+  const { matriculas, turmas, cursos, disciplinas, notas, frequencias, materiais, pagamentos, comunicados } = useMockData();
 
   if (!user) return null;
 
   // OTIMIZADO: Memoizar cálculos para prevenir recálculos em cada render
   const dadosAluno = useMemo(() => {
     // Encontrar matrícula do aluno
-    const matricula = mockData.matriculas.find(m => m.aluno_id === user.id);
-    const turma = matricula ? mockData.turmas.find(t => t.id === matricula.turma_id) : null;
-    const curso = turma ? mockData.cursos.find(c => c.id === turma.curso_id) : null;
+    const matricula = matriculas.find(m => m.aluno_id === user.id);
+    const turma = matricula ? turmas.find(t => t.id === matricula.turma_id) : null;
+    const curso = turma ? cursos.find(c => c.id === turma.curso_id) : null;
 
     // Disciplinas do curso
     const disciplinasCurso = curso 
-      ? mockData.disciplinas.filter(d => d.curso_id === curso.id)
+      ? disciplinas.filter(d => d.curso_id === curso.id)
       : [];
 
     // Notas do aluno
-    const minhasNotas = mockData.notas.filter(n => n.aluno_id === user.id);
+    const minhasNotas = notas.filter(n => n.aluno_id === user.id);
     
     // Calcular média geral
     const mediaGeral = minhasNotas.length > 0 ? calculateMedia(minhasNotas) : 0;
     const situacao = calculateSituacao(mediaGeral);
 
     // Frequência do aluno
-    const minhaFrequencia = mockData.frequencias.filter(f => f.aluno_id === user.id);
+    const minhaFrequencia = frequencias.filter(f => f.aluno_id === user.id);
     const percentualFrequencia = calculateFrequenciaPercentual(minhaFrequencia);
 
     // Materiais disponíveis
-    const materiaisDisponiveis = mockData.materiais.filter(m => 
+    const materiaisDisponiveis = materiais.filter(m => 
       disciplinasCurso.some(d => d.id === m.disciplina_id) && m.visivel_alunos
     );
 
     // Pagamentos
-    const meusPagamentos = mockData.pagamentos.filter(p => p.aluno_id === user.id);
+    const meusPagamentos = pagamentos.filter(p => p.aluno_id === user.id);
     const pagamentosPendentes = meusPagamentos.filter(p => 
       p.status === 'pendente' || p.status === 'vencido'
     );
@@ -77,7 +78,7 @@ export const AlunoDashboard: React.FC = () => {
     )[0];
 
     // Comunicados
-    const comunicadosParaMim = [...mockData.comunicados]
+    const comunicadosParaMim = [...comunicados]
       .filter(c => 
         c.destinatarios === 'todos_alunos' || 
         (c.destinatarios === 'turma_especifica' && c.turma_id === matricula?.turma_id)
@@ -107,7 +108,7 @@ export const AlunoDashboard: React.FC = () => {
       comunicadosParaMim,
       progressoCurso
     };
-  }, [user.id]);
+  }, [user.id, matriculas, turmas, cursos, disciplinas, notas, frequencias, materiais, pagamentos, comunicados]);
 
   const {
     turma,

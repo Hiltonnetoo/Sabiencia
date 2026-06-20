@@ -19,7 +19,7 @@ import {
   FileText,
   MessageSquare
 } from 'lucide-react';
-import { mockData } from '../../data/mockData';
+import { useMockData } from '../../contexts/MockDataContext';
 import { formatRelativeTime } from '../../utils/formatters';
 import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
 
@@ -27,26 +27,37 @@ export const ProfessorDashboard: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user } = useAuth();
+  const { 
+    turmas, 
+    disciplinas, 
+    alunos, 
+    cursos, 
+    matriculas, 
+    professorTurmaDisciplina, 
+    materiais, 
+    observacoes, 
+    comunicados 
+  } = useMockData();
 
   if (!user) return null;
 
   // Mapas O(1) memoizados — evitam O(N²) nos lookups de render
   const dadosProfessor = useMemo(() => {
     // Construir Maps para lookup O(1)
-    const turmasMap      = new Map(mockData.turmas.map(t => [t.id, t]));
-    const disciplinasMap = new Map(mockData.disciplinas.map(d => [d.id, d]));
-    const alunosMap      = new Map(mockData.alunos.map(a => [a.id, a]));
-    const cursosMap      = new Map(mockData.cursos.map(c => [c.id, c]));
+    const turmasMap      = new Map(turmas.map(t => [t.id, t]));
+    const disciplinasMap = new Map(disciplinas.map(d => [d.id, d]));
+    const alunosMap      = new Map(alunos.map(a => [a.id, a]));
+    const cursosMap      = new Map(cursos.map(c => [c.id, c]));
 
     // Pré-computar contagem de alunos ativos por turma (O(matriculas))
     const alunosPorTurmaMap = new Map<string, number>();
-    for (const m of mockData.matriculas) {
+    for (const m of matriculas) {
       if (m.status === 'ativo') {
         alunosPorTurmaMap.set(m.turma_id, (alunosPorTurmaMap.get(m.turma_id) || 0) + 1);
       }
     }
 
-    const minhasAtribuicoes = mockData.professorTurmaDisciplina.filter(
+    const minhasAtribuicoes = professorTurmaDisciplina.filter(
       ptd => ptd.professor_id === user.id
     );
 
@@ -60,21 +71,21 @@ export const ProfessorDashboard: React.FC = () => {
       .map(discId => disciplinasMap.get(discId))
       .filter(Boolean);
 
-    const meusAlunos = mockData.matriculas
+    const meusAlunos = matriculas
       .filter(m => minhasTurmaIds.has(m.turma_id) && m.status === 'ativo')
       .map(m => alunosMap.get(m.aluno_id))
       .filter(Boolean);
 
-    const meusMateriais = mockData.materiais.filter(m => m.professor_id === user.id);
+    const meusMateriais = materiais.filter(m => m.professor_id === user.id);
 
-    const minhasObservacoes = [...mockData.observacoes]
+    const minhasObservacoes = [...observacoes]
       .filter(o => o.professor_id === user.id)
       .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
       .slice(0, 5);
 
-    const totalObservacoes = mockData.observacoes.filter(o => o.professor_id === user.id).length;
+    const totalObservacoes = observacoes.filter(o => o.professor_id === user.id).length;
 
-    const comunicados = [...mockData.comunicados]
+    const meusComunicados = [...comunicados]
       .filter(c => c.remetente_id === user.id)
       .sort((a, b) => new Date(b.data_envio).getTime() - new Date(a.data_envio).getTime())
       .slice(0, 3);
@@ -86,12 +97,12 @@ export const ProfessorDashboard: React.FC = () => {
       meusMateriais,
       minhasObservacoes,
       totalObservacoes,
-      comunicados,
+      comunicados: meusComunicados,
       cursosMap,
       alunosMap,
       alunosPorTurmaMap,
     };
-  }, [user.id]);
+  }, [user.id, turmas, disciplinas, alunos, cursos, matriculas, professorTurmaDisciplina, materiais, observacoes, comunicados]);
 
   const {
     minhasTurmas,
