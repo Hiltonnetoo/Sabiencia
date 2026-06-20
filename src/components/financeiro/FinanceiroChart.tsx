@@ -20,29 +20,8 @@ export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
     });
     return () => { mounted = false; };
   }, []);
-  if (!Recharts) {
-    return (
-      <Card className="p-6">
-        <div className="flex items-center justify-center h-[300px] text-gray-500">{t('components.financeiroChart.loading')}</div>
-      </Card>
-    );
-  }
   // Garantir que pagamentos seja sempre um array válido
   const safePagamentos = Array.isArray(pagamentos) ? pagamentos : [];
-  
-  // Se não houver pagamentos, renderizar estado vazio para ambos os tipos
-  if (safePagamentos.length === 0) {
-    return (
-      <Card className="p-6">
-        <h3 className="font-semibold text-gray-900 mb-4">
-          {tipo === 'mensal' ? t('components.financeiroChart.monthlyRevenue') : t('components.financeiroChart.distributionByStatus')}
-        </h3>
-        <div className="flex items-center justify-center h-[300px] text-gray-500">
-          {t('components.financeiroChart.noPayments')}
-        </div>
-      </Card>
-    );
-  }
   
   const dadosMensais = useMemo(() => {
     const meses = [0,1,2,3,4,5,6,7,8,9,10,11].map(i => t(`components.financeiroChart.monthShort.${i}`));
@@ -72,7 +51,7 @@ export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
         ? meses.indexOf(mesA) - meses.indexOf(mesB)
         : parseInt(anoA) - parseInt(anoB);
     });
-  }, [safePagamentos]);
+  }, [safePagamentos, t]);
 
   const dadosStatus = useMemo(() => {
     const totais = { pago: 0, pendente: 0, vencido: 0, cancelado: 0 };
@@ -89,7 +68,31 @@ export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
       { name: t('components.financeiroChart.overdue'), value: totais.vencido, color: '#dc2626' },
       { name: t('components.financeiroChart.cancelled'), value: totais.cancelado, color: '#6b7280' },
     ].filter(item => item.value > 0);
-  }, [safePagamentos]);
+  }, [safePagamentos, t]);
+
+  if (!Recharts) {
+    return (
+      <Card className="p-6">
+        <div className="flex items-center justify-center h-[300px] text-gray-500">{t('components.financeiroChart.loading')}</div>
+      </Card>
+    );
+  }
+  
+  // Se não houver pagamentos, renderizar estado vazio para ambos os tipos
+  if (safePagamentos.length === 0) {
+    return (
+      <Card className="p-6">
+        <h3 className="font-semibold text-gray-900 mb-4">
+          {tipo === 'mensal' ? t('components.financeiroChart.monthlyRevenue') : t('components.financeiroChart.distributionByStatus')}
+        </h3>
+        <div className="flex items-center justify-center h-[300px] text-gray-500">
+          {t('components.financeiroChart.noPayments')}
+        </div>
+      </Card>
+    );
+  }
+  
+
 
   if (tipo === 'mensal') {
     // Se não houver dados, mostrar mensagem
