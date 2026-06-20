@@ -2,6 +2,7 @@
 // RELATÓRIO CARD - Card de relatório
 // ============================================
 
+import { useTranslation } from 'react-i18next';
 import { FileText, Download, Eye, TrendingUp, TrendingDown } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
@@ -24,15 +25,6 @@ interface RelatorioCardProps {
   onExportar?: () => void;
 }
 
-const TIPO_LABELS: Record<TipoRelatorio, string> = {
-  desempenho_aluno: 'Desempenho do Aluno',
-  desempenho_turma: 'Desempenho da Turma',
-  frequencia: 'Frequência',
-  financeiro: 'Financeiro',
-  disciplina: 'Por Disciplina',
-  observacoes: 'Observações',
-  geral: 'Relatório Geral',
-};
 
 const TIPO_COLORS: Record<TipoRelatorio, string> = {
   desempenho_aluno: 'bg-blue-100 text-blue-700',
@@ -54,7 +46,18 @@ export function RelatorioCard({
   onVisualizar,
   onExportar,
 }: RelatorioCardProps) {
-  
+  const { t } = useTranslation();
+
+  const TIPO_LABELS: Record<TipoRelatorio, string> = {
+    desempenho_aluno: t('components.relatorioCard.typeStudentPerformance'),
+    desempenho_turma: t('components.relatorioCard.typeClassPerformance'),
+    frequencia: t('components.relatorioCard.typeAttendance'),
+    financeiro: t('components.relatorioCard.typeFinancial'),
+    disciplina: t('components.relatorioCard.typeSubject'),
+    observacoes: t('components.relatorioCard.typeObservations'),
+    geral: t('components.relatorioCard.typeGeneral'),
+  };
+
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6 hover:border-gray-300 transition-colors">
       {/* Header */}
@@ -76,10 +79,10 @@ export function RelatorioCard({
       {/* Info */}
       <div className="flex items-center gap-4 mb-4 text-sm text-gray-600">
         {periodo && (
-          <span>Período: <strong>{periodo}</strong></span>
+          <span>{t('components.relatorioCard.period')} <strong>{periodo}</strong></span>
         )}
         {dataGeracao && (
-          <span>Gerado em: <strong>{formatDate(dataGeracao)}</strong></span>
+          <span>{t('components.relatorioCard.generatedOn')} <strong>{formatDate(dataGeracao)}</strong></span>
         )}
       </div>
 
@@ -123,7 +126,7 @@ export function RelatorioCard({
             className="flex-1"
           >
             <Eye className="w-4 h-4 mr-2" />
-            Visualizar
+            {t('components.relatorioCard.view')}
           </Button>
         )}
         {onExportar && (
@@ -133,7 +136,7 @@ export function RelatorioCard({
             onClick={onExportar}
           >
             <Download className="w-4 h-4 mr-2" />
-            Exportar
+            {t('components.relatorioCard.export')}
           </Button>
         )}
       </div>

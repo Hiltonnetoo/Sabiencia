@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMockData } from '../../contexts/MockDataContext';
 import { useVideoaulas } from '../../contexts/VideoaulasContext';
@@ -25,6 +26,7 @@ import { toast } from 'sonner';
 import type { AulaAoVivo } from '../../types/videoaulas';
 
 export const GerenciarLivesPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { disciplinas, turmas } = useMockData();
   const {
@@ -118,19 +120,19 @@ export const GerenciarLivesPage: React.FC = () => {
   const handleSalvar = () => {
     // Validações
     if (!formData.disciplina_id) {
-      toast.error('Selecione uma disciplina');
+      toast.error(t('professor.gerenciarLives.toasts.selectSubject'));
       return;
     }
     if (!formData.titulo.trim()) {
-      toast.error('Digite um título para a aula');
+      toast.error(t('professor.gerenciarLives.toasts.enterTitle'));
       return;
     }
     if (!formData.data_inicio || !formData.hora_inicio) {
-      toast.error('Defina a data e hora de início');
+      toast.error(t('professor.gerenciarLives.toasts.defineDateTime'));
       return;
     }
     if (!formData.link_sala.trim()) {
-      toast.error('Digite o link da sala');
+      toast.error(t('professor.gerenciarLives.toasts.enterRoomLink'));
       return;
     }
 
@@ -162,18 +164,18 @@ export const GerenciarLivesPage: React.FC = () => {
   };
 
   const handleDeletar = (aulaId: string) => {
-    if (confirm('Tem certeza que deseja excluir esta aula ao vivo?')) {
+    if (confirm(t('professor.gerenciarLives.toasts.confirmDelete'))) {
       deletarAulaAoVivo(aulaId);
     }
   };
 
   const handleNotificar = (aulaId: string) => {
-    toast.success('Notificações enviadas para todos os alunos!');
+    toast.success(t('professor.gerenciarLives.toasts.notificationsSent'));
     editarAulaAoVivo(aulaId, { notificacao_enviada: true });
   };
 
   const getDisciplinaNome = (disciplinaId: string) => {
-    return disciplinas.find(d => d.id === disciplinaId)?.nome || 'Disciplina';
+    return disciplinas.find(d => d.id === disciplinaId)?.nome || t('professor.gerenciarLives.fallbackSubject');
   };
 
   return (
@@ -181,14 +183,14 @@ export const GerenciarLivesPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gerenciar Aulas ao Vivo</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('professor.gerenciarLives.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Crie e gerencie suas aulas ao vivo
+            {t('professor.gerenciarLives.subtitle')}
           </p>
         </div>
         <Button onClick={() => handleAbrirDialog()} className="gap-2">
           <Plus className="w-4 h-4" />
-          Nova Aula ao Vivo
+          {t('professor.gerenciarLives.newLive')}
         </Button>
       </div>
 
@@ -197,15 +199,15 @@ export const GerenciarLivesPage: React.FC = () => {
         <TabsList>
           <TabsTrigger value="agendadas" className="gap-2">
             <Calendar className="w-4 h-4" />
-            Agendadas ({aulasAgendadas.length})
+            {t('professor.gerenciarLives.tabs.scheduled', { count: aulasAgendadas.length })}
           </TabsTrigger>
           <TabsTrigger value="ao-vivo" className="gap-2">
             <Video className="w-4 h-4" />
-            Ao Vivo ({aulasAoVivoAtivas.length})
+            {t('professor.gerenciarLives.tabs.live', { count: aulasAoVivoAtivas.length })}
           </TabsTrigger>
           <TabsTrigger value="finalizadas" className="gap-2">
             <Clock className="w-4 h-4" />
-            Finalizadas ({aulasFinalizadas.length})
+            {t('professor.gerenciarLives.tabs.finished', { count: aulasFinalizadas.length })}
           </TabsTrigger>
         </TabsList>
 
@@ -216,14 +218,14 @@ export const GerenciarLivesPage: React.FC = () => {
               <CardContent className="pt-6 text-center py-12">
                 <Calendar className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Nenhuma aula agendada
+                  {t('professor.gerenciarLives.empty.scheduledTitle')}
                 </h3>
                 <p className="text-sm text-gray-600 mb-4">
-                  Crie uma nova aula ao vivo para seus alunos
+                  {t('professor.gerenciarLives.empty.scheduledDesc')}
                 </p>
                 <Button onClick={() => handleAbrirDialog()} className="gap-2">
                   <Plus className="w-4 h-4" />
-                  Criar Aula ao Vivo
+                  {t('professor.gerenciarLives.empty.createLive')}
                 </Button>
               </CardContent>
             </Card>
@@ -256,10 +258,10 @@ export const GerenciarLivesPage: React.FC = () => {
               <CardContent className="pt-6 text-center py-12">
                 <Video className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Nenhuma aula ao vivo agora
+                  {t('professor.gerenciarLives.empty.liveTitle')}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Não há aulas acontecendo neste momento
+                  {t('professor.gerenciarLives.empty.liveDesc')}
                 </p>
               </CardContent>
             </Card>
@@ -290,10 +292,10 @@ export const GerenciarLivesPage: React.FC = () => {
               <CardContent className="pt-6 text-center py-12">
                 <Clock className="w-16 h-16 mx-auto mb-4 text-gray-300" />
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Nenhuma aula finalizada
+                  {t('professor.gerenciarLives.empty.finishedTitle')}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Aulas finalizadas aparecerão aqui
+                  {t('professor.gerenciarLives.empty.finishedDesc')}
                 </p>
               </CardContent>
             </Card>
@@ -322,12 +324,12 @@ export const GerenciarLivesPage: React.FC = () => {
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              {aulaEditando ? 'Editar Aula ao Vivo' : 'Nova Aula ao Vivo'}
+              {aulaEditando ? t('professor.gerenciarLives.dialog.editTitle') : t('professor.gerenciarLives.dialog.newTitle')}
             </DialogTitle>
             <DialogDescription>
-              {aulaEditando 
-                ? 'Atualize as informações da aula ao vivo'
-                : 'Agende uma nova aula ao vivo para seus alunos'
+              {aulaEditando
+                ? t('professor.gerenciarLives.dialog.editDescription')
+                : t('professor.gerenciarLives.dialog.newDescription')
               }
             </DialogDescription>
           </DialogHeader>
@@ -335,13 +337,13 @@ export const GerenciarLivesPage: React.FC = () => {
           <div className="space-y-4">
             {/* Disciplina */}
             <div>
-              <Label htmlFor="disciplina">Disciplina *</Label>
+              <Label htmlFor="disciplina">{t('professor.gerenciarLives.dialog.subjectLabel')}</Label>
               <Select
                 value={formData.disciplina_id}
                 onValueChange={(value: string) => setFormData({ ...formData, disciplina_id: value })}
               >
                 <SelectTrigger id="disciplina">
-                  <SelectValue placeholder="Selecione a disciplina" />
+                  <SelectValue placeholder={t('professor.gerenciarLives.dialog.subjectPlaceholder')} />
                 </SelectTrigger>
                 <SelectContent>
                   {disciplinas.map(d => (
@@ -355,16 +357,16 @@ export const GerenciarLivesPage: React.FC = () => {
 
             {/* Turma (opcional) */}
             <div>
-              <Label htmlFor="turma">Turma (opcional)</Label>
+              <Label htmlFor="turma">{t('professor.gerenciarLives.dialog.classLabel')}</Label>
               <Select
                 value={formData.turma_id}
                 onValueChange={(value: string) => setFormData({ ...formData, turma_id: value })}
               >
                 <SelectTrigger id="turma">
-                  <SelectValue placeholder="Todas as turmas" />
+                  <SelectValue placeholder={t('professor.gerenciarLives.dialog.allClasses')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">Todas as turmas</SelectItem>
+                  <SelectItem value="">{t('professor.gerenciarLives.dialog.allClasses')}</SelectItem>
                   {turmas.map(t => (
                     <SelectItem key={t.id} value={t.id}>
                       {t.nome}
@@ -376,10 +378,10 @@ export const GerenciarLivesPage: React.FC = () => {
 
             {/* Título */}
             <div>
-              <Label htmlFor="titulo">Título *</Label>
+              <Label htmlFor="titulo">{t('professor.gerenciarLives.dialog.titleLabel')}</Label>
               <Input
                 id="titulo"
-                placeholder="Ex: Revisão para Prova"
+                placeholder={t('professor.gerenciarLives.dialog.titlePlaceholder')}
                 value={formData.titulo}
                 onChange={(e) => setFormData({ ...formData, titulo: e.target.value })}
               />
@@ -387,10 +389,10 @@ export const GerenciarLivesPage: React.FC = () => {
 
             {/* Descrição */}
             <div>
-              <Label htmlFor="descricao">Descrição</Label>
+              <Label htmlFor="descricao">{t('professor.gerenciarLives.dialog.descriptionLabel')}</Label>
               <Textarea
                 id="descricao"
-                placeholder="Descreva o que será abordado na aula..."
+                placeholder={t('professor.gerenciarLives.dialog.descriptionPlaceholder')}
                 value={formData.descricao}
                 onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
                 rows={3}
@@ -400,7 +402,7 @@ export const GerenciarLivesPage: React.FC = () => {
             {/* Data e Hora */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="data_inicio">Data *</Label>
+                <Label htmlFor="data_inicio">{t('professor.gerenciarLives.dialog.dateLabel')}</Label>
                 <Input
                   id="data_inicio"
                   type="date"
@@ -409,7 +411,7 @@ export const GerenciarLivesPage: React.FC = () => {
                 />
               </div>
               <div>
-                <Label htmlFor="hora_inicio">Hora *</Label>
+                <Label htmlFor="hora_inicio">{t('professor.gerenciarLives.dialog.timeLabel')}</Label>
                 <Input
                   id="hora_inicio"
                   type="time"
@@ -421,7 +423,7 @@ export const GerenciarLivesPage: React.FC = () => {
 
             {/* Duração */}
             <div>
-              <Label htmlFor="duracao">Duração (minutos) *</Label>
+              <Label htmlFor="duracao">{t('professor.gerenciarLives.dialog.durationLabel')}</Label>
               <Input
                 id="duracao"
                 type="number"
@@ -434,7 +436,7 @@ export const GerenciarLivesPage: React.FC = () => {
 
             {/* Plataforma */}
             <div>
-              <Label htmlFor="plataforma">Plataforma *</Label>
+              <Label htmlFor="plataforma">{t('professor.gerenciarLives.dialog.platformLabel')}</Label>
               <Select
                 value={formData.plataforma}
                 onValueChange={(value: any) => setFormData({ ...formData, plataforma: value })}
@@ -443,18 +445,18 @@ export const GerenciarLivesPage: React.FC = () => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="google_meet">Google Meet</SelectItem>
-                  <SelectItem value="zoom">Zoom</SelectItem>
-                  <SelectItem value="teams">Microsoft Teams</SelectItem>
-                  <SelectItem value="jitsi">Jitsi</SelectItem>
-                  <SelectItem value="outro">Outro</SelectItem>
+                  <SelectItem value="google_meet">{t('professor.gerenciarLives.platforms.google_meet')}</SelectItem>
+                  <SelectItem value="zoom">{t('professor.gerenciarLives.platforms.zoom')}</SelectItem>
+                  <SelectItem value="teams">{t('professor.gerenciarLives.platforms.teams')}</SelectItem>
+                  <SelectItem value="jitsi">{t('professor.gerenciarLives.platforms.jitsi')}</SelectItem>
+                  <SelectItem value="outro">{t('professor.gerenciarLives.platforms.outro')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Link da Sala */}
             <div>
-              <Label htmlFor="link_sala">Link da Sala *</Label>
+              <Label htmlFor="link_sala">{t('professor.gerenciarLives.dialog.roomLinkLabel')}</Label>
               <Input
                 id="link_sala"
                 type="url"
@@ -466,10 +468,10 @@ export const GerenciarLivesPage: React.FC = () => {
 
             {/* Senha (opcional) */}
             <div>
-              <Label htmlFor="senha_sala">Senha da Sala (opcional)</Label>
+              <Label htmlFor="senha_sala">{t('professor.gerenciarLives.dialog.roomPasswordLabel')}</Label>
               <Input
                 id="senha_sala"
-                placeholder="Digite a senha se houver"
+                placeholder={t('professor.gerenciarLives.dialog.roomPasswordPlaceholder')}
                 value={formData.senha_sala}
                 onChange={(e) => setFormData({ ...formData, senha_sala: e.target.value })}
               />
@@ -477,7 +479,7 @@ export const GerenciarLivesPage: React.FC = () => {
 
             {/* Configurações */}
             <div className="space-y-2 p-4 bg-gray-50 rounded-lg">
-              <h4 className="font-medium text-sm text-gray-900 mb-3">Configurações</h4>
+              <h4 className="font-medium text-sm text-gray-900 mb-3">{t('professor.gerenciarLives.dialog.settings')}</h4>
               
               <div className="flex items-center gap-2">
                 <input
@@ -488,7 +490,7 @@ export const GerenciarLivesPage: React.FC = () => {
                   className="rounded"
                 />
                 <Label htmlFor="permite_chat" className="cursor-pointer text-sm">
-                  Permitir chat durante a aula
+                  {t('professor.gerenciarLives.dialog.allowChat')}
                 </Label>
               </div>
 
@@ -501,7 +503,7 @@ export const GerenciarLivesPage: React.FC = () => {
                   className="rounded"
                 />
                 <Label htmlFor="permite_microfone" className="cursor-pointer text-sm">
-                  Alunos podem usar microfone
+                  {t('professor.gerenciarLives.dialog.allowMicrophone')}
                 </Label>
               </div>
 
@@ -514,7 +516,7 @@ export const GerenciarLivesPage: React.FC = () => {
                   className="rounded"
                 />
                 <Label htmlFor="permite_camera" className="cursor-pointer text-sm">
-                  Alunos podem usar câmera
+                  {t('professor.gerenciarLives.dialog.allowCamera')}
                 </Label>
               </div>
             </div>
@@ -522,10 +524,10 @@ export const GerenciarLivesPage: React.FC = () => {
             {/* Ações */}
             <div className="flex gap-2 pt-4 border-t">
               <Button onClick={handleSalvar} className="flex-1">
-                {aulaEditando ? 'Atualizar' : 'Criar'} Aula ao Vivo
+                {aulaEditando ? t('professor.gerenciarLives.dialog.update') : t('professor.gerenciarLives.dialog.create')}
               </Button>
               <Button variant="outline" onClick={handleFecharDialog}>
-                Cancelar
+                {t('common.actions.cancel')}
               </Button>
             </div>
           </div>

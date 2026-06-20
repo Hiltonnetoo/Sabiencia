@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMockData } from '../../contexts/MockDataContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
@@ -45,6 +46,7 @@ interface NovoConteudo {
 }
 
 export const ConteudoAulasPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { disciplinas, professorTurmaDisciplina } = useMockData();
 
@@ -112,11 +114,11 @@ export const ConteudoAulasPage: React.FC = () => {
 
   const handleAdicionarConteudo = () => {
     if (!novoConteudo.titulo || (!novoConteudo.url && tipoConteudo !== 'atividade' && tipoConteudo !== 'teste')) {
-      toast.error('Preencha todos os campos obrigatórios');
+      toast.error(t('professor.conteudoAulas.toast.fillRequired'));
       return;
     }
 
-    toast.success('Conteúdo adicionado com sucesso!');
+    toast.success(t('professor.conteudoAulas.toast.added'));
     setDialogOpen(false);
     setNovoConteudo({
       tipo: 'video',
@@ -140,11 +142,11 @@ export const ConteudoAulasPage: React.FC = () => {
 
   const getTipoLabel = (tipo: TipoConteudoAula) => {
     switch (tipo) {
-      case 'video': return 'Vídeo-aula';
-      case 'pdf': return 'Material PDF';
-      case 'atividade': return 'Atividade';
-      case 'teste': return 'Teste/Prova';
-      case 'extra': return 'Conteúdo Extra';
+      case 'video': return t('professor.conteudoAulas.types.video');
+      case 'pdf': return t('professor.conteudoAulas.types.pdf');
+      case 'atividade': return t('professor.conteudoAulas.types.atividade');
+      case 'teste': return t('professor.conteudoAulas.types.teste');
+      case 'extra': return t('professor.conteudoAulas.types.extra');
     }
   };
 
@@ -165,24 +167,24 @@ export const ConteudoAulasPage: React.FC = () => {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Gerenciar Conteúdo das Aulas</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('professor.conteudoAulas.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Adicione vídeo-aulas, materiais, atividades e testes para suas disciplinas
+          {t('professor.conteudoAulas.subtitle')}
         </p>
       </div>
 
       {/* Seletor de Disciplina */}
       <Card>
         <CardHeader>
-          <CardTitle>Selecione a Disciplina</CardTitle>
+          <CardTitle>{t('professor.conteudoAulas.selectSubjectTitle')}</CardTitle>
           <CardDescription>
-            Escolha a disciplina para gerenciar o conteúdo das aulas
+            {t('professor.conteudoAulas.selectSubjectDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Select value={disciplinaSelecionada} onValueChange={setDisciplinaSelecionada}>
             <SelectTrigger>
-              <SelectValue placeholder="Selecione uma disciplina..." />
+              <SelectValue placeholder={t('professor.conteudoAulas.selectSubjectPlaceholder')} />
             </SelectTrigger>
             <SelectContent>
               {minhasDisciplinas.map(disc => (
@@ -202,7 +204,7 @@ export const ConteudoAulasPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Card>
               <CardHeader className="pb-3">
-                <CardDescription>Vídeo-aulas</CardDescription>
+                <CardDescription>{t('professor.conteudoAulas.stats.videoLessons')}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-3">
@@ -211,7 +213,7 @@ export const ConteudoAulasPage: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-2xl font-bold">3</p>
-                    <p className="text-xs text-gray-500">vídeos</p>
+                    <p className="text-xs text-gray-500">{t('professor.conteudoAulas.stats.videos')}</p>
                   </div>
                 </div>
               </CardContent>
@@ -219,7 +221,7 @@ export const ConteudoAulasPage: React.FC = () => {
 
             <Card>
               <CardHeader className="pb-3">
-                <CardDescription>Materiais PDF</CardDescription>
+                <CardDescription>{t('professor.conteudoAulas.stats.pdfMaterials')}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-3">
@@ -228,7 +230,7 @@ export const ConteudoAulasPage: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-2xl font-bold">2</p>
-                    <p className="text-xs text-gray-500">arquivos</p>
+                    <p className="text-xs text-gray-500">{t('professor.conteudoAulas.stats.files')}</p>
                   </div>
                 </div>
               </CardContent>
@@ -236,7 +238,7 @@ export const ConteudoAulasPage: React.FC = () => {
 
             <Card>
               <CardHeader className="pb-3">
-                <CardDescription>Atividades</CardDescription>
+                <CardDescription>{t('professor.conteudoAulas.stats.activities')}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-3">
@@ -245,7 +247,7 @@ export const ConteudoAulasPage: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-2xl font-bold">1</p>
-                    <p className="text-xs text-gray-500">atividades</p>
+                    <p className="text-xs text-gray-500">{t('professor.conteudoAulas.stats.activitiesUnit')}</p>
                   </div>
                 </div>
               </CardContent>
@@ -253,7 +255,7 @@ export const ConteudoAulasPage: React.FC = () => {
 
             <Card>
               <CardHeader className="pb-3">
-                <CardDescription>Testes</CardDescription>
+                <CardDescription>{t('professor.conteudoAulas.stats.tests')}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-3">
@@ -262,7 +264,7 @@ export const ConteudoAulasPage: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-2xl font-bold">1</p>
-                    <p className="text-xs text-gray-500">testes</p>
+                    <p className="text-xs text-gray-500">{t('professor.conteudoAulas.stats.testsUnit')}</p>
                   </div>
                 </div>
               </CardContent>
@@ -273,14 +275,14 @@ export const ConteudoAulasPage: React.FC = () => {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
-                <CardTitle>Conteúdos das Aulas</CardTitle>
+                <CardTitle>{t('professor.conteudoAulas.listTitle')}</CardTitle>
                 <CardDescription>
-                  Organize o conteúdo por módulos e aulas
+                  {t('professor.conteudoAulas.listDesc')}
                 </CardDescription>
               </div>
               <Button onClick={() => setDialogOpen(true)} className="gap-2">
                 <Plus className="h-4 w-4" />
-                Adicionar Conteúdo
+                {t('professor.conteudoAulas.addContent')}
               </Button>
             </CardHeader>
             <CardContent>
@@ -312,28 +314,28 @@ export const ConteudoAulasPage: React.FC = () => {
                                 </Badge>
                                 {conteudo.obrigatorio && (
                                   <Badge className="text-xs bg-orange-100 text-orange-700">
-                                    Obrigatório
+                                    {t('professor.conteudoAulas.required')}
                                   </Badge>
                                 )}
                               </div>
                               <div className="flex items-center gap-3 mt-1">
                                 {conteudo.duracao && (
                                   <span className="text-xs text-gray-500">
-                                    {conteudo.duracao} min
+                                    {t('professor.conteudoAulas.minutes', { count: conteudo.duracao })}
                                   </span>
                                 )}
                                 {conteudo.tamanho && (
                                   <span className="text-xs text-gray-500">
-                                    {conteudo.tamanho} MB
+                                    {t('professor.conteudoAulas.megabytes', { value: conteudo.tamanho })}
                                   </span>
                                 )}
                                 {conteudo.visivel ? (
                                   <span className="text-xs text-green-600 flex items-center gap-1">
-                                    <Eye className="h-3 w-3" /> Visível
+                                    <Eye className="h-3 w-3" /> {t('professor.conteudoAulas.visible')}
                                   </span>
                                 ) : (
                                   <span className="text-xs text-gray-400 flex items-center gap-1">
-                                    <EyeOff className="h-3 w-3" /> Oculto
+                                    <EyeOff className="h-3 w-3" /> {t('professor.conteudoAulas.hidden')}
                                   </span>
                                 )}
                               </div>
@@ -369,10 +371,10 @@ export const ConteudoAulasPage: React.FC = () => {
             <div className="text-center">
               <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-2">
-                Selecione uma disciplina
+                {t('professor.conteudoAulas.emptyTitle')}
               </h3>
               <p className="text-gray-500">
-                Escolha uma disciplina acima para começar a gerenciar o conteúdo das aulas
+                {t('professor.conteudoAulas.emptyDesc')}
               </p>
             </div>
           </CardContent>
@@ -383,16 +385,16 @@ export const ConteudoAulasPage: React.FC = () => {
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Adicionar Novo Conteúdo</DialogTitle>
+            <DialogTitle>{t('professor.conteudoAulas.dialog.title')}</DialogTitle>
             <DialogDescription>
-              Adicione vídeo-aula, material PDF, atividade ou teste
+              {t('professor.conteudoAulas.dialog.desc')}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
             {/* Tipo de Conteúdo */}
             <div>
-              <Label htmlFor="tipo">Tipo de Conteúdo *</Label>
+              <Label htmlFor="tipo">{t('professor.conteudoAulas.dialog.typeLabel')}</Label>
               <Tabs value={tipoConteudo} onValueChange={(v: string) => {
                 setTipoConteudo(v as TipoConteudoAula);
                 setNovoConteudo({ ...novoConteudo, tipo: v as TipoConteudoAula });
@@ -400,23 +402,23 @@ export const ConteudoAulasPage: React.FC = () => {
                 <TabsList className="grid grid-cols-5 w-full">
                   <TabsTrigger value="video">
                     <Video className="h-4 w-4 mr-2" />
-                    Vídeo
+                    {t('professor.conteudoAulas.tabs.video')}
                   </TabsTrigger>
                   <TabsTrigger value="pdf">
                     <FileText className="h-4 w-4 mr-2" />
-                    PDF
+                    {t('professor.conteudoAulas.tabs.pdf')}
                   </TabsTrigger>
                   <TabsTrigger value="atividade">
                     <ClipboardList className="h-4 w-4 mr-2" />
-                    Atividade
+                    {t('professor.conteudoAulas.tabs.atividade')}
                   </TabsTrigger>
                   <TabsTrigger value="teste">
                     <FileQuestion className="h-4 w-4 mr-2" />
-                    Teste
+                    {t('professor.conteudoAulas.tabs.teste')}
                   </TabsTrigger>
                   <TabsTrigger value="extra">
                     <BookOpen className="h-4 w-4 mr-2" />
-                    Extra
+                    {t('professor.conteudoAulas.tabs.extra')}
                   </TabsTrigger>
                 </TabsList>
               </Tabs>
@@ -424,10 +426,10 @@ export const ConteudoAulasPage: React.FC = () => {
 
             {/* Título */}
             <div>
-              <Label htmlFor="titulo">Título *</Label>
+              <Label htmlFor="titulo">{t('professor.conteudoAulas.dialog.titleLabel')}</Label>
               <Input
                 id="titulo"
-                placeholder="Ex: Introdução à Anatomia"
+                placeholder={t('professor.conteudoAulas.dialog.titlePlaceholder')}
                 value={novoConteudo.titulo}
                 onChange={(e) => setNovoConteudo({ ...novoConteudo, titulo: e.target.value })}
               />
@@ -435,10 +437,10 @@ export const ConteudoAulasPage: React.FC = () => {
 
             {/* Descrição */}
             <div>
-              <Label htmlFor="descricao">Descrição</Label>
+              <Label htmlFor="descricao">{t('professor.conteudoAulas.dialog.descLabel')}</Label>
               <Textarea
                 id="descricao"
-                placeholder="Descreva brevemente o conteúdo..."
+                placeholder={t('professor.conteudoAulas.dialog.descPlaceholder')}
                 value={novoConteudo.descricao}
                 onChange={(e) => setNovoConteudo({ ...novoConteudo, descricao: e.target.value })}
                 rows={3}
@@ -449,18 +451,18 @@ export const ConteudoAulasPage: React.FC = () => {
             {(tipoConteudo === 'video' || tipoConteudo === 'pdf' || tipoConteudo === 'extra') && (
               <div>
                 <Label htmlFor="url">
-                  {tipoConteudo === 'video' ? 'URL do Vídeo (YouTube/Vimeo)' : 'URL do Arquivo'} *
+                  {tipoConteudo === 'video' ? t('professor.conteudoAulas.dialog.videoUrlLabel') : t('professor.conteudoAulas.dialog.fileUrlLabel')} *
                 </Label>
                 <Input
                   id="url"
                   type="url"
-                  placeholder={tipoConteudo === 'video' ? 'https://youtube.com/watch?v=...' : 'https://...'}
+                  placeholder={tipoConteudo === 'video' ? t('professor.conteudoAulas.dialog.videoUrlPlaceholder') : t('professor.conteudoAulas.dialog.fileUrlPlaceholder')}
                   value={novoConteudo.url}
                   onChange={(e) => setNovoConteudo({ ...novoConteudo, url: e.target.value })}
                 />
                 {tipoConteudo === 'video' && (
                   <p className="text-xs text-gray-500 mt-1">
-                    Cole o link do vídeo do YouTube ou Vimeo
+                    {t('professor.conteudoAulas.dialog.videoUrlHint')}
                   </p>
                 )}
               </div>

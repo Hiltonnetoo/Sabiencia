@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { MaterialCard } from '../../components/biblioteca/MaterialCard';
@@ -15,6 +16,7 @@ import { toast } from 'sonner';
 import type { Material } from '../../types';
 
 export const BibliotecaAlunoPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { materiais: allMateriais, disciplinas } = useMockData();
 
@@ -99,8 +101,8 @@ export const BibliotecaAlunoPage: React.FC = () => {
 
     toast.success(
       favorites.includes(material.id)
-        ? 'Removido dos favoritos'
-        : 'Adicionado aos favoritos'
+        ? t('aluno.biblioteca.toasts.removedFromFavorites')
+        : t('aluno.biblioteca.toasts.addedToFavorites')
     );
   };
 
@@ -113,7 +115,7 @@ export const BibliotecaAlunoPage: React.FC = () => {
   // Download
   const handleDownload = (material: Material) => {
     window.open(material.url, '_blank');
-    toast.success('Abrindo material em nova aba...');
+    toast.success(t('aluno.biblioteca.toasts.openingMaterial'));
   };
 
   // Limpar filtros
@@ -136,9 +138,9 @@ export const BibliotecaAlunoPage: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Biblioteca Virtual</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('aluno.biblioteca.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Acesse materiais de estudo, vídeos e documentos
+          {t('aluno.biblioteca.subtitle')}
         </p>
       </div>
 
@@ -148,7 +150,7 @@ export const BibliotecaAlunoPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <BookOpen className="h-4 w-4" />
-              Total de Materiais
+              {t('aluno.biblioteca.stats.totalMaterials')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -160,7 +162,7 @@ export const BibliotecaAlunoPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <FileText className="h-4 w-4" />
-              PDFs
+              {t('aluno.biblioteca.stats.pdfs')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -172,7 +174,7 @@ export const BibliotecaAlunoPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <Video className="h-4 w-4" />
-              Vídeos
+              {t('aluno.biblioteca.stats.videos')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -184,7 +186,7 @@ export const BibliotecaAlunoPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <Heart className="h-4 w-4" />
-              Favoritos
+              {t('aluno.biblioteca.stats.favorites')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -196,7 +198,7 @@ export const BibliotecaAlunoPage: React.FC = () => {
       {/* Filtros */}
       <Card>
         <CardHeader>
-          <CardTitle>Filtros</CardTitle>
+          <CardTitle>{t('common.actions.filters')}</CardTitle>
         </CardHeader>
         <CardContent>
           <MaterialFilters
@@ -222,12 +224,12 @@ export const BibliotecaAlunoPage: React.FC = () => {
       <Tabs defaultValue="todos" className="w-full">
         <TabsList className="grid w-full max-w-md grid-cols-4">
           <TabsTrigger value="todos">
-            Todos ({filteredMateriais.length})
+            {t('aluno.biblioteca.tabs.all', { count: filteredMateriais.length })}
           </TabsTrigger>
-          <TabsTrigger value="pdfs">PDFs ({pdfs.length})</TabsTrigger>
-          <TabsTrigger value="videos">Vídeos ({videos.length})</TabsTrigger>
+          <TabsTrigger value="pdfs">{t('aluno.biblioteca.tabs.pdfs', { count: pdfs.length })}</TabsTrigger>
+          <TabsTrigger value="videos">{t('aluno.biblioteca.tabs.videos', { count: videos.length })}</TabsTrigger>
           <TabsTrigger value="favoritos">
-            Favoritos ({favoriteMateriais.length})
+            {t('aluno.biblioteca.tabs.favorites', { count: favoriteMateriais.length })}
           </TabsTrigger>
         </TabsList>
 
@@ -238,7 +240,7 @@ export const BibliotecaAlunoPage: React.FC = () => {
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <BookOpen className="h-16 w-16 text-gray-300 mb-4" />
                 <p className="text-gray-500 text-center">
-                  Nenhum material encontrado com os filtros selecionados
+                  {t('aluno.biblioteca.empty.filtered')}
                 </p>
               </CardContent>
             </Card>
@@ -264,7 +266,7 @@ export const BibliotecaAlunoPage: React.FC = () => {
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <FileText className="h-16 w-16 text-gray-300 mb-4" />
-                <p className="text-gray-500">Nenhum PDF encontrado</p>
+                <p className="text-gray-500">{t('aluno.biblioteca.empty.noPdfs')}</p>
               </CardContent>
             </Card>
           ) : (
@@ -289,7 +291,7 @@ export const BibliotecaAlunoPage: React.FC = () => {
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <Video className="h-16 w-16 text-gray-300 mb-4" />
-                <p className="text-gray-500">Nenhum vídeo encontrado</p>
+                <p className="text-gray-500">{t('aluno.biblioteca.empty.noVideos')}</p>
               </CardContent>
             </Card>
           ) : (
@@ -315,10 +317,10 @@ export const BibliotecaAlunoPage: React.FC = () => {
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <Heart className="h-16 w-16 text-gray-300 mb-4" />
                 <p className="text-gray-500 text-center">
-                  Você ainda não possui materiais favoritos
+                  {t('aluno.biblioteca.empty.noFavoritesTitle')}
                 </p>
                 <p className="text-sm text-gray-400 mt-2">
-                  Clique no ❤️ nos materiais para adicioná-los aos favoritos
+                  {t('aluno.biblioteca.empty.noFavoritesHint')}
                 </p>
               </CardContent>
             </Card>

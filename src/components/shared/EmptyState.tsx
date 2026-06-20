@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import { Card, CardContent } from '../ui/card';
 
@@ -229,6 +230,7 @@ export function SearchEmptyState({
   searchTerm: string;
   onClearSearch?: () => void;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
       <div className="rounded-full p-4 mb-4 bg-gray-100">
@@ -248,20 +250,20 @@ export function SearchEmptyState({
       </div>
 
       <h3 className="text-lg text-gray-900 mb-2">
-        Nenhum resultado encontrado
+        {t('common.messages.noResults')}
       </h3>
 
-      <p className="text-sm text-gray-600 mb-2 max-w-md">
-        Não encontramos resultados para <strong>"{searchTerm}"</strong>
-      </p>
-      
+      <p className="text-sm text-gray-600 mb-2 max-w-md"
+        dangerouslySetInnerHTML={{ __html: t('components.emptyState.searchNoResults', { term: searchTerm }) }}
+      />
+
       <p className="text-sm text-gray-500 mb-6">
-        Tente usar palavras-chave diferentes ou remover filtros.
+        {t('components.emptyState.searchHint')}
       </p>
 
       {onClearSearch && (
         <Button variant="outline" onClick={onClearSearch}>
-          Limpar Busca
+          {t('components.emptyState.clearSearch')}
         </Button>
       )}
     </div>
@@ -278,6 +280,7 @@ export function FilterEmptyState({
   onClearFilters?: () => void;
   activeFiltersCount?: number;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
       <div className="rounded-full p-4 mb-4 bg-blue-50">
@@ -297,22 +300,22 @@ export function FilterEmptyState({
       </div>
 
       <h3 className="text-lg text-gray-900 mb-2">
-        Nenhum item corresponde aos filtros
+        {t('components.emptyState.filterNoResults')}
       </h3>
 
       {activeFiltersCount !== undefined && activeFiltersCount > 0 && (
         <p className="text-sm text-gray-500 mb-2">
-          {activeFiltersCount} filtros ativos
+          {t('components.emptyState.activeFilters', { count: activeFiltersCount })}
         </p>
       )}
 
       <p className="text-sm text-gray-600 mb-6 max-w-md">
-        Ajuste os filtros aplicados para ver mais resultados
+        {t('components.emptyState.filterHint')}
       </p>
 
       {onClearFilters && (
         <Button variant="outline" onClick={onClearFilters}>
-          Limpar Filtros
+          {t('common.actions.clearFilters')}
         </Button>
       )}
     </div>

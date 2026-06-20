@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -29,7 +30,6 @@ import {
 import type { Material } from '../../types';
 import { formatFileSize, formatDuration } from '../../schemas/materialSchemas';
 import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { getInitials } from '../../utils/formatters';
 import { useMockData } from '../../contexts/MockDataContext';
 
@@ -46,6 +46,7 @@ export const MaterialViewDialog: React.FC<MaterialViewDialogProps> = ({
   onOpenChange,
   onDownload,
 }) => {
+  const { t } = useTranslation();
   const { professores, disciplinas } = useMockData();
 
   if (!material) return null;
@@ -99,7 +100,7 @@ export const MaterialViewDialog: React.FC<MaterialViewDialogProps> = ({
               <div className="flex items-center gap-3">
                 <BookOpen className="h-5 w-5 text-gray-400" />
                 <div>
-                  <p className="text-sm text-gray-500">Disciplina</p>
+                  <p className="text-sm text-gray-500">{t('components.biblioteca.view.subject')}</p>
                   <p className="font-medium">{disciplina.nome}</p>
                 </div>
               </div>
@@ -109,7 +110,7 @@ export const MaterialViewDialog: React.FC<MaterialViewDialogProps> = ({
             <div className="flex items-center gap-3">
               <Tag className="h-5 w-5 text-gray-400" />
               <div>
-                <p className="text-sm text-gray-500">Módulo</p>
+                <p className="text-sm text-gray-500">{t('components.biblioteca.view.module')}</p>
                 <p className="font-medium">{material.modulo}</p>
               </div>
             </div>
@@ -126,7 +127,7 @@ export const MaterialViewDialog: React.FC<MaterialViewDialogProps> = ({
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="text-sm text-gray-500">Professor</p>
+                    <p className="text-sm text-gray-500">{t('components.biblioteca.view.teacher')}</p>
                     <p className="font-medium">{professor.nome_completo}</p>
                   </div>
                 </div>
@@ -137,9 +138,9 @@ export const MaterialViewDialog: React.FC<MaterialViewDialogProps> = ({
             <div className="flex items-center gap-3">
               <Calendar className="h-5 w-5 text-gray-400" />
               <div>
-                <p className="text-sm text-gray-500">Data de Upload</p>
+                <p className="text-sm text-gray-500">{t('components.biblioteca.view.uploadDate')}</p>
                 <p className="font-medium">
-                  {format(material.data_upload, 'dd/MM/yyyy', { locale: ptBR })}
+                  {format(material.data_upload, 'dd/MM/yyyy')}
                 </p>
               </div>
             </div>
@@ -149,7 +150,7 @@ export const MaterialViewDialog: React.FC<MaterialViewDialogProps> = ({
               <div className="flex items-center gap-3">
                 <Clock className="h-5 w-5 text-gray-400" />
                 <div>
-                  <p className="text-sm text-gray-500">Duração</p>
+                  <p className="text-sm text-gray-500">{t('components.biblioteca.view.duration')}</p>
                   <p className="font-medium">{formatDuration(material.duracao_segundos)}</p>
                 </div>
               </div>
@@ -159,7 +160,7 @@ export const MaterialViewDialog: React.FC<MaterialViewDialogProps> = ({
               <div className="flex items-center gap-3">
                 <FileText className="h-5 w-5 text-gray-400" />
                 <div>
-                  <p className="text-sm text-gray-500">Tamanho</p>
+                  <p className="text-sm text-gray-500">{t('components.biblioteca.view.size')}</p>
                   <p className="font-medium">{formatFileSize(material.tamanho_kb)}</p>
                 </div>
               </div>
@@ -169,7 +170,7 @@ export const MaterialViewDialog: React.FC<MaterialViewDialogProps> = ({
           {/* Tags */}
           {material.tags.length > 0 && (
             <div>
-              <p className="text-sm text-gray-500 mb-2">Tags</p>
+              <p className="text-sm text-gray-500 mb-2">{t('components.biblioteca.view.tags')}</p>
               <div className="flex flex-wrap gap-2">
                 {material.tags.map((tag, idx) => (
                   <Badge key={idx} variant="secondary">
@@ -190,7 +191,7 @@ export const MaterialViewDialog: React.FC<MaterialViewDialogProps> = ({
                 className="flex-1 gap-2"
               >
                 <Download className="h-4 w-4" />
-                Baixar PDF
+                {t('components.biblioteca.view.downloadPdf')}
               </Button>
             )}
 
@@ -200,7 +201,7 @@ export const MaterialViewDialog: React.FC<MaterialViewDialogProps> = ({
               className={`${material.tipo === 'pdf' && onDownload ? 'flex-1' : 'flex-1'} gap-2`}
             >
               <ExternalLink className="h-4 w-4" />
-              {material.tipo === 'pdf' ? 'Abrir em Nova Aba' : 'Abrir no YouTube'}
+              {material.tipo === 'pdf' ? t('components.biblioteca.view.openNewTab') : t('components.biblioteca.view.openYoutube')}
             </Button>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AlunoForm } from '../../components/alunos/AlunoForm';
 import { useMockData } from '../../contexts/MockDataContext';
 import { Button } from '../../components/ui/button';
@@ -12,6 +13,7 @@ import { UnsavedChangesDialog } from '../../components/shared/UnsavedChangesDial
 
 export const AlunoFormPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { createAluno, updateAluno, getAlunoById } = useMockData();
   
@@ -33,7 +35,7 @@ export const AlunoFormPage: React.FC = () => {
       if (alunoData) {
         setAluno(alunoData);
       } else {
-        toast.error('Aluno não encontrado');
+        toast.error(t('gestor.alunoForm.toast.notFound'));
         navigate('/gestor/alunos');
       }
     }
@@ -53,7 +55,7 @@ export const AlunoFormPage: React.FC = () => {
           ...data,
           role: 'aluno' as const,
         } as any);
-        toast.success('Aluno atualizado com sucesso!');
+        toast.success(t('gestor.alunoForm.toast.updated'));
       } else {
         // Criar novo aluno
         createAluno({
@@ -61,13 +63,13 @@ export const AlunoFormPage: React.FC = () => {
           role: 'aluno' as const,
           cpf: data.cpf.replace(/\D/g, ''), // Remover formatação do CPF
         } as any);
-        toast.success('Aluno cadastrado com sucesso!');
+        toast.success(t('gestor.alunoForm.toast.created'));
       }
 
       setIsFormDirty(false);
       navigate('/gestor/alunos');
     } catch (error) {
-      toast.error('Erro ao salvar aluno. Tente novamente.');
+      toast.error(t('gestor.alunoForm.toast.error'));
       console.error('Erro ao salvar aluno:', error);
     } finally {
       setIsLoading(false);
@@ -83,7 +85,7 @@ export const AlunoFormPage: React.FC = () => {
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Carregando dados...</p>
+          <p className="mt-4 text-gray-600">{t('gestor.alunoForm.loading')}</p>
         </div>
       </div>
     );
@@ -100,16 +102,16 @@ export const AlunoFormPage: React.FC = () => {
           className="gap-2"
         >
           <ArrowLeft className="h-4 w-4" />
-          Voltar
+          {t('common.actions.back')}
         </Button>
         <div>
           <h1 className="text-3xl font-bold text-gray-900">
-            {isEditMode ? 'Editar Aluno' : 'Novo Aluno'}
+            {isEditMode ? t('gestor.alunoForm.editTitle') : t('gestor.alunoForm.newTitle')}
           </h1>
           <p className="text-gray-600 mt-1">
             {isEditMode
-              ? 'Atualize as informações do aluno'
-              : 'Preencha os dados para cadastrar um novo aluno'}
+              ? t('gestor.alunoForm.editSubtitle')
+              : t('gestor.alunoForm.newSubtitle')}
           </p>
         </div>
       </div>

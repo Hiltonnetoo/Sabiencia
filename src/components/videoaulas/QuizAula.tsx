@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
@@ -28,6 +29,7 @@ export const QuizAulaComponent: React.FC<QuizAulaProps> = ({
   onSubmitQuiz,
   className = ''
 }) => {
+  const { t } = useTranslation();
   const [respostas, setRespostas] = useState<{ [questaoId: string]: string }>({});
   const [mostrandoResultado, setMostrandoResultado] = useState(false);
   const [resultado, setResultado] = useState<RespostaQuiz | null>(null);
@@ -59,7 +61,7 @@ export const QuizAulaComponent: React.FC<QuizAulaProps> = ({
     // Verificar se todas as questões foram respondidas
     const questoesNaoRespondidas = quiz.questoes.filter(q => !respostas[q.id]);
     if (questoesNaoRespondidas.length > 0) {
-      toast.error(`Responda todas as questões antes de enviar (${questoesNaoRespondidas.length} pendente${questoesNaoRespondidas.length > 1 ? 's' : ''})`);
+      toast.error(t('components.videoaulas.quiz.answerAllQuestions', { count: questoesNaoRespondidas.length }));
       return;
     }
 
@@ -110,9 +112,9 @@ export const QuizAulaComponent: React.FC<QuizAulaProps> = ({
     onSubmitQuiz(novoResultado);
 
     if (aprovado) {
-      toast.success(`Parabéns! Você foi aprovado com ${Math.round(nota)}%`);
+      toast.success(t('components.videoaulas.quiz.passedToast', { value: Math.round(nota) }));
     } else {
-      toast.error(`Você não atingiu a nota mínima. Tente novamente!`);
+      toast.error(t('components.videoaulas.quiz.failedToast'));
     }
   };
 
@@ -127,7 +129,7 @@ export const QuizAulaComponent: React.FC<QuizAulaProps> = ({
               <CardDescription>{quiz.descricao}</CardDescription>
             </div>
             <Badge variant={ultimaTentativa.aprovado ? 'default' : 'destructive'}>
-              {ultimaTentativa.aprovado ? 'Aprovado' : 'Reprovado'}
+              {ultimaTentativa.aprovado ? t('components.videoaulas.quiz.approved') : t('components.videoaulas.quiz.failed')}
             </Badge>
           </div>
         </CardHeader>
@@ -151,8 +153,9 @@ export const QuizAulaComponent: React.FC<QuizAulaProps> = ({
           </div>
           {tentativasRealizadas > 0 && (
             <Badge variant="outline">
-              Tentativa {tentativasRealizadas + 1}
-              {quiz.max_tentativas && ` de ${quiz.max_tentativas}`}
+              {quiz.max_tentativas
+                ? t('components.videoaulas.quiz.attemptOf', { current: tentativasRealizadas + 1, max: quiz.max_tentativas })
+                : t('components.videoaulas.quiz.attempt', { current: tentativasRealizadas + 1 })}
             </Badge>
           )}
         </div>
@@ -165,10 +168,10 @@ export const QuizAulaComponent: React.FC<QuizAulaProps> = ({
             <Info className="w-4 h-4" />
             <AlertDescription>
               <ul className="text-sm space-y-1 mt-2">
-                <li>• <strong>{quiz.questoes.length}</strong> questões</li>
-                <li>• Nota mínima para aprovação: <strong>{quiz.nota_minima_aprovacao}%</strong></li>
+                <li>• <strong>{quiz.questoes.length}</strong> {t('components.videoaulas.quiz.questionsCount', { count: quiz.questoes.length })}</li>
+                <li>• {t('components.videoaulas.quiz.minPassGrade', { value: quiz.nota_minima_aprovacao })}</li>
                 {quiz.max_tentativas && (
-                  <li>• Máximo de tentativas: <strong>{quiz.max_tentativas}</strong></li>
+                  <li>• {t('components.videoaulas.quiz.maxAttempts', { count: quiz.max_tentativas })}</li>
                 )}
               </ul>
             </AlertDescription>
@@ -189,7 +192,7 @@ export const QuizAulaComponent: React.FC<QuizAulaProps> = ({
                       <div className="flex-1">
                         <p className="font-medium text-gray-900">{questao.pergunta}</p>
                         <p className="text-xs text-gray-500 mt-1">
-                          Peso: {questao.peso} ponto{questao.peso > 1 ? 's' : ''}
+                          {t('components.videoaulas.quiz.weightPoints', { count: questao.peso })}
                         </p>
                       </div>
                     </div>
@@ -226,13 +229,13 @@ export const QuizAulaComponent: React.FC<QuizAulaProps> = ({
                           <div className="flex items-center space-x-2">
                             <RadioGroupItem value="true" id={`${questao.id}-true`} />
                             <Label htmlFor={`${questao.id}-true`} className="cursor-pointer">
-                              Verdadeiro
+                              {t('components.videoaulas.quiz.true')}
                             </Label>
                           </div>
                           <div className="flex items-center space-x-2">
                             <RadioGroupItem value="false" id={`${questao.id}-false`} />
                             <Label htmlFor={`${questao.id}-false`} className="cursor-pointer">
-                              Falso
+                              {t('components.videoaulas.quiz.false')}
                             </Label>
                           </div>
                         </div>
@@ -242,7 +245,7 @@ export const QuizAulaComponent: React.FC<QuizAulaProps> = ({
                     {/* Dissertativa */}
                     {questao.tipo === 'dissertativa' && (
                       <Textarea
-                        placeholder="Digite sua resposta..."
+                        placeholder={t('components.videoaulas.quiz.answerPlaceholder')}
                         value={respostas[questao.id] || ''}
                         onChange={(e) => handleRespostaChange(questao.id, e.target.value)}
                         rows={4}
@@ -252,14 +255,14 @@ export const QuizAulaComponent: React.FC<QuizAulaProps> = ({
                 ))}
 
                 <Button onClick={handleSubmit} className="w-full" size="lg">
-                  Enviar Respostas
+                  {t('components.videoaulas.quiz.submitAnswers')}
                 </Button>
               </div>
             ) : (
               <div className="text-center py-8">
                 <Button onClick={handleIniciarQuiz} size="lg" className="gap-2">
                   <Trophy className="w-5 h-5" />
-                  {tentativasRealizadas > 0 ? 'Tentar Novamente' : 'Iniciar Quiz'}
+                  {tentativasRealizadas > 0 ? t('components.videoaulas.quiz.tryAgain') : t('components.videoaulas.quiz.startQuiz')}
                 </Button>
               </div>
             )}
@@ -274,7 +277,7 @@ export const QuizAulaComponent: React.FC<QuizAulaProps> = ({
                 className="w-full gap-2"
               >
                 <RefreshCw className="w-4 h-4" />
-                Tentar Novamente
+                {t('components.videoaulas.quiz.tryAgain')}
               </Button>
             )}
           </div>
@@ -294,6 +297,7 @@ interface ResultadoQuizProps {
 }
 
 const ResultadoQuiz: React.FC<ResultadoQuizProps> = ({ resultado, quiz }) => {
+  const { t } = useTranslation();
   const questoesCorretas = resultado.respostas.filter(r => r.correta).length;
   const totalQuestoes = quiz.questoes.length;
 
@@ -311,12 +315,12 @@ const ResultadoQuiz: React.FC<ResultadoQuizProps> = ({ resultado, quiz }) => {
           <XCircle className="w-16 h-16 text-white mx-auto mb-3" />
         )}
         <h3 className="text-2xl font-bold text-white mb-2">
-          {resultado.aprovado ? 'Parabéns!' : 'Ops...'}
+          {resultado.aprovado ? t('components.videoaulas.quiz.resultPassedTitle') : t('components.videoaulas.quiz.resultFailedTitle')}
         </h3>
         <p className="text-white/90 mb-4">
-          {resultado.aprovado 
-            ? 'Você foi aprovado neste quiz!'
-            : `Nota mínima necessária: ${quiz.nota_minima_aprovacao}%`
+          {resultado.aprovado
+            ? t('components.videoaulas.quiz.resultPassedMessage')
+            : t('components.videoaulas.quiz.resultFailedMessage', { value: quiz.nota_minima_aprovacao })
           }
         </p>
         <div className="inline-block px-6 py-3 bg-white/20 rounded-lg backdrop-blur">
@@ -329,19 +333,19 @@ const ResultadoQuiz: React.FC<ResultadoQuizProps> = ({ resultado, quiz }) => {
         <Card>
           <CardContent className="pt-4 text-center">
             <p className="text-2xl font-bold text-gray-900">{questoesCorretas}</p>
-            <p className="text-sm text-gray-600">Corretas</p>
+            <p className="text-sm text-gray-600">{t('components.videoaulas.quiz.correct')}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-4 text-center">
             <p className="text-2xl font-bold text-gray-900">{totalQuestoes - questoesCorretas}</p>
-            <p className="text-sm text-gray-600">Erradas</p>
+            <p className="text-sm text-gray-600">{t('components.videoaulas.quiz.wrong')}</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="pt-4 text-center">
-            <p className="text-2xl font-bold text-gray-900">{Math.floor(resultado.tempo_gasto_segundos / 60)}min</p>
-            <p className="text-sm text-gray-600">Tempo</p>
+            <p className="text-2xl font-bold text-gray-900">{t('components.videoaulas.quiz.timeMin', { value: Math.floor(resultado.tempo_gasto_segundos / 60) })}</p>
+            <p className="text-sm text-gray-600">{t('components.videoaulas.quiz.time')}</p>
           </CardContent>
         </Card>
       </div>
@@ -349,8 +353,8 @@ const ResultadoQuiz: React.FC<ResultadoQuizProps> = ({ resultado, quiz }) => {
       {/* Progresso */}
       <div>
         <div className="flex justify-between text-sm mb-2">
-          <span className="text-gray-600">Acertos</span>
-          <span className="font-medium">{questoesCorretas} de {totalQuestoes}</span>
+          <span className="text-gray-600">{t('components.videoaulas.quiz.hits')}</span>
+          <span className="font-medium">{t('components.videoaulas.quiz.hitsOf', { correct: questoesCorretas, total: totalQuestoes })}</span>
         </div>
         <Progress value={(questoesCorretas / totalQuestoes) * 100} className="h-2" />
       </div>
@@ -358,7 +362,7 @@ const ResultadoQuiz: React.FC<ResultadoQuizProps> = ({ resultado, quiz }) => {
       {/* Revisão das Questões (opcional - pode mostrar só se errou) */}
       {!resultado.aprovado && (
         <div className="space-y-3 pt-4 border-t">
-          <h4 className="font-semibold text-gray-900">Revisão:</h4>
+          <h4 className="font-semibold text-gray-900">{t('components.videoaulas.quiz.review')}</h4>
           {quiz.questoes.map((questao, index) => {
             const respostaAluno = resultado.respostas.find(r => r.questao_id === questao.id);
             if (!respostaAluno || respostaAluno.correta) return null;
@@ -369,11 +373,11 @@ const ResultadoQuiz: React.FC<ResultadoQuizProps> = ({ resultado, quiz }) => {
                   <XCircle className="w-4 h-4 text-red-600 mt-1 flex-shrink-0" />
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-900 mb-1">
-                      Questão {index + 1}: {questao.pergunta}
+                      {t('components.videoaulas.quiz.questionNumber', { number: index + 1, question: questao.pergunta })}
                     </p>
                     {questao.explicacao && (
                       <p className="text-sm text-gray-700 mt-2 p-2 bg-white rounded border border-gray-200">
-                        <strong>Explicação:</strong> {questao.explicacao}
+                        <strong>{t('components.videoaulas.quiz.explanation')}</strong> {questao.explicacao}
                       </p>
                     )}
                   </div>

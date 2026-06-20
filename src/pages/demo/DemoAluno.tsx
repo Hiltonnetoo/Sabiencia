@@ -4,6 +4,7 @@
 // ============================================
 
 import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AlunoDashboard } from '../aluno/AlunoDashboard';
 import { BaseLayout } from '../../components/layout/BaseLayout';
 import { alunoNavItems } from '../../config/navigation';
@@ -17,6 +18,7 @@ import { getAlunoDetails } from '../../utils/alunoHelpers';
 
 export const DemoAluno: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { login, logout, isAuthenticated, user } = useAuth();
   const { matriculas, turmas, cursos } = useMockData();
   const hasInitialized = useRef(false);
@@ -58,14 +60,14 @@ export const DemoAluno: React.FC = () => {
   
   // ✅ Buscar curso do aluno
   const cursoNome = useMemo(() => {
-    if (!user || user.role !== 'aluno') return 'Enfermagem';
+    if (!user || user.role !== 'aluno') return t('demoPages.aluno.defaultCourse');
     const alunoDetails = getAlunoDetails(user.id, matriculas, turmas, cursos);
-    return alunoDetails.curso?.nome || 'Enfermagem';
-  }, [user, matriculas, turmas, cursos]);
+    return alunoDetails.curso?.nome || t('demoPages.aluno.defaultCourse');
+  }, [user, matriculas, turmas, cursos, t]);
   
   // ✅ Mostrar loading até tudo estar correto
   if (isInitializing || !isAuthenticated || user?.role !== 'aluno') {
-    return <LoadingFallback message="Preparando demonstração do Aluno..." />;
+    return <LoadingFallback message={t('demoPages.aluno.loading')} />;
   }
   
   return (
@@ -73,7 +75,7 @@ export const DemoAluno: React.FC = () => {
       <div className="mb-4 bg-green-50 border border-green-200 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm text-green-800">
-            🎯 <strong>MODO DEMONSTRAÇÃO - ALUNO</strong> | {user.nome_completo} - {cursoNome}
+            🎯 <strong>{t('demoPages.aluno.bannerLabel')}</strong> | {user.nome_completo} - {cursoNome}
           </p>
           <Button 
             variant="outline" 
@@ -81,7 +83,7 @@ export const DemoAluno: React.FC = () => {
             onClick={() => navigate('/demo')}
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Voltar
+            {t('demoPages.common.back')}
           </Button>
         </div>
       </div>

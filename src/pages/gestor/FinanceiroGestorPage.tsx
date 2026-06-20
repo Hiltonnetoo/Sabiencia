@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useMockData } from '../../contexts/MockDataContext';
 import { PagamentoCard } from '../../components/financeiro/PagamentoCard';
 import { FinanceiroStats } from '../../components/financeiro/FinanceiroStats';
@@ -21,6 +22,7 @@ import { exportToPDF, type ExportColumn } from '../../utils/exportService';
 import { formatCurrency, formatDate } from '../../utils/formatters';
 
 export const FinanceiroGestorPage: React.FC = () => {
+  const { t } = useTranslation();
   const { pagamentos, alunos, registrarPagamento, cancelarPagamento } = useMockData();
   
   const [busca, setBusca] = useState('');
@@ -145,7 +147,7 @@ export const FinanceiroGestorPage: React.FC = () => {
     if (!pagamentoSelecionado) return;
 
     registrarPagamento(pagamentoSelecionado.id, data);
-    toast.success('Pagamento registrado com sucesso!');
+    toast.success(t('gestor.financeiro.registerSuccess'));
     setShowRegistroForm(false);
     setPagamentoSelecionado(null);
   };
@@ -156,8 +158,8 @@ export const FinanceiroGestorPage: React.FC = () => {
 
   const handleConfirmCancelar = () => {
     if (pagamentoToCancel) {
-      cancelarPagamento(pagamentoToCancel.id, 'Cancelado pelo gestor');
-      toast.success('Pagamento cancelado com sucesso!');
+      cancelarPagamento(pagamentoToCancel.id, t('gestor.financeiro.cancelByManager'));
+      toast.success(t('gestor.financeiro.cancelSuccess'));
       setPagamentoToCancel(null);
     }
   };
@@ -171,15 +173,15 @@ export const FinanceiroGestorPage: React.FC = () => {
 
   const handleExportarRelatorio = async () => {
     if (pagamentosFiltrados.length === 0) {
-      toast.warning('Não há pagamentos para exportar com os filtros atuais.');
+      toast.warning(t('gestor.financeiro.exportEmpty'));
       return;
     }
 
     const statusLabel: Record<string, string> = {
-      pago: 'Pago',
-      pendente: 'Pendente',
-      vencido: 'Vencido',
-      cancelado: 'Cancelado',
+      pago: t('gestor.financeiro.statusLabels.paid'),
+      pendente: t('gestor.financeiro.statusLabels.pending'),
+      vencido: t('gestor.financeiro.statusLabels.overdue'),
+      cancelado: t('gestor.financeiro.statusLabels.cancelled'),
     };
 
     const rows = pagamentosFiltrados.map((pag) => {
@@ -190,27 +192,27 @@ export const FinanceiroGestorPage: React.FC = () => {
         valor: pag.valor,
         vencimento: pag.data_vencimento,
         pagamento: pag.data_pagamento,
-        status: vencido ? 'Vencido' : statusLabel[pag.status] ?? pag.status,
+        status: vencido ? t('gestor.financeiro.statusLabels.overdue') : statusLabel[pag.status] ?? pag.status,
       };
     });
 
     const columns: ExportColumn[] = [
-      { header: 'Aluno', key: 'aluno' },
-      { header: 'Valor', key: 'valor', format: (v) => formatCurrency(v) },
-      { header: 'Vencimento', key: 'vencimento', format: (v) => (v ? formatDate(v) : '—') },
-      { header: 'Pagamento', key: 'pagamento', format: (v) => (v ? formatDate(v) : '—') },
-      { header: 'Status', key: 'status' },
+      { header: t('gestor.financeiro.columns.student'), key: 'aluno' },
+      { header: t('gestor.financeiro.columns.value'), key: 'valor', format: (v) => formatCurrency(v) },
+      { header: t('gestor.financeiro.columns.dueDate'), key: 'vencimento', format: (v) => (v ? formatDate(v) : '—') },
+      { header: t('gestor.financeiro.columns.payment'), key: 'pagamento', format: (v) => (v ? formatDate(v) : '—') },
+      { header: t('gestor.financeiro.columns.status'), key: 'status' },
     ];
 
     try {
       await exportToPDF(rows, columns, {
-        filename: 'relatorio-financeiro',
-        title: 'Relatório Financeiro — Sabiencia',
+        filename: t('gestor.financeiro.reportFilename'),
+        title: t('gestor.financeiro.reportTitle'),
         orientation: 'landscape',
       });
-      toast.success('Relatório exportado em PDF!');
+      toast.success(t('gestor.financeiro.exportSuccess'));
     } catch {
-      toast.error('Não foi possível gerar o relatório. Tente novamente.');
+      toast.error(t('gestor.financeiro.exportError'));
     }
   };
 
@@ -222,16 +224,16 @@ export const FinanceiroGestorPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gestão Financeira</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('gestor.financeiro.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Controle de pagamentos e receitas da instituição
+            {t('gestor.financeiro.subtitle')}
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           <Button variant="outline" onClick={handleExportarRelatorio}>
             <Download className="w-4 h-4 mr-2" />
-            Exportar Relatório
+            {t('gestor.financeiro.exportReport')}
           </Button>
         </div>
       </div>
@@ -241,7 +243,7 @@ export const FinanceiroGestorPage: React.FC = () => {
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            Atenção: {estatisticas.alunosInadimplentes} {estatisticas.alunosInadimplentes === 1 ? 'aluno está' : 'alunos estão'} com pagamentos vencidos
+            {t('gestor.financeiro.delinquentAlert', { count: estatisticas.alunosInadimplentes })}
           </AlertDescription>
         </Alert>
       )}
@@ -274,7 +276,7 @@ export const FinanceiroGestorPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <FileText className="w-5 h-5 text-gray-400" />
             <h2 className="font-semibold text-gray-900">
-              Pagamentos ({pagamentosFiltrados.length})
+              {t('gestor.financeiro.paymentsTitle', { count: pagamentosFiltrados.length })}
             </h2>
           </div>
         </div>
@@ -283,12 +285,12 @@ export const FinanceiroGestorPage: React.FC = () => {
           <div className="text-center py-12 bg-gray-50 rounded-lg">
             <DollarSign className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <h3 className="font-medium text-gray-900 mb-2">
-              Nenhum pagamento encontrado
+              {t('gestor.financeiro.noPaymentsTitle')}
             </h3>
             <p className="text-gray-600">
               {busca || status !== 'todos' || (mes && mes !== 'todos') || (ano && ano !== 'todos')
-                ? 'Tente ajustar os filtros de busca'
-                : 'Não há pagamentos registrados ainda'}
+                ? t('gestor.financeiro.noPaymentsFiltered')
+                : t('gestor.financeiro.noPaymentsEmpty')}
             </p>
           </div>
         ) : (
@@ -329,9 +331,9 @@ export const FinanceiroGestorPage: React.FC = () => {
         open={!!pagamentoToCancel}
         onOpenChange={(open) => !open && setPagamentoToCancel(null)}
         onConfirm={handleConfirmCancelar}
-        title="Cancelar Pagamento"
-        confirmLabel="Confirmar Cancelamento"
-        description="Atenção: Ao cancelar este pagamento, o boleto correspondente será invalidado permanentemente. O aluno não receberá mais cobranças para esta parcela, mas o saldo devedor continuará constando no histórico acadêmico até que uma nova negociação seja registrada."
+        title={t('gestor.financeiro.cancelDialogTitle')}
+        confirmLabel={t('gestor.financeiro.cancelDialogConfirm')}
+        description={t('gestor.financeiro.cancelDialogDesc')}
       />
     </div>
   );

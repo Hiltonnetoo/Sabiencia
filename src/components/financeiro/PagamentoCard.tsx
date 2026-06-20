@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pagamento, Aluno } from '../../types';
 import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
@@ -33,13 +34,14 @@ export function PagamentoCard({
   onCancelar,
   showAlunoInfo = true
 }: PagamentoCardProps) {
-  
+  const { t } = useTranslation();
+
   const getStatusBadge = (status: string) => {
     const configs = {
-      pago: { variant: 'default' as const, icon: CheckCircle2, label: 'Pago', color: 'text-green-600 bg-green-50' },
-      pendente: { variant: 'secondary' as const, icon: Clock, label: 'Pendente', color: 'text-yellow-600 bg-yellow-50' },
-      vencido: { variant: 'destructive' as const, icon: AlertCircle, label: 'Vencido', color: 'text-red-600 bg-red-50' },
-      cancelado: { variant: 'outline' as const, icon: XCircle, label: 'Cancelado', color: 'text-gray-600 bg-gray-50' },
+      pago: { variant: 'default' as const, icon: CheckCircle2, label: t('components.pagamentoCard.status.pago'), color: 'text-green-600 bg-green-50' },
+      pendente: { variant: 'secondary' as const, icon: Clock, label: t('components.pagamentoCard.status.pendente'), color: 'text-yellow-600 bg-yellow-50' },
+      vencido: { variant: 'destructive' as const, icon: AlertCircle, label: t('components.pagamentoCard.status.vencido'), color: 'text-red-600 bg-red-50' },
+      cancelado: { variant: 'outline' as const, icon: XCircle, label: t('components.pagamentoCard.status.cancelado'), color: 'text-gray-600 bg-gray-50' },
     };
     
     const config = configs[status as keyof typeof configs];
@@ -92,7 +94,7 @@ export function PagamentoCard({
             {getStatusBadge(pagamento.status)}
             {isVencido && (
               <span className="text-xs text-red-600 font-medium">
-                {diasAtraso} {diasAtraso === 1 ? 'dia' : 'dias'} de atraso
+                {t('components.pagamentoCard.daysLate', { count: diasAtraso })}
               </span>
             )}
           </div>
@@ -103,7 +105,7 @@ export function PagamentoCard({
           <div className="flex items-start gap-2">
             <Calendar className="w-4 h-4 text-gray-400 mt-0.5" />
             <div>
-              <p className="text-xs text-gray-500">Vencimento</p>
+              <p className="text-xs text-gray-500">{t('components.pagamentoCard.dueDate')}</p>
               <p className="text-sm font-medium text-gray-900">
                 {formatDate(pagamento.data_vencimento)}
               </p>
@@ -114,7 +116,7 @@ export function PagamentoCard({
             <div className="flex items-start gap-2">
               <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5" />
               <div>
-                <p className="text-xs text-gray-500">Pagamento</p>
+                <p className="text-xs text-gray-500">{t('components.pagamentoCard.paymentDate')}</p>
                 <p className="text-sm font-medium text-gray-900">
                   {formatDate(pagamento.data_pagamento)}
                 </p>
@@ -126,7 +128,7 @@ export function PagamentoCard({
             <div className="flex items-start gap-2">
               <CreditCard className="w-4 h-4 text-gray-400 mt-0.5" />
               <div>
-                <p className="text-xs text-gray-500">Método</p>
+                <p className="text-xs text-gray-500">{t('components.pagamentoCard.method')}</p>
                 <p className="text-sm font-medium text-gray-900">
                   {pagamento.metodo_pagamento}
                 </p>
@@ -138,7 +140,7 @@ export function PagamentoCard({
         {/* Observação */}
         {pagamento.observacao && (
           <div className="pt-4 border-t">
-            <p className="text-xs text-gray-500 mb-1">Observação</p>
+            <p className="text-xs text-gray-500 mb-1">{t('components.pagamentoCard.note')}</p>
             <p className="text-sm text-gray-700">{pagamento.observacao}</p>
           </div>
         )}
@@ -152,7 +154,7 @@ export function PagamentoCard({
               className="flex-1"
             >
               <CheckCircle2 className="w-4 h-4 mr-2" />
-              Registrar Pagamento
+              {t('components.pagamentoCard.registerPayment')}
             </Button>
           )}
 
@@ -163,7 +165,7 @@ export function PagamentoCard({
               size="sm"
             >
               <Eye className="w-4 h-4 mr-2" />
-              Ver Comprovante
+              {t('components.pagamentoCard.viewReceipt')}
             </Button>
           )}
 
@@ -184,7 +186,7 @@ export function PagamentoCard({
               size="sm"
             >
               <XCircle className="w-4 h-4 mr-2" />
-              Cancelar
+              {t('common.actions.cancel')}
             </Button>
           )}
         </div>

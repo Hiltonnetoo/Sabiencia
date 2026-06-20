@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Plus, FileText } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { ObservacaoCard } from '../../components/observacoes/ObservacaoCard';
@@ -17,6 +18,7 @@ import type { Observacao } from '../../types';
 import type { ObservacaoFormData, ObservacaoFilters as FiltersType } from '../../schemas/observacaoSchemas';
 
 export const ObservacoesGestorPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const {
     observacoes,
@@ -75,15 +77,15 @@ export const ObservacoesGestorPage: React.FC = () => {
     try {
       if (editingObservacao) {
         updateObservacao(editingObservacao.id, data as any);
-        toast.success('Observação atualizada com sucesso!');
+        toast.success(t('gestor.observacoes.toast.updated'));
       } else {
         addObservacao(data as any);
-        toast.success('Observação registrada com sucesso!');
+        toast.success(t('gestor.observacoes.toast.created'));
       }
       setIsFormOpen(false);
       setEditingObservacao(undefined);
     } catch (error) {
-      toast.error('Erro ao salvar observação. Tente novamente.');
+      toast.error(t('gestor.observacoes.toast.error'));
     }
   };
 
@@ -99,7 +101,7 @@ export const ObservacoesGestorPage: React.FC = () => {
   const confirmDelete = () => {
     if (deletingObservacao) {
       deleteObservacao(deletingObservacao.id);
-      toast.success('Observação excluída com sucesso!');
+      toast.success(t('gestor.observacoes.toast.deleted'));
       setDeletingObservacao(undefined);
     }
   };
@@ -136,14 +138,14 @@ export const ObservacoesGestorPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gestão de Observações</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('gestor.observacoes.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Visualize e gerencie todas as observações dos alunos
+            {t('gestor.observacoes.subtitle')}
           </p>
         </div>
         <Button onClick={handleOpenForm}>
           <Plus className="w-4 h-4 mr-2" />
-          Nova Observação
+          {t('gestor.observacoes.new')}
         </Button>
       </div>
 
@@ -163,42 +165,42 @@ export const ObservacoesGestorPage: React.FC = () => {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="flex flex-col gap-1">
-            <p className="text-sm text-gray-600">Total</p>
+            <p className="text-sm text-gray-600">{t('gestor.observacoes.stats.total')}</p>
             <p className="text-2xl font-semibold text-gray-900">{stats.total}</p>
           </div>
         </div>
 
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="flex flex-col gap-1">
-            <p className="text-sm text-gray-600">Pedagógicas</p>
+            <p className="text-sm text-gray-600">{t('gestor.observacoes.stats.pedagogicas')}</p>
             <p className="text-2xl font-semibold text-blue-600">{stats.pedagogicas}</p>
           </div>
         </div>
 
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="flex flex-col gap-1">
-            <p className="text-sm text-gray-600">Comportamentais</p>
+            <p className="text-sm text-gray-600">{t('gestor.observacoes.stats.comportamentais')}</p>
             <p className="text-2xl font-semibold text-green-600">{stats.comportamentais}</p>
           </div>
         </div>
 
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="flex flex-col gap-1">
-            <p className="text-sm text-gray-600">Administrativas</p>
+            <p className="text-sm text-gray-600">{t('gestor.observacoes.stats.administrativas')}</p>
             <p className="text-2xl font-semibold text-purple-600">{stats.administrativas}</p>
           </div>
         </div>
 
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="flex flex-col gap-1">
-            <p className="text-sm text-gray-600">Visíveis</p>
+            <p className="text-sm text-gray-600">{t('gestor.observacoes.stats.visiveis')}</p>
             <p className="text-2xl font-semibold text-green-600">{stats.visiveis}</p>
           </div>
         </div>
 
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="flex flex-col gap-1">
-            <p className="text-sm text-gray-600">Ocultas</p>
+            <p className="text-sm text-gray-600">{t('gestor.observacoes.stats.ocultas')}</p>
             <p className="text-2xl font-semibold text-gray-600">{stats.ocultas}</p>
           </div>
         </div>
@@ -208,16 +210,16 @@ export const ObservacoesGestorPage: React.FC = () => {
       {observacoesFiltradas.length === 0 ? (
         <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
           <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-gray-900 mb-2">Nenhuma observação encontrada</h3>
+          <h3 className="text-gray-900 mb-2">{t('gestor.observacoes.emptyTitle')}</h3>
           <p className="text-gray-600 mb-6">
             {filters.busca || filters.aluno_id || filters.professor_id || filters.disciplina_id || filters.tipo
-              ? 'Tente ajustar os filtros para encontrar observações.'
-              : 'Ainda não há observações registradas no sistema.'}
+              ? t('gestor.observacoes.emptyFiltered')
+              : t('gestor.observacoes.emptyDefault')}
           </p>
           {!filters.busca && !filters.aluno_id && !filters.professor_id && !filters.disciplina_id && !filters.tipo && (
             <Button onClick={handleOpenForm}>
               <Plus className="w-4 h-4 mr-2" />
-              Registrar Primeira Observação
+              {t('gestor.observacoes.registerFirst')}
             </Button>
           )}
         </div>
@@ -263,8 +265,8 @@ export const ObservacoesGestorPage: React.FC = () => {
         open={!!deletingObservacao}
         onOpenChange={(open) => !open && setDeletingObservacao(undefined)}
         onConfirm={confirmDelete}
-        title="Excluir Observação"
-        description="Tem certeza que deseja excluir esta observação? Esta ação não pode ser desfeita."
+        title={t('gestor.observacoes.deleteTitle')}
+        description={t('gestor.observacoes.deleteDescription')}
       />
     </div>
   );

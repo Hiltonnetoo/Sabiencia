@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 
 interface Evento {
   id: string;
@@ -48,6 +49,7 @@ interface Evento {
 }
 
 export const EventosPage: React.FC = () => {
+  const { t } = useTranslation();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [abaSelecionada, setAbaSelecionada] = useState<'ativos' | 'passados'>('ativos');
 
@@ -120,21 +122,21 @@ export const EventosPage: React.FC = () => {
 
   const handleCriarEvento = () => {
     if (!titulo || !dataInicio || !horaInicio || !dataFim || !horaFim) {
-      toast.error('Preencha todos os campos obrigatórios');
+      toast.error(t('gestor.eventos.toast.fillRequired'));
       return;
     }
 
     if (localTipo === 'online' && !localLink) {
-      toast.error('Informe o link do evento online');
+      toast.error(t('gestor.eventos.toast.informLink'));
       return;
     }
 
     if (localTipo === 'presencial' && !localEndereco) {
-      toast.error('Informe o endereço do evento');
+      toast.error(t('gestor.eventos.toast.informAddress'));
       return;
     }
 
-    toast.success('Evento criado com sucesso!');
+    toast.success(t('gestor.eventos.toast.created'));
     setDialogOpen(false);
     // Resetar formulário
     setTitulo('');
@@ -151,13 +153,7 @@ export const EventosPage: React.FC = () => {
   };
 
   const getTipoLabel = (tipo: Evento['tipo']) => {
-    switch (tipo) {
-      case 'palestra': return 'Palestra';
-      case 'workshop': return 'Workshop';
-      case 'aula_ao_vivo': return 'Aula ao Vivo';
-      case 'evento_social': return 'Evento Social';
-      case 'extracurricular': return 'Extracurricular';
-    }
+    return t(`gestor.eventos.types.${tipo}`);
   };
 
   const getTipoBadgeColor = (tipo: Evento['tipo']) => {
@@ -188,14 +184,14 @@ export const EventosPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Eventos e Atividades</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('gestor.eventos.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Gerencie eventos, palestras, workshops e atividades extracurriculares
+            {t('gestor.eventos.subtitle')}
           </p>
         </div>
         <Button onClick={() => setDialogOpen(true)} className="gap-2">
           <Plus className="h-4 w-4" />
-          Criar Evento
+          {t('gestor.eventos.createButton')}
         </Button>
       </div>
 
@@ -203,7 +199,7 @@ export const EventosPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Eventos Ativos</CardDescription>
+            <CardDescription>{t('gestor.eventos.stats.activeEvents')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -212,7 +208,7 @@ export const EventosPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">3</p>
-                <p className="text-xs text-gray-500">eventos</p>
+                <p className="text-xs text-gray-500">{t('gestor.eventos.stats.events')}</p>
               </div>
             </div>
           </CardContent>
@@ -220,7 +216,7 @@ export const EventosPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Total de Inscritos</CardDescription>
+            <CardDescription>{t('gestor.eventos.stats.totalRegistrations')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -229,7 +225,7 @@ export const EventosPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">193</p>
-                <p className="text-xs text-gray-500">participantes</p>
+                <p className="text-xs text-gray-500">{t('gestor.eventos.stats.participants')}</p>
               </div>
             </div>
           </CardContent>
@@ -237,7 +233,7 @@ export const EventosPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Eventos Online</CardDescription>
+            <CardDescription>{t('gestor.eventos.stats.onlineEvents')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -246,7 +242,7 @@ export const EventosPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">1</p>
-                <p className="text-xs text-gray-500">eventos</p>
+                <p className="text-xs text-gray-500">{t('gestor.eventos.stats.events')}</p>
               </div>
             </div>
           </CardContent>
@@ -254,7 +250,7 @@ export const EventosPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Com Certificado</CardDescription>
+            <CardDescription>{t('gestor.eventos.stats.withCertificate')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -263,7 +259,7 @@ export const EventosPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">2</p>
-                <p className="text-xs text-gray-500">eventos</p>
+                <p className="text-xs text-gray-500">{t('gestor.eventos.stats.events')}</p>
               </div>
             </div>
           </CardContent>
@@ -273,16 +269,16 @@ export const EventosPage: React.FC = () => {
       {/* Lista de Eventos */}
       <Card>
         <CardHeader>
-          <CardTitle>Eventos Cadastrados</CardTitle>
+          <CardTitle>{t('gestor.eventos.listTitle')}</CardTitle>
           <CardDescription>
-            Gerencie todos os eventos da instituição
+            {t('gestor.eventos.listDescription')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs value={abaSelecionada} onValueChange={(v) => setAbaSelecionada(v as any)}>
             <TabsList>
-              <TabsTrigger value="ativos">Ativos (3)</TabsTrigger>
-              <TabsTrigger value="passados">Finalizados (12)</TabsTrigger>
+              <TabsTrigger value="ativos">{t('gestor.eventos.tabs.active', { count: 3 })}</TabsTrigger>
+              <TabsTrigger value="passados">{t('gestor.eventos.tabs.past', { count: 12 })}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="ativos" className="space-y-4 mt-6">
@@ -302,7 +298,7 @@ export const EventosPage: React.FC = () => {
                           {evento.emitirCertificado && (
                             <Badge className="bg-yellow-100 text-yellow-700">
                               <Award className="h-3 w-3 mr-1" />
-                              Certificado
+                              {t('gestor.eventos.certificateBadge')}
                             </Badge>
                           )}
                         </div>
@@ -316,7 +312,7 @@ export const EventosPage: React.FC = () => {
                           <div className="flex items-center gap-2 text-gray-600">
                             <Clock className="h-4 w-4" />
                             <div>
-                              <p className="font-medium text-gray-900">Data</p>
+                              <p className="font-medium text-gray-900">{t('gestor.eventos.details.date')}</p>
                               <p>{formatarData(evento.dataInicio)}</p>
                             </div>
                           </div>
@@ -324,15 +320,15 @@ export const EventosPage: React.FC = () => {
                           <div className="flex items-center gap-2 text-gray-600">
                             <MapPin className="h-4 w-4" />
                             <div>
-                              <p className="font-medium text-gray-900">Local</p>
-                              <p>{evento.localTipo === 'online' ? 'Online' : 'Presencial'}</p>
+                              <p className="font-medium text-gray-900">{t('gestor.eventos.details.location')}</p>
+                              <p>{evento.localTipo === 'online' ? t('gestor.eventos.locationOnline') : t('gestor.eventos.locationInPerson')}</p>
                             </div>
                           </div>
 
                           <div className="flex items-center gap-2 text-gray-600">
                             <Users className="h-4 w-4" />
                             <div>
-                              <p className="font-medium text-gray-900">Inscritos</p>
+                              <p className="font-medium text-gray-900">{t('gestor.eventos.details.registrations')}</p>
                               <p>
                                 {evento.inscritos}
                                 {evento.vagasLimitadas && evento.totalVagas 
@@ -345,7 +341,7 @@ export const EventosPage: React.FC = () => {
                           {evento.vagasLimitadas && evento.totalVagas && (
                             <div className="flex items-center gap-2">
                               <div className="flex-1">
-                                <p className="text-xs text-gray-500 mb-1">Vagas</p>
+                                <p className="text-xs text-gray-500 mb-1">{t('gestor.eventos.details.slots')}</p>
                                 <div className="w-full bg-gray-200 rounded-full h-2">
                                   <div
                                     className="bg-blue-600 h-2 rounded-full"
@@ -363,7 +359,7 @@ export const EventosPage: React.FC = () => {
                         {evento.localTipo === 'online' && evento.localLink && (
                           <div className="mt-3 p-2 bg-blue-50 rounded text-sm">
                             <p className="text-gray-600">
-                              <strong>Link:</strong>{' '}
+                              <strong>{t('gestor.eventos.linkLabel')}</strong>{' '}
                               <a href={evento.localLink} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
                                 {evento.localLink}
                               </a>
@@ -374,7 +370,7 @@ export const EventosPage: React.FC = () => {
                         {evento.localTipo === 'presencial' && evento.localEndereco && (
                           <div className="mt-3 p-2 bg-green-50 rounded text-sm">
                             <p className="text-gray-600">
-                              <strong>Endereço:</strong> {evento.localEndereco}
+                              <strong>{t('gestor.eventos.addressLabel')}</strong> {evento.localEndereco}
                             </p>
                           </div>
                         )}
@@ -402,10 +398,10 @@ export const EventosPage: React.FC = () => {
               <div className="text-center py-12">
                 <CheckCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  Eventos Finalizados
+                  {t('gestor.eventos.past.title')}
                 </h3>
                 <p className="text-gray-500">
-                  12 eventos já foram realizados
+                  {t('gestor.eventos.past.description', { count: 12 })}
                 </p>
               </div>
             </TabsContent>
@@ -417,19 +413,19 @@ export const EventosPage: React.FC = () => {
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Criar Novo Evento</DialogTitle>
+            <DialogTitle>{t('gestor.eventos.dialog.title')}</DialogTitle>
             <DialogDescription>
-              Crie palestras, workshops e atividades extracurriculares
+              {t('gestor.eventos.dialog.description')}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
             {/* Título */}
             <div>
-              <Label htmlFor="titulo">Título do Evento *</Label>
+              <Label htmlFor="titulo">{t('gestor.eventos.dialog.titleLabel')}</Label>
               <Input
                 id="titulo"
-                placeholder="Ex: Workshop de Primeiros Socorros"
+                placeholder={t('gestor.eventos.dialog.titlePlaceholder')}
                 value={titulo}
                 onChange={(e) => setTitulo(e.target.value)}
               />
@@ -437,10 +433,10 @@ export const EventosPage: React.FC = () => {
 
             {/* Descrição */}
             <div>
-              <Label htmlFor="descricao">Descrição *</Label>
+              <Label htmlFor="descricao">{t('gestor.eventos.dialog.descriptionLabel')}</Label>
               <Textarea
                 id="descricao"
-                placeholder="Descreva o evento e seus objetivos..."
+                placeholder={t('gestor.eventos.dialog.descriptionPlaceholder')}
                 value={descricao}
                 onChange={(e) => setDescricao(e.target.value)}
                 rows={3}
@@ -449,17 +445,17 @@ export const EventosPage: React.FC = () => {
 
             {/* Tipo */}
             <div>
-              <Label htmlFor="tipo">Tipo de Evento *</Label>
+              <Label htmlFor="tipo">{t('gestor.eventos.dialog.typeLabel')}</Label>
               <Select value={tipo} onValueChange={(v) => setTipo(v as Evento['tipo'])}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="palestra">Palestra</SelectItem>
-                  <SelectItem value="workshop">Workshop</SelectItem>
-                  <SelectItem value="aula_ao_vivo">Aula ao Vivo</SelectItem>
-                  <SelectItem value="evento_social">Evento Social</SelectItem>
-                  <SelectItem value="extracurricular">Atividade Extracurricular</SelectItem>
+                  <SelectItem value="palestra">{t('gestor.eventos.types.palestra')}</SelectItem>
+                  <SelectItem value="workshop">{t('gestor.eventos.types.workshop')}</SelectItem>
+                  <SelectItem value="aula_ao_vivo">{t('gestor.eventos.types.aula_ao_vivo')}</SelectItem>
+                  <SelectItem value="evento_social">{t('gestor.eventos.types.evento_social')}</SelectItem>
+                  <SelectItem value="extracurricular">{t('gestor.eventos.types.extracurricularFull')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -467,7 +463,7 @@ export const EventosPage: React.FC = () => {
             {/* Data e Hora */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="data-inicio">Data de Início *</Label>
+                <Label htmlFor="data-inicio">{t('gestor.eventos.dialog.startDateLabel')}</Label>
                 <Input
                   id="data-inicio"
                   type="date"
@@ -476,7 +472,7 @@ export const EventosPage: React.FC = () => {
                 />
               </div>
               <div>
-                <Label htmlFor="hora-inicio">Hora de Início *</Label>
+                <Label htmlFor="hora-inicio">{t('gestor.eventos.dialog.startTimeLabel')}</Label>
                 <Input
                   id="hora-inicio"
                   type="time"
@@ -488,7 +484,7 @@ export const EventosPage: React.FC = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="data-fim">Data de Término *</Label>
+                <Label htmlFor="data-fim">{t('gestor.eventos.dialog.endDateLabel')}</Label>
                 <Input
                   id="data-fim"
                   type="date"
@@ -497,7 +493,7 @@ export const EventosPage: React.FC = () => {
                 />
               </div>
               <div>
-                <Label htmlFor="hora-fim">Hora de Término *</Label>
+                <Label htmlFor="hora-fim">{t('gestor.eventos.dialog.endTimeLabel')}</Label>
                 <Input
                   id="hora-fim"
                   type="time"
@@ -509,22 +505,22 @@ export const EventosPage: React.FC = () => {
 
             {/* Local */}
             <div>
-              <Label>Local do Evento *</Label>
+              <Label>{t('gestor.eventos.dialog.locationLabel')}</Label>
               <Tabs value={localTipo} onValueChange={(v) => setLocalTipo(v as 'online' | 'presencial')}>
                 <TabsList className="grid grid-cols-2 w-full">
                   <TabsTrigger value="online">
                     <VideoIcon className="h-4 w-4 mr-2" />
-                    Online
+                    {t('gestor.eventos.dialog.onlineTab')}
                   </TabsTrigger>
                   <TabsTrigger value="presencial">
                     <MapPin className="h-4 w-4 mr-2" />
-                    Presencial
+                    {t('gestor.eventos.dialog.inPersonTab')}
                   </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="online" className="mt-3">
                   <Input
-                    placeholder="Link da reunião online (Google Meet, Zoom, etc)"
+                    placeholder={t('gestor.eventos.dialog.onlineLinkPlaceholder')}
                     value={localLink}
                     onChange={(e) => setLocalLink(e.target.value)}
                   />
@@ -532,7 +528,7 @@ export const EventosPage: React.FC = () => {
 
                 <TabsContent value="presencial" className="mt-3">
                   <Input
-                    placeholder="Endereço completo do evento"
+                    placeholder={t('gestor.eventos.dialog.addressPlaceholder')}
                     value={localEndereco}
                     onChange={(e) => setLocalEndereco(e.target.value)}
                   />
@@ -544,9 +540,9 @@ export const EventosPage: React.FC = () => {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div>
-                  <Label htmlFor="vagas-limitadas">Limitar vagas</Label>
+                  <Label htmlFor="vagas-limitadas">{t('gestor.eventos.dialog.limitSlotsLabel')}</Label>
                   <p className="text-xs text-gray-500">
-                    Definir número máximo de participantes
+                    {t('gestor.eventos.dialog.limitSlotsHint')}
                   </p>
                 </div>
                 <Switch
@@ -558,11 +554,11 @@ export const EventosPage: React.FC = () => {
 
               {vagasLimitadas && (
                 <div>
-                  <Label htmlFor="total-vagas">Número de Vagas</Label>
+                  <Label htmlFor="total-vagas">{t('gestor.eventos.dialog.slotsCountLabel')}</Label>
                   <Input
                     id="total-vagas"
                     type="number"
-                    placeholder="Ex: 50"
+                    placeholder={t('gestor.eventos.dialog.slotsCountPlaceholder')}
                     value={totalVagas}
                     onChange={(e) => setTotalVagas(e.target.value)}
                   />

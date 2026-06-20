@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,9 +28,12 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
   open,
   onConfirm,
   onCancel,
-  title = 'Alterações não salvas',
-  description = 'Você tem alterações não salvas que serão perdidas. Deseja sair mesmo assim?',
+  title,
+  description,
 }) => {
+  const { t } = useTranslation();
+  const resolvedTitle = title ?? t('components.unsavedChangesDialog.title');
+  const resolvedDescription = description ?? t('components.unsavedChangesDialog.description');
   return (
     <AlertDialog open={open}>
       <AlertDialogContent>
@@ -39,22 +43,22 @@ export const UnsavedChangesDialog: React.FC<UnsavedChangesDialogProps> = ({
               <AlertTriangle className="h-6 w-6 text-orange-600" />
             </div>
             <div>
-              <AlertDialogTitle>{title}</AlertDialogTitle>
+              <AlertDialogTitle>{resolvedTitle}</AlertDialogTitle>
             </div>
           </div>
           <AlertDialogDescription className="pt-2">
-            {description}
+            {resolvedDescription}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={onCancel}>
-            Continuar editando
+            {t('components.unsavedChangesDialog.keepEditing')}
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={onConfirm}
             className="bg-red-600 hover:bg-red-700"
           >
-            Sair sem salvar
+            {t('components.unsavedChangesDialog.leaveWithoutSaving')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

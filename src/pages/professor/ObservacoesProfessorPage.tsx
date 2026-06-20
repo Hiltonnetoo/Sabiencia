@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Plus, FileText } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { ObservacaoCard } from '../../components/observacoes/ObservacaoCard';
@@ -16,6 +17,7 @@ import type { Observacao } from '../../types';
 import type { ObservacaoFormData, ObservacaoFilters as FiltersType } from '../../schemas/observacaoSchemas';
 
 export const ObservacoesProfessorPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const {
     observacoes,
@@ -100,15 +102,15 @@ export const ObservacoesProfessorPage: React.FC = () => {
     try {
       if (editingObservacao) {
         updateObservacao(editingObservacao.id, data as any);
-        toast.success('Observação atualizada com sucesso!');
+        toast.success(t('professor.observacoes.toast.updated'));
       } else {
         addObservacao(data as any);
-        toast.success('Observação registrada com sucesso!');
+        toast.success(t('professor.observacoes.toast.created'));
       }
       setIsFormOpen(false);
       setEditingObservacao(undefined);
     } catch (error) {
-      toast.error('Erro ao salvar observação. Tente novamente.');
+      toast.error(t('professor.observacoes.toast.saveError'));
     }
   };
 
@@ -124,7 +126,7 @@ export const ObservacoesProfessorPage: React.FC = () => {
   const confirmDelete = () => {
     if (deletingObservacao) {
       deleteObservacao(deletingObservacao.id);
-      toast.success('Observação excluída com sucesso!');
+      toast.success(t('professor.observacoes.toast.deleted'));
       setDeletingObservacao(undefined);
     }
   };
@@ -146,14 +148,14 @@ export const ObservacoesProfessorPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Observações dos Alunos</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('professor.observacoes.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Registre observações pedagógicas, comportamentais e administrativas
+            {t('professor.observacoes.subtitle')}
           </p>
         </div>
         <Button onClick={handleOpenForm}>
           <Plus className="w-4 h-4 mr-2" />
-          Nova Observação
+          {t('professor.observacoes.newObservation')}
         </Button>
       </div>
 
@@ -174,7 +176,7 @@ export const ObservacoesProfessorPage: React.FC = () => {
               <FileText className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Total</p>
+              <p className="text-sm text-gray-600">{t('professor.observacoes.stats.total')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 {observacoesFiltradas.length}
               </p>
@@ -188,7 +190,7 @@ export const ObservacoesProfessorPage: React.FC = () => {
               <FileText className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Pedagógicas</p>
+              <p className="text-sm text-gray-600">{t('professor.observacoes.stats.pedagogical')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 {observacoesFiltradas.filter(o => o.tipo === 'pedagogica').length}
               </p>
@@ -202,7 +204,7 @@ export const ObservacoesProfessorPage: React.FC = () => {
               <FileText className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Comportamentais</p>
+              <p className="text-sm text-gray-600">{t('professor.observacoes.stats.behavioral')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 {observacoesFiltradas.filter(o => o.tipo === 'comportamental').length}
               </p>
@@ -216,7 +218,7 @@ export const ObservacoesProfessorPage: React.FC = () => {
               <FileText className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Administrativas</p>
+              <p className="text-sm text-gray-600">{t('professor.observacoes.stats.administrative')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 {observacoesFiltradas.filter(o => o.tipo === 'administrativa').length}
               </p>
@@ -229,16 +231,16 @@ export const ObservacoesProfessorPage: React.FC = () => {
       {observacoesFiltradas.length === 0 ? (
         <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
           <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-gray-900 mb-2">Nenhuma observação encontrada</h3>
+          <h3 className="text-gray-900 mb-2">{t('professor.observacoes.empty.title')}</h3>
           <p className="text-gray-600 mb-6">
             {filters.busca || filters.aluno_id || filters.disciplina_id || filters.tipo
-              ? 'Tente ajustar os filtros para encontrar observações.'
-              : 'Comece registrando observações sobre seus alunos.'}
+              ? t('professor.observacoes.empty.withFilters')
+              : t('professor.observacoes.empty.default')}
           </p>
           {!filters.busca && !filters.aluno_id && !filters.disciplina_id && !filters.tipo && (
             <Button onClick={handleOpenForm}>
               <Plus className="w-4 h-4 mr-2" />
-              Registrar Primeira Observação
+              {t('professor.observacoes.empty.registerFirst')}
             </Button>
           )}
         </div>
@@ -284,8 +286,8 @@ export const ObservacoesProfessorPage: React.FC = () => {
         open={!!deletingObservacao}
         onOpenChange={(open) => !open && setDeletingObservacao(undefined)}
         onConfirm={confirmDelete}
-        title="Excluir Observação"
-        description="Tem certeza que deseja excluir esta observação? Esta ação não pode ser desfeita."
+        title={t('professor.observacoes.delete.title')}
+        description={t('professor.observacoes.delete.description')}
       />
     </div>
   );

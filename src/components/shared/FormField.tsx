@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { ReactNode, cloneElement, isValidElement } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Label } from '../ui/label';
 import { cn } from '../ui/utils';
 import { AlertCircle } from 'lucide-react';
@@ -17,15 +18,16 @@ interface FormFieldProps {
   className?: string;
 }
 
-export function FormField({ 
-  label, 
-  htmlFor, 
-  required, 
-  error, 
-  hint, 
+export function FormField({
+  label,
+  htmlFor,
+  required,
+  error,
+  hint,
   children,
-  className 
+  className
 }: FormFieldProps) {
+  const { t } = useTranslation();
   const errorId = `${htmlFor}-error`;
   const hintId = `${htmlFor}-hint`;
   const descriptionIds: string[] = [];
@@ -49,7 +51,7 @@ export function FormField({
       <Label htmlFor={htmlFor} className="flex items-center gap-1">
         {label}
         {required && (
-          <span className="text-red-600" aria-label="obrigatório">*</span>
+          <span className="text-red-600" aria-label={t('components.formField.required')}>*</span>
         )}
       </Label>
       

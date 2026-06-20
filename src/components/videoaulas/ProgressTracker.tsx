@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { CheckCircle, Clock, PlayCircle } from 'lucide-react';
 import { Progress } from '../ui/progress';
 import { Badge } from '../ui/badge';
@@ -27,6 +28,7 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
   const aulasConcluidas = progressos.filter(p => p.concluida).length;
   const percentualGeral = totalAulas > 0 ? (aulasConcluidas / totalAulas) * 100 : 0;
 
+  const { t } = useTranslation();
   const tempoTotalSegundos = videoaulas.reduce((sum, v) => sum + v.duracao_segundos, 0);
   const tempoAssistidoSegundos = progressos.reduce((sum, p) => sum + p.tempo_assistido_segundos, 0);
 
@@ -36,16 +38,16 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
         <div className="space-y-4">
           {/* Título */}
           <div>
-            <h3 className="font-semibold text-gray-900">Progresso Geral</h3>
+            <h3 className="font-semibold text-gray-900">{t('components.videoaulas.progressTracker.title')}</h3>
             <p className="text-sm text-gray-600 mt-1">
-              Acompanhe seu progresso no curso
+              {t('components.videoaulas.progressTracker.subtitle')}
             </p>
           </div>
 
           {/* Barra de Progresso Geral */}
           <div>
             <div className="flex justify-between text-sm mb-2">
-              <span className="text-gray-600">Conclusão</span>
+              <span className="text-gray-600">{t('components.videoaulas.progressTracker.completion')}</span>
               <span className="font-medium text-gray-900">
                 {Math.round(percentualGeral)}%
               </span>
@@ -59,7 +61,7 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <PlayCircle className="w-4 h-4" />
-                <span>Total de Aulas</span>
+                <span>{t('components.videoaulas.progressTracker.totalLessons')}</span>
               </div>
               <p className="text-2xl font-bold text-gray-900">{totalAulas}</p>
             </div>
@@ -68,7 +70,7 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <CheckCircle className="w-4 h-4 text-green-600" />
-                <span>Concluídas</span>
+                <span>{t('components.videoaulas.progressTracker.completed')}</span>
               </div>
               <p className="text-2xl font-bold text-green-600">{aulasConcluidas}</p>
             </div>
@@ -77,7 +79,7 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Clock className="w-4 h-4" />
-                <span>Tempo Total</span>
+                <span>{t('components.videoaulas.progressTracker.totalTime')}</span>
               </div>
               <p className="text-lg font-semibold text-gray-900">
                 {formatDuration(tempoTotalSegundos)}
@@ -88,7 +90,7 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Clock className="w-4 h-4 text-blue-600" />
-                <span>Assistido</span>
+                <span>{t('components.videoaulas.progressTracker.watched')}</span>
               </div>
               <p className="text-lg font-semibold text-blue-600">
                 {formatDuration(tempoAssistidoSegundos)}
@@ -99,11 +101,11 @@ export const ProgressTracker: React.FC<ProgressTrackerProps> = ({
           {/* Badges de Status */}
           <div className="flex gap-2 pt-2 border-t">
             <Badge variant={aulasConcluidas === totalAulas ? 'default' : 'secondary'}>
-              {aulasConcluidas === totalAulas ? 'Completo! 🎉' : 'Em Andamento'}
+              {aulasConcluidas === totalAulas ? t('components.videoaulas.progressTracker.complete') : t('components.videoaulas.progressTracker.inProgress')}
             </Badge>
             {aulasAssistidas > 0 && aulasAssistidas !== aulasConcluidas && (
               <Badge variant="outline">
-                {aulasAssistidas} em progresso
+                {t('components.videoaulas.progressTracker.inProgressCount', { count: aulasAssistidas })}
               </Badge>
             )}
           </div>
@@ -123,11 +125,12 @@ interface MiniProgressProps {
 }
 
 export const MiniProgress: React.FC<MiniProgressProps> = ({ progresso, duracao }) => {
+  const { t } = useTranslation();
   if (!progresso || progresso.percentual_assistido === 0) {
     return (
       <Badge variant="outline" className="gap-1">
         <PlayCircle className="w-3 h-3" />
-        Não assistida
+        {t('components.videoaulas.progressTracker.notWatched')}
       </Badge>
     );
   }
@@ -136,7 +139,7 @@ export const MiniProgress: React.FC<MiniProgressProps> = ({ progresso, duracao }
     return (
       <Badge variant="default" className="gap-1 bg-green-600">
         <CheckCircle className="w-3 h-3" />
-        Concluída
+        {t('components.videoaulas.progressTracker.completedBadge')}
       </Badge>
     );
   }
@@ -145,7 +148,7 @@ export const MiniProgress: React.FC<MiniProgressProps> = ({ progresso, duracao }
     <div className="space-y-1">
       <Badge variant="secondary" className="gap-1">
         <Clock className="w-3 h-3" />
-        {Math.round(progresso.percentual_assistido)}% assistido
+        {t('components.videoaulas.progressTracker.percentWatched', { value: Math.round(progresso.percentual_assistido) })}
       </Badge>
       <Progress value={progresso.percentual_assistido} className="h-1" />
     </div>

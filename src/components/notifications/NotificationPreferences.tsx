@@ -4,6 +4,7 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useTranslation } from 'react-i18next';
 import { Save, Mail, Smartphone, Calendar } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
@@ -18,6 +19,7 @@ interface NotificationPreferencesProps {
 }
 
 export function NotificationPreferences({ preferences, onSave }: NotificationPreferencesProps) {
+  const { t } = useTranslation();
   const {
     handleSubmit,
     watch,
@@ -45,9 +47,9 @@ export function NotificationPreferences({ preferences, onSave }: NotificationPre
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       onSave?.(data);
-      toast.success('Preferências salvas com sucesso!');
+      toast.success(t('components.notificationPreferences.preferencesSaved'));
     } catch (error) {
-      toast.error('Erro ao salvar preferências');
+      toast.error(t('components.notificationPreferences.preferencesSaveError'));
     }
   };
 
@@ -61,7 +63,7 @@ export function NotificationPreferences({ preferences, onSave }: NotificationPre
     name: keyof PreferenciasNotificacaoData;
   }) => {
     const value = watch(name);
-    
+
     return (
       <div className="flex items-center justify-between p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
         <div className="flex-1">
@@ -83,9 +85,8 @@ export function NotificationPreferences({ preferences, onSave }: NotificationPre
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <Callout variant="info" title="Importante">
-        Você pode ajustar suas preferências a qualquer momento. Recomendamos manter ativas as
-        notificações de comunicados e financeiro.
+      <Callout variant="info" title={t('components.notificationPreferences.importantTitle')}>
+        {t('components.notificationPreferences.importantText')}
       </Callout>
 
       {/* Notificações por Email */}
@@ -95,35 +96,35 @@ export function NotificationPreferences({ preferences, onSave }: NotificationPre
             <Mail className="w-5 h-5 text-blue-600" />
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900">Notificações por Email</h3>
-            <p className="text-sm text-gray-600">Receba atualizações no seu email</p>
+            <h3 className="font-semibold text-gray-900">{t('components.notificationPreferences.emailTitle')}</h3>
+            <p className="text-sm text-gray-600">{t('components.notificationPreferences.emailDesc')}</p>
           </div>
         </div>
 
         <PreferenceItem
           name="email_comunicados"
-          label="Comunicados"
-          description="Receber comunicados importantes da escola"
+          label={t('components.notificationPreferences.announcements')}
+          description={t('components.notificationPreferences.emailAnnouncementsDesc')}
         />
         <PreferenceItem
           name="email_notas"
-          label="Notas e Avaliações"
-          description="Ser notificado sobre lançamento de notas"
+          label={t('components.notificationPreferences.grades')}
+          description={t('components.notificationPreferences.emailGradesDesc')}
         />
         <PreferenceItem
           name="email_frequencia"
-          label="Frequência"
-          description="Receber alertas sobre faltas e presenças"
+          label={t('components.notificationPreferences.attendance')}
+          description={t('components.notificationPreferences.emailAttendanceDesc')}
         />
         <PreferenceItem
           name="email_financeiro"
-          label="Financeiro"
-          description="Lembretes de pagamentos e cobranças"
+          label={t('components.notificationPreferences.financial')}
+          description={t('components.notificationPreferences.emailFinancialDesc')}
         />
         <PreferenceItem
           name="email_materiais"
-          label="Materiais Didáticos"
-          description="Novos materiais disponibilizados"
+          label={t('components.notificationPreferences.materials')}
+          description={t('components.notificationPreferences.emailMaterialsDesc')}
         />
       </div>
 
@@ -134,35 +135,35 @@ export function NotificationPreferences({ preferences, onSave }: NotificationPre
             <Smartphone className="w-5 h-5 text-purple-600" />
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900">Notificações no Sistema</h3>
-            <p className="text-sm text-gray-600">Alertas em tempo real no sistema</p>
+            <h3 className="font-semibold text-gray-900">{t('components.notificationPreferences.pushTitle')}</h3>
+            <p className="text-sm text-gray-600">{t('components.notificationPreferences.pushDesc')}</p>
           </div>
         </div>
 
         <PreferenceItem
           name="push_comunicados"
-          label="Comunicados"
-          description="Notificações instantâneas de comunicados"
+          label={t('components.notificationPreferences.announcements')}
+          description={t('components.notificationPreferences.pushAnnouncementsDesc')}
         />
         <PreferenceItem
           name="push_notas"
-          label="Notas e Avaliações"
-          description="Alertas sobre novas notas lançadas"
+          label={t('components.notificationPreferences.grades')}
+          description={t('components.notificationPreferences.pushGradesDesc')}
         />
         <PreferenceItem
           name="push_frequencia"
-          label="Frequência"
-          description="Notificações sobre registros de presença"
+          label={t('components.notificationPreferences.attendance')}
+          description={t('components.notificationPreferences.pushAttendanceDesc')}
         />
         <PreferenceItem
           name="push_financeiro"
-          label="Financeiro"
-          description="Alertas de vencimentos e pagamentos"
+          label={t('components.notificationPreferences.financial')}
+          description={t('components.notificationPreferences.pushFinancialDesc')}
         />
         <PreferenceItem
           name="push_materiais"
-          label="Materiais Didáticos"
-          description="Notificações de novos conteúdos"
+          label={t('components.notificationPreferences.materials')}
+          description={t('components.notificationPreferences.pushMaterialsDesc')}
         />
       </div>
 
@@ -173,20 +174,20 @@ export function NotificationPreferences({ preferences, onSave }: NotificationPre
             <Calendar className="w-5 h-5 text-green-600" />
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900">Resumos Periódicos</h3>
-            <p className="text-sm text-gray-600">Receba compilados de atividades</p>
+            <h3 className="font-semibold text-gray-900">{t('components.notificationPreferences.summariesTitle')}</h3>
+            <p className="text-sm text-gray-600">{t('components.notificationPreferences.summariesDesc')}</p>
           </div>
         </div>
 
         <PreferenceItem
           name="resumo_diario"
-          label="Resumo Diário"
-          description="Receber um resumo das atividades do dia"
+          label={t('components.notificationPreferences.dailySummary')}
+          description={t('components.notificationPreferences.dailySummaryDesc')}
         />
         <PreferenceItem
           name="resumo_semanal"
-          label="Resumo Semanal"
-          description="Receber um resumo das atividades da semana"
+          label={t('components.notificationPreferences.weeklySummary')}
+          description={t('components.notificationPreferences.weeklySummaryDesc')}
         />
       </div>
 
@@ -194,7 +195,7 @@ export function NotificationPreferences({ preferences, onSave }: NotificationPre
       <div className="flex items-center gap-3 pt-4 border-t">
         <Button type="submit" disabled={isSubmitting}>
           <Save className="w-4 h-4 mr-2" />
-          {isSubmitting ? 'Salvando...' : 'Salvar Preferências'}
+          {isSubmitting ? t('common.actions.saving') : t('components.notificationPreferences.savePreferences')}
         </Button>
       </div>
     </form>

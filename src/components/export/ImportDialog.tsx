@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -52,6 +53,7 @@ export function ImportDialog({
   mappings,
   onImportComplete,
 }: ImportDialogProps) {
+  const { t } = useTranslation();
   const [step, setStep] = useState<'upload' | 'configure' | 'result'>('upload');
   const [fileType, setFileType] = useState<'csv' | 'excel'>('excel');
   const [file, setFile] = useState<File | null>(null);
@@ -75,7 +77,7 @@ export function ImportDialog({
         setSelectedSheet(0);
       } catch (error) {
         console.error('Erro ao ler planilhas:', error);
-        toast.error('Erro ao ler arquivo Excel');
+        toast.error(t('components.importDialog.readSheetsError'));
         return;
       }
     }
@@ -101,17 +103,15 @@ export function ImportDialog({
       setStep('result');
 
       if (importResult.success) {
-        toast.success(`${importResult.validRows} registro(s) importado(s) com sucesso!`);
+        toast.success(t('components.importDialog.importSuccess', { count: importResult.validRows }));
       } else if (importResult.validRows > 0) {
-        toast.warning(
-          `${importResult.validRows} registro(s) importado(s) com ${importResult.errors.length} erro(s)`
-        );
+        toast.warning(t('components.importDialog.importWarning', { valid: importResult.validRows, errors: importResult.errors.length }));
       } else {
-        toast.error('Nenhum registro válido foi importado');
+        toast.error(t('components.importDialog.noValidRecords'));
       }
     } catch (error) {
       console.error('Erro ao importar:', error);
-      toast.error('Erro ao processar arquivo');
+      toast.error(t('components.importDialog.processError'));
     } finally {
       setIsProcessing(false);
     }
@@ -147,10 +147,10 @@ export function ImportDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Upload className="h-5 w-5" />
-            Importar Dados - {title}
+            {t('components.importDialog.title', { entity: title })}
           </DialogTitle>
           <DialogDescription>
-            Importe dados de arquivos CSV ou Excel.
+            {t('components.importDialog.description')}
           </DialogDescription>
         </DialogHeader>
 
@@ -159,7 +159,7 @@ export function ImportDialog({
           <div className="space-y-6 py-4">
             {/* Tipo de arquivo */}
             <div className="space-y-3">
-              <Label>Tipo de Arquivo</Label>
+              <Label>{t('components.importDialog.fileType')}</Label>
               <RadioGroup value={fileType} onValueChange={(v) => setFileType(v as any)}>
                 <div className="flex items-center space-x-2 rounded-lg border p-3 hover:bg-accent cursor-pointer">
                   <RadioGroupItem value="excel" id="excel-import" />
@@ -169,9 +169,9 @@ export function ImportDialog({
                   >
                     <FileSpreadsheet className="h-5 w-5" />
                     <div>
-                      <div>Excel (.xlsx, .xls)</div>
+                      <div>{t('components.importDialog.excelOption')}</div>
                       <div className="text-xs text-muted-foreground">
-                        Suporta múltiplas planilhas
+                        {t('components.importDialog.excelHint')}
                       </div>
                     </div>
                   </Label>
@@ -185,9 +185,9 @@ export function ImportDialog({
                   >
                     <FileText className="h-5 w-5" />
                     <div>
-                      <div>CSV (.csv)</div>
+                      <div>{t('components.importDialog.csvOption')}</div>
                       <div className="text-xs text-muted-foreground">
-                        Arquivo de texto separado por vírgulas
+                        {t('components.importDialog.csvHint')}
                       </div>
                     </div>
                   </Label>
@@ -197,7 +197,7 @@ export function ImportDialog({
 
             {/* Upload */}
             <div className="space-y-2">
-              <Label>Selecionar Arquivo</Label>
+              <Label>{t('components.importDialog.selectFile')}</Label>
               <div className="flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-8 hover:bg-accent cursor-pointer">
                 <input
                   ref={fileInputRef}
@@ -212,10 +212,10 @@ export function ImportDialog({
                   type="button"
                 >
                   <Upload className="mr-2 h-4 w-4" />
-                  Escolher Arquivo
+                  {t('components.importDialog.chooseFile')}
                 </Button>
                 <p className="text-sm text-muted-foreground mt-2">
-                  {fileType === 'csv' ? 'CSV' : 'Excel'} • Máx 10MB
+                  {t('components.importDialog.fileSizeHint', { type: fileType === 'csv' ? 'CSV' : 'Excel' })}
                 </p>
               </div>
             </div>
@@ -224,18 +224,18 @@ export function ImportDialog({
             <Alert>
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>
-                <p className="mb-2">O arquivo deve conter as seguintes colunas:</p>
+                <p className="mb-2">{t('components.importDialog.columnsRequired')}</p>
                 <ul className="list-disc list-inside text-sm space-y-1">
                   {mappings
                     .filter((m) => m.required)
                     .map((m) => (
-                      <li key={m.sourceColumn}>{m.sourceColumn} (obrigatório)</li>
+                      <li key={m.sourceColumn}>{t('components.importDialog.columnRequired', { column: m.sourceColumn })}</li>
                     ))}
                   {mappings
                     .filter((m) => !m.required)
                     .slice(0, 3)
                     .map((m) => (
-                      <li key={m.sourceColumn}>{m.sourceColumn} (opcional)</li>
+                      <li key={m.sourceColumn}>{t('components.importDialog.columnOptional', { column: m.sourceColumn })}</li>
                     ))}
                 </ul>
               </AlertDescription>
@@ -249,13 +249,13 @@ export function ImportDialog({
             <Alert>
               <CheckCircle2 className="h-4 w-4" />
               <AlertDescription>
-                Arquivo selecionado: <strong>{file?.name}</strong>
+                {t('components.importDialog.fileSelected')} <strong>{file?.name}</strong>
               </AlertDescription>
             </Alert>
 
             {fileType === 'excel' && sheets.length > 1 && (
               <div className="space-y-2">
-                <Label>Selecione a Planilha</Label>
+                <Label>{t('components.importDialog.selectSheet')}</Label>
                 <Select
                   value={selectedSheet.toString()}
                   onValueChange={(v) => setSelectedSheet(parseInt(v))}
@@ -276,11 +276,11 @@ export function ImportDialog({
 
             <div className="flex justify-end gap-3">
               <Button variant="outline" onClick={handleReset}>
-                Voltar
+                {t('common.actions.back')}
               </Button>
               <Button onClick={handleImport} disabled={isProcessing}>
                 {isProcessing && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Importar
+                {t('common.actions.import')}
               </Button>
             </div>
           </div>
@@ -292,9 +292,9 @@ export function ImportDialog({
             {/* Progresso */}
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span>Progresso</span>
+                <span>{t('components.importDialog.progress')}</span>
                 <span>
-                  {result.validRows} / {result.totalRows} registros
+                  {t('components.importDialog.recordsCount', { valid: result.validRows, total: result.totalRows })}
                 </span>
               </div>
               <Progress
@@ -309,19 +309,19 @@ export function ImportDialog({
                 <div className="text-2xl text-green-600 dark:text-green-400">
                   {result.validRows}
                 </div>
-                <div className="text-xs text-muted-foreground">Válidos</div>
+                <div className="text-xs text-muted-foreground">{t('components.importDialog.valid')}</div>
               </div>
               <div className="text-center p-3 bg-red-50 dark:bg-red-950 rounded-lg">
                 <div className="text-2xl text-red-600 dark:text-red-400">
                   {result.errors.length}
                 </div>
-                <div className="text-xs text-muted-foreground">Erros</div>
+                <div className="text-xs text-muted-foreground">{t('components.importDialog.errors')}</div>
               </div>
               <div className="text-center p-3 bg-yellow-50 dark:bg-yellow-950 rounded-lg">
                 <div className="text-2xl text-yellow-600 dark:text-yellow-400">
                   {result.warnings.length}
                 </div>
-                <div className="text-xs text-muted-foreground">Avisos</div>
+                <div className="text-xs text-muted-foreground">{t('components.importDialog.warnings')}</div>
               </div>
             </div>
 
@@ -330,7 +330,7 @@ export function ImportDialog({
               <div className="space-y-2">
                 <Label className="flex items-center gap-2 text-red-600">
                   <AlertCircle className="h-4 w-4" />
-                  Erros Encontrados
+                  {t('components.importDialog.errorsFound')}
                 </Label>
                 <ScrollArea className="h-[150px] rounded-md border">
                   <div className="p-3 space-y-1">
@@ -349,7 +349,7 @@ export function ImportDialog({
               <div className="space-y-2">
                 <Label className="flex items-center gap-2 text-yellow-600">
                   <AlertTriangle className="h-4 w-4" />
-                  Avisos
+                  {t('components.importDialog.warningsLabel')}
                 </Label>
                 <ScrollArea className="h-[100px] rounded-md border">
                   <div className="p-3 space-y-1">
@@ -365,13 +365,13 @@ export function ImportDialog({
 
             <div className="flex justify-end gap-3">
               <Button variant="outline" onClick={handleReset}>
-                Importar Outro
+                {t('components.importDialog.importAnother')}
               </Button>
               <Button
                 onClick={handleComplete}
                 disabled={result.validRows === 0}
               >
-                Concluir
+                {t('components.importDialog.finish')}
               </Button>
             </div>
           </div>

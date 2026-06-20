@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Input } from '../ui/input';
 import { Badge } from '../ui/badge';
@@ -42,7 +43,8 @@ export const MaterialFilters: React.FC<MaterialFiltersProps> = ({
   availableModulos,
   onClearFilters,
 }) => {
-  const hasActiveFilters = 
+  const { t } = useTranslation();
+  const hasActiveFilters =
     searchTerm || 
     tipoFilter !== 'all' || 
     disciplinaFilter !== 'all' || 
@@ -57,7 +59,7 @@ export const MaterialFilters: React.FC<MaterialFiltersProps> = ({
         <Input
           value={searchTerm}
           onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Buscar por título ou descrição..."
+          placeholder={t('components.biblioteca.filters.searchPlaceholder')}
           className="pl-10"
         />
       </div>
@@ -67,22 +69,22 @@ export const MaterialFilters: React.FC<MaterialFiltersProps> = ({
         {/* Tipo */}
         <Select value={tipoFilter} onValueChange={onTipoFilterChange}>
           <SelectTrigger>
-            <SelectValue placeholder="Todos os tipos" />
+            <SelectValue placeholder={t('common.labels.allTypes')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos os tipos</SelectItem>
-            <SelectItem value="pdf">PDF</SelectItem>
-            <SelectItem value="video">Vídeo</SelectItem>
+            <SelectItem value="all">{t('common.labels.allTypes')}</SelectItem>
+            <SelectItem value="pdf">{t('components.biblioteca.uploadForm.pdf')}</SelectItem>
+            <SelectItem value="video">{t('components.biblioteca.filters.video')}</SelectItem>
           </SelectContent>
         </Select>
 
         {/* Disciplina */}
         <Select value={disciplinaFilter} onValueChange={onDisciplinaFilterChange}>
           <SelectTrigger>
-            <SelectValue placeholder="Todas disciplinas" />
+            <SelectValue placeholder={t('common.labels.allSubjects')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todas disciplinas</SelectItem>
+            <SelectItem value="all">{t('common.labels.allSubjects')}</SelectItem>
             {availableDisciplinas
               .filter(disc => disc?.id && disc.id.trim() !== '')
               .map(disc => (
@@ -96,10 +98,10 @@ export const MaterialFilters: React.FC<MaterialFiltersProps> = ({
         {/* Módulo */}
         <Select value={moduloFilter} onValueChange={onModuloFilterChange}>
           <SelectTrigger>
-            <SelectValue placeholder="Todos módulos" />
+            <SelectValue placeholder={t('common.labels.allModules')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos módulos</SelectItem>
+            <SelectItem value="all">{t('common.labels.allModules')}</SelectItem>
             {availableModulos
               .filter(modulo => modulo && modulo.trim() !== '')
               .map((modulo, idx) => (
@@ -118,7 +120,7 @@ export const MaterialFilters: React.FC<MaterialFiltersProps> = ({
             className="gap-2"
           >
             <X className="h-4 w-4" />
-            Limpar Filtros
+            {t('common.actions.clearFilters')}
           </Button>
         )}
       </div>
@@ -126,7 +128,7 @@ export const MaterialFilters: React.FC<MaterialFiltersProps> = ({
       {/* Tags */}
       {availableTags.length > 0 && (
         <div>
-          <p className="text-sm text-gray-600 mb-2">Filtrar por tags:</p>
+          <p className="text-sm text-gray-600 mb-2">{t('components.biblioteca.filters.filterByTags')}</p>
           <div className="flex flex-wrap gap-2">
             {availableTags.map(tag => {
               const isSelected = selectedTags.includes(tag);

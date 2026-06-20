@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import {
   Table,
@@ -33,6 +34,7 @@ export const AlunosPaginatedList: React.FC<AlunosPaginatedListProps> = ({
   alunos,
   onDelete,
 }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [sortColumn, setSortColumn] = useState<SortColumn>('nome_completo');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
@@ -94,13 +96,13 @@ export const AlunosPaginatedList: React.FC<AlunosPaginatedListProps> = ({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-12">Foto</TableHead>
+            <TableHead className="w-12">{t('components.alunosPaginatedList.photo')}</TableHead>
             <TableHead>
               <button
                 onClick={() => handleSort('nome_completo')}
                 className="flex items-center gap-1 hover:text-gray-900"
               >
-                Nome
+                {t('components.alunosPaginatedList.name')}
                 <ArrowUpDown className="h-4 w-4" />
               </button>
             </TableHead>
@@ -109,7 +111,7 @@ export const AlunosPaginatedList: React.FC<AlunosPaginatedListProps> = ({
                 onClick={() => handleSort('cpf')}
                 className="flex items-center gap-1 hover:text-gray-900"
               >
-                CPF
+                {t('components.alunosPaginatedList.cpf')}
                 <ArrowUpDown className="h-4 w-4" />
               </button>
             </TableHead>
@@ -118,21 +120,21 @@ export const AlunosPaginatedList: React.FC<AlunosPaginatedListProps> = ({
                 onClick={() => handleSort('email')}
                 className="flex items-center gap-1 hover:text-gray-900"
               >
-                Email
+                {t('components.alunosPaginatedList.email')}
                 <ArrowUpDown className="h-4 w-4" />
               </button>
             </TableHead>
-            <TableHead>Curso</TableHead>
-            <TableHead>Turma</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-right">Ações</TableHead>
+            <TableHead>{t('components.alunosPaginatedList.course')}</TableHead>
+            <TableHead>{t('components.alunosPaginatedList.class')}</TableHead>
+            <TableHead>{t('components.alunosPaginatedList.status')}</TableHead>
+            <TableHead className="text-right">{t('components.alunosPaginatedList.actions')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {sortedAlunos.length === 0 ? (
             <TableRow>
               <TableCell colSpan={8} className="text-center py-8 text-gray-500">
-                Nenhum aluno encontrado
+                {t('components.alunosPaginatedList.noStudentsFound')}
               </TableCell>
             </TableRow>
           ) : (
@@ -174,7 +176,7 @@ export const AlunosPaginatedList: React.FC<AlunosPaginatedListProps> = ({
                         size="sm"
                         onClick={() => handleView(aluno.id)}
                         className="h-8 w-8 p-0"
-                        title="Visualizar"
+                        title={t('components.alunosPaginatedList.view')}
                       >
                         <Eye className="h-4 w-4" />
                       </Button>
@@ -183,7 +185,7 @@ export const AlunosPaginatedList: React.FC<AlunosPaginatedListProps> = ({
                         size="sm"
                         onClick={() => handleEdit(aluno.id)}
                         className="h-8 w-8 p-0"
-                        title="Editar"
+                        title={t('components.alunosPaginatedList.edit')}
                       >
                         <Pencil className="h-4 w-4" />
                       </Button>
@@ -192,7 +194,7 @@ export const AlunosPaginatedList: React.FC<AlunosPaginatedListProps> = ({
                         size="sm"
                         onClick={() => onDelete(aluno)}
                         className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                        title="Excluir"
+                        title={t('components.alunosPaginatedList.delete')}
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>

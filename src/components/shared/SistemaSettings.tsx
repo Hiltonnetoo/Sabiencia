@@ -3,12 +3,13 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
-import { 
+import {
   Building2,
   Globe,
   Clock,
@@ -20,6 +21,8 @@ import {
 import { toast } from 'sonner';
 
 export const SistemaSettings: React.FC = () => {
+  const { t } = useTranslation();
+
   // Informações da Instituição
   const [nomeInstituicao, setNomeInstituicao] = useState('Sabiencia');
   const [cnpj, setCnpj] = useState('12.345.678/0001-90');
@@ -43,13 +46,13 @@ export const SistemaSettings: React.FC = () => {
   const handleSalvar = async () => {
     setSalvando(true);
     await new Promise(resolve => setTimeout(resolve, 1000));
-    toast.success('Configurações do sistema atualizadas!');
+    toast.success(t('components.sistemaSettings.settingsUpdated'));
     setSalvando(false);
   };
 
   const handleRealizarBackup = () => {
-    toast.success('Backup iniciado!', {
-      description: 'O backup será concluído em alguns minutos.',
+    toast.success(t('components.sistemaSettings.backupStarted'), {
+      description: t('components.sistemaSettings.backupStartedDesc'),
     });
   };
 
@@ -60,16 +63,16 @@ export const SistemaSettings: React.FC = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Building2 className="h-5 w-5 text-gray-500" />
-            <CardTitle>Informações da Instituição</CardTitle>
+            <CardTitle>{t('components.sistemaSettings.institutionInfo')}</CardTitle>
           </div>
           <CardDescription>
-            Dados cadastrais da escola
+            {t('components.sistemaSettings.institutionInfoDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="nome-instituicao">Nome da Instituição</Label>
+              <Label htmlFor="nome-instituicao">{t('components.sistemaSettings.institutionName')}</Label>
               <Input
                 id="nome-instituicao"
                 value={nomeInstituicao}
@@ -77,7 +80,7 @@ export const SistemaSettings: React.FC = () => {
               />
             </div>
             <div>
-              <Label htmlFor="cnpj">CNPJ</Label>
+              <Label htmlFor="cnpj">{t('components.sistemaSettings.cnpj')}</Label>
               <Input
                 id="cnpj"
                 value={cnpj}
@@ -87,7 +90,7 @@ export const SistemaSettings: React.FC = () => {
           </div>
 
           <div>
-            <Label htmlFor="endereco">Endereço Completo</Label>
+            <Label htmlFor="endereco">{t('components.sistemaSettings.fullAddress')}</Label>
             <Input
               id="endereco"
               value={endereco}
@@ -97,7 +100,7 @@ export const SistemaSettings: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="telefone">Telefone</Label>
+              <Label htmlFor="telefone">{t('components.sistemaSettings.phone')}</Label>
               <Input
                 id="telefone"
                 value={telefone}
@@ -105,7 +108,7 @@ export const SistemaSettings: React.FC = () => {
               />
             </div>
             <div>
-              <Label htmlFor="email-contato">E-mail de Contato</Label>
+              <Label htmlFor="email-contato">{t('components.sistemaSettings.contactEmail')}</Label>
               <Input
                 id="email-contato"
                 type="email"
@@ -122,52 +125,52 @@ export const SistemaSettings: React.FC = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Globe className="h-5 w-5 text-gray-500" />
-            <CardTitle>Configurações Gerais</CardTitle>
+            <CardTitle>{t('components.sistemaSettings.generalSettings')}</CardTitle>
           </div>
           <CardDescription>
-            Parâmetros gerais do sistema
+            {t('components.sistemaSettings.generalSettingsDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <Label htmlFor="fuso-horario">Fuso Horário</Label>
+              <Label htmlFor="fuso-horario">{t('components.sistemaSettings.timezone')}</Label>
               <Select value={fusoHorario} onValueChange={setFusoHorario}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="America/Sao_Paulo">Brasília (GMT-3)</SelectItem>
-                  <SelectItem value="America/Manaus">Manaus (GMT-4)</SelectItem>
-                  <SelectItem value="America/Rio_Branco">Rio Branco (GMT-5)</SelectItem>
+                  <SelectItem value="America/Sao_Paulo">{t('components.sistemaSettings.timezoneBrasilia')}</SelectItem>
+                  <SelectItem value="America/Manaus">{t('components.sistemaSettings.timezoneManaus')}</SelectItem>
+                  <SelectItem value="America/Rio_Branco">{t('components.sistemaSettings.timezoneRioBranco')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="formato-data">Formato de Data</Label>
+              <Label htmlFor="formato-data">{t('components.sistemaSettings.dateFormat')}</Label>
               <Select value={formatoData} onValueChange={setFormatoData}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="DD/MM/YYYY">DD/MM/AAAA</SelectItem>
-                  <SelectItem value="MM/DD/YYYY">MM/DD/AAAA</SelectItem>
-                  <SelectItem value="YYYY-MM-DD">AAAA-MM-DD</SelectItem>
+                  <SelectItem value="DD/MM/YYYY">{t('components.sistemaSettings.dateFormatDMY')}</SelectItem>
+                  <SelectItem value="MM/DD/YYYY">{t('components.sistemaSettings.dateFormatMDY')}</SelectItem>
+                  <SelectItem value="YYYY-MM-DD">{t('components.sistemaSettings.dateFormatYMD')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="idioma">Idioma</Label>
+              <Label htmlFor="idioma">{t('components.sistemaSettings.language')}</Label>
               <Select value={idioma} onValueChange={setIdioma}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="pt-BR">Português (Brasil)</SelectItem>
-                  <SelectItem value="en-US">English (US)</SelectItem>
-                  <SelectItem value="es-ES">Español</SelectItem>
+                  <SelectItem value="pt-BR">{t('components.sistemaSettings.languagePt')}</SelectItem>
+                  <SelectItem value="en-US">{t('components.sistemaSettings.languageEn')}</SelectItem>
+                  <SelectItem value="es-ES">{t('components.sistemaSettings.languageEs')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -180,16 +183,16 @@ export const SistemaSettings: React.FC = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Clock className="h-5 w-5 text-gray-500" />
-            <CardTitle>Parâmetros Acadêmicos</CardTitle>
+            <CardTitle>{t('components.sistemaSettings.academicParams')}</CardTitle>
           </div>
           <CardDescription>
-            Regras e critérios de avaliação
+            {t('components.sistemaSettings.academicParamsDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="frequencia-minima">Frequência Mínima para Aprovação (%)</Label>
+              <Label htmlFor="frequencia-minima">{t('components.sistemaSettings.minAttendance')}</Label>
               <Input
                 id="frequencia-minima"
                 type="number"
@@ -199,7 +202,7 @@ export const SistemaSettings: React.FC = () => {
             </div>
 
             <div>
-              <Label htmlFor="nota-minima">Nota Mínima para Aprovação</Label>
+              <Label htmlFor="nota-minima">{t('components.sistemaSettings.minGrade')}</Label>
               <Input
                 id="nota-minima"
                 type="number"
@@ -212,21 +215,21 @@ export const SistemaSettings: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="sistema-notas">Sistema de Notas</Label>
+              <Label htmlFor="sistema-notas">{t('components.sistemaSettings.gradeSystem')}</Label>
               <Select value={sistemaNotas} onValueChange={setSistemaNotas}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="0-10">0 a 10</SelectItem>
-                  <SelectItem value="0-100">0 a 100</SelectItem>
-                  <SelectItem value="conceitos">Conceitos (A, B, C, D, E)</SelectItem>
+                  <SelectItem value="0-10">{t('components.sistemaSettings.gradeSystem010')}</SelectItem>
+                  <SelectItem value="0-100">{t('components.sistemaSettings.gradeSystem0100')}</SelectItem>
+                  <SelectItem value="conceitos">{t('components.sistemaSettings.gradeSystemConcepts')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div>
-              <Label htmlFor="duracao-semestre">Duração do Semestre (meses)</Label>
+              <Label htmlFor="duracao-semestre">{t('components.sistemaSettings.semesterDuration')}</Label>
               <Input
                 id="duracao-semestre"
                 type="number"
@@ -243,27 +246,27 @@ export const SistemaSettings: React.FC = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Database className="h-5 w-5 text-gray-500" />
-            <CardTitle>Backup e Segurança</CardTitle>
+            <CardTitle>{t('components.sistemaSettings.backupSecurity')}</CardTitle>
           </div>
           <CardDescription>
-            Proteção e recuperação de dados
+            {t('components.sistemaSettings.backupSecurityDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="p-4 bg-gray-50 rounded-lg">
             <div className="flex items-start justify-between">
               <div className="flex-1">
-                <h4 className="font-medium text-gray-900 mb-2">Backup do Sistema</h4>
+                <h4 className="font-medium text-gray-900 mb-2">{t('components.sistemaSettings.systemBackup')}</h4>
                 <p className="text-sm text-gray-600 mb-3">
-                  Realize um backup completo de todos os dados do sistema
+                  {t('components.sistemaSettings.systemBackupDesc')}
                 </p>
                 <p className="text-xs text-gray-500">
-                  Último backup: 10/11/2024 às 03:00
+                  {t('components.sistemaSettings.lastBackup', { date: '10/11/2024 03:00' })}
                 </p>
               </div>
               <Button onClick={handleRealizarBackup} className="gap-2">
                 <Download className="h-4 w-4" />
-                Realizar Backup
+                {t('components.sistemaSettings.performBackup')}
               </Button>
             </div>
           </div>
@@ -271,10 +274,10 @@ export const SistemaSettings: React.FC = () => {
           <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <Shield className="h-4 w-4 text-blue-600" />
-              <h4 className="font-medium text-blue-900">Backup Automático</h4>
+              <h4 className="font-medium text-blue-900">{t('components.sistemaSettings.automaticBackup')}</h4>
             </div>
             <p className="text-sm text-blue-700">
-              Backups automáticos são realizados diariamente às 03:00
+              {t('components.sistemaSettings.automaticBackupDesc')}
             </p>
           </div>
         </CardContent>
@@ -286,12 +289,12 @@ export const SistemaSettings: React.FC = () => {
           {salvando ? (
             <>
               <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-              Salvando...
+              {t('components.sistemaSettings.saving')}
             </>
           ) : (
             <>
               <Save className="h-4 w-4" />
-              Salvar Configurações
+              {t('components.sistemaSettings.saveSettings')}
             </>
           )}
         </Button>

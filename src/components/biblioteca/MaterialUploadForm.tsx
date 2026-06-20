@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../ui/button';
@@ -38,6 +39,7 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
   onCancel,
   isLoading = false,
 }) => {
+  const { t } = useTranslation();
   const { disciplinas } = useMockData();
   const [tagsInput, setTagsInput] = useState('');
   const [previewThumbnail, setPreviewThumbnail] = useState<string>('');
@@ -107,16 +109,15 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
     setValue('tags', tags.filter(t => t !== tagToRemove));
   };
 
-  // Sugestões de módulos
   const modulosSugeridos = [
-    'Módulo 1 - Introdução',
-    'Módulo 2 - Fundamentos',
-    'Módulo 3 - Intermediário',
-    'Módulo 4 - Avançado',
-    'Módulo 5 - Prática',
-    'Material Complementar',
-    'Revisão',
-    'Avaliação',
+    t('components.biblioteca.uploadForm.modules.mod1'),
+    t('components.biblioteca.uploadForm.modules.mod2'),
+    t('components.biblioteca.uploadForm.modules.mod3'),
+    t('components.biblioteca.uploadForm.modules.mod4'),
+    t('components.biblioteca.uploadForm.modules.mod5'),
+    t('components.biblioteca.uploadForm.modules.complementary'),
+    t('components.biblioteca.uploadForm.modules.review'),
+    t('components.biblioteca.uploadForm.modules.assessment'),
   ];
 
   return (
@@ -124,14 +125,14 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
       {/* SEÇÃO 1: INFORMAÇÕES BÁSICAS */}
       <Card>
         <CardHeader>
-          <CardTitle>Informações Básicas</CardTitle>
-          <CardDescription>Dados principais do material</CardDescription>
+          <CardTitle>{t('components.biblioteca.uploadForm.basicInfoTitle')}</CardTitle>
+          <CardDescription>{t('components.biblioteca.uploadForm.basicInfoDesc')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Tipo */}
           <div>
             <Label htmlFor="tipo">
-              Tipo de Material <span className="text-red-500">*</span>
+              {t('components.biblioteca.uploadForm.materialType')} <span className="text-red-500">*</span>
             </Label>
             <Select
               value={tipo}
@@ -144,13 +145,13 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
                 <SelectItem value="pdf">
                   <div className="flex items-center gap-2">
                     <FileText className="h-4 w-4" />
-                    PDF
+                    {t('components.biblioteca.uploadForm.pdf')}
                   </div>
                 </SelectItem>
                 <SelectItem value="video">
                   <div className="flex items-center gap-2">
                     <Video className="h-4 w-4" />
-                    Vídeo (YouTube)
+                    {t('components.biblioteca.uploadForm.videoYoutube')}
                   </div>
                 </SelectItem>
               </SelectContent>
@@ -160,12 +161,12 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
           {/* Título */}
           <div>
             <Label htmlFor="titulo">
-              Título <span className="text-red-500">*</span>
+              {t('components.biblioteca.uploadForm.title')} <span className="text-red-500">*</span>
             </Label>
             <Input
               id="titulo"
               {...register('titulo')}
-              placeholder="Ex: Aula 01 - Introdução à Enfermagem"
+              placeholder={t('components.biblioteca.uploadForm.titlePlaceholder')}
             />
             {errors.titulo && (
               <p className="text-sm text-red-500 mt-1">{errors.titulo.message}</p>
@@ -175,12 +176,12 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
           {/* Descrição */}
           <div>
             <Label htmlFor="descricao">
-              Descrição <span className="text-red-500">*</span>
+              {t('components.biblioteca.uploadForm.description')} <span className="text-red-500">*</span>
             </Label>
             <Textarea
               id="descricao"
               {...register('descricao')}
-              placeholder="Descreva o conteúdo do material..."
+              placeholder={t('components.biblioteca.uploadForm.descriptionPlaceholder')}
               rows={4}
             />
             {errors.descricao && (
@@ -192,14 +193,14 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <Label htmlFor="disciplina_id">
-                Disciplina <span className="text-red-500">*</span>
+                {t('components.biblioteca.uploadForm.subject')} <span className="text-red-500">*</span>
               </Label>
               <Select
                 value={watch('disciplina_id')}
                 onValueChange={(value) => setValue('disciplina_id', value)}
               >
                 <SelectTrigger id="disciplina_id">
-                  <SelectValue placeholder="Selecione a disciplina" />
+                  <SelectValue placeholder={t('components.biblioteca.uploadForm.selectSubject')} />
                 </SelectTrigger>
                 <SelectContent>
                   {disciplinas
@@ -218,12 +219,12 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
 
             <div>
               <Label htmlFor="modulo">
-                Módulo <span className="text-red-500">*</span>
+                {t('components.biblioteca.uploadForm.module')} <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="modulo"
                 {...register('modulo')}
-                placeholder="Ex: Módulo 1"
+                placeholder={t('components.biblioteca.uploadForm.modulePlaceholder')}
                 list="modulos-sugeridos"
               />
               <datalist id="modulos-sugeridos">
@@ -243,12 +244,12 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
       <Card>
         <CardHeader>
           <CardTitle>
-            {tipo === 'pdf' ? 'Link do PDF' : 'Link do YouTube'}
+            {tipo === 'pdf' ? t('components.biblioteca.uploadForm.pdfLinkTitle') : t('components.biblioteca.uploadForm.youtubeLinkTitle')}
           </CardTitle>
           <CardDescription>
-            {tipo === 'pdf' 
-              ? 'Cole o link direto do arquivo PDF (Google Drive, Dropbox, etc.)'
-              : 'Cole o link do vídeo no YouTube'}
+            {tipo === 'pdf'
+              ? t('components.biblioteca.uploadForm.pdfLinkDesc')
+              : t('components.biblioteca.uploadForm.youtubeLinkDesc')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -256,7 +257,7 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
           {tipo === 'pdf' && (
             <div>
               <Label htmlFor="file-upload">
-                Fazer Upload do PDF <span className="text-red-500">*</span>
+                {t('components.biblioteca.uploadForm.uploadPdf')} <span className="text-red-500">*</span>
               </Label>
               <div className="mt-2 flex items-center gap-4">
                 <label
@@ -264,7 +265,7 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
                   className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg cursor-pointer hover:bg-blue-700 transition-colors"
                 >
                   <Upload className="h-4 w-4" />
-                  Selecionar Arquivo
+                  {t('components.biblioteca.uploadForm.selectFile')}
                 </label>
                 <input
                   id="file-upload"
@@ -303,7 +304,7 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
               {isUploading && (
                 <div className="mt-4 space-y-2">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Fazendo upload...</span>
+                    <span className="text-gray-600">{t('components.biblioteca.uploadForm.uploading')}</span>
                     <span className="font-medium">{uploadProgress}%</span>
                   </div>
                   <Progress value={uploadProgress} className="h-2" />
@@ -315,7 +316,7 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
           {/* URL Manual (alternativa) */}
           <div>
             <Label htmlFor="url">
-              {tipo === 'pdf' ? 'ou Cole o Link do PDF' : 'Link do YouTube'} <span className="text-red-500">*</span>
+              {tipo === 'pdf' ? t('components.biblioteca.uploadForm.orPastePdfLink') : t('components.biblioteca.uploadForm.youtubeLinkLabel')} <span className="text-red-500">*</span>
             </Label>
             <div className="relative">
               <LinkIcon className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -323,8 +324,8 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
                 id="url"
                 {...register('url')}
                 placeholder={
-                  tipo === 'pdf' 
-                    ? 'https://drive.google.com/file/...' 
+                  tipo === 'pdf'
+                    ? 'https://drive.google.com/file/...'
                     : 'https://www.youtube.com/watch?v=...'
                 }
                 className="pl-10"
@@ -336,7 +337,7 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
             )}
             {tipo === 'video' && url && !isValidYouTubeURL(url) && (
               <p className="text-sm text-orange-500 mt-1">
-                Certifique-se de que é um link válido do YouTube
+                {t('components.biblioteca.uploadForm.invalidYoutubeWarning')}
               </p>
             )}
           </div>
@@ -344,7 +345,7 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
           {/* Preview da Thumbnail (YouTube) */}
           {tipo === 'video' && previewThumbnail && (
             <div>
-              <Label>Preview da Thumbnail</Label>
+              <Label>{t('components.biblioteca.uploadForm.thumbnailPreview')}</Label>
               <img
                 src={previewThumbnail}
                 alt="Thumbnail"
@@ -358,12 +359,12 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
           {tipo === 'pdf' && (
             <div className="grid gap-4 md:grid-cols-2">
               <div>
-                <Label htmlFor="tamanho_kb">Tamanho (KB) - Opcional</Label>
+                <Label htmlFor="tamanho_kb">{t('components.biblioteca.uploadForm.sizeKbOptional')}</Label>
                 <Input
                   id="tamanho_kb"
                   type="number"
                   {...register('tamanho_kb', { valueAsNumber: true })}
-                  placeholder="Ex: 2048"
+                  placeholder={t('components.biblioteca.uploadForm.sizePlaceholder')}
                 />
               </div>
             </div>
@@ -373,12 +374,12 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
           {tipo === 'video' && (
             <div className="grid gap-4 md:grid-cols-2">
               <div>
-                <Label htmlFor="duracao_segundos">Duração (segundos) - Opcional</Label>
+                <Label htmlFor="duracao_segundos">{t('components.biblioteca.uploadForm.durationSecondsOptional')}</Label>
                 <Input
                   id="duracao_segundos"
                   type="number"
                   {...register('duracao_segundos', { valueAsNumber: true })}
-                  placeholder="Ex: 1800 (30 minutos)"
+                  placeholder={t('components.biblioteca.uploadForm.durationPlaceholder')}
                 />
               </div>
             </div>
@@ -389,21 +390,21 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
       {/* SEÇÃO 3: TAGS E ORGANIZAÇÃO */}
       <Card>
         <CardHeader>
-          <CardTitle>Tags e Organização</CardTitle>
-          <CardDescription>Ajude os alunos a encontrar o material</CardDescription>
+          <CardTitle>{t('components.biblioteca.uploadForm.tagsTitle')}</CardTitle>
+          <CardDescription>{t('components.biblioteca.uploadForm.tagsDesc')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Tags */}
           <div>
             <Label htmlFor="tags">
-              Tags <span className="text-red-500">*</span>
+              {t('components.biblioteca.uploadForm.tags')} <span className="text-red-500">*</span>
             </Label>
             <div className="space-y-2">
               <Input
                 id="tags"
                 value={tagsInput}
                 onChange={(e) => setTagsInput(e.target.value)}
-                placeholder="Digite uma tag e pressione Enter"
+                placeholder={t('components.biblioteca.uploadForm.tagsPlaceholder')}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault();
@@ -433,7 +434,7 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
               )}
 
               <p className="text-xs text-gray-500">
-                {tags.length}/10 tags • Pressione Enter para adicionar
+                {t('components.biblioteca.uploadForm.tagsHint', { count: tags.length })}
               </p>
             </div>
           </div>
@@ -443,15 +444,15 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
       {/* SEÇÃO 4: CONFIGURAÇÕES */}
       <Card>
         <CardHeader>
-          <CardTitle>Configurações de Acesso</CardTitle>
+          <CardTitle>{t('components.biblioteca.uploadForm.accessSettingsTitle')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Visível para alunos */}
           <div className="flex items-center justify-between">
             <div className="space-y-0.5">
-              <Label htmlFor="visivel_para_alunos">Visível para alunos</Label>
+              <Label htmlFor="visivel_para_alunos">{t('components.biblioteca.uploadForm.visibleToStudents')}</Label>
               <p className="text-sm text-gray-500">
-                Os alunos poderão ver este material na biblioteca
+                {t('components.biblioteca.uploadForm.visibleToStudentsDesc')}
               </p>
             </div>
             <Switch
@@ -465,9 +466,9 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
           {tipo === 'pdf' && (
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label htmlFor="permite_download">Permitir download</Label>
+                <Label htmlFor="permite_download">{t('components.biblioteca.uploadForm.allowDownload')}</Label>
                 <p className="text-sm text-gray-500">
-                  Os alunos poderão baixar o arquivo PDF
+                  {t('components.biblioteca.uploadForm.allowDownloadDesc')}
                 </p>
               </div>
               <Switch
@@ -488,14 +489,14 @@ export const MaterialUploadForm: React.FC<MaterialUploadFormProps> = ({
           onClick={onCancel}
           disabled={isLoading}
         >
-          Cancelar
+          {t('common.actions.cancel')}
         </Button>
-        <LoadingButton 
-          type="submit" 
+        <LoadingButton
+          type="submit"
           isLoading={isLoading}
-          loadingText="Salvando..."
+          loadingText={t('common.actions.saving')}
         >
-          Salvar Material
+          {t('components.biblioteca.uploadForm.saveMaterial')}
         </LoadingButton>
       </div>
     </form>

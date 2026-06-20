@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   CommandDialog,
   CommandEmpty,
@@ -50,6 +51,7 @@ const CATEGORY_ICON_MAP: Record<SearchCategory, React.ReactNode> = {
 };
 
 export const GlobalSearch: React.FC<GlobalSearchProps> = ({ open, onOpenChange }) => {
+  const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const navigate = useNavigate();
@@ -128,15 +130,15 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({ open, onOpenChange }
 
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
-      <CommandInput 
-        placeholder="Buscar alunos, professores, materiais..." 
+      <CommandInput
+        placeholder={t('components.globalSearch.placeholder')}
         value={query}
         onValueChange={setQuery}
       />
       <CommandList>
         {!query && recentSearches.length > 0 && (
           <>
-            <CommandGroup heading="Buscas Recentes">
+            <CommandGroup heading={t('components.globalSearch.recentSearches')}>
               {recentSearches.map((search, index) => (
                 <CommandItem
                   key={index}
@@ -154,7 +156,7 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({ open, onOpenChange }
                 onSelect={clearRecentSearches}
                 className="cursor-pointer text-red-600"
               >
-                Limpar histórico
+                {t('components.globalSearch.clearHistory')}
               </CommandItem>
             </CommandGroup>
           </>
@@ -162,7 +164,7 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({ open, onOpenChange }
 
         {query && results.length === 0 && (
           <CommandEmpty>
-            Nenhum resultado encontrado para &quot;{query}&quot;
+            {t('components.globalSearch.noResults', { query })}
           </CommandEmpty>
         )}
 
@@ -173,7 +175,7 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({ open, onOpenChange }
               <div className="flex items-center gap-2">
                 <TrendingUp className="h-4 w-4" />
                 <span>
-                  {results.length} {results.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}
+                  {t('components.globalSearch.resultsCount', { count: results.length })}
                 </span>
               </div>
             </div>
@@ -222,9 +224,9 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({ open, onOpenChange }
 
         {!query && recentSearches.length === 0 && (
           <div className="py-6 text-center text-sm text-gray-500">
-            <p>Digite para começar a buscar</p>
+            <p>{t('components.globalSearch.startHint')}</p>
             <p className="text-xs mt-2">
-              Você pode buscar por alunos, professores, materiais e muito mais
+              {t('components.globalSearch.startSubhint')}
             </p>
           </div>
         )}

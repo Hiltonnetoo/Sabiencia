@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
@@ -21,7 +22,6 @@ import { Badge } from '../ui/badge';
 import { Textarea } from '../ui/textarea';
 import { CalendarIcon, Check, X, FileQuestion, Save } from 'lucide-react';
 import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { useMockData } from '../../contexts/MockDataContext';
 import type { Aluno } from '../../types';
 
@@ -34,6 +34,7 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
   professorId,
   onSuccess,
 }) => {
+  const { t } = useTranslation();
   const { turmas, disciplinas, alunos, matriculas } = useMockData();
   const [selectedTurma, setSelectedTurma] = useState<string>('');
   const [selectedDisciplina, setSelectedDisciplina] = useState<string>('');
@@ -156,16 +157,16 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
       {/* Filtros */}
       <Card>
         <CardHeader>
-          <CardTitle>Configurar Aula</CardTitle>
-          <CardDescription>Selecione a turma, disciplina e data da aula</CardDescription>
+          <CardTitle>{t('components.listaPresencaForm.configureLesson')}</CardTitle>
+          <CardDescription>{t('components.listaPresencaForm.configureDescription')}</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 md:grid-cols-3">
           {/* Turma */}
           <div className="space-y-2">
-            <Label>Turma</Label>
+            <Label>{t('components.listaPresencaForm.class')}</Label>
             <Select value={selectedTurma} onValueChange={setSelectedTurma}>
               <SelectTrigger>
-                <SelectValue placeholder="Selecione a turma" />
+                <SelectValue placeholder={t('components.listaPresencaForm.selectClass')} />
               </SelectTrigger>
               <SelectContent>
                 {turmas
@@ -181,10 +182,10 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
 
           {/* Disciplina */}
           <div className="space-y-2">
-            <Label>Disciplina</Label>
+            <Label>{t('components.listaPresencaForm.subject')}</Label>
             <Select value={selectedDisciplina} onValueChange={setSelectedDisciplina}>
               <SelectTrigger>
-                <SelectValue placeholder="Selecione a disciplina" />
+                <SelectValue placeholder={t('components.listaPresencaForm.selectSubject')} />
               </SelectTrigger>
               <SelectContent>
                 {disciplinas
@@ -200,12 +201,12 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
 
           {/* Data */}
           <div className="space-y-2">
-            <Label>Data da Aula</Label>
+            <Label>{t('components.listaPresencaForm.lessonDate')}</Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" className="w-full justify-start text-left">
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {selectedDate ? format(selectedDate, 'PPP', { locale: ptBR }) : 'Selecione a data'}
+                  {selectedDate ? format(selectedDate, 'PPP') : t('components.listaPresencaForm.selectDate')}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
@@ -228,8 +229,8 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>Lista de Presença</CardTitle>
-                <CardDescription>{alunosDaTurma.length} alunos na turma</CardDescription>
+                <CardTitle>{t('components.listaPresencaForm.attendanceList')}</CardTitle>
+                <CardDescription>{t('components.listaPresencaForm.studentsInClass', { count: alunosDaTurma.length })}</CardDescription>
               </div>
               <div className="flex gap-2">
                 <Button
@@ -239,7 +240,7 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
                   className="gap-2"
                 >
                   <Check className="h-4 w-4" />
-                  Todos presentes
+                  {t('components.listaPresencaForm.allPresent')}
                 </Button>
                 <Button
                   variant="outline"
@@ -248,7 +249,7 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
                   className="gap-2"
                 >
                   <X className="h-4 w-4" />
-                  Todos ausentes
+                  {t('components.listaPresencaForm.allAbsent')}
                 </Button>
               </div>
             </div>
@@ -257,9 +258,9 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Aluno</TableHead>
-                  <TableHead className="text-center">Status</TableHead>
-                  <TableHead>Observação</TableHead>
+                  <TableHead>{t('components.listaPresencaForm.student')}</TableHead>
+                  <TableHead className="text-center">{t('components.listaPresencaForm.status')}</TableHead>
+                  <TableHead>{t('components.listaPresencaForm.note')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -282,12 +283,12 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
                           size="sm"
                         >
                           {getStatusIcon(status)}
-                          {status === 'presente' ? 'Presente' : status === 'ausente' ? 'Ausente' : 'Justificado'}
+                          {status === 'presente' ? t('components.listaPresencaForm.statusPresent') : status === 'ausente' ? t('components.listaPresencaForm.statusAbsent') : t('components.listaPresencaForm.statusJustified')}
                         </Button>
                       </TableCell>
                       <TableCell>
                         <Textarea
-                          placeholder="Observação (opcional)"
+                          placeholder={t('components.listaPresencaForm.notePlaceholder')}
                           value={presenca?.observacao || ''}
                           onChange={(e) => handleObservacao(aluno.id, e.target.value)}
                           className="min-h-[60px]"
@@ -304,15 +305,15 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
               <div className="flex gap-4">
                 <Badge variant="outline" className="gap-2">
                   <Check className="h-3 w-3 text-green-600" />
-                  Presentes: {Array.from(presencas.values()).filter(p => p.status === 'presente').length}
+                  {t('components.listaPresencaForm.summaryPresent', { count: Array.from(presencas.values()).filter(p => p.status === 'presente').length })}
                 </Badge>
                 <Badge variant="outline" className="gap-2">
                   <X className="h-3 w-3 text-red-600" />
-                  Ausentes: {Array.from(presencas.values()).filter(p => p.status === 'ausente').length}
+                  {t('components.listaPresencaForm.summaryAbsent', { count: Array.from(presencas.values()).filter(p => p.status === 'ausente').length })}
                 </Badge>
                 <Badge variant="outline" className="gap-2">
                   <FileQuestion className="h-3 w-3 text-yellow-600" />
-                  Justificados: {Array.from(presencas.values()).filter(p => p.status === 'justificado').length}
+                  {t('components.listaPresencaForm.summaryJustified', { count: Array.from(presencas.values()).filter(p => p.status === 'justificado').length })}
                 </Badge>
               </div>
 
@@ -320,11 +321,10 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
                 onClick={handleSubmit}
                 disabled={!canSubmit}
                 isLoading={isSubmitting}
-                loadingText="Salvando..."
                 className="gap-2"
               >
                 <Save className="h-4 w-4" />
-                Salvar Frequência
+                {t('components.listaPresencaForm.saveAttendance')}
               </LoadingButton>
             </div>
           </CardContent>
@@ -334,7 +334,7 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
       {selectedTurma && alunosDaTurma.length === 0 && (
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
-            <p className="text-gray-500">Nenhum aluno ativo encontrado nesta turma</p>
+            <p className="text-gray-500">{t('components.listaPresencaForm.noActiveStudents')}</p>
           </CardContent>
         </Card>
       )}

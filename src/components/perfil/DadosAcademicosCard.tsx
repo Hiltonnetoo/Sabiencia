@@ -2,6 +2,7 @@
 // DADOS ACADÊMICOS CARD - Informações acadêmicas do aluno
 // ============================================
 
+import { useTranslation } from 'react-i18next';
 import { GraduationCap, Calendar, BookOpen, Users } from 'lucide-react';
 import { Badge } from '../ui/badge';
 import type { Aluno, Matricula, Turma, Curso } from '../../types';
@@ -14,6 +15,7 @@ interface DadosAcademicosCardProps {
 }
 
 export function DadosAcademicosCard({ aluno, matricula, turma, curso }: DadosAcademicosCardProps) {
+  const { t } = useTranslation();
   const getStatusColor = (status: string) => {
     const colors: Record<string, string> = {
       ativo: 'bg-green-100 text-green-800',
@@ -26,10 +28,10 @@ export function DadosAcademicosCard({ aluno, matricula, turma, curso }: DadosAca
 
   const getStatusLabel = (status: string) => {
     const labels: Record<string, string> = {
-      ativo: 'Ativo',
-      trancado: 'Trancado',
-      concluido: 'Concluído',
-      evadido: 'Evadido',
+      ativo: t('components.dadosAcademicos.statusActive'),
+      trancado: t('components.dadosAcademicos.statusLocked'),
+      concluido: t('components.dadosAcademicos.statusCompleted'),
+      evadido: t('components.dadosAcademicos.statusDroppedOut'),
     };
     return labels[status] || status;
   };
@@ -41,8 +43,8 @@ export function DadosAcademicosCard({ aluno, matricula, turma, curso }: DadosAca
           <GraduationCap className="w-5 h-5 text-blue-600" />
         </div>
         <div>
-          <h2 className="text-xl text-gray-900">Dados Acadêmicos</h2>
-          <p className="text-sm text-gray-600">Informações sobre sua matrícula e curso</p>
+          <h2 className="text-xl text-gray-900">{t('components.dadosAcademicos.title')}</h2>
+          <p className="text-sm text-gray-600">{t('components.dadosAcademicos.subtitle')}</p>
         </div>
       </div>
 
@@ -52,7 +54,7 @@ export function DadosAcademicosCard({ aluno, matricula, turma, curso }: DadosAca
           <div className="p-4 bg-gray-50 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <BookOpen className="w-4 h-4 text-gray-600" />
-              <p className="text-sm text-gray-600">Matrícula</p>
+              <p className="text-sm text-gray-600">{t('components.dadosAcademicos.enrollment')}</p>
             </div>
             <p className="text-gray-900">{aluno.matricula}</p>
           </div>
@@ -60,7 +62,7 @@ export function DadosAcademicosCard({ aluno, matricula, turma, curso }: DadosAca
           <div className="p-4 bg-gray-50 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <Calendar className="w-4 h-4 text-gray-600" />
-              <p className="text-sm text-gray-600">Data de Matrícula</p>
+              <p className="text-sm text-gray-600">{t('components.dadosAcademicos.enrollmentDate')}</p>
             </div>
             <p className="text-gray-900">
               {matricula?.data_matricula
@@ -75,12 +77,12 @@ export function DadosAcademicosCard({ aluno, matricula, turma, curso }: DadosAca
           <div className="p-4 bg-gray-50 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <GraduationCap className="w-4 h-4 text-gray-600" />
-              <p className="text-sm text-gray-600">Curso</p>
+              <p className="text-sm text-gray-600">{t('components.dadosAcademicos.course')}</p>
             </div>
             <p className="text-gray-900">{curso?.nome || '-'}</p>
             {curso?.carga_horaria && (
               <p className="text-sm text-gray-600 mt-1">
-                Carga horária: {curso.carga_horaria}h
+                {t('components.dadosAcademicos.courseLoad', { hours: curso.carga_horaria })}
               </p>
             )}
           </div>
@@ -88,12 +90,12 @@ export function DadosAcademicosCard({ aluno, matricula, turma, curso }: DadosAca
           <div className="p-4 bg-gray-50 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
               <Users className="w-4 h-4 text-gray-600" />
-              <p className="text-sm text-gray-600">Turma</p>
+              <p className="text-sm text-gray-600">{t('components.dadosAcademicos.class')}</p>
             </div>
             <p className="text-gray-900">{turma?.nome || '-'}</p>
             {turma?.turno && (
               <p className="text-sm text-gray-600 mt-1">
-                Turno: {turma.turno}
+                {t('components.dadosAcademicos.shift', { shift: turma.turno })}
               </p>
             )}
           </div>
@@ -102,14 +104,14 @@ export function DadosAcademicosCard({ aluno, matricula, turma, curso }: DadosAca
         {/* Status e Período */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600 mb-2">Status</p>
+            <p className="text-sm text-gray-600 mb-2">{t('components.dadosAcademicos.status')}</p>
             <Badge className={getStatusColor(matricula?.status || 'ativo')}>
               {getStatusLabel(matricula?.status || 'ativo')}
             </Badge>
           </div>
 
           <div className="p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm text-gray-600 mb-2">Período Letivo</p>
+            <p className="text-sm text-gray-600 mb-2">{t('components.dadosAcademicos.academicTerm')}</p>
             <p className="text-gray-900">
               {turma?.data_inicio && turma?.data_fim
                 ? `${new Date(turma.data_inicio).toLocaleDateString('pt-BR')} - ${new Date(turma.data_fim).toLocaleDateString('pt-BR')}`
@@ -121,7 +123,7 @@ export function DadosAcademicosCard({ aluno, matricula, turma, curso }: DadosAca
         {/* Informações Adicionais */}
         {curso?.descricao && (
           <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm font-semibold text-blue-900 mb-1">Sobre o Curso</p>
+            <p className="text-sm font-semibold text-blue-900 mb-1">{t('components.dadosAcademicos.aboutCourse')}</p>
             <p className="text-sm text-blue-800">{curso.descricao}</p>
           </div>
         )}

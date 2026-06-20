@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Progress } from '../ui/progress';
@@ -21,6 +22,7 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
   frequencias,
   showDetalhes = false,
 }) => {
+  const { t } = useTranslation();
   // Calcular estatísticas
   const total = frequencias.length;
   const presencas = frequencias.filter(f => f.status === 'presente').length;
@@ -55,7 +57,7 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
           <div>
             <CardTitle className="text-lg">{disciplina.nome}</CardTitle>
             <p className="text-sm text-gray-500 mt-1">
-              {total} aulas registradas
+              {t('components.frequenciaCard.lessonsRegistered', { count: total })}
             </p>
           </div>
           <Badge
@@ -70,7 +72,7 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
         {/* Percentual de presença */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium">Frequência</span>
+            <span className="text-sm font-medium">{t('components.frequenciaCard.attendance')}</span>
             <span className={`text-2xl font-bold ${
               statusInfo.cor === 'green' ? 'text-green-600' :
               statusInfo.cor === 'yellow' ? 'text-yellow-600' :
@@ -81,7 +83,7 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
           </div>
           <Progress value={percentual} className="h-2" />
           <p className="text-xs text-gray-500">
-            Mínimo necessário: 75% para aprovação
+            {t('components.frequenciaCard.minimumRequired')}
           </p>
         </div>
 
@@ -90,7 +92,7 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
           <div className="text-center p-3 bg-green-50 rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <Check className="h-4 w-4 text-green-600" />
-              <span className="text-xs text-gray-600">Presentes</span>
+              <span className="text-xs text-gray-600">{t('components.frequenciaCard.present')}</span>
             </div>
             <p className="text-xl font-bold text-green-600">{presencas}</p>
           </div>
@@ -98,7 +100,7 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
           <div className="text-center p-3 bg-red-50 rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <X className="h-4 w-4 text-red-600" />
-              <span className="text-xs text-gray-600">Faltas</span>
+              <span className="text-xs text-gray-600">{t('components.frequenciaCard.absences')}</span>
             </div>
             <p className="text-xl font-bold text-red-600">{ausencias}</p>
           </div>
@@ -106,7 +108,7 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
           <div className="text-center p-3 bg-yellow-50 rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <FileQuestion className="h-4 w-4 text-yellow-600" />
-              <span className="text-xs text-gray-600">Justificadas</span>
+              <span className="text-xs text-gray-600">{t('components.frequenciaCard.justified')}</span>
             </div>
             <p className="text-xl font-bold text-yellow-600">{justificadas}</p>
           </div>
@@ -123,7 +125,7 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
               <TrendingDown className="h-4 w-4" />
             )}
             <span className="text-sm font-medium">
-              {tendencia === 'up' ? 'Frequência melhorando' : 'Atenção: frequência caindo'}
+              {tendencia === 'up' ? t('components.frequenciaCard.trendUp') : t('components.frequenciaCard.trendDown')}
             </span>
           </div>
         )}
@@ -131,7 +133,7 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
         {/* Últimas frequências (detalhes) */}
         {showDetalhes && ultimasFrequencias.length > 0 && (
           <div className="border-t pt-4">
-            <p className="text-sm font-medium mb-3">Últimas aulas</p>
+            <p className="text-sm font-medium mb-3">{t('components.frequenciaCard.lastLessons')}</p>
             <div className="space-y-2">
               {ultimasFrequencias.map(freq => (
                 <div
@@ -139,7 +141,7 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
                   className="flex items-center justify-between p-2 bg-gray-50 rounded"
                 >
                   <span className="text-sm text-gray-600">
-                    {freq.data_aula.toLocaleDateString('pt-BR')}
+                    {freq.data_aula.toLocaleDateString()}
                   </span>
                   <Badge
                     variant={
@@ -149,9 +151,9 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
                     }
                     className="text-xs"
                   >
-                    {freq.status === 'presente' ? 'Presente' :
-                     freq.status === 'justificado' ? 'Justificado' :
-                     'Ausente'}
+                    {freq.status === 'presente' ? t('components.frequenciaCard.statusPresent') :
+                     freq.status === 'justificado' ? t('components.frequenciaCard.statusJustified') :
+                     t('components.frequenciaCard.statusAbsent')}
                   </Badge>
                 </div>
               ))}
@@ -163,11 +165,11 @@ export const FrequenciaCard: React.FC<FrequenciaCardProps> = ({
         {percentual < 75 && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-3">
             <p className="text-sm text-red-800 font-medium">
-              ⚠️ Atenção: Você está abaixo dos 75% de frequência necessários para aprovação
+              ⚠️ {t('components.frequenciaCard.riskAlert')}
             </p>
             <p className="text-xs text-red-600 mt-1">
-              {percentual < 60 && 'Risco de reprovação por falta!'}
-              {percentual >= 60 && percentual < 75 && `Precisa melhorar em ${(75 - percentual).toFixed(1)}%`}
+              {percentual < 60 && t('components.frequenciaCard.riskFailure')}
+              {percentual >= 60 && percentual < 75 && t('components.frequenciaCard.riskImprove', { percent: (75 - percentual).toFixed(1) })}
             </p>
           </div>
         )}

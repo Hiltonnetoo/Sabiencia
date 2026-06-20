@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { cursoSchema, type CursoFormData } from '../../schemas/cursoSchemas';
@@ -39,6 +40,7 @@ export const CursoForm: React.FC<CursoFormProps> = ({
   curso,
   isLoading = false,
 }) => {
+  const { t } = useTranslation();
   const [showErrors, setShowErrors] = useState(false);
   const isEditing = !!curso;
 
@@ -105,12 +107,12 @@ export const CursoForm: React.FC<CursoFormProps> = ({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {isEditing ? 'Editar Curso' : 'Novo Curso'}
+            {isEditing ? t('components.cursos.form.editTitle') : t('components.cursos.form.newTitle')}
           </DialogTitle>
           <DialogDescription>
             {isEditing
-              ? 'Atualize as informações do curso'
-              : 'Preencha os dados para criar um novo curso'}
+              ? t('components.cursos.form.editDescription')
+              : t('components.cursos.form.newDescription')}
           </DialogDescription>
         </DialogHeader>
 
@@ -120,7 +122,7 @@ export const CursoForm: React.FC<CursoFormProps> = ({
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>
-                Por favor, corrija os erros no formulário antes de continuar.
+                {t('components.cursos.form.validationError')}
               </AlertDescription>
             </Alert>
           )}
@@ -128,14 +130,14 @@ export const CursoForm: React.FC<CursoFormProps> = ({
           {/* Nome */}
           <div className="space-y-2">
             <Label htmlFor="nome" className="required">
-              Nome do Curso
+              {t('components.cursos.form.nameLabel')}
             </Label>
             <div className="relative">
               <BookOpen className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
               <Input
                 id="nome"
                 {...register('nome')}
-                placeholder="Ex: Técnico em Enfermagem"
+                placeholder={t('components.cursos.form.namePlaceholder')}
                 className="pl-10"
                 aria-invalid={!!errors.nome}
                 aria-describedby={errors.nome ? 'nome-error' : undefined}
@@ -151,12 +153,12 @@ export const CursoForm: React.FC<CursoFormProps> = ({
           {/* Descrição */}
           <div className="space-y-2">
             <Label htmlFor="descricao" className="required">
-              Descrição
+              {t('components.cursos.form.descriptionLabel')}
             </Label>
             <Textarea
               id="descricao"
               {...register('descricao')}
-              placeholder="Descreva o curso, objetivos, competências desenvolvidas..."
+              placeholder={t('components.cursos.form.descriptionPlaceholder')}
               rows={4}
               aria-invalid={!!errors.descricao}
               aria-describedby={errors.descricao ? 'descricao-error' : undefined}
@@ -173,7 +175,7 @@ export const CursoForm: React.FC<CursoFormProps> = ({
             {/* Carga Horária */}
             <div className="space-y-2">
               <Label htmlFor="carga_horaria" className="required">
-                Carga Horária (horas)
+                {t('components.cursos.form.workloadLabel')}
               </Label>
               <div className="relative">
                 <Clock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -183,7 +185,7 @@ export const CursoForm: React.FC<CursoFormProps> = ({
                   min="0"
                   step="1"
                   {...register('carga_horaria', { valueAsNumber: true })}
-                  placeholder="Ex: 1200"
+                  placeholder={t('components.cursos.form.workloadPlaceholder')}
                   className="pl-10"
                   aria-invalid={!!errors.carga_horaria}
                   aria-describedby={errors.carga_horaria ? 'carga-error' : undefined}
@@ -199,7 +201,7 @@ export const CursoForm: React.FC<CursoFormProps> = ({
             {/* Duração */}
             <div className="space-y-2">
               <Label htmlFor="duracao_meses" className="required">
-                Duração (meses)
+                {t('components.cursos.form.durationLabel')}
               </Label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -209,7 +211,7 @@ export const CursoForm: React.FC<CursoFormProps> = ({
                   min="0"
                   step="1"
                   {...register('duracao_meses', { valueAsNumber: true })}
-                  placeholder="Ex: 18"
+                  placeholder={t('components.cursos.form.durationPlaceholder')}
                   className="pl-10"
                   aria-invalid={!!errors.duracao_meses}
                   aria-describedby={errors.duracao_meses ? 'duracao-error' : undefined}
@@ -227,12 +229,12 @@ export const CursoForm: React.FC<CursoFormProps> = ({
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
             <div className="space-y-0.5">
               <Label htmlFor="ativo" className="text-base">
-                Curso Ativo
+                {t('components.cursos.form.activeLabel')}
               </Label>
               <p className="text-sm text-gray-500">
-                {ativoValue 
-                  ? 'Este curso está ativo e pode receber novas turmas'
-                  : 'Este curso está inativo e não pode receber novas turmas'}
+                {ativoValue
+                  ? t('components.cursos.form.activeHintOn')
+                  : t('components.cursos.form.activeHintOff')}
               </p>
             </div>
             <Switch
@@ -249,14 +251,14 @@ export const CursoForm: React.FC<CursoFormProps> = ({
               onClick={onClose}
               disabled={isLoading}
             >
-              Cancelar
+              {t('common.actions.cancel')}
             </Button>
             <LoadingButton
               type="submit"
               isLoading={isLoading}
               disabled={isLoading || (!isDirty && isEditing)}
             >
-              {isEditing ? 'Salvar Alterações' : 'Criar Curso'}
+              {isEditing ? t('components.cursos.form.submitEdit') : t('components.cursos.form.submitNew')}
             </LoadingButton>
           </DialogFooter>
         </form>

@@ -2,6 +2,7 @@
 // OBSERVACAO CARD - Card de observação
 // ============================================
 
+import { useTranslation } from 'react-i18next';
 import { Eye, EyeOff, FileText, Heart, Briefcase, Edit, Trash2, User, BookOpen, Calendar } from 'lucide-react';
 import { Card, CardContent, CardFooter, CardHeader } from '../ui/card';
 import { Badge } from '../ui/badge';
@@ -22,17 +23,14 @@ interface ObservacaoCardProps {
 
 const tipoConfig = {
   pedagogica: {
-    label: 'Pedagógica',
     icon: BookOpen,
     color: 'bg-blue-100 text-blue-800'
   },
   comportamental: {
-    label: 'Comportamental',
     icon: Heart,
     color: 'bg-green-100 text-green-800'
   },
   administrativa: {
-    label: 'Administrativa',
     icon: Briefcase,
     color: 'bg-purple-100 text-purple-800'
   }
@@ -48,6 +46,7 @@ export function ObservacaoCard({
   showActions = true,
   showStudent = true
 }: ObservacaoCardProps) {
+  const { t } = useTranslation();
   const config = tipoConfig[observacao.tipo];
   const Icon = config.icon;
 
@@ -61,16 +60,16 @@ export function ObservacaoCard({
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
-                <Badge className={config.color}>{config.label}</Badge>
+                <Badge className={config.color}>{t('components.observacoes.type.' + observacao.tipo)}</Badge>
                 {observacao.visivel_aluno ? (
                   <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
                     <Eye className="w-3 h-3 mr-1" />
-                    Visível
+                    {t('components.observacoes.card.visible')}
                   </Badge>
                 ) : (
                   <Badge variant="outline" className="bg-gray-50 text-gray-700 border-gray-200">
                     <EyeOff className="w-3 h-3 mr-1" />
-                    Oculta
+                    {t('components.observacoes.card.hidden')}
                   </Badge>
                 )}
               </div>
@@ -123,7 +122,7 @@ export function ObservacaoCard({
           <div className="flex items-center gap-1">
             <User className="w-4 h-4" />
             <span className="truncate">
-              {professor?.nome_completo || 'Professor não encontrado'}
+              {professor?.nome_completo || t('components.observacoes.card.teacherNotFound')}
             </span>
           </div>
           {disciplina && (

@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
@@ -36,6 +37,7 @@ export function ComunicadoCard({
   showReadStatus = false,
   showStats = false
 }: ComunicadoCardProps) {
+  const { t } = useTranslation();
   const PrioridadeIcon = {
     baixa: MessageCircle,
     normal: Mail,
@@ -67,7 +69,7 @@ export function ComunicadoCard({
                 </h3>
                 {!isLido && showReadStatus && (
                   <Badge variant="secondary" className="mt-1">
-                    Novo
+                    {t('components.comunicados.card.new')}
                   </Badge>
                 )}
               </div>
@@ -77,7 +79,7 @@ export function ComunicadoCard({
             <div className="flex flex-wrap gap-2">
               {comunicado.prioridade !== 'normal' && (
                 <Badge className={getPrioridadeColor(comunicado.prioridade)}>
-                  {comunicado.prioridade.charAt(0).toUpperCase() + comunicado.prioridade.slice(1)}
+                  {t(`components.comunicados.priority.${comunicado.prioridade}`)}
                 </Badge>
               )}
               
@@ -105,7 +107,7 @@ export function ComunicadoCard({
           
           {comunicado.remetente && (
             <span>
-              De: {comunicado.remetente.nome_completo}
+              {t('components.comunicados.card.from', { name: comunicado.remetente.nome_completo })}
             </span>
           )}
         </div>
@@ -115,7 +117,7 @@ export function ComunicadoCard({
           <div className="flex items-center gap-2 pt-2 border-t">
             <CheckCircle2 className="h-4 w-4 text-green-600" />
             <span className="text-sm">
-              {comunicado.total_leituras || 0} de {comunicado.total_destinatarios} leram
+              {t('components.comunicados.card.readCount', { read: comunicado.total_leituras || 0, total: comunicado.total_destinatarios })}
             </span>
             <div className="flex-1 bg-gray-200 rounded-full h-2 ml-2">
               <div 
@@ -134,7 +136,7 @@ export function ComunicadoCard({
         {showReadStatus && isLido && comunicado.data_leitura && (
           <div className="flex items-center gap-2 text-sm text-green-600 pt-2 border-t">
             <CheckCircle2 className="h-4 w-4" />
-            Lido em {format(new Date(comunicado.data_leitura), 'dd/MM/yyyy HH:mm', { locale: ptBR })}
+            {t('components.comunicados.card.readAt', { date: format(new Date(comunicado.data_leitura), 'dd/MM/yyyy HH:mm', { locale: ptBR }) })}
           </div>
         )}
 
@@ -147,7 +149,7 @@ export function ComunicadoCard({
             className="flex-1"
           >
             <Eye className="h-4 w-4 mr-2" />
-            Ver Completo
+            {t('components.comunicados.card.viewFull')}
           </Button>
           
           {showReadStatus && !isLido && onMarkAsRead && (
@@ -157,7 +159,7 @@ export function ComunicadoCard({
               size="sm"
             >
               <CheckCircle2 className="h-4 w-4 mr-2" />
-              Marcar como Lido
+              {t('components.comunicados.card.markAsRead')}
             </Button>
           )}
         </div>

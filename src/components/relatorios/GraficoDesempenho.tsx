@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface GraficoDesempenhoProps {
   tipo: 'line' | 'bar' | 'pie';
@@ -32,6 +33,7 @@ export function GraficoDesempenho({
   xAxisKey = 'name',
   colors = DEFAULT_COLORS,
 }: GraficoDesempenhoProps) {
+  const { t } = useTranslation();
   const [Recharts, setRecharts] = useState<any>(null);
   useEffect(() => {
     let mounted = true;
@@ -43,7 +45,7 @@ export function GraficoDesempenho({
   if (!Recharts) {
     return (
       <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-        <p className="text-gray-600">Carregando gráfico...</p>
+        <p className="text-gray-600">{t('components.graficoDesempenho.loading')}</p>
       </div>
     );
   }
@@ -66,7 +68,7 @@ export function GraficoDesempenho({
   if (!dadosSanitizados || dadosSanitizados.length === 0) {
     return (
       <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-        <p className="text-gray-600">Sem dados para exibir</p>
+        <p className="text-gray-600">{t('components.graficoDesempenho.noData')}</p>
       </div>
     );
   }
@@ -164,7 +166,7 @@ export function GraficoDesempenho({
     // Tipo de gráfico não suportado
     return (
       <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-        <p className="text-gray-600">Tipo de gráfico não suportado</p>
+        <p className="text-gray-600">{t('components.graficoDesempenho.unsupportedType')}</p>
       </div>
     );
   }

@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -32,6 +33,7 @@ export const ChatAoVivo: React.FC<ChatAoVivoProps> = ({
   participantesOnline = 0,
   className = ''
 }) => {
+  const { t } = useTranslation();
   const [novaMensagem, setNovaMensagem] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -63,9 +65,9 @@ export const ChatAoVivo: React.FC<ChatAoVivoProps> = ({
   const getTipoBadge = (tipo: string) => {
     switch (tipo) {
       case 'professor':
-        return <Badge className="text-xs bg-purple-600">Professor</Badge>;
+        return <Badge className="text-xs bg-purple-600">{t('components.lives.chat.roleTeacher')}</Badge>;
       case 'gestor':
-        return <Badge className="text-xs bg-blue-600">Gestor</Badge>;
+        return <Badge className="text-xs bg-blue-600">{t('components.lives.chat.roleManager')}</Badge>;
       default:
         return null;
     }
@@ -76,15 +78,15 @@ export const ChatAoVivo: React.FC<ChatAoVivoProps> = ({
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle className="text-lg">Chat ao Vivo</CardTitle>
+            <CardTitle className="text-lg">{t('components.lives.chat.title')}</CardTitle>
             <CardDescription>
-              Tire dúvidas e interaja durante a aula
+              {t('components.lives.chat.description')}
             </CardDescription>
           </div>
           {participantesOnline > 0 && (
             <Badge variant="outline" className="gap-1">
               <Users className="w-3 h-3" />
-              {participantesOnline} online
+              {t('components.lives.chat.online', { count: participantesOnline })}
             </Badge>
           )}
         </div>
@@ -97,8 +99,8 @@ export const ChatAoVivo: React.FC<ChatAoVivoProps> = ({
             {mensagens.length === 0 ? (
               <div className="text-center py-12 text-gray-500">
                 <Users className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                <p className="text-sm">Nenhuma mensagem ainda</p>
-                <p className="text-xs mt-1">Seja o primeiro a enviar uma mensagem!</p>
+                <p className="text-sm">{t('components.lives.chat.emptyTitle')}</p>
+                <p className="text-xs mt-1">{t('components.lives.chat.emptyHint')}</p>
               </div>
             ) : (
               mensagens.map((mensagem) => {
@@ -133,7 +135,7 @@ export const ChatAoVivo: React.FC<ChatAoVivoProps> = ({
                             </>
                           )}
                           {isPropraMensagem && (
-                            <span className="text-xs text-gray-500">Você</span>
+                            <span className="text-xs text-gray-500">{t('components.lives.chat.you')}</span>
                           )}
                         </div>
                         
@@ -152,7 +154,7 @@ export const ChatAoVivo: React.FC<ChatAoVivoProps> = ({
                         </div>
 
                         <div className={`text-xs text-gray-500 mt-1 ${isPropraMensagem ? 'text-right' : 'text-left'}`}>
-                          {new Date(mensagem.enviado_em).toLocaleTimeString('pt-BR', {
+                          {new Date(mensagem.enviado_em).toLocaleTimeString(undefined, {
                             hour: '2-digit',
                             minute: '2-digit'
                           })}
@@ -170,7 +172,7 @@ export const ChatAoVivo: React.FC<ChatAoVivoProps> = ({
         <div className="flex gap-2 pt-3 border-t">
           <Input
             ref={inputRef}
-            placeholder="Digite sua mensagem..."
+            placeholder={t('components.lives.chat.inputPlaceholder')}
             value={novaMensagem}
             onChange={(e) => setNovaMensagem(e.target.value)}
             onKeyPress={handleKeyPress}
@@ -183,7 +185,7 @@ export const ChatAoVivo: React.FC<ChatAoVivoProps> = ({
             className="gap-2"
           >
             <Send className="w-4 h-4" />
-            Enviar
+            {t('components.lives.chat.send')}
           </Button>
         </div>
 

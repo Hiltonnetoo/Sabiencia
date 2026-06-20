@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Send, Mail, Inbox, Plus } from 'lucide-react';
 import { Card, CardContent } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
@@ -19,6 +20,7 @@ import type { ComunicadoComDetalhes } from '../../types';
 import type { ComunicadoFormData } from '../../schemas/comunicadoSchemas';
 
 export const ComunicadosProfessorPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { 
     comunicados, 
@@ -139,7 +141,7 @@ export const ComunicadosProfessorPage: React.FC = () => {
       data_envio: new Date()
     } as any);
 
-    toast.success('Comunicado enviado com sucesso!');
+    toast.success(t('professor.comunicados.toast.sent'));
     setShowForm(false);
   };
 
@@ -153,7 +155,7 @@ export const ComunicadosProfessorPage: React.FC = () => {
       data_leitura: new Date()
     });
 
-    toast.success('Comunicado marcado como lido!');
+    toast.success(t('professor.comunicados.toast.markedRead'));
   };
 
   // Visualizar comunicado
@@ -172,16 +174,16 @@ export const ComunicadosProfessorPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Comunicados</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('professor.comunicados.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Envie comunicados para suas turmas e receba avisos da escola
+            {t('professor.comunicados.subtitle')}
           </p>
         </div>
-        
+
         {!showForm && (
           <Button onClick={() => setShowForm(true)}>
             <Plus className="h-4 w-4 mr-2" />
-            Novo Comunicado
+            {t('professor.comunicados.newAnnouncement')}
           </Button>
         )}
       </div>
@@ -192,7 +194,7 @@ export const ComunicadosProfessorPage: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Enviados por Mim</p>
+                <p className="text-sm text-gray-600">{t('professor.comunicados.stats.sentByMe')}</p>
                 <p className="text-2xl font-semibold mt-1">{totalEnviados}</p>
               </div>
               <Send className="h-8 w-8 text-blue-600" />
@@ -204,7 +206,7 @@ export const ComunicadosProfessorPage: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Recebidos</p>
+                <p className="text-sm text-gray-600">{t('professor.comunicados.stats.received')}</p>
                 <p className="text-2xl font-semibold mt-1">{totalRecebidos}</p>
               </div>
               <Mail className="h-8 w-8 text-green-600" />
@@ -216,7 +218,7 @@ export const ComunicadosProfessorPage: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Não Lidos</p>
+                <p className="text-sm text-gray-600">{t('professor.comunicados.stats.unread')}</p>
                 <p className="text-2xl font-semibold mt-1">{totalNaoLidos}</p>
               </div>
               <Inbox className="h-8 w-8 text-orange-600" />
@@ -241,10 +243,10 @@ export const ComunicadosProfessorPage: React.FC = () => {
           <Tabs defaultValue="recebidos" className="space-y-4">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="recebidos">
-                Recebidos ({totalRecebidos})
+                {t('professor.comunicados.tabs.received', { count: totalRecebidos })}
               </TabsTrigger>
               <TabsTrigger value="enviados">
-                Enviados ({totalEnviados})
+                {t('professor.comunicados.tabs.sent', { count: totalEnviados })}
               </TabsTrigger>
             </TabsList>
 
@@ -269,8 +271,8 @@ export const ComunicadosProfessorPage: React.FC = () => {
                     <Inbox className="h-12 w-12 text-gray-400 mx-auto mb-3" />
                     <p className="text-gray-600">
                       {searchTerm || prioridadeFilter !== 'todas' || leituraFilter !== 'todos'
-                        ? 'Nenhum comunicado encontrado com os filtros aplicados.'
-                        : 'Você não tem comunicados recebidos.'}
+                        ? t('professor.comunicados.empty.receivedFiltered')
+                        : t('professor.comunicados.empty.receivedDefault')}
                     </p>
                   </CardContent>
                 </Card>
@@ -309,8 +311,8 @@ export const ComunicadosProfessorPage: React.FC = () => {
                     <Send className="h-12 w-12 text-gray-400 mx-auto mb-3" />
                     <p className="text-gray-600">
                       {searchTerm || prioridadeFilter !== 'todas' || destinatariosFilter !== 'todos'
-                        ? 'Nenhum comunicado encontrado com os filtros aplicados.'
-                        : 'Você ainda não enviou nenhum comunicado.'}
+                        ? t('professor.comunicados.empty.sentFiltered')
+                        : t('professor.comunicados.empty.sentDefault')}
                     </p>
                   </CardContent>
                 </Card>

@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
@@ -21,6 +22,7 @@ import { toast } from 'sonner';
 import type { Certificado } from '../../types';
 
 export const CertificadosPage: React.FC = () => {
+  const { t } = useTranslation();
   // Certificados mockados
   const certificados: Certificado[] = [
     {
@@ -65,36 +67,31 @@ export const CertificadosPage: React.FC = () => {
 
   const handleBaixarCertificado = (certificado: Certificado) => {
     if (certificado.url_pdf) {
-      toast.success('Download iniciado!', {
-        description: 'Seu certificado está sendo baixado.',
+      toast.success(t('aluno.certificados.toast.downloadStartedTitle'), {
+        description: t('aluno.certificados.toast.downloadStartedDesc'),
       });
       // Simular download
       window.open(certificado.url_pdf, '_blank');
     } else {
-      toast.info('Gerando certificado...', {
-        description: 'Seu certificado será gerado em instantes.',
+      toast.info(t('aluno.certificados.toast.generatingTitle'), {
+        description: t('aluno.certificados.toast.generatingDesc'),
       });
     }
   };
 
   const handleVisualizarCertificado = (certificado: Certificado) => {
-    toast.info('Abrindo visualização...');
+    toast.info(t('aluno.certificados.toast.openingPreview'));
   };
 
   const handleCompartilhar = (certificado: Certificado) => {
     navigator.clipboard.writeText(certificado.codigo_validacao);
-    toast.success('Código de validação copiado!', {
-      description: 'Compartilhe este código para validar seu certificado.',
+    toast.success(t('aluno.certificados.toast.codeCopiedTitle'), {
+      description: t('aluno.certificados.toast.codeCopiedDesc'),
     });
   };
 
   const getTipoLabel = (tipo: Certificado['tipo']) => {
-    switch (tipo) {
-      case 'conclusao_curso': return 'Conclusão de Curso';
-      case 'participacao_evento': return 'Participação em Evento';
-      case 'aprovacao_disciplina': return 'Aprovação em Disciplina';
-      case 'horas_complementares': return 'Horas Complementares';
-    }
+    return t(`aluno.certificados.types.${tipo}`);
   };
 
   const getTipoColor = (tipo: Certificado['tipo']) => {
@@ -113,9 +110,9 @@ export const CertificadosPage: React.FC = () => {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Meus Certificados</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('aluno.certificados.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Visualize, baixe e compartilhe seus certificados
+          {t('aluno.certificados.subtitle')}
         </p>
       </div>
 
@@ -125,15 +122,14 @@ export const CertificadosPage: React.FC = () => {
           <div className="flex items-start gap-3">
             <FileText className="h-5 w-5 text-blue-600 mt-1" />
             <div>
-              <h3 className="font-medium text-blue-900 mb-2">Como validar meu certificado?</h3>
+              <h3 className="font-medium text-blue-900 mb-2">{t('aluno.certificados.howToValidateTitle')}</h3>
               <p className="text-sm text-blue-700 mb-3">
-                Todos os certificados emitidos possuem um código de validação único. Para validar a autenticidade
-                de um certificado:
+                {t('aluno.certificados.howToValidateDesc')}
               </p>
               <ol className="text-sm text-blue-700 space-y-1 ml-4">
-                <li>1. Acesse o site da instituição na página de validação de certificados</li>
-                <li>2. Insira o código de validação do certificado</li>
-                <li>3. O sistema confirmará os dados e a autenticidade do documento</li>
+                <li>{t('aluno.certificados.validateStep1')}</li>
+                <li>{t('aluno.certificados.validateStep2')}</li>
+                <li>{t('aluno.certificados.validateStep3')}</li>
               </ol>
             </div>
           </div>
@@ -144,7 +140,7 @@ export const CertificadosPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Total de Certificados</CardDescription>
+            <CardDescription>{t('aluno.certificados.stats.totalCertificates')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -153,7 +149,7 @@ export const CertificadosPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">{certificados.length}</p>
-                <p className="text-xs text-gray-500">emitidos</p>
+                <p className="text-xs text-gray-500">{t('aluno.certificados.stats.issued')}</p>
               </div>
             </div>
           </CardContent>
@@ -161,7 +157,7 @@ export const CertificadosPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Cursos Concluídos</CardDescription>
+            <CardDescription>{t('aluno.certificados.stats.completedCourses')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -170,7 +166,7 @@ export const CertificadosPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">1</p>
-                <p className="text-xs text-gray-500">curso</p>
+                <p className="text-xs text-gray-500">{t('aluno.certificados.stats.course')}</p>
               </div>
             </div>
           </CardContent>
@@ -178,7 +174,7 @@ export const CertificadosPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Horas Certificadas</CardDescription>
+            <CardDescription>{t('aluno.certificados.stats.certifiedHours')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -189,7 +185,7 @@ export const CertificadosPage: React.FC = () => {
                 <p className="text-2xl font-bold">
                   {certificados.reduce((sum, cert) => sum + (cert.carga_horaria || 0), 0)}
                 </p>
-                <p className="text-xs text-gray-500">horas</p>
+                <p className="text-xs text-gray-500">{t('aluno.certificados.stats.hours')}</p>
               </div>
             </div>
           </CardContent>
@@ -197,7 +193,7 @@ export const CertificadosPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Eventos</CardDescription>
+            <CardDescription>{t('aluno.certificados.stats.events')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -206,7 +202,7 @@ export const CertificadosPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">1</p>
-                <p className="text-xs text-gray-500">participação</p>
+                <p className="text-xs text-gray-500">{t('aluno.certificados.stats.participation')}</p>
               </div>
             </div>
           </CardContent>

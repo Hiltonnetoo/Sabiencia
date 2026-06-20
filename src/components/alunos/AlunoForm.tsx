@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../ui/button';
@@ -46,6 +47,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
   isLoading = false,
   onDirtyChange,
 }) => {
+  const { t } = useTranslation();
   const activeAluno = aluno || initialData;
 
   const form = useForm<AlunoFormData>({
@@ -111,14 +113,14 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
       {/* SEÇÃO 1: DADOS PESSOAIS */}
       <Card>
         <CardHeader>
-          <CardTitle>Dados Pessoais</CardTitle>
-          <CardDescription>Informações básicas do aluno</CardDescription>
+          <CardTitle>{t('components.alunoForm.personalData')}</CardTitle>
+          <CardDescription>{t('components.alunoForm.personalDataDesc')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             {/* Nome Completo */}
             <FormField
-              label="Nome Completo"
+              label={t('components.alunoForm.fullName')}
               htmlFor="nome_completo"
               required
               error={errors.nome_completo?.message}
@@ -128,7 +130,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
                 id="nome_completo"
                 required
                 {...register('nome_completo')}
-                placeholder="Nome completo do aluno"
+                placeholder={t('components.alunoForm.fullNamePlaceholder')}
                 error={errors.nome_completo?.message}
                 isValid={validation.isFieldValid('nome_completo')}
               />
@@ -136,7 +138,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
 
             {/* CPF */}
             <FormField
-              label="CPF"
+              label={t('components.alunoForm.cpf')}
               htmlFor="cpf"
               required
               error={errors.cpf?.message}
@@ -151,11 +153,11 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
 
             {/* RG */}
             <div>
-              <Label htmlFor="rg">RG</Label>
+              <Label htmlFor="rg">{t('components.alunoForm.rg')}</Label>
               <Input
                 id="rg"
                 {...register('rg')}
-                placeholder="00.000.000-0"
+                placeholder={t('components.alunoForm.rgPlaceholder')}
               />
               {errors.rg && (
                 <p className="text-sm text-red-500 mt-1">
@@ -167,7 +169,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
             {/* Data de Nascimento */}
             <div>
               <Label htmlFor="data_nascimento">
-                Data de Nascimento <span className="text-red-500">*</span>
+                {t('components.alunoForm.birthDate')} <span className="text-red-500">*</span>
               </Label>
               <input
                 type="text"
@@ -192,7 +194,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
                     {dataNascimento ? (
                       format(dataNascimento, 'PPP', { locale: ptBR })
                     ) : (
-                      <span>Selecione uma data</span>
+                      <span>{t('components.alunoForm.selectDate')}</span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -214,37 +216,37 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
 
             {/* Sexo */}
             <div>
-              <Label htmlFor="sexo">Sexo</Label>
+              <Label htmlFor="sexo">{t('components.alunoForm.sex')}</Label>
               <Select
                 value={watch('sexo')}
                 onValueChange={(value) => setValue('sexo', value as 'M' | 'F' | 'Outro')}
               >
                 <SelectTrigger id="sexo">
-                  <SelectValue placeholder="Selecione" />
+                  <SelectValue placeholder={t('components.alunoForm.select')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="M">Masculino</SelectItem>
-                  <SelectItem value="F">Feminino</SelectItem>
-                  <SelectItem value="Outro">Outro</SelectItem>
+                  <SelectItem value="M">{t('components.alunoForm.sexMale')}</SelectItem>
+                  <SelectItem value="F">{t('components.alunoForm.sexFemale')}</SelectItem>
+                  <SelectItem value="Outro">{t('components.alunoForm.sexOther')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Estado Civil */}
             <div>
-              <Label htmlFor="estado_civil">Estado Civil</Label>
+              <Label htmlFor="estado_civil">{t('components.alunoForm.maritalStatus')}</Label>
               <Select
                 value={watch('estado_civil')}
                 onValueChange={(value) => setValue('estado_civil', value)}
               >
                 <SelectTrigger id="estado_civil">
-                  <SelectValue placeholder="Selecione" />
+                  <SelectValue placeholder={t('components.alunoForm.select')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Solteiro(a)">Solteiro(a)</SelectItem>
-                  <SelectItem value="Casado(a)">Casado(a)</SelectItem>
-                  <SelectItem value="Divorciado(a)">Divorciado(a)</SelectItem>
-                  <SelectItem value="Viúvo(a)">Viúvo(a)</SelectItem>
+                  <SelectItem value="Solteiro(a)">{t('components.alunoForm.maritalSingle')}</SelectItem>
+                  <SelectItem value="Casado(a)">{t('components.alunoForm.maritalMarried')}</SelectItem>
+                  <SelectItem value="Divorciado(a)">{t('components.alunoForm.maritalDivorced')}</SelectItem>
+                  <SelectItem value="Viúvo(a)">{t('components.alunoForm.maritalWidowed')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -255,14 +257,14 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
       {/* SEÇÃO 2: CONTATO */}
       <Card>
         <CardHeader>
-          <CardTitle>Contato</CardTitle>
-          <CardDescription>Informações de contato do aluno</CardDescription>
+          <CardTitle>{t('components.alunoForm.contact')}</CardTitle>
+          <CardDescription>{t('components.alunoForm.contactDesc')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             {/* Email */}
             <FormField
-              label="Email"
+              label={t('components.alunoForm.email')}
               htmlFor="email"
               required
               error={errors.email?.message}
@@ -277,7 +279,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
 
             {/* Telefone */}
             <FormField
-              label="Telefone"
+              label={t('components.alunoForm.phone')}
               htmlFor="telefone"
               required
               error={errors.telefone?.message}
@@ -293,19 +295,19 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
             {/* Nome do Responsável */}
             <div>
               <Label htmlFor="nome_responsavel">
-                Nome do Responsável
-                <span className="text-sm text-gray-500 ml-1">(se menor de idade)</span>
+                {t('components.alunoForm.guardianName')}
+                <span className="text-sm text-gray-500 ml-1">{t('components.alunoForm.guardianNameHint')}</span>
               </Label>
               <Input
                 id="nome_responsavel"
                 {...register('nome_responsavel')}
-                placeholder="Nome do responsável"
+                placeholder={t('components.alunoForm.guardianNamePlaceholder')}
               />
             </div>
 
             {/* Telefone do Responsável */}
             <FormField
-              label="Telefone do Responsável"
+              label={t('components.alunoForm.guardianPhone')}
               htmlFor="telefone_responsavel"
             >
               <PhoneInput
@@ -321,17 +323,17 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
       {/* SEÇÃO 3: ENDEREÇO */}
       <Card>
         <CardHeader>
-          <CardTitle>Endereço</CardTitle>
-          <CardDescription>Endereço residencial do aluno</CardDescription>
+          <CardTitle>{t('components.alunoForm.address')}</CardTitle>
+          <CardDescription>{t('components.alunoForm.addressDesc')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             {/* CEP */}
             <FormField
-              label="CEP"
+              label={t('components.alunoForm.zipCode')}
               htmlFor="endereco.cep"
               error={errors.endereco?.cep?.message}
-              hint="O endereço será preenchido automaticamente"
+              hint={t('components.alunoForm.zipCodeHint')}
             >
               <CEPInput
                 id="endereco.cep"
@@ -348,14 +350,14 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
 
             {/* Rua */}
             <FormField
-              label="Rua"
+              label={t('components.alunoForm.street')}
               htmlFor="endereco.rua"
               error={errors.endereco?.rua?.message}
             >
               <InputWithValidation
                 id="endereco.rua"
                 {...register('endereco.rua')}
-                placeholder="Nome da rua"
+                placeholder={t('components.alunoForm.streetPlaceholder')}
                 error={errors.endereco?.rua?.message}
                 isValid={validation.isFieldValid('endereco.rua')}
               />
@@ -363,11 +365,11 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
 
             {/* Número */}
             <div>
-              <Label htmlFor="endereco.numero">Número</Label>
+              <Label htmlFor="endereco.numero">{t('components.alunoForm.number')}</Label>
               <Input
                 id="endereco.numero"
                 {...register('endereco.numero')}
-                placeholder="Número"
+                placeholder={t('components.alunoForm.numberPlaceholder')}
               />
               {errors.endereco?.numero && (
                 <p className="text-sm text-red-500 mt-1">
@@ -378,21 +380,21 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
 
             {/* Complemento */}
             <div>
-              <Label htmlFor="endereco.complemento">Complemento</Label>
+              <Label htmlFor="endereco.complemento">{t('components.alunoForm.complement')}</Label>
               <Input
                 id="endereco.complemento"
                 {...register('endereco.complemento')}
-                placeholder="Apto, bloco, etc."
+                placeholder={t('components.alunoForm.complementPlaceholder')}
               />
             </div>
 
             {/* Bairro */}
             <div>
-              <Label htmlFor="endereco.bairro">Bairro</Label>
+              <Label htmlFor="endereco.bairro">{t('components.alunoForm.neighborhood')}</Label>
               <Input
                 id="endereco.bairro"
                 {...register('endereco.bairro')}
-                placeholder="Nome do bairro"
+                placeholder={t('components.alunoForm.neighborhoodPlaceholder')}
               />
               {errors.endereco?.bairro && (
                 <p className="text-sm text-red-500 mt-1">
@@ -403,11 +405,11 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
 
             {/* Cidade */}
             <div>
-              <Label htmlFor="endereco.cidade">Cidade</Label>
+              <Label htmlFor="endereco.cidade">{t('components.alunoForm.city')}</Label>
               <Input
                 id="endereco.cidade"
                 {...register('endereco.cidade')}
-                placeholder="Nome da cidade"
+                placeholder={t('components.alunoForm.cityPlaceholder')}
               />
               {errors.endereco?.cidade && (
                 <p className="text-sm text-red-500 mt-1">
@@ -418,11 +420,11 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
 
             {/* Estado */}
             <div>
-              <Label htmlFor="endereco.estado">Estado</Label>
+              <Label htmlFor="endereco.estado">{t('components.alunoForm.state')}</Label>
               <Input
                 id="endereco.estado"
                 {...register('endereco.estado')}
-                placeholder="UF (ex: SP)"
+                placeholder={t('components.alunoForm.statePlaceholder')}
                 maxLength={2}
               />
               {errors.endereco?.estado && (
@@ -438,16 +440,16 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
       {/* SEÇÃO 4: FOTO (OPCIONAL) */}
       <Card>
         <CardHeader>
-          <CardTitle>Foto do Aluno</CardTitle>
-          <CardDescription>URL da foto de perfil (opcional)</CardDescription>
+          <CardTitle>{t('components.alunoForm.photo')}</CardTitle>
+          <CardDescription>{t('components.alunoForm.photoDesc')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div>
-            <Label htmlFor="foto_url">URL da Foto</Label>
+            <Label htmlFor="foto_url">{t('components.alunoForm.photoUrl')}</Label>
             <Input
               id="foto_url"
               {...register('foto_url')}
-              placeholder="https://exemplo.com/foto.jpg"
+              placeholder={t('components.alunoForm.photoUrlPlaceholder')}
             />
             {errors.foto_url && (
               <p className="text-sm text-red-500 mt-1">
@@ -466,14 +468,14 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
           onClick={onCancel}
           disabled={isLoading}
         >
-          Cancelar
+          {t('common.actions.cancel')}
         </Button>
-        <LoadingButton 
-          type="submit" 
+        <LoadingButton
+          type="submit"
           isLoading={isLoading}
-          loadingText="Salvando..."
+          loadingText={t('common.actions.saving')}
         >
-          Salvar Aluno
+          {t('components.alunoForm.saveStudent')}
         </LoadingButton>
       </div>
     </form>

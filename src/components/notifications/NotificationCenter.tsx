@@ -3,6 +3,7 @@
 // ============================================
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Bell, CheckCheck, Filter, Settings } from 'lucide-react';
 import { Button } from '../ui/button';
@@ -30,6 +31,7 @@ export function NotificationCenter({
   onMarkAllAsRead,
   onOpenSettings,
 }: NotificationCenterProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [filter, setFilter] = useState<'todos' | 'nao_lidas'>('todos');
@@ -47,7 +49,7 @@ export function NotificationCenter({
 
   const handleMarkAllAsRead = () => {
     onMarkAllAsRead?.();
-    toast.success('Todas as notificações marcadas como lidas');
+    toast.success(t('components.notificationCenter.allMarkedAsRead'));
   };
 
   const handleNotificationClick = (notification: Notificacao) => {
@@ -81,10 +83,10 @@ export function NotificationCenter({
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b">
           <div>
-            <h3 className="font-semibold text-gray-900">Notificações</h3>
+            <h3 className="font-semibold text-gray-900">{t('components.notificationCenter.title')}</h3>
             {unreadCount > 0 && (
               <p className="text-xs text-gray-600">
-                {unreadCount} não {unreadCount === 1 ? 'lida' : 'lidas'}
+                {t('components.notificationCenter.unreadCount', { count: unreadCount })}
               </p>
             )}
           </div>
@@ -144,7 +146,7 @@ export function NotificationCenter({
           <div className="flex flex-col items-center justify-center py-12 px-4">
             <Bell className="w-12 h-12 text-gray-300 mb-3" />
             <p className="text-gray-500 text-sm">
-              {filter === 'nao_lidas' ? 'Nenhuma notificação não lida' : 'Nenhuma notificação'}
+              {filter === 'nao_lidas' ? t('components.notificationCenter.emptyUnread') : t('components.notificationCenter.empty')}
             </p>
           </div>
         )}
@@ -158,11 +160,10 @@ export function NotificationCenter({
             size="sm"
             className="w-full text-xs"
             onClick={() => {
-              // Implementar navegação para página de notificações completa (se necessário)
               setIsOpen(false);
             }}
           >
-            Ver todas as notificações
+            {t('components.notificationCenter.viewAll')}
           </Button>
         </div>
       </DropdownMenuContent>

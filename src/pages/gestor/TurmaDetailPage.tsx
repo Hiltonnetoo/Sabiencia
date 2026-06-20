@@ -4,6 +4,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useMockData } from '../../contexts/MockDataContext';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
@@ -18,6 +19,7 @@ import { ptBR } from 'date-fns/locale';
 import { formatCPF, getInitials } from '../../utils/formatters';
 
 export const TurmaDetailPage: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { turmas, cursos, alunos } = useMockData();
@@ -29,14 +31,14 @@ export const TurmaDetailPage: React.FC = () => {
 
   useEffect(() => {
     if (!id) {
-      toast.error('ID da turma não fornecido');
+      toast.error(t('gestor.turmaDetail.toast.noId'));
       navigate('/gestor/turmas');
       return;
     }
 
     const turmaData = turmas.find(t => t.id === id);
     if (!turmaData) {
-      toast.error('Turma não encontrada');
+      toast.error(t('gestor.turmaDetail.toast.notFound'));
       navigate('/gestor/turmas');
       return;
     }
@@ -52,14 +54,14 @@ export const TurmaDetailPage: React.FC = () => {
     setAlunosTurma(alunosData);
 
     setIsLoading(false);
-  }, [id, turmas, cursos, alunos, navigate]);
+  }, [id, turmas, cursos, alunos, navigate, t]);
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Carregando dados...</p>
+          <p className="mt-4 text-gray-600">{t('gestor.turmaDetail.loading')}</p>
         </div>
       </div>
     );
@@ -86,18 +88,18 @@ export const TurmaDetailPage: React.FC = () => {
             className="gap-2"
           >
             <ArrowLeft className="h-4 w-4" />
-            Voltar
+            {t('common.actions.back')}
           </Button>
           <div>
             <h1 className="text-3xl font-bold text-gray-900">{turma.nome}</h1>
-            <p className="text-gray-600 mt-1">Gerenciamento e informações da turma</p>
+            <p className="text-gray-600 mt-1">{t('gestor.turmaDetail.subtitle')}</p>
           </div>
         </div>
         <div className="flex gap-2">
           {isAtiva ? (
-            <Badge className="bg-green-100 text-green-800 border-green-200">Ativa</Badge>
+            <Badge className="bg-green-100 text-green-800 border-green-200">{t('common.status.active')}</Badge>
           ) : (
-            <Badge className="bg-gray-100 text-gray-800 border-gray-200">Inativa</Badge>
+            <Badge className="bg-gray-100 text-gray-800 border-gray-200">{t('common.status.inactive')}</Badge>
           )}
         </div>
       </div>

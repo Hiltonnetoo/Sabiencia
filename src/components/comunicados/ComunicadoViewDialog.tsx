@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -44,6 +45,7 @@ export function ComunicadoViewDialog({
   showReadStatus = false,
   showStats = false
 }: ComunicadoViewDialogProps) {
+  const { t } = useTranslation();
   if (!comunicado) return null;
 
   const PrioridadeIcon = {
@@ -72,7 +74,7 @@ export function ComunicadoViewDialog({
               <div className="flex flex-wrap gap-2 mt-3">
                 {comunicado.prioridade !== 'normal' && (
                   <Badge className={getPrioridadeColor(comunicado.prioridade)}>
-                    {comunicado.prioridade.charAt(0).toUpperCase() + comunicado.prioridade.slice(1)}
+                    {t('components.comunicados.priority.' + comunicado.prioridade)}
                   </Badge>
                 )}
                 
@@ -83,7 +85,7 @@ export function ComunicadoViewDialog({
 
                 {!isLido && showReadStatus && (
                   <Badge variant="default">
-                    Novo
+                    {t('components.comunicados.view.new')}
                   </Badge>
                 )}
               </div>
@@ -97,15 +99,15 @@ export function ComunicadoViewDialog({
             <div className="flex items-center gap-2 text-sm">
               <User className="h-4 w-4 text-gray-500" />
               <div>
-                <p className="text-xs text-gray-500">Enviado por</p>
-                <p>{comunicado.remetente?.nome_completo || 'Desconhecido'}</p>
+                <p className="text-xs text-gray-500">{t('components.comunicados.view.sentBy')}</p>
+                <p>{comunicado.remetente?.nome_completo || t('components.comunicados.view.unknownSender')}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-2 text-sm">
               <Calendar className="h-4 w-4 text-gray-500" />
               <div>
-                <p className="text-xs text-gray-500">Data de envio</p>
+                <p className="text-xs text-gray-500">{t('components.comunicados.view.sendDate')}</p>
                 <p>{format(new Date(comunicado.data_envio), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}</p>
               </div>
             </div>
@@ -113,7 +115,7 @@ export function ComunicadoViewDialog({
 
           {/* Mensagem */}
           <div className="space-y-2">
-            <h3 className="text-sm font-medium text-gray-500">Mensagem</h3>
+            <h3 className="text-sm font-medium text-gray-500">{t('components.comunicados.view.message')}</h3>
             <div className="bg-gray-50 p-4 rounded-lg">
               <p className="whitespace-pre-wrap text-sm leading-relaxed">
                 {comunicado.mensagem}
@@ -128,24 +130,24 @@ export function ComunicadoViewDialog({
               <div className="space-y-3">
                 <h3 className="text-sm font-medium flex items-center gap-2">
                   <CheckCircle2 className="h-4 w-4" />
-                  Estatísticas de Leitura
+                  {t('components.comunicados.view.readStats')}
                 </h3>
                 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Total de destinatários</span>
+                    <span className="text-gray-600">{t('components.comunicados.view.totalRecipients')}</span>
                     <span className="font-medium">{comunicado.total_destinatarios}</span>
                   </div>
                   
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Leram o comunicado</span>
+                    <span className="text-gray-600">{t('components.comunicados.view.readCount')}</span>
                     <span className="font-medium text-green-600">
                       {comunicado.total_leituras || 0}
                     </span>
                   </div>
                   
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-600">Não leram ainda</span>
+                    <span className="text-gray-600">{t('components.comunicados.view.notReadYet')}</span>
                     <span className="font-medium text-orange-600">
                       {comunicado.total_destinatarios - (comunicado.total_leituras || 0)}
                     </span>
@@ -154,7 +156,7 @@ export function ComunicadoViewDialog({
                   {/* Barra de progresso */}
                   <div className="mt-3">
                     <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
-                      <span>Taxa de leitura</span>
+                      <span>{t('components.comunicados.view.readRate')}</span>
                       <span>
                         {comunicado.total_destinatarios > 0
                           ? Math.round(((comunicado.total_leituras || 0) / comunicado.total_destinatarios) * 100)
@@ -186,16 +188,16 @@ export function ComunicadoViewDialog({
                   <div className="flex items-center gap-2 text-sm text-green-600">
                     <CheckCircle2 className="h-5 w-5" />
                     <div>
-                      <p className="font-medium">Você já leu este comunicado</p>
+                      <p className="font-medium">{t('components.comunicados.view.alreadyRead')}</p>
                       <p className="text-xs text-gray-500">
-                        Em {format(new Date(comunicado.data_leitura), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}
+                        {t('components.comunicados.view.readOn', { date: format(new Date(comunicado.data_leitura), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR }) })}
                       </p>
                     </div>
                   </div>
                 ) : (
                   <div className="flex items-center gap-2 text-sm text-blue-600">
                     <Mail className="h-5 w-5" />
-                    <p className="font-medium">Este comunicado ainda não foi marcado como lido</p>
+                    <p className="font-medium">{t('components.comunicados.view.notMarkedRead')}</p>
                   </div>
                 )}
               </div>
@@ -209,7 +211,7 @@ export function ComunicadoViewDialog({
               onClick={onClose}
               className="flex-1"
             >
-              Fechar
+              {t('common.actions.close')}
             </Button>
             
             {showReadStatus && !isLido && onMarkAsRead && (
@@ -221,7 +223,7 @@ export function ComunicadoViewDialog({
                 className="flex-1"
               >
                 <CheckCircle2 className="h-4 w-4 mr-2" />
-                Marcar como Lido
+                {t('components.comunicados.view.markAsRead')}
               </Button>
             )}
           </div>

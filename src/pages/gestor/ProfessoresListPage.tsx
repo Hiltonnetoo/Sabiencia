@@ -4,6 +4,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/select';
@@ -23,6 +24,7 @@ import { KeyboardShortcutsHelp } from '../../components/shared/KeyboardShortcuts
 
 export const ProfessoresListPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { professores, deleteProfessor } = useMockData();
 
   // Estados de filtros
@@ -57,7 +59,7 @@ export const ProfessoresListPage: React.FC = () => {
   const handleConfirmDelete = () => {
     if (professorToDelete) {
       deleteProfessor(professorToDelete.id);
-      toast.success(`Professor ${professorToDelete.nome_completo} excluído com sucesso!`);
+      toast.success(t('gestor.professoresList.deleted', { name: professorToDelete.nome_completo }));
       setDeleteDialogOpen(false);
       setProfessorToDelete(null);
     }
@@ -70,22 +72,22 @@ export const ProfessoresListPage: React.FC = () => {
 
   // Colunas para exportação
   const exportColumns: ExportColumn[] = [
-    { header: 'Nome', key: 'nome_completo', width: 25 },
-    { header: 'CPF', key: 'cpf', width: 15, format: formatCPF },
-    { header: 'Email', key: 'email', width: 25 },
-    { header: 'Telefone', key: 'telefone', width: 15, format: formatPhone },
-    { 
-      header: 'Especialidades', 
-      key: 'especialidades', 
+    { header: t('gestor.professoresList.export.name'), key: 'nome_completo', width: 25 },
+    { header: t('common.labels.cpf'), key: 'cpf', width: 15, format: formatCPF },
+    { header: t('gestor.professoresList.export.email'), key: 'email', width: 25 },
+    { header: t('gestor.professoresList.export.phone'), key: 'telefone', width: 15, format: formatPhone },
+    {
+      header: t('gestor.professoresList.export.specialties'),
+      key: 'especialidades',
       width: 30,
       format: (esp) => Array.isArray(esp) ? esp.join(', ') : esp
     },
-    { header: 'Status', key: 'status', width: 12 },
-    { 
-      header: 'Data Contratação', 
-      key: 'data_contratacao', 
+    { header: t('gestor.professoresList.export.status'), key: 'status', width: 12 },
+    {
+      header: t('gestor.professoresList.export.hireDate'),
+      key: 'data_contratacao',
       width: 15,
-      format: (date) => new Date(date).toLocaleDateString('pt-BR')
+      format: (date) => new Date(date).toLocaleDateString()
     },
   ];
 
@@ -109,8 +111,8 @@ export const ProfessoresListPage: React.FC = () => {
 
   // Lista de atalhos para ajuda
   const shortcutsList = [
-    { keys: 'Ctrl + N', description: 'Novo professor', category: 'Ações' },
-    { keys: 'Shift + ?', description: 'Mostrar atalhos', category: 'Ajuda' },
+    { keys: 'Ctrl + N', description: t('gestor.professoresList.shortcuts.new'), category: t('gestor.professoresList.shortcuts.actions') },
+    { keys: 'Shift + ?', description: t('gestor.professoresList.shortcuts.show'), category: t('gestor.professoresList.shortcuts.help') },
   ];
 
   return (
@@ -121,22 +123,22 @@ export const ProfessoresListPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Professores</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('gestor.professoresList.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Gerencie os professores cadastrados no sistema
+            {t('gestor.professoresList.subtitle')}
           </p>
         </div>
         <div className="flex gap-2">
           <KeyboardShortcutsHelp shortcuts={shortcutsList} />
           <ExportButton
-            title="Professores"
+            title={t('gestor.professoresList.exportTitle')}
             data={getFilteredProfessores()}
             columns={exportColumns}
             filename="professores"
           />
           <Button onClick={handleNovoProfessor} className="gap-2">
             <Plus className="h-4 w-4" />
-            Novo Professor
+            {t('gestor.professoresList.new')}
           </Button>
         </div>
       </div>
@@ -149,8 +151,8 @@ export const ProfessoresListPage: React.FC = () => {
               <Users className="h-5 w-5 text-purple-600" />
             </div>
             <div>
-              <CardTitle>Total de Professores</CardTitle>
-              <CardDescription>Professores cadastrados no sistema</CardDescription>
+              <CardTitle>{t('gestor.professoresList.totalTitle')}</CardTitle>
+              <CardDescription>{t('gestor.professoresList.totalDescription')}</CardDescription>
             </div>
           </div>
           <div className="text-3xl font-bold text-purple-600">
@@ -162,7 +164,7 @@ export const ProfessoresListPage: React.FC = () => {
       {/* Filtros */}
       <Card>
         <CardHeader>
-          <CardTitle>Filtros</CardTitle>
+          <CardTitle>{t('common.actions.filters')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-3">
@@ -170,17 +172,17 @@ export const ProfessoresListPage: React.FC = () => {
             <SearchBar
               value={searchTerm}
               onChange={setSearchTerm}
-              placeholder="Buscar por nome ou CPF..."
+              placeholder={t('gestor.professoresList.searchPlaceholder')}
               className="md:col-span-1"
             />
 
             {/* Filtro de Especialidade */}
             <Select value={especialidadeFilter} onValueChange={setEspecialidadeFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Todas as especialidades" />
+                <SelectValue placeholder={t('gestor.professoresList.allSpecialties')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Todas as especialidades</SelectItem>
+                <SelectItem value="all">{t('gestor.professoresList.allSpecialties')}</SelectItem>
                 {especialidadesUnicas.map(esp => (
                   <SelectItem key={esp} value={esp}>
                     {esp}
@@ -192,12 +194,12 @@ export const ProfessoresListPage: React.FC = () => {
             {/* Filtro de Status */}
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger>
-                <SelectValue placeholder="Todos os status" />
+                <SelectValue placeholder={t('common.labels.allStatuses')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">Todos os status</SelectItem>
-                <SelectItem value="ativo">Ativo</SelectItem>
-                <SelectItem value="inativo">Inativo</SelectItem>
+                <SelectItem value="all">{t('common.labels.allStatuses')}</SelectItem>
+                <SelectItem value="ativo">{t('common.status.active')}</SelectItem>
+                <SelectItem value="inativo">{t('common.status.inactive')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -221,9 +223,9 @@ export const ProfessoresListPage: React.FC = () => {
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
         onConfirm={handleConfirmDelete}
-        title="Excluir Professor"
+        title={t('gestor.professoresList.deleteTitle')}
         itemName={professorToDelete?.nome_completo}
-        description="Esta ação irá excluir permanentemente o professor e remover suas atribuições de turmas e disciplinas. Esta operação não pode ser desfeita."
+        description={t('gestor.professoresList.deleteDescription')}
       />
     </div>
   );

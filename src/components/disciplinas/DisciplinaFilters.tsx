@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { 
@@ -28,12 +29,13 @@ export function DisciplinaFilters({
   onCursoChange,
   onLimpar,
 }: DisciplinaFiltersProps) {
+  const { t } = useTranslation();
   const hasActiveFilters = busca || curso_id !== 'todos';
 
   return (
     <div className="bg-white p-4 rounded-lg border space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-gray-900">Filtros</h3>
+        <h3 className="font-semibold text-gray-900">{t('components.disciplinas.filters.title')}</h3>
         {hasActiveFilters && (
           <Button
             onClick={onLimpar}
@@ -41,7 +43,7 @@ export function DisciplinaFilters({
             size="sm"
           >
             <X className="w-4 h-4 mr-2" />
-            Limpar
+            {t('common.actions.clear')}
           </Button>
         )}
       </div>
@@ -50,12 +52,12 @@ export function DisciplinaFilters({
         {/* Busca */}
         <div>
           <label className="text-sm font-medium text-gray-700 mb-1 block">
-            Buscar
+            {t('components.disciplinas.filters.searchLabel')}
           </label>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
-              placeholder="Nome ou descrição..."
+              placeholder={t('components.disciplinas.filters.searchPlaceholder')}
               value={busca}
               onChange={(e) => onBuscaChange(e.target.value)}
               className="pl-9"
@@ -66,14 +68,14 @@ export function DisciplinaFilters({
         {/* Curso */}
         <div>
           <label className="text-sm font-medium text-gray-700 mb-1 block">
-            Curso
+            {t('components.disciplinas.filters.courseLabel')}
           </label>
           <Select value={curso_id} onValueChange={onCursoChange}>
             <SelectTrigger>
-              <SelectValue placeholder="Selecione..." />
+              <SelectValue placeholder={t('components.disciplinas.filters.selectPlaceholder')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="todos">Todos os cursos</SelectItem>
+              <SelectItem value="todos">{t('components.disciplinas.filters.allCourses')}</SelectItem>
               {cursos
                 .filter(curso => curso?.id && curso.id.trim() !== '')
                 .map(curso => (
@@ -88,10 +90,10 @@ export function DisciplinaFilters({
 
       {hasActiveFilters && (
         <div className="text-sm text-gray-600">
-          Filtros ativos: {[
-            busca && 'Busca',
-            curso_id !== 'todos' && 'Curso',
-          ].filter(Boolean).join(', ')}
+          {t('components.disciplinas.filters.activeFilters', { filters: [
+            busca && t('components.disciplinas.filters.filterSearch'),
+            curso_id !== 'todos' && t('components.disciplinas.filters.filterCourse'),
+          ].filter(Boolean).join(', ') })}
         </div>
       )}
     </div>

@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/card';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
@@ -22,7 +23,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '.
 import { Badge } from '../ui/badge';
 import { CalendarIcon, Save, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { TIPOS_AVALIACAO, formatarNota, notaPorExtenso } from '../../schemas/notaSchemas';
 import { useMockData } from '../../contexts/MockDataContext';
 import type { Aluno } from '../../types';
@@ -36,6 +36,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
   professorId,
   onSuccess,
 }) => {
+  const { t } = useTranslation();
   const { turmas, disciplinas, alunos, matriculas, notas: notasExistentes } = useMockData();
   const [selectedTurma, setSelectedTurma] = useState<string>('');
   const [selectedDisciplina, setSelectedDisciplina] = useState<string>('');
@@ -147,19 +148,19 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Lançamento de Notas</CardTitle>
+        <CardTitle>{t('components.lancamentoNotasForm.title')}</CardTitle>
         <CardDescription>
-          Lance notas para os alunos de forma rápida e eficiente
+          {t('components.lancamentoNotasForm.description')}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Filtros */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-2">
-            <Label htmlFor="turma">Turma *</Label>
+            <Label htmlFor="turma">{t('components.lancamentoNotasForm.class')}</Label>
             <Select value={selectedTurma} onValueChange={setSelectedTurma}>
               <SelectTrigger id="turma">
-                <SelectValue placeholder="Selecione a turma" />
+                <SelectValue placeholder={t('components.lancamentoNotasForm.selectClass')} />
               </SelectTrigger>
               <SelectContent>
                 {turmas.map((turma) => (
@@ -172,10 +173,10 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="disciplina">Disciplina *</Label>
+            <Label htmlFor="disciplina">{t('components.lancamentoNotasForm.subject')}</Label>
             <Select value={selectedDisciplina} onValueChange={setSelectedDisciplina}>
               <SelectTrigger id="disciplina">
-                <SelectValue placeholder="Selecione a disciplina" />
+                <SelectValue placeholder={t('components.lancamentoNotasForm.selectSubject')} />
               </SelectTrigger>
               <SelectContent>
                 {disciplinas
@@ -190,10 +191,10 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="tipo">Tipo de Avaliação *</Label>
+            <Label htmlFor="tipo">{t('components.lancamentoNotasForm.evaluationType')}</Label>
             <Select value={tipoAvaliacao} onValueChange={setTipoAvaliacao}>
               <SelectTrigger id="tipo">
-                <SelectValue placeholder="Selecione o tipo" />
+                <SelectValue placeholder={t('components.lancamentoNotasForm.selectType')} />
               </SelectTrigger>
               <SelectContent>
                 {TIPOS_AVALIACAO.map((tipo) => (
@@ -206,7 +207,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="data">Data da Avaliação *</Label>
+            <Label htmlFor="data">{t('components.lancamentoNotasForm.evaluationDate')}</Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -215,7 +216,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
                   className="w-full justify-start text-left"
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
-                  {selectedDate ? format(selectedDate, 'PPP', { locale: ptBR }) : 'Selecione a data'}
+                  {selectedDate ? format(selectedDate, 'PPP') : t('components.lancamentoNotasForm.selectDate')}
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0">
@@ -224,7 +225,6 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
                   selected={selectedDate}
                   onSelect={setSelectedDate}
                   initialFocus
-                  locale={ptBR}
                 />
               </PopoverContent>
             </Popover>
@@ -232,7 +232,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="peso">Peso da Avaliação *</Label>
+          <Label htmlFor="peso">{t('components.lancamentoNotasForm.evaluationWeight')}</Label>
           <Input
             id="peso"
             type="number"
@@ -241,7 +241,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
             step="0.5"
             value={peso}
             onChange={(e) => setPeso(e.target.value)}
-            placeholder="Ex: 1, 2, 3..."
+            placeholder={t('components.lancamentoNotasForm.weightPlaceholder')}
           />
         </div>
 
@@ -251,18 +251,18 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Aluno</TableHead>
-                  <TableHead>Matrícula</TableHead>
-                  <TableHead className="w-32">Nota (0-10)</TableHead>
-                  <TableHead className="w-24">Tendência</TableHead>
-                  <TableHead>Observações</TableHead>
+                  <TableHead>{t('components.lancamentoNotasForm.student')}</TableHead>
+                  <TableHead>{t('components.lancamentoNotasForm.enrollment')}</TableHead>
+                  <TableHead className="w-32">{t('components.lancamentoNotasForm.gradeRange')}</TableHead>
+                  <TableHead className="w-24">{t('components.lancamentoNotasForm.trend')}</TableHead>
+                  <TableHead>{t('components.lancamentoNotasForm.notes')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {alunosDaTurma.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={5} className="text-center text-gray-500 py-8">
-                      Nenhum aluno encontrado nesta turma
+                      {t('components.lancamentoNotasForm.noStudents')}
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -278,7 +278,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
                             <div className="font-medium">{aluno.nome_completo}</div>
                             {notaAnterior !== null && (
                               <div className="text-xs text-gray-500">
-                                Última nota: {formatarNota(notaAnterior)}
+                                {t('components.lancamentoNotasForm.lastGrade', { grade: formatarNota(notaAnterior) })}
                               </div>
                             )}
                           </div>
@@ -296,7 +296,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
                             step="0.5"
                             value={notaAtual ?? ''}
                             onChange={(e) => handleNotaChange(aluno.id, e.target.value)}
-                            placeholder="0.0"
+                            placeholder={t('components.lancamentoNotasForm.gradePlaceholder')}
                             className="w-20"
                           />
                           {notaAtual !== null && notaAtual !== undefined && (
@@ -309,19 +309,19 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
                           {tendencia === 'up' && (
                             <div className="flex items-center gap-1 text-green-600">
                               <TrendingUp className="h-4 w-4" />
-                              <span className="text-xs">Melhorou</span>
+                              <span className="text-xs">{t('components.lancamentoNotasForm.improved')}</span>
                             </div>
                           )}
                           {tendencia === 'down' && (
                             <div className="flex items-center gap-1 text-red-600">
                               <TrendingDown className="h-4 w-4" />
-                              <span className="text-xs">Piorou</span>
+                              <span className="text-xs">{t('components.lancamentoNotasForm.worsened')}</span>
                             </div>
                           )}
                           {tendencia === 'neutral' && (
                             <div className="flex items-center gap-1 text-gray-500">
                               <Minus className="h-4 w-4" />
-                              <span className="text-xs">Igual</span>
+                              <span className="text-xs">{t('components.lancamentoNotasForm.same')}</span>
                             </div>
                           )}
                         </TableCell>
@@ -329,7 +329,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
                           <Textarea
                             value={notasAlunos.get(aluno.id)?.observacao || ''}
                             onChange={(e) => handleObservacaoChange(aluno.id, e.target.value)}
-                            placeholder="Observações (opcional)"
+                            placeholder={t('components.lancamentoNotasForm.notesPlaceholder')}
                             className="min-h-[60px]"
                           />
                         </TableCell>
@@ -355,7 +355,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
               setSelectedDate(undefined);
             }}
           >
-            Limpar
+            {t('common.actions.clear', 'Clear')}
           </Button>
           <LoadingButton
             onClick={handleSubmit}
@@ -363,7 +363,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
             disabled={!canSave}
           >
             <Save className="h-4 w-4 mr-2" />
-            Salvar Notas
+            {t('components.lancamentoNotasForm.saveGrades')}
           </LoadingButton>
         </div>
       </CardContent>

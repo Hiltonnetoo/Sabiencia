@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { NotificationPreferences } from '../../components/notifications/NotificationPreferences';
@@ -12,39 +13,40 @@ import { AparenciaSettings } from '../../components/shared/AparenciaSettings';
 import { Bell, Shield, Palette, Database } from 'lucide-react';
 
 export const ConfiguracoesGestorPage: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Configurações do Sistema</h1>
-        <p className="text-gray-600 mt-1">Gerencie configurações gerais e preferências administrativas</p>
+        <h1 className="text-3xl font-bold text-gray-900">{t('gestor.configuracoes.title')}</h1>
+        <p className="text-gray-600 mt-1">{t('gestor.configuracoes.subtitle')}</p>
       </div>
 
       <Tabs defaultValue="notificacoes" className="space-y-6">
         <TabsList>
           <TabsTrigger value="notificacoes">
             <Bell className="w-4 h-4 mr-2" />
-            Notificações
+            {t('gestor.configuracoes.tabs.notifications')}
           </TabsTrigger>
           <TabsTrigger value="sistema">
             <Database className="w-4 h-4 mr-2" />
-            Sistema
+            {t('gestor.configuracoes.tabs.system')}
           </TabsTrigger>
           <TabsTrigger value="privacidade">
             <Shield className="w-4 h-4 mr-2" />
-            Privacidade
+            {t('gestor.configuracoes.tabs.privacy')}
           </TabsTrigger>
           <TabsTrigger value="aparencia">
             <Palette className="w-4 h-4 mr-2" />
-            Aparência
+            {t('gestor.configuracoes.tabs.appearance')}
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="notificacoes" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Preferências de Notificações</CardTitle>
+              <CardTitle>{t('gestor.configuracoes.notificationsTitle')}</CardTitle>
               <CardDescription>
-                Configure como e quando você deseja receber notificações administrativas
+                {t('gestor.configuracoes.notificationsDescription')}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -62,9 +64,9 @@ export const ConfiguracoesGestorPage: React.FC = () => {
         <TabsContent value="sistema" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Configurações do Sistema</CardTitle>
+              <CardTitle>{t('gestor.configuracoes.systemTitle')}</CardTitle>
               <CardDescription>
-                Configurações gerais da plataforma
+                {t('gestor.configuracoes.systemDescription')}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -76,9 +78,9 @@ export const ConfiguracoesGestorPage: React.FC = () => {
         <TabsContent value="privacidade" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Configurações de Privacidade</CardTitle>
+              <CardTitle>{t('gestor.configuracoes.privacyTitle')}</CardTitle>
               <CardDescription>
-                Gerencie configurações de privacidade e segurança (LGPD)
+                {t('gestor.configuracoes.privacyDescription')}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -90,9 +92,9 @@ export const ConfiguracoesGestorPage: React.FC = () => {
         <TabsContent value="aparencia" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Aparência do Sistema</CardTitle>
+              <CardTitle>{t('gestor.configuracoes.appearanceTitle')}</CardTitle>
               <CardDescription>
-                Personalize a aparência da interface
+                {t('gestor.configuracoes.appearanceDescription')}
               </CardDescription>
             </CardHeader>
             <CardContent>

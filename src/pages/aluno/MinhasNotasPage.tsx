@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMockData } from '../../contexts/MockDataContext';
 import { BoletimCard } from '../../components/notas/BoletimCard';
@@ -12,6 +13,7 @@ import { FileCheck, Trophy, AlertTriangle, TrendingUp } from 'lucide-react';
 import { calcularMedia, obterSituacaoAluno, formatarNota } from '../../schemas/notaSchemas';
 
 export const MinhasNotasPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { notas, disciplinas } = useMockData();
 
@@ -90,7 +92,7 @@ export const MinhasNotasPage: React.FC = () => {
     return (
       <Card>
         <CardContent className="flex flex-col items-center justify-center py-12">
-          <p className="text-gray-500">Você precisa estar logado para acessar esta página</p>
+          <p className="text-gray-500">{t('aluno.minhasNotas.loginRequired')}</p>
         </CardContent>
       </Card>
     );
@@ -105,9 +107,9 @@ export const MinhasNotasPage: React.FC = () => {
             <FileCheck className="h-6 w-6 text-purple-600" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Minhas Notas</h1>
+            <h1 className="text-3xl font-bold text-gray-900">{t('aluno.minhasNotas.title')}</h1>
             <p className="text-gray-600 mt-1">
-              Acompanhe seu desempenho acadêmico
+              {t('aluno.minhasNotas.subtitle')}
             </p>
           </div>
         </div>
@@ -117,7 +119,7 @@ export const MinhasNotasPage: React.FC = () => {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Média Geral</CardTitle>
+            <CardTitle className="text-sm">{t('aluno.minhasNotas.stats.overallAverage')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className={`text-3xl font-bold ${
@@ -142,35 +144,35 @@ export const MinhasNotasPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Disciplinas</CardTitle>
+            <CardTitle className="text-sm">{t('aluno.minhasNotas.stats.subjects')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-gray-900">{estatisticasGerais.totalDisciplinas}</div>
-            <p className="text-xs text-gray-500 mt-2">Com notas lançadas</p>
+            <p className="text-xs text-gray-500 mt-2">{t('aluno.minhasNotas.stats.withGrades')}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Aprovado</CardTitle>
+            <CardTitle className="text-sm">{t('aluno.minhasNotas.stats.approved')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-green-600">{estatisticasGerais.aprovadas}</div>
             <p className="text-xs text-gray-500 mt-2">
-              Média ≥ 7.0
+              {t('aluno.minhasNotas.stats.averageAtLeast')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Recuperação</CardTitle>
+            <CardTitle className="text-sm">{t('aluno.minhasNotas.stats.recovery')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-yellow-600">{estatisticasGerais.recuperacao}</div>
             <p className="text-xs text-gray-500 mt-2">
-              {estatisticasGerais.reprovadas > 0 && `+ ${estatisticasGerais.reprovadas} risco`}
-              {estatisticasGerais.reprovadas === 0 && 'Média 5.0-6.9'}
+              {estatisticasGerais.reprovadas > 0 && t('aluno.minhasNotas.stats.atRisk', { count: estatisticasGerais.reprovadas })}
+              {estatisticasGerais.reprovadas === 0 && t('aluno.minhasNotas.stats.averageRange')}
             </p>
           </CardContent>
         </Card>
@@ -184,7 +186,7 @@ export const MinhasNotasPage: React.FC = () => {
             <CardHeader>
               <CardTitle className="text-green-900 flex items-center gap-2">
                 <Trophy className="h-5 w-5" />
-                Melhores Desempenhos
+                {t('aluno.minhasNotas.bestPerformanceTitle')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -214,7 +216,7 @@ export const MinhasNotasPage: React.FC = () => {
             <CardHeader>
               <CardTitle className="text-yellow-900 flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" />
-                Disciplinas que Precisam de Atenção
+                {t('aluno.minhasNotas.attentionTitle')}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -236,7 +238,7 @@ export const MinhasNotasPage: React.FC = () => {
                   ))}
               </div>
               <p className="text-xs text-yellow-700 mt-3">
-                💡 Dica: Procure materiais de estudo na biblioteca e tire dúvidas com seus professores
+                {t('aluno.minhasNotas.attentionHint')}
               </p>
             </CardContent>
           </Card>
@@ -249,7 +251,7 @@ export const MinhasNotasPage: React.FC = () => {
           <CardContent className="pt-6">
             <p className="text-sm text-blue-800 flex items-center gap-2">
               <TrendingUp className="h-4 w-4" />
-              <strong>Excelente trabalho!</strong> Você está com ótimo desempenho. Continue se dedicando!
+              <span dangerouslySetInnerHTML={{ __html: t('aluno.minhasNotas.motivationMessage') }} />
             </p>
           </CardContent>
         </Card>
@@ -257,7 +259,7 @@ export const MinhasNotasPage: React.FC = () => {
 
       {/* Boletim por Disciplina */}
       <div>
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Boletim Detalhado</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-4">{t('aluno.minhasNotas.detailedReport')}</h2>
         <div className="grid gap-6 md:grid-cols-2">
           {Array.from(notasPorDisciplina.entries()).map(([disciplinaId, notas]) => {
             const disciplina = disciplinas.find(d => d.id === disciplinaId);
@@ -280,7 +282,7 @@ export const MinhasNotasPage: React.FC = () => {
           <CardContent className="flex flex-col items-center justify-center py-12">
             <FileCheck className="h-16 w-16 text-gray-300 mb-4" />
             <p className="text-gray-500 text-center">
-              Nenhuma nota lançada ainda
+              {t('aluno.minhasNotas.empty')}
             </p>
           </CardContent>
         </Card>

@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 import { Bell, Mail, Inbox } from 'lucide-react';
 import { Card, CardContent } from '../../components/ui/card';
 import { Badge } from '../../components/ui/badge';
@@ -17,6 +18,7 @@ import { toast } from 'sonner';
 import type { ComunicadoComDetalhes } from '../../types';
 
 export const ComunicadosAlunoPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { comunicados, comunicadosLeituras, alunos, professores, turmas, addComunicadoLeitura } = useMockData();
   
@@ -90,7 +92,7 @@ export const ComunicadosAlunoPage: React.FC = () => {
       data_leitura: new Date()
     });
 
-    toast.success('Comunicado marcado como lido!');
+    toast.success(t('aluno.comunicados.toast.markedAsRead'));
   };
 
   // Visualizar comunicado
@@ -108,9 +110,9 @@ export const ComunicadosAlunoPage: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Meus Comunicados</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('aluno.comunicados.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Acompanhe os avisos e comunicados da escola
+          {t('aluno.comunicados.subtitle')}
         </p>
       </div>
 
@@ -120,7 +122,7 @@ export const ComunicadosAlunoPage: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Total de Comunicados</p>
+                <p className="text-sm text-gray-600">{t('aluno.comunicados.stats.totalAnnouncements')}</p>
                 <p className="text-2xl font-semibold mt-1">{totalComunicados}</p>
               </div>
               <Mail className="h-8 w-8 text-blue-600" />
@@ -132,7 +134,7 @@ export const ComunicadosAlunoPage: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Não Lidos</p>
+                <p className="text-sm text-gray-600">{t('aluno.comunicados.stats.unread')}</p>
                 <p className="text-2xl font-semibold mt-1">{totalNaoLidos}</p>
               </div>
               <Inbox className="h-8 w-8 text-orange-600" />
@@ -144,7 +146,7 @@ export const ComunicadosAlunoPage: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Urgentes Não Lidos</p>
+                <p className="text-sm text-gray-600">{t('aluno.comunicados.stats.urgentUnread')}</p>
                 <p className="text-2xl font-semibold mt-1">{totalUrgentes}</p>
               </div>
               <Bell className="h-8 w-8 text-red-600" />
@@ -158,8 +160,11 @@ export const ComunicadosAlunoPage: React.FC = () => {
         <Alert className="border-red-200 bg-red-50">
           <Bell className="h-4 w-4 text-red-600" />
           <AlertDescription className="text-red-800">
-            Você tem <strong>{totalUrgentes}</strong> comunicado(s) urgente(s) não lido(s). 
-            Por favor, leia com atenção!
+            <Trans
+              i18nKey="aluno.comunicados.urgentAlert"
+              values={{ count: totalUrgentes }}
+              components={{ 1: <strong /> }}
+            />
           </AlertDescription>
         </Alert>
       )}
@@ -182,9 +187,9 @@ export const ComunicadosAlunoPage: React.FC = () => {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="flex items-center gap-2">
-            Comunicados Recebidos
+            {t('aluno.comunicados.receivedAnnouncements')}
             {totalNaoLidos > 0 && (
-              <Badge variant="default">{totalNaoLidos} novos</Badge>
+              <Badge variant="default">{t('aluno.comunicados.newCount', { count: totalNaoLidos })}</Badge>
             )}
           </h2>
         </div>
@@ -195,8 +200,8 @@ export const ComunicadosAlunoPage: React.FC = () => {
               <Inbox className="h-12 w-12 text-gray-400 mx-auto mb-3" />
               <p className="text-gray-600">
                 {searchTerm || prioridadeFilter !== 'todas' || leituraFilter !== 'todos'
-                  ? 'Nenhum comunicado encontrado com os filtros aplicados.'
-                  : 'Você ainda não recebeu nenhum comunicado.'}
+                  ? t('aluno.comunicados.empty.filtered')
+                  : t('aluno.comunicados.empty.default')}
               </p>
             </CardContent>
           </Card>

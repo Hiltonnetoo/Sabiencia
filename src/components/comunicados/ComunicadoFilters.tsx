@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import {
@@ -40,6 +41,7 @@ export function ComunicadoFilters({
   onLeituraChange,
   showLeituraFilter = false
 }: ComunicadoFiltersProps) {
+  const { t } = useTranslation();
   return (
     <Card>
       <CardContent className="pt-6">
@@ -48,12 +50,12 @@ export function ComunicadoFilters({
           <div className="space-y-2">
             <Label htmlFor="search" className="flex items-center gap-2">
               <Search className="h-4 w-4" />
-              Buscar
+              {t('components.comunicados.filters.search')}
             </Label>
             <Input
               id="search"
               type="text"
-              placeholder="Buscar por título ou mensagem..."
+              placeholder={t('components.comunicados.filters.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
             />
@@ -65,18 +67,18 @@ export function ComunicadoFilters({
             <div className="space-y-2">
               <Label htmlFor="prioridade" className="flex items-center gap-2">
                 <Filter className="h-4 w-4" />
-                Prioridade
+                {t('components.comunicados.filters.priority')}
               </Label>
               <Select value={prioridadeFilter} onValueChange={onPrioridadeChange}>
                 <SelectTrigger id="prioridade">
-                  <SelectValue placeholder="Todas" />
+                  <SelectValue placeholder={t('components.comunicados.filters.allPriorities')} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="todas">Todas</SelectItem>
-                  <SelectItem value="urgente">Urgente</SelectItem>
-                  <SelectItem value="alta">Alta</SelectItem>
-                  <SelectItem value="normal">Normal</SelectItem>
-                  <SelectItem value="baixa">Baixa</SelectItem>
+                  <SelectItem value="todas">{t('components.comunicados.filters.allPriorities')}</SelectItem>
+                  <SelectItem value="urgente">{t('components.comunicados.priority.urgente')}</SelectItem>
+                  <SelectItem value="alta">{t('components.comunicados.priority.alta')}</SelectItem>
+                  <SelectItem value="normal">{t('components.comunicados.priority.normal')}</SelectItem>
+                  <SelectItem value="baixa">{t('components.comunicados.priority.baixa')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -85,18 +87,18 @@ export function ComunicadoFilters({
             {showDestinatariosFilter && (
               <div className="space-y-2">
                 <Label htmlFor="destinatarios">
-                  Destinatários
+                  {t('components.comunicados.filters.recipients')}
                 </Label>
                 <Select value={destinatariosFilter} onValueChange={onDestinatariosChange}>
                   <SelectTrigger id="destinatarios">
-                    <SelectValue placeholder="Todos" />
+                    <SelectValue placeholder={t('components.comunicados.filters.allRecipients')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="todos">Todos</SelectItem>
-                    <SelectItem value="todos_alunos">Todos os Alunos</SelectItem>
-                    <SelectItem value="todos_professores">Todos os Professores</SelectItem>
-                    <SelectItem value="turma_especifica">Turma Específica</SelectItem>
-                    <SelectItem value="individual">Individual</SelectItem>
+                    <SelectItem value="todos">{t('components.comunicados.recipients.all')}</SelectItem>
+                    <SelectItem value="todos_alunos">{t('components.comunicados.recipients.allStudents')}</SelectItem>
+                    <SelectItem value="todos_professores">{t('components.comunicados.recipients.allTeachers')}</SelectItem>
+                    <SelectItem value="turma_especifica">{t('components.comunicados.recipients.specificClass')}</SelectItem>
+                    <SelectItem value="individual">{t('components.comunicados.recipients.individual')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -106,16 +108,16 @@ export function ComunicadoFilters({
             {showLeituraFilter && onLeituraChange && (
               <div className="space-y-2">
                 <Label htmlFor="leitura">
-                  Status de Leitura
+                  {t('components.comunicados.filters.readStatus')}
                 </Label>
                 <Select value={leituraFilter} onValueChange={onLeituraChange}>
                   <SelectTrigger id="leitura">
-                    <SelectValue placeholder="Todos" />
+                    <SelectValue placeholder={t('components.comunicados.filters.allRecipients')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="todos">Todos</SelectItem>
-                    <SelectItem value="lidos">Lidos</SelectItem>
-                    <SelectItem value="nao_lidos">Não Lidos</SelectItem>
+                    <SelectItem value="todos">{t('components.comunicados.recipients.all')}</SelectItem>
+                    <SelectItem value="lidos">{t('components.comunicados.filters.read')}</SelectItem>
+                    <SelectItem value="nao_lidos">{t('components.comunicados.filters.unread')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

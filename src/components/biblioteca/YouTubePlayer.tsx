@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { extractYouTubeID, getYouTubeEmbedURL } from '../../schemas/materialSchemas';
 import { Card, CardContent } from '../ui/card';
 import { AlertCircle } from 'lucide-react';
@@ -15,10 +16,12 @@ interface YouTubePlayerProps {
 
 export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
   url,
-  title = 'Vídeo',
+  title,
   className = '',
 }) => {
+  const { t } = useTranslation();
   const videoId = extractYouTubeID(url);
+  const resolvedTitle = title ?? t('components.biblioteca.youtube.defaultTitle');
 
   if (!videoId) {
     return (
@@ -26,8 +29,8 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
         <CardContent className="flex items-center gap-3 p-6">
           <AlertCircle className="h-5 w-5 text-red-500" />
           <div>
-            <p className="font-medium text-red-900">Erro ao carregar vídeo</p>
-            <p className="text-sm text-red-600">URL do YouTube inválida</p>
+            <p className="font-medium text-red-900">{t('components.biblioteca.youtube.loadError')}</p>
+            <p className="text-sm text-red-600">{t('components.biblioteca.youtube.invalidUrl')}</p>
           </div>
         </CardContent>
       </Card>
@@ -40,7 +43,7 @@ export const YouTubePlayer: React.FC<YouTubePlayerProps> = ({
     <div className={`relative ${className}`} style={{ paddingBottom: '56.25%' }}>
       <iframe
         src={embedUrl}
-        title={title}
+        title={resolvedTitle}
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen

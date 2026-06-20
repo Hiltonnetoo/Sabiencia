@@ -4,6 +4,7 @@
 
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMockData } from '../../contexts/MockDataContext';
 import { useVideoaulas } from '../../contexts/VideoaulasContext';
@@ -45,6 +46,7 @@ interface AulaData {
 
 export const MinhasAulasPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { 
     matriculas, 
@@ -195,9 +197,9 @@ export const MinhasAulasPage: React.FC = () => {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Minhas Aulas</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('aluno.minhasAulas.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Acompanhe suas disciplinas, frequência e materiais de estudo
+          {t('aluno.minhasAulas.subtitle')}
         </p>
       </div>
 
@@ -209,10 +211,10 @@ export const MinhasAulasPage: React.FC = () => {
               <AlertCircle className="w-5 h-5 text-yellow-600" />
               <div>
                 <CardTitle className="text-base text-yellow-900">
-                  Atenção à Frequência
+                  {t('aluno.minhasAulas.attendanceWarningTitle')}
                 </CardTitle>
                 <CardDescription className="text-yellow-700">
-                  Você possui disciplinas com frequência abaixo de 75%
+                  {t('aluno.minhasAulas.attendanceWarningDesc')}
                 </CardDescription>
               </div>
             </div>
@@ -229,11 +231,11 @@ export const MinhasAulasPage: React.FC = () => {
                     <div>
                       <p className="font-medium text-gray-900">{aula.disciplina.nome}</p>
                       <p className="text-sm text-gray-600">
-                        Frequência: {formatPercent(aula.percentualFrequencia)}
+                        {t('aluno.minhasAulas.attendanceLabel', { value: formatPercent(aula.percentualFrequencia) })}
                       </p>
                     </div>
                     <Badge variant="destructive">
-                      Atenção
+                      {t('common.status.attention')}
                     </Badge>
                   </div>
                 ))}
@@ -246,7 +248,7 @@ export const MinhasAulasPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Total de Disciplinas</CardDescription>
+            <CardDescription>{t('aluno.minhasAulas.stats.totalSubjects')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -255,7 +257,7 @@ export const MinhasAulasPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-3xl font-bold text-gray-900">{estatisticas.totalDisciplinas}</p>
-                <p className="text-sm text-gray-500">disciplinas ativas</p>
+                <p className="text-sm text-gray-500">{t('aluno.minhasAulas.stats.activeSubjects')}</p>
               </div>
             </div>
           </CardContent>
@@ -263,7 +265,7 @@ export const MinhasAulasPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Total de Aulas</CardDescription>
+            <CardDescription>{t('aluno.minhasAulas.stats.totalLessons')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -272,7 +274,7 @@ export const MinhasAulasPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-3xl font-bold text-gray-900">{estatisticas.totalAulas}</p>
-                <p className="text-sm text-gray-500">aulas realizadas</p>
+                <p className="text-sm text-gray-500">{t('aluno.minhasAulas.stats.lessonsHeld')}</p>
               </div>
             </div>
           </CardContent>
@@ -280,7 +282,7 @@ export const MinhasAulasPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Frequência Geral</CardDescription>
+            <CardDescription>{t('aluno.minhasAulas.stats.overallAttendance')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -291,7 +293,7 @@ export const MinhasAulasPage: React.FC = () => {
                 <p className="text-3xl font-bold text-gray-900">
                   {formatPercent(estatisticas.mediaFrequencia)}
                 </p>
-                <p className="text-sm text-gray-500">{estatisticas.totalPresencas} presenças</p>
+                <p className="text-sm text-gray-500">{t('aluno.minhasAulas.stats.presences', { count: estatisticas.totalPresencas })}</p>
               </div>
             </div>
           </CardContent>
@@ -299,7 +301,7 @@ export const MinhasAulasPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Materiais Disponíveis</CardDescription>
+            <CardDescription>{t('aluno.minhasAulas.stats.availableMaterials')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -308,7 +310,7 @@ export const MinhasAulasPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-3xl font-bold text-gray-900">{estatisticas.totalMateriais}</p>
-                <p className="text-sm text-gray-500">arquivos e vídeos</p>
+                <p className="text-sm text-gray-500">{t('aluno.minhasAulas.stats.filesAndVideos')}</p>
               </div>
             </div>
           </CardContent>
@@ -319,13 +321,13 @@ export const MinhasAulasPage: React.FC = () => {
       <Tabs value={abaSelecionada} onValueChange={(v) => setAbaSelecionada(v as any)}>
         <TabsList>
           <TabsTrigger value="todas">
-            Todas ({minhasAulas.length})
+            {t('aluno.minhasAulas.tabs.all', { count: minhasAulas.length })}
           </TabsTrigger>
           <TabsTrigger value="em-andamento">
-            Em Andamento ({minhasAulas.filter(a => a.proximaAula).length})
+            {t('aluno.minhasAulas.tabs.inProgress', { count: minhasAulas.filter(a => a.proximaAula).length })}
           </TabsTrigger>
           <TabsTrigger value="concluidas">
-            Concluídas ({minhasAulas.filter(a => !a.proximaAula && a.totalAulas > 0).length})
+            {t('aluno.minhasAulas.tabs.completed', { count: minhasAulas.filter(a => !a.proximaAula && a.totalAulas > 0).length })}
           </TabsTrigger>
         </TabsList>
 
@@ -333,13 +335,13 @@ export const MinhasAulasPage: React.FC = () => {
           {aulasFiltradas.length === 0 ? (
             <EmptyState
               icon={Video}
-              title="Nenhuma aula encontrada"
+              title={t('aluno.minhasAulas.empty.title')}
               description={
                 abaSelecionada === 'em-andamento'
-                  ? "Você não possui aulas em andamento no momento."
+                  ? t('aluno.minhasAulas.empty.inProgress')
                   : abaSelecionada === 'concluidas'
-                  ? "Você ainda não concluiu nenhuma disciplina."
-                  : "Você ainda não possui aulas cadastradas."
+                  ? t('aluno.minhasAulas.empty.completed')
+                  : t('aluno.minhasAulas.empty.default')
               }
             />
           ) : (
@@ -354,7 +356,7 @@ export const MinhasAulasPage: React.FC = () => {
                         </CardTitle>
                         <CardDescription className="flex items-center gap-2">
                           <User className="w-4 h-4" />
-                          Prof. {aula.professor.nome_completo}
+                          {t('aluno.minhasAulas.profPrefix')} {aula.professor.nome_completo}
                         </CardDescription>
                       </div>
                       <Badge 
@@ -375,9 +377,9 @@ export const MinhasAulasPage: React.FC = () => {
                     {/* Progresso */}
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-600">Frequência</span>
+                        <span className="text-gray-600">{t('aluno.minhasAulas.attendance')}</span>
                         <span className="font-medium">
-                          {aula.presencas} de {aula.totalAulas} aulas
+                          {t('aluno.minhasAulas.lessonsCount', { done: aula.presencas, total: aula.totalAulas })}
                         </span>
                       </div>
                       <Progress 
@@ -392,7 +394,7 @@ export const MinhasAulasPage: React.FC = () => {
                         <div className="space-y-1">
                           <p className="text-xs text-gray-500 flex items-center gap-1">
                             <Clock className="w-3 h-3" />
-                            Última aula
+                            {t('aluno.minhasAulas.lastLesson')}
                           </p>
                           <p className="text-sm font-medium">
                             {formatDate(aula.ultimaAula)}
@@ -404,7 +406,7 @@ export const MinhasAulasPage: React.FC = () => {
                         <div className="space-y-1">
                           <p className="text-xs text-gray-500 flex items-center gap-1">
                             <Calendar className="w-3 h-3" />
-                            Próxima aula
+                            {t('aluno.minhasAulas.nextLesson')}
                           </p>
                           <p className="text-sm font-medium text-blue-600">
                             {formatDate(aula.proximaAula)}
@@ -420,17 +422,15 @@ export const MinhasAulasPage: React.FC = () => {
                           <div className="flex items-center gap-2 text-sm text-gray-600">
                             <FileText className="w-4 h-4" />
                             <span>
-                              {aula.materiaisDisponiveis.length} material
-                              {aula.materiaisDisponiveis.length !== 1 ? 'is' : ''} disponível
-                              {aula.materiaisDisponiveis.length !== 1 ? 'is' : ''}
+                              {t('aluno.minhasAulas.materialsAvailable', { count: aula.materiaisDisponiveis.length })}
                             </span>
                           </div>
-                          <Button 
-                            variant="ghost" 
+                          <Button
+                            variant="ghost"
                             size="sm"
                             onClick={() => navigate(`/aluno/materiais?disciplina=${aula.disciplina.id}`)}
                           >
-                            Ver materiais
+                            {t('aluno.minhasAulas.viewMaterials')}
                           </Button>
                         </div>
                       </div>
@@ -444,7 +444,7 @@ export const MinhasAulasPage: React.FC = () => {
                         onClick={() => navigate(`/aluno/frequencia?disciplina=${aula.disciplina.id}`)}
                       >
                         <CheckCircle className="w-4 h-4 mr-2" />
-                        Ver Frequência
+                        {t('aluno.minhasAulas.viewAttendance')}
                       </Button>
                       <Button 
                         variant="outline" 
@@ -452,7 +452,7 @@ export const MinhasAulasPage: React.FC = () => {
                         onClick={() => navigate(`/aluno/notas?disciplina=${aula.disciplina.id}`)}
                       >
                         <FileText className="w-4 h-4 mr-2" />
-                        Ver Notas
+                        {t('aluno.minhasAulas.viewGrades')}
                       </Button>
                       <Button 
                         variant="outline" 
@@ -463,7 +463,7 @@ export const MinhasAulasPage: React.FC = () => {
                         }}
                       >
                         <PlayCircle className="w-4 h-4 mr-2" />
-                        Ver Aulas
+                        {t('aluno.minhasAulas.viewLessons')}
                       </Button>
                     </div>
                   </CardContent>

@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useMockData } from '../../contexts/MockDataContext';
 import { TurmaCard } from '../../components/turmas/TurmaCard';
 import { TurmaFilters } from '../../components/turmas/TurmaFilters';
@@ -13,6 +14,7 @@ import type { TurmaFormData } from '../../schemas/turmaSchemas';
 
 export const TurmasListPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { turmas, cursos, alunos, addTurma, updateTurma, deleteTurma } = useMockData();
   
   const [busca, setBusca] = useState('');
@@ -83,23 +85,23 @@ export const TurmasListPage: React.FC = () => {
     const alunosNaTurma = getAlunosPorTurma(turma.id);
     
     if (alunosNaTurma > 0) {
-      toast.error(`Não é possível excluir. Existem ${alunosNaTurma} aluno(s) matriculado(s) nesta turma.`);
+      toast.error(t('gestor.turmasList.toast.cannotDelete', { count: alunosNaTurma }));
       return;
     }
 
-    if (confirm(`Tem certeza que deseja excluir a turma "${turma.nome}"?`)) {
+    if (confirm(t('gestor.turmasList.toast.confirmDelete', { name: turma.nome }))) {
       deleteTurma(turma.id);
-      toast.success('Turma excluída com sucesso!');
+      toast.success(t('gestor.turmasList.toast.deleted'));
     }
   };
 
   const handleSubmitForm = (data: TurmaFormData) => {
     if (selectedTurma) {
       updateTurma(selectedTurma.id, data as any);
-      toast.success('Turma atualizada com sucesso!');
+      toast.success(t('gestor.turmasList.toast.updated'));
     } else {
       addTurma(data as any);
-      toast.success('Turma criada com sucesso!');
+      toast.success(t('gestor.turmasList.toast.created'));
     }
     setShowForm(false);
     setSelectedTurma(null);
@@ -113,15 +115,15 @@ export const TurmasListPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gestão de Turmas</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('gestor.turmasList.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Crie e gerencie as turmas dos cursos
+            {t('gestor.turmasList.subtitle')}
           </p>
         </div>
 
         <Button onClick={handleNovaTurma}>
           <Plus className="w-4 h-4 mr-2" />
-          Nova Turma
+          {t('gestor.turmasList.new')}
         </Button>
       </div>
 
@@ -143,7 +145,7 @@ export const TurmasListPage: React.FC = () => {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold text-gray-900">
-            Turmas ({turmasFiltradas.length})
+            {t('gestor.turmasList.listHeading', { count: turmasFiltradas.length })}
           </h2>
         </div>
 
@@ -151,17 +153,17 @@ export const TurmasListPage: React.FC = () => {
           <div className="text-center py-12 bg-gray-50 rounded-lg">
             <GraduationCap className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <h3 className="font-medium text-gray-900 mb-2">
-              Nenhuma turma encontrada
+              {t('gestor.turmasList.emptyTitle')}
             </h3>
             <p className="text-gray-600 mb-4">
               {busca || cursoId !== 'todos' || periodo !== 'todos' || status !== 'todos'
-                ? 'Tente ajustar os filtros de busca'
-                : 'Comece criando sua primeira turma'}
+                ? t('gestor.turmasList.emptyFiltered')
+                : t('gestor.turmasList.emptyDefault')}
             </p>
             {!busca && cursoId === 'todos' && periodo === 'todos' && status === 'todos' && (
               <Button onClick={handleNovaTurma}>
                 <Plus className="w-4 h-4 mr-2" />
-                Criar Primeira Turma
+                {t('gestor.turmasList.createFirst')}
               </Button>
             )}
           </div>

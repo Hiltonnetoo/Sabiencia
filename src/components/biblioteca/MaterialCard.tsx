@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
@@ -23,7 +24,6 @@ import {
 import type { Material } from '../../types';
 import { formatFileSize, formatDuration } from '../../schemas/materialSchemas';
 import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 import { getInitials } from '../../utils/formatters';
 import { useMockData } from '../../contexts/MockDataContext';
 
@@ -50,6 +50,7 @@ export const MaterialCard: React.FC<MaterialCardProps> = ({
   showActions = true,
   variant = 'default',
 }) => {
+  const { t } = useTranslation();
   const { professores, disciplinas } = useMockData();
   const [imageError, setImageError] = useState(false);
 
@@ -148,7 +149,7 @@ export const MaterialCard: React.FC<MaterialCardProps> = ({
             </Badge>
           )}
           <Badge variant="secondary" className="text-xs">
-            Módulo {material.modulo}
+            {t('components.biblioteca.card.module', { value: material.modulo })}
           </Badge>
         </div>
 
@@ -183,7 +184,7 @@ export const MaterialCard: React.FC<MaterialCardProps> = ({
           )}
           <div className="flex items-center gap-1 text-xs">
             <Calendar className="h-3 w-3" />
-            {format(material.data_upload, 'dd/MM/yy', { locale: ptBR })}
+            {format(material.data_upload, 'dd/MM/yy')}
           </div>
         </div>
       </CardContent>
@@ -199,7 +200,7 @@ export const MaterialCard: React.FC<MaterialCardProps> = ({
               className="flex-1 gap-2"
             >
               <Eye className="h-4 w-4" />
-              Ver
+              {t('components.biblioteca.card.view')}
             </Button>
           )}
           
@@ -211,7 +212,7 @@ export const MaterialCard: React.FC<MaterialCardProps> = ({
               className="flex-1 gap-2"
             >
               <Download className="h-4 w-4" />
-              Baixar
+              {t('components.biblioteca.card.download')}
             </Button>
           )}
 
@@ -223,7 +224,7 @@ export const MaterialCard: React.FC<MaterialCardProps> = ({
               className="flex-1 gap-2"
             >
               <ExternalLink className="h-4 w-4" />
-              Abrir
+              {t('components.biblioteca.card.open')}
             </Button>
           )}
           

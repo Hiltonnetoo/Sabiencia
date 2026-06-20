@@ -5,6 +5,7 @@
 
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMockData } from '../../contexts/MockDataContext';
 import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
@@ -31,6 +32,7 @@ import { calculateFrequenciaPercentual } from '../../utils/calculations';
 
 export const MinhasTurmasPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { turmas, cursos, disciplinas, professorTurmaDisciplina, matriculas, frequencias } = useMockData();
 
@@ -166,14 +168,14 @@ export const MinhasTurmasPage: React.FC = () => {
 
   const getPeriodoBadge = (periodo: string) => {
     const configs = {
-      manha: { label: 'Manhã', className: 'bg-yellow-100 text-yellow-700' },
-      tarde: { label: 'Tarde', className: 'bg-orange-100 text-orange-700' },
-      noite: { label: 'Noite', className: 'bg-indigo-100 text-indigo-700' },
-      integral: { label: 'Integral', className: 'bg-purple-100 text-purple-700' },
+      manha: { label: t('professor.minhasTurmas.periods.manha'), className: 'bg-yellow-100 text-yellow-700' },
+      tarde: { label: t('professor.minhasTurmas.periods.tarde'), className: 'bg-orange-100 text-orange-700' },
+      noite: { label: t('professor.minhasTurmas.periods.noite'), className: 'bg-indigo-100 text-indigo-700' },
+      integral: { label: t('professor.minhasTurmas.periods.integral'), className: 'bg-purple-100 text-purple-700' },
     };
-    
+
     const config = configs[periodo as keyof typeof configs];
-    
+
     return (
       <Badge className={config.className}>
         <Clock className="w-3 h-3 mr-1" />
@@ -187,11 +189,11 @@ export const MinhasTurmasPage: React.FC = () => {
     const isFinalizada = new Date(turma.data_fim) < new Date();
 
     if (isAtiva) {
-      return <Badge className="bg-green-100 text-green-700">Ativa</Badge>;
+      return <Badge className="bg-green-100 text-green-700">{t('professor.minhasTurmas.status.active')}</Badge>;
     } else if (isFinalizada) {
-      return <Badge className="bg-gray-100 text-gray-700">Finalizada</Badge>;
+      return <Badge className="bg-gray-100 text-gray-700">{t('professor.minhasTurmas.status.finished')}</Badge>;
     } else {
-      return <Badge className="bg-red-100 text-red-700">Inativa</Badge>;
+      return <Badge className="bg-red-100 text-red-700">{t('professor.minhasTurmas.status.inactive')}</Badge>;
     }
   };
 
@@ -202,9 +204,9 @@ export const MinhasTurmasPage: React.FC = () => {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Minhas Turmas</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('professor.minhasTurmas.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Gerencie as turmas e disciplinas que você leciona
+          {t('professor.minhasTurmas.subtitle')}
         </p>
       </div>
 
@@ -212,46 +214,46 @@ export const MinhasTurmasPage: React.FC = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total de Turmas</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('professor.minhasTurmas.stats.totalClasses')}</CardTitle>
             <GraduationCap className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{estatisticas.totalTurmas}</div>
             <p className="text-xs text-gray-500 mt-1">
-              {estatisticas.turmasAtivas} turmas ativas
+              {t('professor.minhasTurmas.stats.activeClasses', { count: estatisticas.turmasAtivas })}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total de Alunos</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('professor.minhasTurmas.stats.totalStudents')}</CardTitle>
             <Users className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{estatisticas.totalAlunos}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Em todas as turmas
+              {t('professor.minhasTurmas.stats.inAllClasses')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Frequência Geral</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('professor.minhasTurmas.stats.overallAttendance')}</CardTitle>
             <TrendingUp className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{estatisticas.frequenciaGeral}%</div>
             <p className="text-xs text-gray-500 mt-1">
-              Média de presença
+              {t('professor.minhasTurmas.stats.averagePresence')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Disciplinas</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('professor.minhasTurmas.stats.subjects')}</CardTitle>
             <BookOpen className="h-4 w-4 text-orange-600" />
           </CardHeader>
           <CardContent>
@@ -263,7 +265,7 @@ export const MinhasTurmasPage: React.FC = () => {
               )].length}
             </div>
             <p className="text-xs text-gray-500 mt-1">
-              Diferentes disciplinas
+              {t('professor.minhasTurmas.stats.differentSubjects')}
             </p>
           </CardContent>
         </Card>
@@ -274,7 +276,7 @@ export const MinhasTurmasPage: React.FC = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Filter className="h-5 w-5 text-gray-500" />
-            <CardTitle>Filtros</CardTitle>
+            <CardTitle>{t('common.actions.filters')}</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
@@ -283,7 +285,7 @@ export const MinhasTurmasPage: React.FC = () => {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
-                placeholder="Buscar turma ou curso..."
+                placeholder={t('professor.minhasTurmas.filters.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-9"
@@ -293,10 +295,10 @@ export const MinhasTurmasPage: React.FC = () => {
             {/* Filtro por Curso */}
             <Select value={selectedCurso} onValueChange={setSelectedCurso}>
               <SelectTrigger>
-                <SelectValue placeholder="Curso" />
+                <SelectValue placeholder={t('professor.minhasTurmas.filters.coursePlaceholder')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="todos">Todos os cursos</SelectItem>
+                <SelectItem value="todos">{t('professor.minhasTurmas.filters.allCourses')}</SelectItem>
                 {cursos.map(curso => (
                   <SelectItem key={curso.id} value={curso.id}>
                     {curso.nome}
@@ -308,27 +310,27 @@ export const MinhasTurmasPage: React.FC = () => {
             {/* Filtro por Período */}
             <Select value={selectedPeriodo} onValueChange={setSelectedPeriodo}>
               <SelectTrigger>
-                <SelectValue placeholder="Período" />
+                <SelectValue placeholder={t('professor.minhasTurmas.filters.periodPlaceholder')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="todos">Todos os períodos</SelectItem>
-                <SelectItem value="manha">Manhã</SelectItem>
-                <SelectItem value="tarde">Tarde</SelectItem>
-                <SelectItem value="noite">Noite</SelectItem>
-                <SelectItem value="integral">Integral</SelectItem>
+                <SelectItem value="todos">{t('professor.minhasTurmas.filters.allPeriods')}</SelectItem>
+                <SelectItem value="manha">{t('professor.minhasTurmas.periods.manha')}</SelectItem>
+                <SelectItem value="tarde">{t('professor.minhasTurmas.periods.tarde')}</SelectItem>
+                <SelectItem value="noite">{t('professor.minhasTurmas.periods.noite')}</SelectItem>
+                <SelectItem value="integral">{t('professor.minhasTurmas.periods.integral')}</SelectItem>
               </SelectContent>
             </Select>
 
             {/* Filtro por Status */}
             <Select value={selectedStatus} onValueChange={setSelectedStatus}>
               <SelectTrigger>
-                <SelectValue placeholder="Status" />
+                <SelectValue placeholder={t('professor.minhasTurmas.filters.statusPlaceholder')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="todos">Todos os status</SelectItem>
-                <SelectItem value="ativa">Ativas</SelectItem>
-                <SelectItem value="finalizada">Finalizadas</SelectItem>
-                <SelectItem value="inativa">Inativas</SelectItem>
+                <SelectItem value="todos">{t('professor.minhasTurmas.filters.allStatuses')}</SelectItem>
+                <SelectItem value="ativa">{t('professor.minhasTurmas.filters.statusActive')}</SelectItem>
+                <SelectItem value="finalizada">{t('professor.minhasTurmas.filters.statusFinished')}</SelectItem>
+                <SelectItem value="inativa">{t('professor.minhasTurmas.filters.statusInactive')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -337,7 +339,7 @@ export const MinhasTurmasPage: React.FC = () => {
           {searchTerm || selectedCurso !== 'todos' || selectedPeriodo !== 'todos' || selectedStatus !== 'todos' ? (
             <div className="mt-4 flex items-center justify-between">
               <p className="text-sm text-gray-600">
-                {turmasFiltradas.length} turma(s) encontrada(s)
+                {t('professor.minhasTurmas.resultsCount', { count: turmasFiltradas.length })}
               </p>
               <Button
                 variant="ghost"
@@ -349,7 +351,7 @@ export const MinhasTurmasPage: React.FC = () => {
                   setSelectedStatus('todos');
                 }}
               >
-                Limpar filtros
+                {t('common.actions.clearFilters')}
               </Button>
             </div>
           ) : null}
@@ -359,11 +361,11 @@ export const MinhasTurmasPage: React.FC = () => {
       {/* Lista de Turmas */}
       {turmasFiltradas.length === 0 ? (
         <EmptyState
-          title="Nenhuma turma encontrada"
+          title={t('professor.minhasTurmas.empty.title')}
           description={
             searchTerm || selectedCurso !== 'todos' || selectedPeriodo !== 'todos' || selectedStatus !== 'todos'
-              ? "Tente ajustar os filtros para encontrar turmas"
-              : "Você ainda não foi atribuído a nenhuma turma"
+              ? t('professor.minhasTurmas.empty.withFilters')
+              : t('professor.minhasTurmas.empty.default')
           }
           icon={GraduationCap}
         />
@@ -405,7 +407,7 @@ export const MinhasTurmasPage: React.FC = () => {
                     <div className="flex items-start gap-2">
                       <Calendar className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-xs text-gray-500">Início</p>
+                        <p className="text-xs text-gray-500">{t('professor.minhasTurmas.startLabel')}</p>
                         <p className="font-medium text-gray-900">
                           {formatDate(turma.data_inicio)}
                         </p>
@@ -415,7 +417,7 @@ export const MinhasTurmasPage: React.FC = () => {
                     <div className="flex items-start gap-2">
                       <Calendar className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-xs text-gray-500">Término</p>
+                        <p className="text-xs text-gray-500">{t('professor.minhasTurmas.endLabel')}</p>
                         <p className="font-medium text-gray-900">
                           {formatDate(turma.data_fim)}
                         </p>
@@ -426,7 +428,7 @@ export const MinhasTurmasPage: React.FC = () => {
                   {/* Disciplinas */}
                   {disciplinas && disciplinas.length > 0 && (
                     <div className="pt-3 border-t">
-                      <p className="text-xs text-gray-500 mb-2">Disciplinas que leciono:</p>
+                      <p className="text-xs text-gray-500 mb-2">{t('professor.minhasTurmas.subjectsITeach')}</p>
                       <div className="flex flex-wrap gap-1">
                         {disciplinas.slice(0, 2).map(disc => (
                           disc && (
@@ -448,7 +450,7 @@ export const MinhasTurmasPage: React.FC = () => {
                   <div className="flex items-center justify-between pt-3 border-t">
                     <div className="flex items-center gap-2">
                       <FileCheck className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm text-gray-600">Frequência média</span>
+                      <span className="text-sm text-gray-600">{t('professor.minhasTurmas.averageAttendance')}</span>
                     </div>
                     <span className="font-semibold text-gray-900">{frequenciaMedia}%</span>
                   </div>
@@ -459,7 +461,7 @@ export const MinhasTurmasPage: React.FC = () => {
                     className="w-full"
                     variant="outline"
                   >
-                    Ver Alunos
+                    {t('professor.minhasTurmas.viewStudents')}
                     <ChevronRight className="w-4 h-4 ml-2" />
                   </Button>
                 </CardContent>

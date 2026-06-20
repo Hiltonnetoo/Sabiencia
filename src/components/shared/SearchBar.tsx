@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Input } from '../ui/input';
 import { Search, X, Loader2 } from 'lucide-react';
 import { Button } from '../ui/button';
@@ -29,7 +30,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   onChange,
   onSearch,
   onClear,
-  placeholder = 'Buscar...',
+  placeholder,
   className = '',
   debounceDelay,
   debounceTime,
@@ -40,8 +41,10 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   onFocus,
   onBlur,
 }) => {
+  const { t } = useTranslation();
   const [localValue, setLocalValue] = useState(value);
   const delay = debounceTime !== undefined ? debounceTime : (debounceDelay !== undefined ? debounceDelay : 300);
+  const resolvedPlaceholder = placeholder ?? t('components.searchBar.placeholder');
 
   // Sincronizar valor externo com interno
   useEffect(() => {
@@ -85,7 +88,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       <Input
         type="search"
         role="searchbox"
-        placeholder={placeholder}
+        placeholder={resolvedPlaceholder}
         value={localValue}
         onChange={handleChange}
         onFocus={onFocus}
@@ -96,7 +99,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       {isLoading && (
         <div role="status" className="absolute right-8 top-1/2 transform -translate-y-1/2">
           <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
-          <span className="sr-only">Carregando...</span>
+          <span className="sr-only">{t('components.searchBar.loading')}</span>
         </div>
       )}
       {error && (
@@ -110,7 +113,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
           size="sm"
           onClick={handleClear}
           className="absolute right-1 top-1/2 transform -translate-y-1/2 h-7 w-7 p-0"
-          aria-label="Limpar pesquisa"
+          aria-label={t('components.searchBar.clear')}
         >
           <X className="h-4 w-4" />
         </Button>

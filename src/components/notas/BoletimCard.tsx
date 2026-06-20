@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
@@ -22,6 +23,7 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
   showDetalhes = true,
 }) => {
   // Calcular média ponderada
+  const { t } = useTranslation();
   const media = calcularMedia(notas.map(n => ({ nota: n.nota, peso: n.peso })));
   const situacao = obterSituacaoAluno(media);
 
@@ -41,7 +43,7 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
           <div>
             <CardTitle className="text-lg">{disciplina.nome}</CardTitle>
             <p className="text-sm text-gray-500 mt-1">
-              {notas.length} avaliação{notas.length !== 1 ? 'ões' : ''} realizada{notas.length !== 1 ? 's' : ''}
+              {t('components.boletimCard.evaluationsDone', { count: notas.length })}
             </p>
           </div>
           <Badge
@@ -60,7 +62,7 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
         {/* Média Final */}
         <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg">
           <div>
-            <p className="text-sm text-gray-600">Média Final</p>
+            <p className="text-sm text-gray-600">{t('components.boletimCard.finalAverage')}</p>
             <p className="text-xs text-gray-500 mt-1">{notaPorExtenso(media)}</p>
           </div>
           <div className="text-right">
@@ -71,7 +73,7 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
             }`}>
               {formatarNota(media)}
             </p>
-            <p className="text-xs text-gray-500">de 10.0</p>
+            <p className="text-xs text-gray-500">{t('components.boletimCard.outOf10')}</p>
           </div>
         </div>
 
@@ -80,7 +82,7 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
           <div className="text-center p-3 bg-green-50 rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <Trophy className="h-4 w-4 text-green-600" />
-              <span className="text-xs text-gray-600">Maior Nota</span>
+              <span className="text-xs text-gray-600">{t('components.boletimCard.highestGrade')}</span>
             </div>
             <p className="text-xl font-bold text-green-600">{formatarNota(notaMaisAlta)}</p>
           </div>
@@ -88,7 +90,7 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
           <div className="text-center p-3 bg-red-50 rounded-lg">
             <div className="flex items-center justify-center gap-1 mb-1">
               <AlertTriangle className="h-4 w-4 text-red-600" />
-              <span className="text-xs text-gray-600">Menor Nota</span>
+              <span className="text-xs text-gray-600">{t('components.boletimCard.lowestGrade')}</span>
             </div>
             <p className="text-xl font-bold text-red-600">{formatarNota(notaMaisBaixa)}</p>
           </div>
@@ -97,14 +99,14 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
         {/* Detalhes das Avaliações */}
         {showDetalhes && (
           <div className="border-t pt-4">
-            <p className="text-sm font-medium mb-3">Avaliações</p>
+            <p className="text-sm font-medium mb-3">{t('components.boletimCard.evaluations')}</p>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Tipo</TableHead>
-                  <TableHead className="text-center">Nota</TableHead>
-                  <TableHead className="text-center">Peso</TableHead>
-                  <TableHead className="text-right">Data</TableHead>
+                  <TableHead>{t('components.boletimCard.type')}</TableHead>
+                  <TableHead className="text-center">{t('components.boletimCard.grade')}</TableHead>
+                  <TableHead className="text-center">{t('components.boletimCard.weight')}</TableHead>
+                  <TableHead className="text-right">{t('components.boletimCard.date')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -133,7 +135,7 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
                       {nota.peso}
                     </TableCell>
                     <TableCell className="text-right text-sm text-gray-500">
-                      {nota.data_avaliacao.toLocaleDateString('pt-BR')}
+                      {nota.data_avaliacao.toLocaleDateString(undefined)}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -147,7 +149,7 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
           <div className="bg-green-50 border border-green-200 rounded-lg p-3">
             <p className="text-sm text-green-800 font-medium flex items-center gap-2">
               <Trophy className="h-4 w-4" />
-              Parabéns! Você está aprovado nesta disciplina
+              {t('components.boletimCard.approvedTitle')}
             </p>
           </div>
         )}
@@ -156,10 +158,10 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
             <p className="text-sm text-yellow-800 font-medium flex items-center gap-2">
               <AlertTriangle className="h-4 w-4" />
-              Você está em recuperação nesta disciplina
+              {t('components.boletimCard.recoveryTitle')}
             </p>
             <p className="text-xs text-yellow-700 mt-1">
-              Necessário obter nota {formatarNota(7 - media)} ou mais na prova de recuperação
+              {t('components.boletimCard.recoveryHint', { grade: formatarNota(7 - media) })}
             </p>
           </div>
         )}
@@ -168,10 +170,10 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
           <div className="bg-red-50 border border-red-200 rounded-lg p-3">
             <p className="text-sm text-red-800 font-medium flex items-center gap-2">
               <AlertTriangle className="h-4 w-4" />
-              Atenção: Risco de reprovação nesta disciplina
+              {t('components.boletimCard.failedTitle')}
             </p>
             <p className="text-xs text-red-700 mt-1">
-              Converse com seu professor sobre atividades de recuperação
+              {t('components.boletimCard.failedHint')}
             </p>
           </div>
         )}
@@ -181,10 +183,10 @@ export const BoletimCard: React.FC<BoletimCardProps> = ({
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
             <p className="text-sm text-blue-800 font-medium flex items-center gap-2">
               <TrendingUp className="h-4 w-4" />
-              Continue se esforçando!
+              {t('components.boletimCard.keepGoingTitle')}
             </p>
             <p className="text-xs text-blue-700 mt-1">
-              Você precisa de mais {formatarNota(7 - media)} pontos para atingir a média 7.0
+              {t('components.boletimCard.keepGoingHint', { points: formatarNota(7 - media) })}
             </p>
           </div>
         )}

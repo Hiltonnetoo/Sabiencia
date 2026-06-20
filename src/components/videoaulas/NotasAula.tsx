@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
@@ -35,6 +36,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
   currentTime,
   className = ''
 }) => {
+  const { t } = useTranslation();
   const [novaAnotacao, setNovaAnotacao] = useState('');
   const [editandoId, setEditandoId] = useState<string | null>(null);
   const [conteudoEditado, setConteudoEditado] = useState('');
@@ -43,7 +45,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
 
   const handleSalvar = () => {
     if (!novaAnotacao.trim()) {
-      toast.error('Digite uma anotação antes de salvar');
+      toast.error(t('components.videoaulas.notes.toastEmpty'));
       return;
     }
 
@@ -56,7 +58,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
 
     onSalvarAnotacao(anotacao);
     setNovaAnotacao('');
-    toast.success('Anotação salva com sucesso!');
+    toast.success(t('components.videoaulas.notes.toastSaved'));
   };
 
   const handleIniciarEdicao = (anotacao: AnotacaoAula) => {
@@ -70,7 +72,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
     onEditarAnotacao(editandoId, conteudoEditado.trim());
     setEditandoId(null);
     setConteudoEditado('');
-    toast.success('Anotação atualizada!');
+    toast.success(t('components.videoaulas.notes.toastUpdated'));
   };
 
   const handleCancelarEdicao = () => {
@@ -85,7 +87,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
   const handleConfirmDeletar = () => {
     if (anotacaoToDelete) {
       onDeletarAnotacao(anotacaoToDelete);
-      toast.success('Anotação excluída!');
+      toast.success(t('components.videoaulas.notes.toastDeleted'));
       setAnotacaoToDelete(null);
     }
   };
@@ -98,9 +100,9 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
   return (
     <Card className={className}>
       <CardHeader>
-        <CardTitle className="text-lg">Minhas Anotações</CardTitle>
+        <CardTitle className="text-lg">{t('components.videoaulas.notes.title')}</CardTitle>
         <CardDescription>
-          Faça anotações durante a aula para revisar depois
+          {t('components.videoaulas.notes.description')}
         </CardDescription>
       </CardHeader>
 
@@ -108,7 +110,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
         {/* Formulário de Nova Anotação */}
         <div className="space-y-3">
           <Textarea
-            placeholder="Digite sua anotação aqui..."
+            placeholder={t('components.videoaulas.notes.inputPlaceholder')}
             value={novaAnotacao}
             onChange={(e) => setNovaAnotacao(e.target.value)}
             rows={3}
@@ -126,7 +128,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
                 htmlFor="incluirTimestamp"
                 className="text-sm text-gray-600 cursor-pointer select-none flex items-center gap-2"
               >
-                <span>Incluir momento do vídeo</span>
+                <span>{t('components.videoaulas.notes.includeVideoMoment')}</span>
                 {incluirTimestamp && currentTime !== undefined && (
                   <Badge variant="outline" className="text-xs">
                     {formatDuration(currentTime)}
@@ -137,7 +139,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
 
             <Button onClick={handleSalvar} size="sm" className="gap-2">
               <Plus className="w-4 h-4" />
-              Adicionar Anotação
+              {t('components.videoaulas.notes.addNote')}
             </Button>
           </div>
         </div>
@@ -146,9 +148,9 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
         <div className="space-y-3 max-h-96 overflow-y-auto">
           {anotacoesOrdenadas.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
-              <p className="text-sm">Nenhuma anotação ainda</p>
+              <p className="text-sm">{t('components.videoaulas.notes.emptyTitle')}</p>
               <p className="text-xs mt-1">
-                Adicione anotações para revisar depois
+                {t('components.videoaulas.notes.emptyHint')}
               </p>
             </div>
           ) : (
@@ -169,14 +171,14 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
                     <div className="flex gap-2">
                       <Button size="sm" onClick={handleSalvarEdicao} className="gap-1">
                         <Save className="w-3 h-3" />
-                        Salvar
+                        {t('components.videoaulas.notes.save')}
                       </Button>
                       <Button
                         size="sm"
                         variant="outline"
                         onClick={handleCancelarEdicao}
                       >
-                        Cancelar
+                        {t('components.videoaulas.notes.cancel')}
                       </Button>
                     </div>
                   </div>
@@ -192,7 +194,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
                           </Badge>
                         )}
                         <span className="text-xs text-gray-500">
-                          {new Date(anotacao.criado_em).toLocaleDateString('pt-BR', {
+                          {new Date(anotacao.criado_em).toLocaleDateString(undefined, {
                             day: '2-digit',
                             month: 'short',
                             hour: '2-digit',
@@ -207,7 +209,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
                           size="sm"
                           onClick={() => handleIniciarEdicao(anotacao)}
                           className="h-11 w-11 p-0"
-                          aria-label="Editar anotação"
+                          aria-label={t('components.videoaulas.notes.editAria')}
                         >
                           <Edit2 className="w-4 h-4" />
                         </Button>
@@ -216,7 +218,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
                           size="sm"
                           onClick={() => handleDeletar(anotacao.id)}
                           className="h-11 w-11 p-0 text-red-600 hover:text-red-700 hover:bg-red-50"
-                          aria-label="Excluir anotação"
+                          aria-label={t('components.videoaulas.notes.deleteAria')}
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
@@ -236,7 +238,7 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
         {/* Contador */}
         {anotacoesOrdenadas.length > 0 && (
           <div className="text-xs text-gray-500 text-center pt-2 border-t">
-            {anotacoesOrdenadas.length} anotaç{anotacoesOrdenadas.length === 1 ? 'ão' : 'ões'}
+            {t('components.videoaulas.notes.count', { count: anotacoesOrdenadas.length })}
           </div>
         )}
 
@@ -245,8 +247,8 @@ export const NotasAula: React.FC<NotasAulaProps> = ({
           open={!!anotacaoToDelete}
           onOpenChange={(open) => !open && setAnotacaoToDelete(null)}
           onConfirm={handleConfirmDeletar}
-          title="Excluir Anotação"
-          description="Tem certeza de que deseja excluir esta anotação? Esta ação não pode ser desfeita."
+          title={t('components.videoaulas.notes.deleteTitle')}
+          description={t('components.videoaulas.notes.deleteDesc')}
         />
       </CardContent>
     </Card>

@@ -14,10 +14,12 @@ import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
 import { BookOpen, FileText, Video, Users, Eye, EyeOff, TrendingUp } from 'lucide-react';
 import { useMockData } from '../../contexts/MockDataContext';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 import type { Material } from '../../types';
 import { Badge } from '../../components/ui/badge';
 
 export const BibliotecaGestorPage: React.FC = () => {
+  const { t } = useTranslation();
   const { materiais: allMateriais, disciplinas, professores, updateMaterial, deleteMaterial } = useMockData();
 
   // Estados de filtros
@@ -100,11 +102,11 @@ export const BibliotecaGestorPage: React.FC = () => {
       });
       toast.success(
         material.visivel_para_alunos
-          ? 'Material ocultado dos alunos'
-          : 'Material visível para alunos'
+          ? t('gestor.biblioteca.toast.hidden')
+          : t('gestor.biblioteca.toast.visible')
       );
     } catch (error) {
-      toast.error('Erro ao atualizar visibilidade');
+      toast.error(t('gestor.biblioteca.toast.visibilityError'));
     } finally {
       setIsLoading(false);
     }
@@ -121,11 +123,11 @@ export const BibliotecaGestorPage: React.FC = () => {
       try {
         await new Promise(resolve => setTimeout(resolve, 500));
         deleteMaterial(materialToDelete.id);
-        toast.success('Material excluído com sucesso!');
+        toast.success(t('gestor.biblioteca.toast.deleted'));
         setDeleteDialogOpen(false);
         setMaterialToDelete(null);
       } catch (error) {
-        toast.error('Erro ao excluir material');
+        toast.error(t('gestor.biblioteca.toast.deleteError'));
       } finally {
         setIsLoading(false);
       }
@@ -134,7 +136,7 @@ export const BibliotecaGestorPage: React.FC = () => {
 
   const handleDownload = (material: Material) => {
     window.open(material.url, '_blank');
-    toast.success('Abrindo material...');
+    toast.success(t('gestor.biblioteca.toast.opening'));
   };
 
   const handleClearFilters = () => {
@@ -159,9 +161,9 @@ export const BibliotecaGestorPage: React.FC = () => {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Biblioteca Virtual</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('gestor.biblioteca.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Visão geral e gerenciamento de materiais
+          {t('gestor.biblioteca.subtitle')}
         </p>
       </div>
 
@@ -171,13 +173,13 @@ export const BibliotecaGestorPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <BookOpen className="h-4 w-4" />
-              Total de Materiais
+              {t('gestor.biblioteca.stats.totalMaterials')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{allMateriais.length}</div>
             <p className="text-xs text-gray-500 mt-1">
-              {pdfs.length} PDFs • {videos.length} Vídeos
+              {t('gestor.biblioteca.stats.filesSummary', { pdfs: pdfs.length, videos: videos.length })}
             </p>
           </CardContent>
         </Card>
@@ -186,13 +188,13 @@ export const BibliotecaGestorPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <Eye className="h-4 w-4" />
-              Visíveis
+              {t('gestor.biblioteca.stats.visible')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-green-600">{visibleMaterials.length}</div>
             <p className="text-xs text-gray-500 mt-1">
-              {((visibleMaterials.length / allMateriais.length) * 100).toFixed(0)}% do total
+              {t('gestor.biblioteca.stats.percentOfTotal', { percent: ((visibleMaterials.length / allMateriais.length) * 100).toFixed(0) })}
             </p>
           </CardContent>
         </Card>
@@ -201,13 +203,13 @@ export const BibliotecaGestorPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <EyeOff className="h-4 w-4" />
-              Ocultos
+              {t('gestor.biblioteca.stats.hidden')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold text-orange-600">{hiddenMaterials.length}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Não visíveis para alunos
+              {t('gestor.biblioteca.stats.notVisibleToStudents')}
             </p>
           </CardContent>
         </Card>
@@ -216,13 +218,13 @@ export const BibliotecaGestorPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <Users className="h-4 w-4" />
-              Professores Ativos
+              {t('gestor.biblioteca.stats.activeTeachers')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{materialsByProfessor.size}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Com materiais publicados
+              {t('gestor.biblioteca.stats.withPublishedMaterials')}
             </p>
           </CardContent>
         </Card>
@@ -233,7 +235,7 @@ export const BibliotecaGestorPage: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5" />
-            Professores com Mais Materiais
+            {t('gestor.biblioteca.topTeachers')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -257,7 +259,7 @@ export const BibliotecaGestorPage: React.FC = () => {
                     </div>
                     <Badge variant="secondary" className="gap-1">
                       <BookOpen className="h-3 w-3" />
-                      {count} materiais
+                      {t('gestor.biblioteca.materialsCount', { count })}
                     </Badge>
                   </div>
                 );
@@ -269,7 +271,7 @@ export const BibliotecaGestorPage: React.FC = () => {
       {/* Filtros */}
       <Card>
         <CardHeader>
-          <CardTitle>Filtros</CardTitle>
+          <CardTitle>{t('common.actions.filters')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <MaterialFilters
@@ -296,7 +298,7 @@ export const BibliotecaGestorPage: React.FC = () => {
               size="sm"
               onClick={() => setVisibilityFilter('all')}
             >
-              Todos
+              {t('gestor.biblioteca.visibilityFilter.all')}
             </Button>
             <Button
               variant={visibilityFilter === 'visible' ? 'default' : 'outline'}
@@ -305,7 +307,7 @@ export const BibliotecaGestorPage: React.FC = () => {
               className="gap-2"
             >
               <Eye className="h-4 w-4" />
-              Visíveis
+              {t('gestor.biblioteca.visibilityFilter.visible')}
             </Button>
             <Button
               variant={visibilityFilter === 'hidden' ? 'default' : 'outline'}
@@ -314,7 +316,7 @@ export const BibliotecaGestorPage: React.FC = () => {
               className="gap-2"
             >
               <EyeOff className="h-4 w-4" />
-              Ocultos
+              {t('gestor.biblioteca.visibilityFilter.hidden')}
             </Button>
           </div>
         </CardContent>
@@ -324,10 +326,10 @@ export const BibliotecaGestorPage: React.FC = () => {
       <Tabs defaultValue="todos" className="w-full">
         <TabsList className="grid w-full max-w-md grid-cols-3">
           <TabsTrigger value="todos">
-            Todos ({filteredMateriais.length})
+            {t('gestor.biblioteca.tabs.all', { count: filteredMateriais.length })}
           </TabsTrigger>
-          <TabsTrigger value="pdfs">PDFs ({pdfs.length})</TabsTrigger>
-          <TabsTrigger value="videos">Vídeos ({videos.length})</TabsTrigger>
+          <TabsTrigger value="pdfs">{t('gestor.biblioteca.tabs.pdfs', { count: pdfs.length })}</TabsTrigger>
+          <TabsTrigger value="videos">{t('gestor.biblioteca.tabs.videos', { count: videos.length })}</TabsTrigger>
         </TabsList>
 
         {/* Todos */}
@@ -337,7 +339,7 @@ export const BibliotecaGestorPage: React.FC = () => {
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <BookOpen className="h-16 w-16 text-gray-300 mb-4" />
                 <p className="text-gray-500 text-center">
-                  Nenhum material encontrado com os filtros selecionados
+                  {t('gestor.biblioteca.empty.filtered')}
                 </p>
               </CardContent>
             </Card>
@@ -350,7 +352,7 @@ export const BibliotecaGestorPage: React.FC = () => {
                     <div className="absolute -top-2 -right-2 z-10">
                       <Badge variant="destructive" className="gap-1">
                         <EyeOff className="h-3 w-3" />
-                        Oculto
+                        {t('gestor.biblioteca.badgeHidden')}
                       </Badge>
                     </div>
                   )}
@@ -369,7 +371,7 @@ export const BibliotecaGestorPage: React.FC = () => {
                       className="flex-1"
                     >
                       <Eye className="h-4 w-4 mr-2" />
-                      Visualizar
+                      {t('gestor.biblioteca.actions.view')}
                     </Button>
                     <Button
                       onClick={() => handleToggleVisibility(material)}
@@ -395,7 +397,7 @@ export const BibliotecaGestorPage: React.FC = () => {
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <FileText className="h-16 w-16 text-gray-300 mb-4" />
-                <p className="text-gray-500">Nenhum PDF encontrado</p>
+                <p className="text-gray-500">{t('gestor.biblioteca.empty.pdfs')}</p>
               </CardContent>
             </Card>
           ) : (
@@ -406,7 +408,7 @@ export const BibliotecaGestorPage: React.FC = () => {
                     <div className="absolute -top-2 -right-2 z-10">
                       <Badge variant="destructive" className="gap-1">
                         <EyeOff className="h-3 w-3" />
-                        Oculto
+                        {t('gestor.biblioteca.badgeHidden')}
                       </Badge>
                     </div>
                   )}
@@ -425,7 +427,7 @@ export const BibliotecaGestorPage: React.FC = () => {
                       className="flex-1"
                     >
                       <Eye className="h-4 w-4 mr-2" />
-                      Visualizar
+                      {t('gestor.biblioteca.actions.view')}
                     </Button>
                     <Button
                       onClick={() => handleToggleVisibility(material)}
@@ -451,7 +453,7 @@ export const BibliotecaGestorPage: React.FC = () => {
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <Video className="h-16 w-16 text-gray-300 mb-4" />
-                <p className="text-gray-500">Nenhum vídeo encontrado</p>
+                <p className="text-gray-500">{t('gestor.biblioteca.empty.videos')}</p>
               </CardContent>
             </Card>
           ) : (
@@ -462,7 +464,7 @@ export const BibliotecaGestorPage: React.FC = () => {
                     <div className="absolute -top-2 -right-2 z-10">
                       <Badge variant="destructive" className="gap-1">
                         <EyeOff className="h-3 w-3" />
-                        Oculto
+                        {t('gestor.biblioteca.badgeHidden')}
                       </Badge>
                     </div>
                   )}
@@ -481,7 +483,7 @@ export const BibliotecaGestorPage: React.FC = () => {
                       className="flex-1"
                     >
                       <Eye className="h-4 w-4 mr-2" />
-                      Visualizar
+                      {t('gestor.biblioteca.actions.view')}
                     </Button>
                     <Button
                       onClick={() => handleToggleVisibility(material)}
@@ -515,9 +517,9 @@ export const BibliotecaGestorPage: React.FC = () => {
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
         onConfirm={handleConfirmDelete}
-        title="Excluir Material"
+        title={t('gestor.biblioteca.deleteDialog.title')}
         itemName={materialToDelete?.titulo}
-        description="Esta ação é irreversível. O material será removido permanentemente da biblioteca."
+        description={t('gestor.biblioteca.deleteDialog.description')}
       />
     </div>
   );

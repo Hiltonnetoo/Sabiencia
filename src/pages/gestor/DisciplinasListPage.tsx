@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useMockData } from '../../contexts/MockDataContext';
 import { DisciplinaCard } from '../../components/disciplinas/DisciplinaCard';
 import { DisciplinaFilters } from '../../components/disciplinas/DisciplinaFilters';
@@ -13,6 +14,7 @@ import type { DisciplinaFormData } from '../../schemas/disciplinaSchemas';
 
 export const DisciplinasListPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { disciplinas, cursos, addDisciplina, updateDisciplina, deleteDisciplina } = useMockData();
   
   const [busca, setBusca] = useState('');
@@ -62,19 +64,19 @@ export const DisciplinasListPage: React.FC = () => {
   const handleDeletarDisciplina = (disciplina: Disciplina) => {
     // TODO: Verificar se há materiais ou notas associadas
     
-    if (confirm(`Tem certeza que deseja excluir a disciplina "${disciplina.nome}"?`)) {
+    if (confirm(t('gestor.disciplinasList.toast.confirmDelete', { name: disciplina.nome }))) {
       deleteDisciplina(disciplina.id);
-      toast.success('Disciplina excluída com sucesso!');
+      toast.success(t('gestor.disciplinasList.toast.deleted'));
     }
   };
 
   const handleSubmitForm = (data: DisciplinaFormData) => {
     if (selectedDisciplina) {
       updateDisciplina(selectedDisciplina.id, data as any);
-      toast.success('Disciplina atualizada com sucesso!');
+      toast.success(t('gestor.disciplinasList.toast.updated'));
     } else {
       addDisciplina(data as any);
-      toast.success('Disciplina criada com sucesso!');
+      toast.success(t('gestor.disciplinasList.toast.created'));
     }
     setShowForm(false);
     setSelectedDisciplina(null);
@@ -102,15 +104,15 @@ export const DisciplinasListPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Gestão de Disciplinas</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('gestor.disciplinasList.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Crie e gerencie as disciplinas dos cursos
+            {t('gestor.disciplinasList.subtitle')}
           </p>
         </div>
 
         <Button onClick={handleNovaDisciplina}>
           <Plus className="w-4 h-4 mr-2" />
-          Nova Disciplina
+          {t('gestor.disciplinasList.new')}
         </Button>
       </div>
 
@@ -128,7 +130,7 @@ export const DisciplinasListPage: React.FC = () => {
       <div>
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-semibold text-gray-900">
-            Disciplinas ({disciplinasFiltradas.length})
+            {t('gestor.disciplinasList.listHeading', { count: disciplinasFiltradas.length })}
           </h2>
         </div>
 
@@ -136,17 +138,17 @@ export const DisciplinasListPage: React.FC = () => {
           <div className="text-center py-12 bg-gray-50 rounded-lg">
             <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <h3 className="font-medium text-gray-900 mb-2">
-              Nenhuma disciplina encontrada
+              {t('gestor.disciplinasList.emptyTitle')}
             </h3>
             <p className="text-gray-600 mb-4">
               {busca || cursoId !== 'todos'
-                ? 'Tente ajustar os filtros de busca'
-                : 'Comece criando sua primeira disciplina'}
+                ? t('gestor.disciplinasList.emptyFiltered')
+                : t('gestor.disciplinasList.emptyDefault')}
             </p>
             {!busca && cursoId === 'todos' && (
               <Button onClick={handleNovaDisciplina}>
                 <Plus className="w-4 h-4 mr-2" />
-                Criar Primeira Disciplina
+                {t('gestor.disciplinasList.createFirst')}
               </Button>
             )}
           </div>
@@ -160,10 +162,10 @@ export const DisciplinasListPage: React.FC = () => {
                   <div className="flex items-center gap-2 mb-4">
                     <BookOpen className="w-5 h-5 text-blue-600" />
                     <h3 className="font-semibold text-gray-900">
-                      {curso?.nome || 'Curso não encontrado'}
+                      {curso?.nome || t('gestor.disciplinasList.courseNotFound')}
                     </h3>
                     <span className="text-sm text-gray-500">
-                      ({disciplinasCurso.length} {disciplinasCurso.length === 1 ? 'disciplina' : 'disciplinas'})
+                      {t('gestor.disciplinasList.subjectCount', { count: disciplinasCurso.length })}
                     </span>
                   </div>
                   

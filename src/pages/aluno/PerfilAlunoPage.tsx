@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { PerfilHeader } from '../../components/perfil/PerfilHeader';
 import { PerfilForm } from '../../components/perfil/PerfilForm';
@@ -14,6 +15,7 @@ import { useMockData } from '../../contexts/MockDataContext';
 import type { PerfilPessoalFormData, AlterarSenhaFormData } from '../../schemas/perfilSchemas';
 
 export const PerfilAlunoPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { alunos, matriculas, turmas, cursos } = useMockData();
 
@@ -57,10 +59,10 @@ export const PerfilAlunoPage: React.FC = () => {
       {/* Tabs */}
       <Tabs defaultValue="dados-pessoais" className="space-y-6">
         <TabsList>
-          <TabsTrigger value="dados-pessoais">Dados Pessoais</TabsTrigger>
-          <TabsTrigger value="academico">Dados Acadêmicos</TabsTrigger>
-          <TabsTrigger value="seguranca">Segurança</TabsTrigger>
-          <TabsTrigger value="atividades">Atividades</TabsTrigger>
+          <TabsTrigger value="dados-pessoais">{t('aluno.perfil.tabs.personalData')}</TabsTrigger>
+          <TabsTrigger value="academico">{t('aluno.perfil.tabs.academicData')}</TabsTrigger>
+          <TabsTrigger value="seguranca">{t('aluno.perfil.tabs.security')}</TabsTrigger>
+          <TabsTrigger value="atividades">{t('aluno.perfil.tabs.activities')}</TabsTrigger>
         </TabsList>
 
         {/* Tab: Dados Pessoais */}
@@ -79,7 +81,7 @@ export const PerfilAlunoPage: React.FC = () => {
             />
           ) : (
             <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <p className="text-gray-600">Dados acadêmicos não disponíveis</p>
+              <p className="text-gray-600">{t('aluno.perfil.academicDataUnavailable')}</p>
             </div>
           )}
         </TabsContent>

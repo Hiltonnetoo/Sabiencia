@@ -1,4 +1,5 @@
 import React, { useMemo, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pagamento } from '../../types';
 import { Card } from '../ui/card';
  
@@ -10,6 +11,7 @@ interface FinanceiroChartProps {
 }
 
 export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
+  const { t } = useTranslation();
   const [Recharts, setRecharts] = useState<any>(null);
   useEffect(() => {
     let mounted = true;
@@ -21,7 +23,7 @@ export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
   if (!Recharts) {
     return (
       <Card className="p-6">
-        <div className="flex items-center justify-center h-[300px] text-gray-500">Carregando gráfico...</div>
+        <div className="flex items-center justify-center h-[300px] text-gray-500">{t('components.financeiroChart.loading')}</div>
       </Card>
     );
   }
@@ -33,17 +35,17 @@ export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
     return (
       <Card className="p-6">
         <h3 className="font-semibold text-gray-900 mb-4">
-          {tipo === 'mensal' ? 'Receita Mensal' : 'Distribuição por Status'}
+          {tipo === 'mensal' ? t('components.financeiroChart.monthlyRevenue') : t('components.financeiroChart.distributionByStatus')}
         </h3>
         <div className="flex items-center justify-center h-[300px] text-gray-500">
-          Nenhum pagamento cadastrado
+          {t('components.financeiroChart.noPayments')}
         </div>
       </Card>
     );
   }
   
   const dadosMensais = useMemo(() => {
-    const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    const meses = [0,1,2,3,4,5,6,7,8,9,10,11].map(i => t(`components.financeiroChart.monthShort.${i}`));
     const dadosPorMes: Record<string, { mes: string; recebido: number; pendente: number; vencido: number }> = {};
 
     safePagamentos.forEach(pag => {
@@ -82,10 +84,10 @@ export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
     });
 
     return [
-      { name: 'Pago', value: totais.pago, color: '#16a34a' },
-      { name: 'Pendente', value: totais.pendente, color: '#eab308' },
-      { name: 'Vencido', value: totais.vencido, color: '#dc2626' },
-      { name: 'Cancelado', value: totais.cancelado, color: '#6b7280' },
+      { name: t('components.financeiroChart.paid'), value: totais.pago, color: '#16a34a' },
+      { name: t('components.financeiroChart.pending'), value: totais.pendente, color: '#eab308' },
+      { name: t('components.financeiroChart.overdue'), value: totais.vencido, color: '#dc2626' },
+      { name: t('components.financeiroChart.cancelled'), value: totais.cancelado, color: '#6b7280' },
     ].filter(item => item.value > 0);
   }, [safePagamentos]);
 
@@ -94,9 +96,9 @@ export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
     if (dadosMensais.length === 0) {
       return (
         <Card className="p-6">
-          <h3 className="font-semibold text-gray-900 mb-4">Receita Mensal</h3>
+          <h3 className="font-semibold text-gray-900 mb-4">{t('components.financeiroChart.monthlyRevenue')}</h3>
           <div className="flex items-center justify-center h-[300px] text-gray-500">
-            Nenhum dado disponível
+            {t('components.financeiroChart.noData')}
           </div>
         </Card>
       );
@@ -104,20 +106,20 @@ export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
     
     return (
       <Card className="p-6">
-        <h3 className="font-semibold text-gray-900 mb-4">Receita Mensal</h3>
+        <h3 className="font-semibold text-gray-900 mb-4">{t('components.financeiroChart.monthlyRevenue')}</h3>
         <Recharts.ResponsiveContainer width="100%" height={300}>
           <Recharts.BarChart data={dadosMensais}>
             <Recharts.CartesianGrid strokeDasharray="3 3" />
             <Recharts.XAxis dataKey="mes" />
             <Recharts.YAxis tickFormatter={(value: number) => `R$ ${(value / 1000).toFixed(0)}k`} />
-            <Recharts.Tooltip 
+            <Recharts.Tooltip
               formatter={(value: number) => formatCurrency(value)}
               contentStyle={{ borderRadius: '8px' }}
             />
             <Recharts.Legend />
-            <Recharts.Bar dataKey="recebido" name="Recebido" fill="#16a34a" radius={[4, 4, 0, 0]} />
-            <Recharts.Bar dataKey="pendente" name="Pendente" fill="#eab308" radius={[4, 4, 0, 0]} />
-            <Recharts.Bar dataKey="vencido" name="Vencido" fill="#dc2626" radius={[4, 4, 0, 0]} />
+            <Recharts.Bar dataKey="recebido" name={t('components.financeiroChart.received')} fill="#16a34a" radius={[4, 4, 0, 0]} />
+            <Recharts.Bar dataKey="pendente" name={t('components.financeiroChart.pending')} fill="#eab308" radius={[4, 4, 0, 0]} />
+            <Recharts.Bar dataKey="vencido" name={t('components.financeiroChart.overdue')} fill="#dc2626" radius={[4, 4, 0, 0]} />
           </Recharts.BarChart>
         </Recharts.ResponsiveContainer>
       </Card>
@@ -129,9 +131,9 @@ export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
     if (dadosStatus.length === 0) {
       return (
         <Card className="p-6">
-          <h3 className="font-semibold text-gray-900 mb-4">Distribuição por Status</h3>
+          <h3 className="font-semibold text-gray-900 mb-4">{t('components.financeiroChart.distributionByStatus')}</h3>
           <div className="flex items-center justify-center h-[300px] text-gray-500">
-            Nenhum dado disponível
+            {t('components.financeiroChart.noData')}
           </div>
         </Card>
       );
@@ -139,7 +141,7 @@ export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
     
     return (
       <Card className="p-6">
-        <h3 className="font-semibold text-gray-900 mb-4">Distribuição por Status</h3>
+        <h3 className="font-semibold text-gray-900 mb-4">{t('components.financeiroChart.distributionByStatus')}</h3>
         <Recharts.ResponsiveContainer width="100%" height={300}>
           <Recharts.PieChart>
             <Recharts.Pie
@@ -184,7 +186,7 @@ export function FinanceiroChart({ pagamentos, tipo }: FinanceiroChartProps) {
   // Fallback para tipo desconhecido
   return (
     <Card className="p-6">
-      <div className="text-gray-500">Tipo de gráfico não suportado</div>
+      <div className="text-gray-500">{t('components.financeiroChart.unsupportedType')}</div>
     </Card>
   );
 }

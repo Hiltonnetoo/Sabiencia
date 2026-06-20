@@ -4,6 +4,7 @@
 // ============================================
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ProfessorDashboard } from '../professor/ProfessorDashboard';
 import { BaseLayout } from '../../components/layout/BaseLayout';
 import { professorNavItems } from '../../config/navigation';
@@ -15,6 +16,7 @@ import { LoadingFallback } from '../../components/shared/LoadingFallback';
 
 export const DemoProfessor: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { login, logout, isAuthenticated, user } = useAuth();
   const hasInitialized = useRef(false);
   const [isInitializing, setIsInitializing] = useState(false);
@@ -55,7 +57,7 @@ export const DemoProfessor: React.FC = () => {
   
   // ✅ Mostrar loading até tudo estar correto
   if (isInitializing || !isAuthenticated || user?.role !== 'professor') {
-    return <LoadingFallback message="Preparando demonstração do Professor..." />;
+    return <LoadingFallback message={t('demoPages.professor.loading')} />;
   }
   
   return (
@@ -63,7 +65,7 @@ export const DemoProfessor: React.FC = () => {
       <div className="mb-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm text-blue-800">
-            🎯 <strong>MODO DEMONSTRAÇÃO - PROFESSOR</strong> | {user.nome_completo} - Enfermagem
+            🎯 <strong>{t('demoPages.professor.bannerLabel')}</strong> | {user.nome_completo} - {t('demoPages.professor.area')}
           </p>
           <Button 
             variant="outline" 
@@ -71,7 +73,7 @@ export const DemoProfessor: React.FC = () => {
             onClick={() => navigate('/demo')}
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Voltar
+            {t('demoPages.common.back')}
           </Button>
         </div>
       </div>

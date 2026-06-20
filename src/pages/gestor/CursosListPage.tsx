@@ -27,6 +27,7 @@ import { DeleteConfirmDialog } from '../../components/shared/DeleteConfirmDialog
 import type { Curso } from '../../types';
 import type { CursoFormData } from '../../schemas/cursoSchemas';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -36,8 +37,9 @@ import {
 } from '../../components/ui/dialog';
 
 export const CursosListPage: React.FC = () => {
+  const { t } = useTranslation();
   const {
-    cursos, 
+    cursos,
     turmas, 
     matriculas, 
     disciplinas,
@@ -172,9 +174,9 @@ export const CursosListPage: React.FC = () => {
   const handleToggleStatus = (curso: Curso) => {
     updateCurso(curso.id, { ativo: !curso.ativo });
     toast.success(
-      curso.ativo 
-        ? 'Curso desativado com sucesso' 
-        : 'Curso ativado com sucesso'
+      curso.ativo
+        ? t('gestor.cursos.toast.deactivated')
+        : t('gestor.cursos.toast.activated')
     );
   };
 
@@ -185,16 +187,16 @@ export const CursosListPage: React.FC = () => {
 
       if (selectedCurso) {
         updateCurso(selectedCurso.id, data as any);
-        toast.success('Curso atualizado com sucesso!');
+        toast.success(t('gestor.cursos.toast.updated'));
       } else {
         addCurso(data as any);
-        toast.success('Curso criado com sucesso!');
+        toast.success(t('gestor.cursos.toast.created'));
       }
-      
+
       setIsFormOpen(false);
       setSelectedCurso(undefined);
     } catch (error) {
-      toast.error('Erro ao salvar curso');
+      toast.error(t('gestor.cursos.toast.saveError'));
     } finally {
       setIsLoading(false);
     }
@@ -208,10 +210,10 @@ export const CursosListPage: React.FC = () => {
       await new Promise(resolve => setTimeout(resolve, 500));
       
       deleteCurso(cursoToDelete.id);
-      toast.success('Curso excluído com sucesso!');
+      toast.success(t('gestor.cursos.toast.deleted'));
       setCursoToDelete(null);
     } catch (error) {
-      toast.error('Erro ao excluir curso');
+      toast.error(t('gestor.cursos.toast.deleteError'));
     } finally {
       setIsLoading(false);
     }
@@ -238,14 +240,14 @@ export const CursosListPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Cursos</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('gestor.cursos.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Gerencie os cursos oferecidos pela instituição
+            {t('gestor.cursos.subtitle')}
           </p>
         </div>
         <Button onClick={handleCreateCurso} className="w-full sm:w-auto">
           <Plus className="h-4 w-4 mr-2" />
-          Novo Curso
+          {t('gestor.cursos.newCourse')}
         </Button>
       </div>
 
@@ -253,65 +255,65 @@ export const CursosListPage: React.FC = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm">Total de Cursos</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.cursos.stats.totalCourses')}</CardTitle>
             <BookOpen className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl">{cursos.length}</div>
             <p className="text-xs text-gray-500 mt-1">
-              {estatisticas.cursosAtivos} ativos
+              {t('gestor.cursos.stats.activeCount', { count: estatisticas.cursosAtivos })}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm">Carga Horária Total</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.cursos.stats.totalWorkload')}</CardTitle>
             <Clock className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl">{estatisticas.totalHoras.toLocaleString()}h</div>
             <p className="text-xs text-gray-500 mt-1">
-              Em todos os cursos
+              {t('gestor.cursos.stats.acrossAllCourses')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm">Duração Média</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.cursos.stats.averageDuration')}</CardTitle>
             <TrendingUp className="h-4 w-4 text-purple-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl">{estatisticas.mediaDuracao}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Meses por curso
+              {t('gestor.cursos.stats.monthsPerCourse')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm">Turmas Ativas</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.cursos.stats.activeClasses')}</CardTitle>
             <Users className="h-4 w-4 text-orange-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl">{estatisticas.turmasAtivas}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Em andamento
+              {t('gestor.cursos.stats.ongoing')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm">Alunos Ativos</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.cursos.stats.activeStudents')}</CardTitle>
             <Users className="h-4 w-4 text-red-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl">{estatisticas.alunosMatriculados}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Matriculados
+              {t('gestor.cursos.stats.enrolled')}
             </p>
           </CardContent>
         </Card>

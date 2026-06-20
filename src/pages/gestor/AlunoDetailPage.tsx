@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMockData } from '../../contexts/MockDataContext';
 import { Button } from '../../components/ui/button';
@@ -20,6 +21,7 @@ import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
 import type { Aluno, Matricula } from '../../types';
 
 export const AlunoDetailPage: React.FC = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { getAlunoById, matriculas, turmas, cursos, frequencias, notas, pagamentos } = useMockData();
@@ -30,14 +32,14 @@ export const AlunoDetailPage: React.FC = () => {
 
   useEffect(() => {
     if (!id) {
-      toast.error('ID do aluno não fornecido');
+      toast.error(t('gestor.alunoDetail.idNotProvided'));
       navigate('/gestor/alunos');
       return;
     }
 
     const alunoData = getAlunoById(id);
     if (!alunoData) {
-      toast.error('Aluno não encontrado');
+      toast.error(t('gestor.alunoDetail.notFound'));
       navigate('/gestor/alunos');
       return;
     }
@@ -56,7 +58,7 @@ export const AlunoDetailPage: React.FC = () => {
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Carregando dados...</p>
+          <p className="mt-4 text-gray-600">{t('gestor.alunoDetail.loading')}</p>
         </div>
       </div>
     );
@@ -101,11 +103,11 @@ export const AlunoDetailPage: React.FC = () => {
             className="gap-2"
           >
             <ArrowLeft className="h-4 w-4" />
-            Voltar
+            {t('gestor.alunoDetail.back')}
           </Button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Detalhes do Aluno</h1>
-            <p className="text-gray-600 mt-1">Informações completas do cadastro</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('gestor.alunoDetail.title')}</h1>
+            <p className="text-gray-600 mt-1">{t('gestor.alunoDetail.subtitle')}</p>
           </div>
         </div>
         <Button
@@ -113,7 +115,7 @@ export const AlunoDetailPage: React.FC = () => {
           className="gap-2"
         >
           <Edit className="h-4 w-4" />
-          Editar
+          {t('gestor.alunoDetail.edit')}
         </Button>
       </div>
 
@@ -160,7 +162,7 @@ export const AlunoDetailPage: React.FC = () => {
                   <div>
                     <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
                       <GraduationCap className="h-4 w-4" />
-                      Curso
+                      {t('gestor.alunoDetail.course')}
                     </div>
                     <p className="font-medium">{curso.nome}</p>
                   </div>
@@ -171,7 +173,7 @@ export const AlunoDetailPage: React.FC = () => {
                   <div>
                     <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
                       <BookOpen className="h-4 w-4" />
-                      Turma
+                      {t('gestor.alunoDetail.class')}
                     </div>
                     <p className="font-medium">{turma.nome}</p>
                   </div>
@@ -182,7 +184,7 @@ export const AlunoDetailPage: React.FC = () => {
                   <div>
                     <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
                       <Calendar className="h-4 w-4" />
-                      Matrícula
+                      {t('gestor.alunoDetail.enrollment')}
                     </div>
                     <p className="font-medium">
                       {format(matricula.data_matricula, 'dd/MM/yyyy', { locale: ptBR })}
@@ -200,12 +202,12 @@ export const AlunoDetailPage: React.FC = () => {
         {/* Frequência */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Frequência</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.alunoDetail.stats.attendance')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{frequenciaPercentual}%</div>
             <p className="text-xs text-gray-500 mt-1">
-              {presencas} de {studentFrequencias.length} aulas
+              {t('gestor.alunoDetail.stats.lessonsRatio', { present: presencas, total: studentFrequencias.length })}
             </p>
           </CardContent>
         </Card>
@@ -213,12 +215,12 @@ export const AlunoDetailPage: React.FC = () => {
         {/* Média Geral */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Média Geral</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.alunoDetail.stats.average')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{mediaGeral.toFixed(1)}</div>
             <p className="text-xs text-gray-500 mt-1">
-              {studentNotas.length} avaliações
+              {t('gestor.alunoDetail.stats.evaluations', { count: studentNotas.length })}
             </p>
           </CardContent>
         </Card>
@@ -226,12 +228,12 @@ export const AlunoDetailPage: React.FC = () => {
         {/* Pagamentos Pendentes */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Pend. Pagamento</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.alunoDetail.stats.pendingPayment')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{pagamentosPendentes}</div>
             <p className="text-xs text-gray-500 mt-1">
-              {pagamentosVencidos} vencidos
+              {t('gestor.alunoDetail.stats.overdueCount', { count: pagamentosVencidos })}
             </p>
           </CardContent>
         </Card>
@@ -239,14 +241,14 @@ export const AlunoDetailPage: React.FC = () => {
         {/* Status */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Status</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.alunoDetail.stats.status')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
               {aluno.ativo ? (
-                <Badge className="bg-green-100 text-green-800">Ativo</Badge>
+                <Badge className="bg-green-100 text-green-800">{t('common.status.active')}</Badge>
               ) : (
-                <Badge className="bg-gray-100 text-gray-800">Inativo</Badge>
+                <Badge className="bg-gray-100 text-gray-800">{t('common.status.inactive')}</Badge>
               )}
             </div>
           </CardContent>
@@ -257,27 +259,27 @@ export const AlunoDetailPage: React.FC = () => {
         {/* Dados Pessoais */}
         <Card>
           <CardHeader>
-            <CardTitle>Dados Pessoais</CardTitle>
+            <CardTitle>{t('gestor.alunoDetail.personalData')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
             <div>
-              <p className="text-sm text-gray-500">RG</p>
+              <p className="text-sm text-gray-500">{t('gestor.alunoDetail.rg')}</p>
               <p className="font-medium">{aluno.rg || '-'}</p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">Data de Nascimento</p>
+              <p className="text-sm text-gray-500">{t('gestor.alunoDetail.birthDate')}</p>
               <p className="font-medium">
                 {format(aluno.data_nascimento, 'dd/MM/yyyy', { locale: ptBR })}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">Sexo</p>
+              <p className="text-sm text-gray-500">{t('gestor.alunoDetail.sex')}</p>
               <p className="font-medium">
-                {aluno.sexo === 'M' ? 'Masculino' : aluno.sexo === 'F' ? 'Feminino' : aluno.sexo || '-'}
+                {aluno.sexo === 'M' ? t('gestor.alunoDetail.male') : aluno.sexo === 'F' ? t('gestor.alunoDetail.female') : aluno.sexo || '-'}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-500">Estado Civil</p>
+              <p className="text-sm text-gray-500">{t('gestor.alunoDetail.maritalStatus')}</p>
               <p className="font-medium">{aluno.estado_civil || '-'}</p>
             </div>
           </CardContent>

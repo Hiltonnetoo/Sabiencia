@@ -4,6 +4,7 @@
 // ============================================
 
 import React, { useMemo, memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Table,
   TableBody,
@@ -61,8 +62,10 @@ export const TabelaRelatorio = memo(function TabelaRelatorio({
   titulo,
   colunas,
   dados,
-  emptyMessage = 'Nenhum dado encontrado',
+  emptyMessage,
 }: TabelaRelatorioProps) {
+  const { t } = useTranslation();
+  const resolvedEmptyMessage = emptyMessage ?? t('components.tabelaRelatorio.empty');
 
   // Memoizar linhas para evitar recriação quando o pai re-renderiza sem mudança nos dados
   const rows = useMemo(() =>
@@ -87,7 +90,7 @@ export const TabelaRelatorio = memo(function TabelaRelatorio({
           </div>
         )}
         <div className="p-12 text-center text-gray-600">
-          {emptyMessage}
+          {resolvedEmptyMessage}
         </div>
       </div>
     );

@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FileText, Download, TrendingUp, Users, BookOpen } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
@@ -16,6 +17,7 @@ import type { RelatorioFiltros } from '../../schemas/relatorioSchemas';
 import { calcularMediaNotas, calcularPercentualFrequencia } from '../../utils/calculations';
 
 export const RelatoriosProfessorPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const {
     alunos,
@@ -280,7 +282,7 @@ export const RelatoriosProfessorPage: React.FC = () => {
   // ============================================
 
   const handleExportarRelatorio = () => {
-    toast.success('Relatório exportado com sucesso! (Simulado)');
+    toast.success(t('professor.relatorios.exportToast'));
   };
 
   if (!user) return null;
@@ -290,14 +292,14 @@ export const RelatoriosProfessorPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Meus Relatórios</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('professor.relatorios.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Acompanhe o desempenho das suas turmas e disciplinas
+            {t('professor.relatorios.subtitle')}
           </p>
         </div>
         <Button onClick={handleExportarRelatorio}>
           <Download className="w-4 h-4 mr-2" />
-          Exportar
+          {t('common.actions.export')}
         </Button>
       </div>
 
@@ -321,7 +323,7 @@ export const RelatoriosProfessorPage: React.FC = () => {
               <Users className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Meus Alunos</p>
+              <p className="text-sm text-gray-600">{t('professor.relatorios.metrics.myStudents')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 {metricas.totalAlunos}
               </p>
@@ -335,7 +337,7 @@ export const RelatoriosProfessorPage: React.FC = () => {
               <TrendingUp className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Média Geral</p>
+              <p className="text-sm text-gray-600">{t('professor.relatorios.metrics.overallAverage')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 {metricas.mediaGeral.toFixed(2)}
               </p>
@@ -349,7 +351,7 @@ export const RelatoriosProfessorPage: React.FC = () => {
               <BookOpen className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Frequência Média</p>
+              <p className="text-sm text-gray-600">{t('professor.relatorios.metrics.averageAttendance')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 {metricas.frequenciaMedia.toFixed(1)}%
               </p>
@@ -363,7 +365,7 @@ export const RelatoriosProfessorPage: React.FC = () => {
               <FileText className="w-5 h-5 text-yellow-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Observações</p>
+              <p className="text-sm text-gray-600">{t('professor.relatorios.metrics.observations')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 {metricas.totalObservacoes}
               </p>
@@ -375,10 +377,10 @@ export const RelatoriosProfessorPage: React.FC = () => {
       {/* Tabs de Relatórios */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
-          <TabsTrigger value="minhas-turmas">Minhas Turmas</TabsTrigger>
-          <TabsTrigger value="disciplinas">Disciplinas</TabsTrigger>
-          <TabsTrigger value="alunos">Alunos</TabsTrigger>
-          <TabsTrigger value="frequencia">Frequência</TabsTrigger>
+          <TabsTrigger value="minhas-turmas">{t('professor.relatorios.tabs.myClasses')}</TabsTrigger>
+          <TabsTrigger value="disciplinas">{t('professor.relatorios.tabs.subjects')}</TabsTrigger>
+          <TabsTrigger value="alunos">{t('professor.relatorios.tabs.students')}</TabsTrigger>
+          <TabsTrigger value="frequencia">{t('professor.relatorios.tabs.attendance')}</TabsTrigger>
         </TabsList>
 
         {/* TAB: MINHAS TURMAS */}
@@ -386,13 +388,13 @@ export const RelatoriosProfessorPage: React.FC = () => {
           <GraficoDesempenho
             tipo="bar"
             dados={dadosDesempenhoPorTurma}
-            titulo="Média de Notas por Turma"
+            titulo={t('professor.relatorios.charts.averageGradeByClass')}
             dataKey="media"
             xAxisKey="name"
           />
 
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-gray-900 mb-4">Resumo das Turmas</h3>
+            <h3 className="text-gray-900 mb-4">{t('professor.relatorios.classesSummaryTitle')}</h3>
             <div className="space-y-3">
               {minhasTurmas.map(turma => {
                 const alunosDaTurma = matriculas.filter(m => 
@@ -404,11 +406,11 @@ export const RelatoriosProfessorPage: React.FC = () => {
                     <div>
                       <p className="text-gray-900">{turma.nome}</p>
                       <p className="text-sm text-gray-600">
-                        {alunosDaTurma} alunos • {turma.turno}
+                        {t('professor.relatorios.studentsCount', { count: alunosDaTurma })} • {turma.turno}
                       </p>
                     </div>
                     <Button variant="outline" size="sm">
-                      Ver Detalhes
+                      {t('common.actions.viewDetails')}
                     </Button>
                   </div>
                 );
@@ -422,19 +424,19 @@ export const RelatoriosProfessorPage: React.FC = () => {
           <GraficoDesempenho
             tipo="bar"
             dados={dadosDesempenhoPorDisciplina}
-            titulo="Média por Disciplina"
+            titulo={t('professor.relatorios.charts.averageBySubject')}
             dataKey="media"
             xAxisKey="name"
           />
 
           <TabelaRelatorio
-            titulo="Desempenho por Disciplina"
+            titulo={t('professor.relatorios.subjectsTable.title')}
             colunas={[
-              { key: 'disciplina', label: 'Disciplina' },
-              { key: 'alunos', label: 'Alunos', tipo: 'number' },
-              { key: 'media', label: 'Média', tipo: 'number' },
-              { key: 'aprovados', label: 'Aprovados', tipo: 'number' },
-              { key: 'taxaAprovacao', label: 'Taxa Aprovação', tipo: 'percentage' },
+              { key: 'disciplina', label: t('professor.relatorios.subjectsTable.subject') },
+              { key: 'alunos', label: t('professor.relatorios.subjectsTable.students'), tipo: 'number' },
+              { key: 'media', label: t('professor.relatorios.subjectsTable.average'), tipo: 'number' },
+              { key: 'aprovados', label: t('professor.relatorios.subjectsTable.approved'), tipo: 'number' },
+              { key: 'taxaAprovacao', label: t('professor.relatorios.subjectsTable.approvalRate'), tipo: 'percentage' },
             ]}
             dados={dadosTabelaDisciplinas}
           />
@@ -443,13 +445,13 @@ export const RelatoriosProfessorPage: React.FC = () => {
         {/* TAB: ALUNOS */}
         <TabsContent value="alunos" className="space-y-6">
           <TabelaRelatorio
-            titulo="Desempenho dos Alunos"
+            titulo={t('professor.relatorios.studentsTable.title')}
             colunas={[
-              { key: 'nome', label: 'Nome' },
-              { key: 'turma', label: 'Turma' },
-              { key: 'media', label: 'Média', tipo: 'number' },
-              { key: 'frequencia', label: 'Frequência', tipo: 'percentage' },
-              { key: 'observacoes', label: 'Observações', tipo: 'number' },
+              { key: 'nome', label: t('professor.relatorios.studentsTable.name') },
+              { key: 'turma', label: t('professor.relatorios.studentsTable.class') },
+              { key: 'media', label: t('professor.relatorios.studentsTable.average'), tipo: 'number' },
+              { key: 'frequencia', label: t('professor.relatorios.studentsTable.attendance'), tipo: 'percentage' },
+              { key: 'observacoes', label: t('professor.relatorios.studentsTable.observations'), tipo: 'number' },
             ]}
             dados={dadosTabelaAlunos}
           />
@@ -460,16 +462,16 @@ export const RelatoriosProfessorPage: React.FC = () => {
           <GraficoDesempenho
             tipo="bar"
             dados={dadosFrequenciaPorTurma}
-            titulo="Frequência Média por Turma (%)"
+            titulo={t('professor.relatorios.charts.averageAttendanceByClass')}
             dataKey="value"
             xAxisKey="name"
           />
 
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-gray-900 mb-4">Resumo de Frequência</h3>
+            <h3 className="text-gray-900 mb-4">{t('professor.relatorios.attendanceSummaryTitle')}</h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-gray-600">Frequência Média Geral</span>
+                <span className="text-gray-600">{t('professor.relatorios.overallAverageAttendance')}</span>
                 <span className="text-gray-900">{metricas.frequenciaMedia.toFixed(1)}%</span>
               </div>
             </div>

@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Progress } from '../ui/progress';
 import { Badge } from '../ui/badge';
@@ -37,6 +38,7 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
   const totalConcluidas = progressos.filter(p => p.aluno_id === alunoId && p.concluida).length;
   const percentualGeral = totalVideoaulas > 0 ? (totalConcluidas / totalVideoaulas) * 100 : 0;
   
+  const { t } = useTranslation();
   const tempoTotalSegundos = videoaulas.reduce((sum, v) => sum + v.duracao_segundos, 0);
 
   // Estatísticas por tópico
@@ -68,7 +70,7 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Total de Aulas</CardDescription>
+            <CardDescription>{t('components.videoaulas.stats.totalLessons')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -77,7 +79,7 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
               </div>
               <div>
                 <p className="text-3xl font-bold text-gray-900">{totalVideoaulas}</p>
-                <p className="text-sm text-gray-500">videoaulas</p>
+                <p className="text-sm text-gray-500">{t('components.videoaulas.stats.videoaulasUnit')}</p>
               </div>
             </div>
           </CardContent>
@@ -85,7 +87,7 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Aulas Concluídas</CardDescription>
+            <CardDescription>{t('components.videoaulas.stats.completedLessons')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -94,7 +96,7 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
               </div>
               <div>
                 <p className="text-3xl font-bold text-gray-900">{totalConcluidas}</p>
-                <p className="text-sm text-gray-500">de {totalVideoaulas}</p>
+                <p className="text-sm text-gray-500">{t('components.videoaulas.stats.ofTotal', { total: totalVideoaulas })}</p>
               </div>
             </div>
           </CardContent>
@@ -102,7 +104,7 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Progresso Geral</CardDescription>
+            <CardDescription>{t('components.videoaulas.stats.overallProgress')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -111,7 +113,7 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
               </div>
               <div>
                 <p className="text-3xl font-bold text-gray-900">{Math.round(percentualGeral)}%</p>
-                <p className="text-sm text-gray-500">completado</p>
+                <p className="text-sm text-gray-500">{t('components.videoaulas.stats.completed')}</p>
               </div>
             </div>
           </CardContent>
@@ -119,7 +121,7 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Tempo Total</CardDescription>
+            <CardDescription>{t('components.videoaulas.stats.totalTime')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -128,7 +130,7 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
               </div>
               <div>
                 <p className="text-3xl font-bold text-gray-900">{formatDuration(tempoTotalSegundos)}</p>
-                <p className="text-sm text-gray-500">de conteúdo</p>
+                <p className="text-sm text-gray-500">{t('components.videoaulas.stats.ofContent')}</p>
               </div>
             </div>
           </CardContent>
@@ -138,15 +140,15 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
       {/* Progresso Geral */}
       <Card>
         <CardHeader>
-          <CardTitle>Progresso Geral</CardTitle>
+          <CardTitle>{t('components.videoaulas.stats.overallProgress')}</CardTitle>
           <CardDescription>
-            Você concluiu {totalConcluidas} de {totalVideoaulas} videoaulas
+            {t('components.videoaulas.stats.completedOfTotal', { completed: totalConcluidas, total: totalVideoaulas })}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-600">Conclusão</span>
+              <span className="text-gray-600">{t('components.videoaulas.stats.completion')}</span>
               <span className="font-medium">{Math.round(percentualGeral)}%</span>
             </div>
             <Progress value={percentualGeral} className="h-3" />
@@ -159,9 +161,9 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>Progresso por Tópico</CardTitle>
+              <CardTitle>{t('components.videoaulas.stats.progressByTopic')}</CardTitle>
               <CardDescription>
-                Acompanhe seu andamento em cada módulo
+                {t('components.videoaulas.stats.progressByTopicDesc')}
               </CardDescription>
             </div>
             <BookOpen className="w-5 h-5 text-gray-400" />
@@ -171,7 +173,7 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
           {estatisticasTopicos.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
               <BookOpen className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-              <p className="text-sm">Nenhum tópico disponível</p>
+              <p className="text-sm">{t('components.videoaulas.stats.noTopics')}</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -200,11 +202,11 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
                       <div className="flex items-center gap-4">
                         <span className="flex items-center gap-1">
                           <PlayCircle className="w-4 h-4" />
-                          {total} aula{total !== 1 ? 's' : ''}
+                          {t('components.videoaulas.stats.lessonsCount', { count: total })}
                         </span>
                         <span className="flex items-center gap-1">
                           <CheckCircle className="w-4 h-4 text-green-600" />
-                          {concluidas} concluída{concluidas !== 1 ? 's' : ''}
+                          {t('components.videoaulas.stats.completedCount', { count: concluidas })}
                         </span>
                         <span className="flex items-center gap-1">
                           <Clock className="w-4 h-4" />
@@ -221,7 +223,7 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
                   {percentual === 100 && (
                     <div className="mt-3 flex items-center gap-2 text-sm text-green-600">
                       <CheckCircle className="w-4 h-4" />
-                      <span className="font-medium">Tópico concluído!</span>
+                      <span className="font-medium">{t('components.videoaulas.stats.topicCompleted')}</span>
                     </div>
                   )}
                 </div>
@@ -239,10 +241,10 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
               <TrendingUp className="w-5 h-5 text-blue-600" />
               <div>
                 <CardTitle className="text-base text-blue-900">
-                  Continue Aprendendo!
+                  {t('components.videoaulas.stats.keepLearningTitle')}
                 </CardTitle>
                 <CardDescription className="text-blue-700">
-                  Você está fazendo um ótimo progresso
+                  {t('components.videoaulas.stats.keepLearningDesc')}
                 </CardDescription>
               </div>
             </div>
@@ -250,13 +252,11 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
           <CardContent>
             <div className="space-y-2">
               <p className="text-sm text-blue-900">
-                <strong>{totalVideoaulas - totalConcluidas}</strong> videoaula
-                {totalVideoaulas - totalConcluidas !== 1 ? 's' : ''} restante
-                {totalVideoaulas - totalConcluidas !== 1 ? 's' : ''} para completar 100%
+                {t('components.videoaulas.stats.remainingLessons', { count: totalVideoaulas - totalConcluidas })}
               </p>
               {estatisticasTopicos.find(e => e.percentual < 100 && e.percentual > 0) && (
                 <p className="text-sm text-blue-800">
-                  Sugestão: Continue o tópico{' '}
+                  {t('components.videoaulas.stats.suggestionContinue')}{' '}
                   <strong>
                     {estatisticasTopicos.find(e => e.percentual < 100 && e.percentual > 0)?.topico.titulo}
                   </strong>
@@ -275,18 +275,17 @@ export const EstatisticasVideoaulas: React.FC<EstatisticasVideoaulasProps> = ({
               <CheckCircle className="w-5 h-5 text-green-600" />
               <div>
                 <CardTitle className="text-base text-green-900">
-                  Parabéns! 🎉
+                  {t('components.videoaulas.stats.congratsTitle')}
                 </CardTitle>
                 <CardDescription className="text-green-700">
-                  Você concluiu todas as videoaulas!
+                  {t('components.videoaulas.stats.congratsDesc')}
                 </CardDescription>
               </div>
             </div>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-green-900">
-              Você assistiu todas as {totalVideoaulas} videoaulas disponíveis. 
-              Continue revisando o conteúdo e pratique com os exercícios!
+              {t('components.videoaulas.stats.congratsBody', { total: totalVideoaulas })}
             </p>
           </CardContent>
         </Card>

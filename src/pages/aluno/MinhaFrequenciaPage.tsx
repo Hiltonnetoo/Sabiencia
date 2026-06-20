@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMockData } from '../../contexts/MockDataContext';
 import { FrequenciaCard } from '../../components/frequencia/FrequenciaCard';
@@ -12,6 +13,7 @@ import { Calendar, TrendingUp, AlertTriangle } from 'lucide-react';
 import { calcularPercentualPresenca, obterStatusFrequencia } from '../../schemas/frequenciaSchemas';
 
 export const MinhaFrequenciaPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { frequencias, disciplinas } = useMockData();
 
@@ -73,7 +75,7 @@ export const MinhaFrequenciaPage: React.FC = () => {
     return (
       <Card>
         <CardContent className="flex flex-col items-center justify-center py-12">
-          <p className="text-gray-500">Você precisa estar logado para acessar esta página</p>
+          <p className="text-gray-500">{t('aluno.minhaFrequencia.loginRequired')}</p>
         </CardContent>
       </Card>
     );
@@ -88,9 +90,9 @@ export const MinhaFrequenciaPage: React.FC = () => {
             <Calendar className="h-6 w-6 text-green-600" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Minha Frequência</h1>
+            <h1 className="text-3xl font-bold text-gray-900">{t('aluno.minhaFrequencia.title')}</h1>
             <p className="text-gray-600 mt-1">
-              Acompanhe sua presença nas aulas
+              {t('aluno.minhaFrequencia.subtitle')}
             </p>
           </div>
         </div>
@@ -100,7 +102,7 @@ export const MinhaFrequenciaPage: React.FC = () => {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Frequência Geral</CardTitle>
+            <CardTitle className="text-sm">{t('aluno.minhaFrequencia.stats.overallAttendance')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className={`text-3xl font-bold ${
@@ -125,34 +127,34 @@ export const MinhaFrequenciaPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Total de Aulas</CardTitle>
+            <CardTitle className="text-sm">{t('aluno.minhaFrequencia.stats.totalLessons')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-gray-900">{estatisticasGerais.total}</div>
-            <p className="text-xs text-gray-500 mt-2">Registradas no sistema</p>
+            <p className="text-xs text-gray-500 mt-2">{t('aluno.minhaFrequencia.stats.registeredInSystem')}</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Presenças</CardTitle>
+            <CardTitle className="text-sm">{t('aluno.minhaFrequencia.stats.presences')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-green-600">{estatisticasGerais.presencas}</div>
             <p className="text-xs text-gray-500 mt-2">
-              + {estatisticasGerais.justificadas} justificadas
+              {t('aluno.minhaFrequencia.stats.plusJustified', { count: estatisticasGerais.justificadas })}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Faltas</CardTitle>
+            <CardTitle className="text-sm">{t('aluno.minhaFrequencia.stats.absences')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-red-600">{estatisticasGerais.ausencias}</div>
             <p className="text-xs text-gray-500 mt-2">
-              {estatisticasGerais.ausencias === 0 ? 'Parabéns!' : 'Sem justificativa'}
+              {estatisticasGerais.ausencias === 0 ? t('aluno.minhaFrequencia.stats.congratulations') : t('aluno.minhaFrequencia.stats.noJustification')}
             </p>
           </CardContent>
         </Card>
@@ -164,12 +166,12 @@ export const MinhaFrequenciaPage: React.FC = () => {
           <CardHeader>
             <CardTitle className="text-red-900 flex items-center gap-2">
               <AlertTriangle className="h-5 w-5" />
-              Atenção: Disciplinas com Frequência Crítica
+              {t('aluno.minhaFrequencia.criticalTitle')}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-red-800 mb-3">
-              Você está abaixo dos 75% de frequência necessários nas seguintes disciplinas:
+              {t('aluno.minhaFrequencia.criticalDesc')}
             </p>
             <div className="space-y-2">
               {disciplinasCriticas.map((item, index) => (
@@ -179,13 +181,13 @@ export const MinhaFrequenciaPage: React.FC = () => {
                 >
                   <span className="font-medium text-red-900">{item.disciplina}</span>
                   <Badge variant="destructive">
-                    {item.percentual}% de frequência
+                    {t('aluno.minhaFrequencia.attendanceBadge', { value: item.percentual })}
                   </Badge>
                 </div>
               ))}
             </div>
             <p className="text-xs text-red-700 mt-3">
-              ⚠️ Frequência abaixo de 75% pode resultar em reprovação por falta!
+              {t('aluno.minhaFrequencia.criticalWarning')}
             </p>
           </CardContent>
         </Card>
@@ -197,7 +199,7 @@ export const MinhaFrequenciaPage: React.FC = () => {
           <CardContent className="pt-6">
             <p className="text-sm text-green-800 flex items-center gap-2">
               <TrendingUp className="h-4 w-4" />
-              <strong>Parabéns!</strong> Sua frequência está adequada. Continue assim!
+              <span dangerouslySetInnerHTML={{ __html: t('aluno.minhaFrequencia.tipMessage') }} />
             </p>
           </CardContent>
         </Card>
@@ -205,7 +207,7 @@ export const MinhaFrequenciaPage: React.FC = () => {
 
       {/* Frequência por Disciplina */}
       <div>
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Frequência por Disciplina</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-4">{t('aluno.minhaFrequencia.bySubject')}</h2>
         <div className="grid gap-6 md:grid-cols-2">
           {Array.from(frequenciasPorDisciplina.entries()).map(([disciplinaId, freqs]) => {
             const disciplina = disciplinas.find(d => d.id === disciplinaId);
@@ -228,7 +230,7 @@ export const MinhaFrequenciaPage: React.FC = () => {
           <CardContent className="flex flex-col items-center justify-center py-12">
             <Calendar className="h-16 w-16 text-gray-300 mb-4" />
             <p className="text-gray-500 text-center">
-              Nenhuma frequência registrada ainda
+              {t('aluno.minhaFrequencia.empty')}
             </p>
           </CardContent>
         </Card>

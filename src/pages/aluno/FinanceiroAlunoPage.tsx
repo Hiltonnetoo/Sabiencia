@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useMockData } from '../../contexts/MockDataContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { PagamentoCard } from '../../components/financeiro/PagamentoCard';
@@ -16,6 +17,7 @@ import {
 } from 'lucide-react';
 
 export const FinanceiroAlunoPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { pagamentos, alunos } = useMockData();
   
@@ -80,9 +82,9 @@ export const FinanceiroAlunoPage: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Meu Financeiro</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('aluno.financeiro.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Acompanhe seus pagamentos e pendências
+          {t('aluno.financeiro.subtitle')}
         </p>
       </div>
 
@@ -91,8 +93,7 @@ export const FinanceiroAlunoPage: React.FC = () => {
         <Alert variant="destructive">
           <AlertCircle className="h-4 h-4" />
           <AlertDescription>
-            Você possui {formatCurrency(estatisticas.vencido)} em pagamentos vencidos. 
-            Entre em contato com a secretaria para regularizar sua situação.
+            {t('aluno.financeiro.overdueAlert', { value: formatCurrency(estatisticas.vencido) })}
           </AlertDescription>
         </Alert>
       )}
@@ -106,10 +107,10 @@ export const FinanceiroAlunoPage: React.FC = () => {
               <DollarSign className="w-5 h-5 text-blue-600" />
             </div>
           </div>
-          <p className="text-sm text-gray-500 mb-1">Total</p>
+          <p className="text-sm text-gray-500 mb-1">{t('aluno.financeiro.total')}</p>
           <p className="text-2xl font-bold text-gray-900">{formatCurrency(estatisticas.total)}</p>
           <p className="text-xs text-gray-500 mt-2">
-            {estatisticas.totalPagamentos} {estatisticas.totalPagamentos === 1 ? 'pagamento' : 'pagamentos'}
+            {t('aluno.financeiro.payments', { count: estatisticas.totalPagamentos })}
           </p>
         </Card>
 
@@ -123,10 +124,10 @@ export const FinanceiroAlunoPage: React.FC = () => {
               {estatisticas.percentualPago.toFixed(0)}%
             </Badge>
           </div>
-          <p className="text-sm text-gray-500 mb-1">Pago</p>
+          <p className="text-sm text-gray-500 mb-1">{t('aluno.financeiro.paid')}</p>
           <p className="text-2xl font-bold text-gray-900">{formatCurrency(estatisticas.pago)}</p>
           <p className="text-xs text-gray-500 mt-2">
-            {estatisticas.pagosPagamentos} de {estatisticas.totalPagamentos} pagos
+            {t('aluno.financeiro.paidOf', { paid: estatisticas.pagosPagamentos, total: estatisticas.totalPagamentos })}
           </p>
         </Card>
 
@@ -137,9 +138,9 @@ export const FinanceiroAlunoPage: React.FC = () => {
               <Clock className="w-5 h-5 text-yellow-600" />
             </div>
           </div>
-          <p className="text-sm text-gray-500 mb-1">Pendente</p>
+          <p className="text-sm text-gray-500 mb-1">{t('aluno.financeiro.pending')}</p>
           <p className="text-2xl font-bold text-gray-900">{formatCurrency(estatisticas.pendente)}</p>
-          <p className="text-xs text-gray-500 mt-2">Aguardando pagamento</p>
+          <p className="text-xs text-gray-500 mt-2">{t('aluno.financeiro.awaitingPayment')}</p>
         </Card>
 
         {/* Vencido */}
@@ -149,9 +150,9 @@ export const FinanceiroAlunoPage: React.FC = () => {
               <AlertCircle className="w-5 h-5 text-red-600" />
             </div>
           </div>
-          <p className="text-sm text-gray-500 mb-1">Vencido</p>
+          <p className="text-sm text-gray-500 mb-1">{t('aluno.financeiro.overdue')}</p>
           <p className="text-2xl font-bold text-red-600">{formatCurrency(estatisticas.vencido)}</p>
-          <p className="text-xs text-red-600 mt-2">Regularize sua situação</p>
+          <p className="text-xs text-red-600 mt-2">{t('aluno.financeiro.regularizeSituation')}</p>
         </Card>
       </div>
 
@@ -159,9 +160,9 @@ export const FinanceiroAlunoPage: React.FC = () => {
       <Card className="p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="font-semibold text-gray-900">Progresso de Pagamentos</h3>
+            <h3 className="font-semibold text-gray-900">{t('aluno.financeiro.paymentProgressTitle')}</h3>
             <p className="text-sm text-gray-600 mt-1">
-              {estatisticas.pagosPagamentos} de {estatisticas.totalPagamentos} pagamentos realizados
+              {t('aluno.financeiro.paymentsCompleted', { paid: estatisticas.pagosPagamentos, total: estatisticas.totalPagamentos })}
             </p>
           </div>
           <div className="text-right">
@@ -181,19 +182,19 @@ export const FinanceiroAlunoPage: React.FC = () => {
               <Calendar className="w-6 h-6 text-yellow-600" />
             </div>
             <div className="flex-1">
-              <h3 className="font-semibold text-gray-900 mb-1">Próximo Vencimento</h3>
+              <h3 className="font-semibold text-gray-900 mb-1">{t('aluno.financeiro.nextDueDate')}</h3>
               <p className="text-sm text-gray-600 mb-3">
-                Vencimento em {new Date(estatisticas.proximoVencimento.data_vencimento).toLocaleDateString('pt-BR')}
+                {t('aluno.financeiro.dueOn', { date: new Date(estatisticas.proximoVencimento.data_vencimento).toLocaleDateString() })}
               </p>
               <div className="flex items-center gap-4">
                 <div>
-                  <p className="text-sm text-gray-500">Valor</p>
+                  <p className="text-sm text-gray-500">{t('aluno.financeiro.value')}</p>
                   <p className="text-xl font-bold text-gray-900">
                     {formatCurrency(estatisticas.proximoVencimento.valor)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">ID</p>
+                  <p className="text-sm text-gray-500">{t('aluno.financeiro.id')}</p>
                   <p className="text-sm font-medium text-gray-900">
                     {estatisticas.proximoVencimento.id}
                   </p>
@@ -207,17 +208,17 @@ export const FinanceiroAlunoPage: React.FC = () => {
       {/* Lista de Pagamentos */}
       <div>
         <h2 className="font-semibold text-gray-900 mb-4">
-          Histórico de Pagamentos ({meusPagamentos.length})
+          {t('aluno.financeiro.paymentHistory', { count: meusPagamentos.length })}
         </h2>
 
         {meusPagamentos.length === 0 ? (
           <div className="text-center py-12 bg-gray-50 rounded-lg">
             <DollarSign className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <h3 className="font-medium text-gray-900 mb-2">
-              Nenhum pagamento encontrado
+              {t('aluno.financeiro.empty.title')}
             </h3>
             <p className="text-gray-600">
-              Você ainda não possui pagamentos registrados
+              {t('aluno.financeiro.empty.desc')}
             </p>
           </div>
         ) : (

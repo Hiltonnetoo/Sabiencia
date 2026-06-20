@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FileText, BookOpen, Heart, Briefcase, Eye, MessageSquare } from 'lucide-react';
 import { ObservacaoCard } from '../../components/observacoes/ObservacaoCard';
 import { useMockData } from '../../contexts/MockDataContext';
@@ -16,6 +17,7 @@ import {
 } from '../../components/ui/select';
 
 export const ObservacoesAlunoPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { observacoes, alunos, professores, disciplinas } = useMockData();
 
@@ -60,9 +62,9 @@ export const ObservacoesAlunoPage: React.FC = () => {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Minhas Observações</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('aluno.observacoes.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Acompanhe as observações registradas pelos professores
+          {t('aluno.observacoes.subtitle')}
         </p>
       </div>
 
@@ -74,7 +76,7 @@ export const ObservacoesAlunoPage: React.FC = () => {
               <Eye className="w-5 h-5 text-gray-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Total Visíveis</p>
+              <p className="text-sm text-gray-600">{t('aluno.observacoes.stats.totalVisible')}</p>
               <p className="text-2xl font-semibold text-gray-900">{stats.total}</p>
             </div>
           </div>
@@ -86,7 +88,7 @@ export const ObservacoesAlunoPage: React.FC = () => {
               <BookOpen className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Pedagógicas</p>
+              <p className="text-sm text-gray-600">{t('aluno.observacoes.stats.pedagogical')}</p>
               <p className="text-2xl font-semibold text-blue-600">{stats.pedagogicas}</p>
             </div>
           </div>
@@ -98,7 +100,7 @@ export const ObservacoesAlunoPage: React.FC = () => {
               <Heart className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Comportamentais</p>
+              <p className="text-sm text-gray-600">{t('aluno.observacoes.stats.behavioral')}</p>
               <p className="text-2xl font-semibold text-green-600">{stats.comportamentais}</p>
             </div>
           </div>
@@ -110,7 +112,7 @@ export const ObservacoesAlunoPage: React.FC = () => {
               <Briefcase className="w-5 h-5 text-purple-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Administrativas</p>
+              <p className="text-sm text-gray-600">{t('aluno.observacoes.stats.administrative')}</p>
               <p className="text-2xl font-semibold text-purple-600">{stats.administrativas}</p>
             </div>
           </div>
@@ -120,16 +122,16 @@ export const ObservacoesAlunoPage: React.FC = () => {
       {/* Filtro de Tipo */}
       <div className="bg-white rounded-lg border border-gray-200 p-4">
         <div className="flex items-center gap-4">
-          <label className="text-sm font-medium text-gray-700">Filtrar por tipo:</label>
+          <label className="text-sm font-medium text-gray-700">{t('aluno.observacoes.filterByType')}</label>
           <Select value={tipoFiltro} onValueChange={setTipoFiltro}>
             <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Tipo" />
+              <SelectValue placeholder={t('aluno.observacoes.typePlaceholder')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="todos">Todos os tipos</SelectItem>
-              <SelectItem value="pedagogica">Pedagógica</SelectItem>
-              <SelectItem value="comportamental">Comportamental</SelectItem>
-              <SelectItem value="administrativa">Administrativa</SelectItem>
+              <SelectItem value="todos">{t('aluno.observacoes.types.all')}</SelectItem>
+              <SelectItem value="pedagogica">{t('aluno.observacoes.types.pedagogica')}</SelectItem>
+              <SelectItem value="comportamental">{t('aluno.observacoes.types.comportamental')}</SelectItem>
+              <SelectItem value="administrativa">{t('aluno.observacoes.types.administrativa')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -140,10 +142,7 @@ export const ObservacoesAlunoPage: React.FC = () => {
         <MessageSquare className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" />
         <div>
           <p className="text-sm text-blue-900">
-            <strong>Sobre as observações:</strong> Os professores registram observações 
-            para acompanhar seu desenvolvimento acadêmico, comportamental e questões 
-            administrativas. Algumas observações podem não estar visíveis por serem 
-            de uso interno dos professores.
+            <strong>{t('aluno.observacoes.infoTitle')}</strong>{t('aluno.observacoes.infoDesc')}
           </p>
         </div>
       </div>
@@ -152,11 +151,11 @@ export const ObservacoesAlunoPage: React.FC = () => {
       {minhasObservacoes.length === 0 ? (
         <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
           <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-gray-900 mb-2">Nenhuma observação encontrada</h3>
+          <h3 className="text-gray-900 mb-2">{t('aluno.observacoes.empty.title')}</h3>
           <p className="text-gray-600">
             {tipoFiltro !== 'todos'
-              ? 'Não há observações deste tipo para você no momento.'
-              : 'Você ainda não possui observações visíveis dos professores.'}
+              ? t('aluno.observacoes.empty.filtered')
+              : t('aluno.observacoes.empty.default')}
           </p>
         </div>
       ) : (
@@ -164,7 +163,7 @@ export const ObservacoesAlunoPage: React.FC = () => {
           {/* Contagem */}
           <div className="flex items-center justify-between">
             <p className="text-sm text-gray-600">
-              {minhasObservacoes.length} {minhasObservacoes.length === 1 ? 'observação encontrada' : 'observações encontradas'}
+              {t('aluno.observacoes.count', { count: minhasObservacoes.length })}
             </p>
           </div>
 

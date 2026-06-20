@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 import { Button } from '../ui/button';
 import { AlertCircle, RefreshCw, ArrowLeft } from 'lucide-react';
@@ -23,6 +24,7 @@ export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
   onGoBack,
   className,
 }) => {
+  const { t } = useTranslation();
   const error = getErrorMessage(type, customMessage);
 
   return (
@@ -44,7 +46,7 @@ export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
               className="gap-2"
             >
               <RefreshCw className="h-4 w-4" />
-              Tentar Novamente
+              {t('common.actions.retry')}
             </Button>
           )}
           {onGoBack && (
@@ -55,7 +57,7 @@ export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
               className="gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
-              Voltar
+              {t('common.actions.back')}
             </Button>
           )}
         </div>
@@ -68,6 +70,7 @@ export const ErrorDisplay: React.FC<ErrorDisplayProps> = ({
  * Hook para mostrar erros em toasts
  */
 import { toast } from 'sonner';
+import i18n from '../../i18n';
 
 export const showErrorToast = (
   type: ErrorType,
@@ -75,11 +78,11 @@ export const showErrorToast = (
   onRetry?: () => void
 ) => {
   const error = getErrorMessage(type, customMessage);
-  
+
   toast.error(error.title, {
     description: error.message,
     action: onRetry ? {
-      label: 'Tentar novamente',
+      label: i18n.t('common.actions.retry'),
       onClick: onRetry,
     } : undefined,
     duration: 5000,

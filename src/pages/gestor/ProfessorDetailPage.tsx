@@ -4,6 +4,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useMockData } from '../../contexts/MockDataContext';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
@@ -17,6 +18,7 @@ import type { Professor } from '../../types';
 
 export const ProfessorDetailPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { getProfessorById, professorTurmaDisciplina, turmas, disciplinas, matriculas, materiais, cursos } = useMockData();
 
@@ -25,14 +27,14 @@ export const ProfessorDetailPage: React.FC = () => {
 
   useEffect(() => {
     if (!id) {
-      toast.error('ID do professor não fornecido');
+      toast.error(t('gestor.professorDetail.idNotProvided'));
       navigate('/gestor/professores');
       return;
     }
 
     const professorData = getProfessorById(id);
     if (!professorData) {
-      toast.error('Professor não encontrado');
+      toast.error(t('gestor.professorDetail.notFound'));
       navigate('/gestor/professores');
       return;
     }
@@ -46,7 +48,7 @@ export const ProfessorDetailPage: React.FC = () => {
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Carregando dados...</p>
+          <p className="mt-4 text-gray-600">{t('gestor.professorDetail.loading')}</p>
         </div>
       </div>
     );
@@ -91,11 +93,11 @@ export const ProfessorDetailPage: React.FC = () => {
             className="gap-2"
           >
             <ArrowLeft className="h-4 w-4" />
-            Voltar
+            {t('common.actions.back')}
           </Button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Detalhes do Professor</h1>
-            <p className="text-gray-600 mt-1">Informações completas do cadastro</p>
+            <h1 className="text-3xl font-bold text-gray-900">{t('gestor.professorDetail.title')}</h1>
+            <p className="text-gray-600 mt-1">{t('gestor.professorDetail.subtitle')}</p>
           </div>
         </div>
         <Button
@@ -103,7 +105,7 @@ export const ProfessorDetailPage: React.FC = () => {
           className="gap-2"
         >
           <Edit className="h-4 w-4" />
-          Editar
+          {t('common.actions.edit')}
         </Button>
       </div>
 
@@ -120,9 +122,9 @@ export const ProfessorDetailPage: React.FC = () => {
                 </AvatarFallback>
               </Avatar>
               {professor.ativo ? (
-                <Badge className="bg-green-100 text-green-800">Ativo</Badge>
+                <Badge className="bg-green-100 text-green-800">{t('common.status.active')}</Badge>
               ) : (
-                <Badge className="bg-gray-100 text-gray-800">Inativo</Badge>
+                <Badge className="bg-gray-100 text-gray-800">{t('common.status.inactive')}</Badge>
               )}
             </div>
 
@@ -149,13 +151,13 @@ export const ProfessorDetailPage: React.FC = () => {
               <Separator />
 
               <div>
-                <p className="text-sm text-gray-500 mb-2">Formação</p>
+                <p className="text-sm text-gray-500 mb-2">{t('gestor.professorDetail.education')}</p>
                 <p className="font-medium">{professor.formacao}</p>
               </div>
 
               {professor.registro_profissional && (
                 <div>
-                  <p className="text-sm text-gray-500 mb-1">Registro Profissional</p>
+                  <p className="text-sm text-gray-500 mb-1">{t('gestor.professorDetail.professionalRegistration')}</p>
                   <p className="font-medium">{professor.registro_profissional}</p>
                 </div>
               )}
@@ -169,44 +171,44 @@ export const ProfessorDetailPage: React.FC = () => {
         {/* Turmas */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Turmas</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.professorDetail.stats.classes')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{turmasProfessor.length}</div>
-            <p className="text-xs text-gray-500 mt-1">turmas ativas</p>
+            <p className="text-xs text-gray-500 mt-1">{t('gestor.professorDetail.stats.activeClasses')}</p>
           </CardContent>
         </Card>
 
         {/* Disciplinas */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Disciplinas</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.professorDetail.stats.subjects')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{disciplinasProfessor.length}</div>
-            <p className="text-xs text-gray-500 mt-1">disciplinas</p>
+            <p className="text-xs text-gray-500 mt-1">{t('gestor.professorDetail.stats.subjectsUnit')}</p>
           </CardContent>
         </Card>
 
         {/* Alunos */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Alunos</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.professorDetail.stats.students')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{alunosIds.size}</div>
-            <p className="text-xs text-gray-500 mt-1">alunos</p>
+            <p className="text-xs text-gray-500 mt-1">{t('gestor.professorDetail.stats.studentsUnit')}</p>
           </CardContent>
         </Card>
 
         {/* Materiais */}
         <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm">Materiais</CardTitle>
+            <CardTitle className="text-sm">{t('gestor.professorDetail.stats.materials')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{materiaisCount}</div>
-            <p className="text-xs text-gray-500 mt-1">publicados</p>
+            <p className="text-xs text-gray-500 mt-1">{t('gestor.professorDetail.stats.published')}</p>
           </CardContent>
         </Card>
       </div>
@@ -215,8 +217,8 @@ export const ProfessorDetailPage: React.FC = () => {
         {/* Especialidades */}
         <Card>
           <CardHeader>
-            <CardTitle>Especialidades</CardTitle>
-            <CardDescription>Áreas de atuação do professor</CardDescription>
+            <CardTitle>{t('gestor.professorDetail.specialties')}</CardTitle>
+            <CardDescription>{t('gestor.professorDetail.specialtiesDesc')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2">
@@ -232,8 +234,8 @@ export const ProfessorDetailPage: React.FC = () => {
         {/* Turmas */}
         <Card>
           <CardHeader>
-            <CardTitle>Turmas</CardTitle>
-            <CardDescription>Turmas que o professor leciona</CardDescription>
+            <CardTitle>{t('gestor.professorDetail.classesTitle')}</CardTitle>
+            <CardDescription>{t('gestor.professorDetail.classesDesc')}</CardDescription>
           </CardHeader>
           <CardContent>
             {turmasProfessor.length > 0 ? (
@@ -255,7 +257,7 @@ export const ProfessorDetailPage: React.FC = () => {
                 })}
               </div>
             ) : (
-              <p className="text-gray-500">Nenhuma turma atribuída</p>
+              <p className="text-gray-500">{t('gestor.professorDetail.noClasses')}</p>
             )}
           </CardContent>
         </Card>
@@ -263,8 +265,8 @@ export const ProfessorDetailPage: React.FC = () => {
         {/* Disciplinas */}
         <Card className="md:col-span-2">
           <CardHeader>
-            <CardTitle>Disciplinas</CardTitle>
-            <CardDescription>Disciplinas que o professor ministra</CardDescription>
+            <CardTitle>{t('gestor.professorDetail.subjectsTitle')}</CardTitle>
+            <CardDescription>{t('gestor.professorDetail.subjectsDesc')}</CardDescription>
           </CardHeader>
           <CardContent>
             {disciplinasProfessor.length > 0 ? (
@@ -279,14 +281,14 @@ export const ProfessorDetailPage: React.FC = () => {
                       <p className="font-medium">{disciplina.nome}</p>
                       <p className="text-sm text-gray-600">{curso?.nome}</p>
                       <p className="text-xs text-gray-500 mt-1">
-                        {disciplina.carga_horaria}h
+                        {t('gestor.professorDetail.workload', { count: disciplina.carga_horaria })}
                       </p>
                     </div>
                   );
                 })}
               </div>
             ) : (
-              <p className="text-gray-500">Nenhuma disciplina atribuída</p>
+              <p className="text-gray-500">{t('gestor.professorDetail.noSubjects')}</p>
             )}
           </CardContent>
         </Card>

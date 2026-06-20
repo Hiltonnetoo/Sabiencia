@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Search, Users, UserCheck, UserX, GraduationCap } from 'lucide-react';
@@ -45,6 +46,7 @@ const defaultFilters: AlunosFilterConfig = {
 };
 
 export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFiltersProps) {
+  const { t } = useTranslation();
   const { cursos, turmas, alunos, matriculas } = useMockData();
 
   const {
@@ -89,7 +91,7 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
   const quickFilters: QuickFilter[] = [
     {
       id: 'todos',
-      label: 'Todos',
+      label: t('components.alunosAdvancedFilters.quickAll'),
       icon: <Users />,
       filters: { ...defaultFilters },
       count: alunos.length,
@@ -97,7 +99,7 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
     },
     {
       id: 'ativos',
-      label: 'Ativos',
+      label: t('components.alunosAdvancedFilters.quickActive'),
       icon: <UserCheck />,
       filters: { ...defaultFilters, status: ['ativo'] },
       count: statusCounts.ativo,
@@ -105,7 +107,7 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
     },
     {
       id: 'trancados',
-      label: 'Trancados',
+      label: t('components.alunosAdvancedFilters.quickLocked'),
       icon: <UserX />,
       filters: { ...defaultFilters, status: ['trancado'] },
       count: statusCounts.trancado,
@@ -113,7 +115,7 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
     },
     {
       id: 'concluidos',
-      label: 'Concluídos',
+      label: t('components.alunosAdvancedFilters.quickCompleted'),
       icon: <GraduationCap />,
       filters: { ...defaultFilters, status: ['concluido'] },
       count: statusCounts.concluido,
@@ -123,10 +125,10 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
 
   // Opções para multi-select
   const statusOptions: MultiSelectOption[] = [
-    { value: 'ativo', label: 'Ativo', count: statusCounts.ativo },
-    { value: 'trancado', label: 'Trancado', count: statusCounts.trancado },
-    { value: 'concluido', label: 'Concluído', count: statusCounts.concluido },
-    { value: 'evadido', label: 'Evadido', count: statusCounts.evadido },
+    { value: 'ativo', label: t('components.alunosAdvancedFilters.statusActive'), count: statusCounts.ativo },
+    { value: 'trancado', label: t('components.alunosAdvancedFilters.statusLocked'), count: statusCounts.trancado },
+    { value: 'concluido', label: t('components.alunosAdvancedFilters.statusCompleted'), count: statusCounts.concluido },
+    { value: 'evadido', label: t('components.alunosAdvancedFilters.statusDroppedOut'), count: statusCounts.evadido },
   ];
 
   const cursosOptions: MultiSelectOption[] = cursos.map(curso => ({
@@ -146,13 +148,13 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
 
   // Labels para os filtros ativos
   const filterLabels: Record<string, string> = {
-    searchTerm: 'Busca',
-    status: 'Status',
-    cursos: 'Cursos',
-    turmas: 'Turmas',
-    dateRange: 'Período',
-    estadoCivil: 'Estado Civil',
-    sexo: 'Sexo',
+    searchTerm: t('components.alunosAdvancedFilters.labelSearch'),
+    status: t('components.alunosAdvancedFilters.labelStatus'),
+    cursos: t('components.alunosAdvancedFilters.labelCourses'),
+    turmas: t('components.alunosAdvancedFilters.labelClasses'),
+    dateRange: t('components.alunosAdvancedFilters.labelPeriod'),
+    estadoCivil: t('components.alunosAdvancedFilters.labelMaritalStatus'),
+    sexo: t('components.alunosAdvancedFilters.labelSex'),
   };
 
   const handleQuickFilterClick = (filter: QuickFilter) => {
@@ -188,12 +190,12 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
         <div className="space-y-4">
           {/* Busca */}
           <div className="space-y-2">
-            <Label htmlFor="search">Buscar</Label>
+            <Label htmlFor="search">{t('components.alunosAdvancedFilters.searchField')}</Label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
                 id="search"
-                placeholder="Nome, CPF, email..."
+                placeholder={t('components.alunosAdvancedFilters.searchPlaceholder')}
                 value={filters.searchTerm}
                 onChange={(e) => updateFilter('searchTerm', e.target.value)}
                 className="pl-9"
@@ -204,36 +206,36 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
           <div className="grid grid-cols-2 gap-4">
             {/* Status (Multi-select) */}
             <MultiSelect
-              label="Status"
+              label={t('components.alunosAdvancedFilters.labelStatus')}
               options={statusOptions}
               value={filters.status}
               onChange={(value) => updateFilter('status', value)}
-              placeholder="Todos os status"
+              placeholder={t('components.alunosAdvancedFilters.allStatuses')}
             />
 
             {/* Cursos (Multi-select) */}
             <MultiSelect
-              label="Cursos"
+              label={t('components.alunosAdvancedFilters.labelCourses')}
               options={cursosOptions}
               value={filters.cursos}
               onChange={(value) => updateFilter('cursos', value)}
-              placeholder="Todos os cursos"
+              placeholder={t('components.alunosAdvancedFilters.allCourses')}
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             {/* Turmas (Multi-select) */}
             <MultiSelect
-              label="Turmas"
+              label={t('components.alunosAdvancedFilters.labelClasses')}
               options={turmasOptions}
               value={filters.turmas}
               onChange={(value) => updateFilter('turmas', value)}
-              placeholder="Todas as turmas"
+              placeholder={t('components.alunosAdvancedFilters.allClasses')}
             />
 
             {/* Sexo */}
             <div className="space-y-2">
-              <Label htmlFor="sexo">Sexo</Label>
+              <Label htmlFor="sexo">{t('components.alunosAdvancedFilters.sex')}</Label>
               <Select
                 value={filters.sexo}
                 onValueChange={(value) => updateFilter('sexo', value)}
@@ -242,10 +244,10 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="todos">Todos</SelectItem>
-                  <SelectItem value="M">Masculino</SelectItem>
-                  <SelectItem value="F">Feminino</SelectItem>
-                  <SelectItem value="Outro">Outro</SelectItem>
+                  <SelectItem value="todos">{t('components.alunosAdvancedFilters.sexAll')}</SelectItem>
+                  <SelectItem value="M">{t('components.alunosAdvancedFilters.sexMale')}</SelectItem>
+                  <SelectItem value="F">{t('components.alunosAdvancedFilters.sexFemale')}</SelectItem>
+                  <SelectItem value="Outro">{t('components.alunosAdvancedFilters.sexOther')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -254,7 +256,7 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
           <div className="grid grid-cols-2 gap-4">
             {/* Estado Civil */}
             <div className="space-y-2">
-              <Label htmlFor="estadoCivil">Estado Civil</Label>
+              <Label htmlFor="estadoCivil">{t('components.alunosAdvancedFilters.maritalStatus')}</Label>
               <Select
                 value={filters.estadoCivil}
                 onValueChange={(value) => updateFilter('estadoCivil', value)}
@@ -263,18 +265,18 @@ export function AlunosAdvancedFilters({ onFiltersChange }: AlunosAdvancedFilters
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="todos">Todos</SelectItem>
-                  <SelectItem value="Solteiro">Solteiro(a)</SelectItem>
-                  <SelectItem value="Casado">Casado(a)</SelectItem>
-                  <SelectItem value="Divorciado">Divorciado(a)</SelectItem>
-                  <SelectItem value="Viúvo">Viúvo(a)</SelectItem>
+                  <SelectItem value="todos">{t('components.alunosAdvancedFilters.maritalAll')}</SelectItem>
+                  <SelectItem value="Solteiro">{t('components.alunosAdvancedFilters.maritalSingle')}</SelectItem>
+                  <SelectItem value="Casado">{t('components.alunosAdvancedFilters.maritalMarried')}</SelectItem>
+                  <SelectItem value="Divorciado">{t('components.alunosAdvancedFilters.maritalDivorced')}</SelectItem>
+                  <SelectItem value="Viúvo">{t('components.alunosAdvancedFilters.maritalWidowed')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Data de Matrícula */}
             <DateRangeFilter
-              label="Período de Matrícula"
+              label={t('components.alunosAdvancedFilters.enrollmentPeriod')}
               value={filters.dateRange}
               onChange={(range) => updateFilter('dateRange', range)}
             />

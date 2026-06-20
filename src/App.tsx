@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { MockDataProvider } from './contexts/MockDataContext';
 import { VideoaulasProvider } from './contexts/VideoaulasContext';
@@ -18,10 +19,10 @@ import { DemoRoutes } from './routes/demoRoutes';
 // Lazy Load Landing Page Components
 const Header = lazy(() => import('./components/landing/Header'));
 const HeroSection = lazy(() => import('./components/landing/HeroSection'));
-const CoursesSection = lazy(() => import('./components/landing/CoursesSection'));
+const RolesSection = lazy(() => import('./components/landing/RolesSection'));
 const FeaturesSection = lazy(() => import('./components/landing/FeaturesSection'));
-const MethodologySection = lazy(() => import('./components/landing/MethodologySection'));
-const TestimonialsSection = lazy(() => import('./components/landing/TestimonialsSection'));
+const WhySabienciaSection = lazy(() => import('./components/landing/WhySabienciaSection'));
+const ContactSection = lazy(() => import('./components/landing/ContactSection'));
 const Footer = lazy(() => import('./components/landing/Footer'));
 
 // Login por papel (3 telas: /login/ceo · /login/professor · /login/aluno)
@@ -65,6 +66,7 @@ const RedirectByRole: React.FC = () => {
 // LANDING PAGE
 // ============================================
 const LandingPage: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-white">
       {/* ✅ ACESSIBILIDADE: Skip link para conteúdo principal */}
@@ -72,11 +74,11 @@ const LandingPage: React.FC = () => {
         href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-blue-600 focus:text-white focus:top-4 focus:left-4 focus:rounded-lg focus:shadow-lg"
       >
-        Pular para o conteúdo principal
+        {t('landing.skipToContent')}
       </a>
 
       {/* Header e Hero carregam primeiro */}
-      <Suspense fallback={<AppPreloader message="Carregando página inicial..." />}>
+      <Suspense fallback={<AppPreloader message="Loading..." />}>
         <Header />
         <HeroSection />
       </Suspense>
@@ -84,10 +86,10 @@ const LandingPage: React.FC = () => {
       {/* ✅ ACESSIBILIDADE: Main landmark com ID para skip link */}
       <main id="main-content" role="main">
         <Suspense fallback={<div className="h-96 flex items-center justify-center"><LoadingFallback /></div>}>
-          <CoursesSection />
+          <RolesSection />
           <FeaturesSection />
-          <MethodologySection />
-          <TestimonialsSection />
+          <WhySabienciaSection />
+          <ContactSection />
           <Footer />
         </Suspense>
       </main>

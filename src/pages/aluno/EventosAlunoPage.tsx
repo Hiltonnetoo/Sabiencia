@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
@@ -36,6 +37,7 @@ interface Evento {
 }
 
 export const EventosAlunoPage: React.FC = () => {
+  const { t } = useTranslation();
   const [abaSelecionada, setAbaSelecionada] = useState<'disponiveis' | 'inscritos'>('disponiveis');
 
   // Eventos mockados
@@ -90,25 +92,19 @@ export const EventosAlunoPage: React.FC = () => {
   const eventosInscritos = eventosMockados.filter(e => e.inscrito);
 
   const handleInscrever = (eventoId: string) => {
-    toast.success('Inscrição realizada com sucesso!', {
-      description: 'Você receberá um e-mail de confirmação em breve.',
+    toast.success(t('aluno.eventos.toast.enrolledTitle'), {
+      description: t('aluno.eventos.toast.enrolledDesc'),
     });
   };
 
   const handleCancelarInscricao = (eventoId: string) => {
-    toast.info('Inscrição cancelada', {
-      description: 'Sua inscrição foi cancelada com sucesso.',
+    toast.info(t('aluno.eventos.toast.cancelledTitle'), {
+      description: t('aluno.eventos.toast.cancelledDesc'),
     });
   };
 
   const getTipoLabel = (tipo: Evento['tipo']) => {
-    switch (tipo) {
-      case 'palestra': return 'Palestra';
-      case 'workshop': return 'Workshop';
-      case 'aula_ao_vivo': return 'Aula ao Vivo';
-      case 'evento_social': return 'Evento Social';
-      case 'extracurricular': return 'Extracurricular';
-    }
+    return t(`aluno.eventos.types.${tipo}`);
   };
 
   const getTipoBadgeColor = (tipo: Evento['tipo']) => {
@@ -147,13 +143,13 @@ export const EventosAlunoPage: React.FC = () => {
               {evento.emitirCertificado && (
                 <Badge className="bg-yellow-100 text-yellow-700">
                   <Award className="h-3 w-3 mr-1" />
-                  Certificado
+                  {t('aluno.eventos.certificate')}
                 </Badge>
               )}
               {inscrito && (
                 <Badge className="bg-green-100 text-green-700">
                   <UserCheck className="h-3 w-3 mr-1" />
-                  Inscrito
+                  {t('aluno.eventos.enrolled')}
                 </Badge>
               )}
             </div>
@@ -167,7 +163,7 @@ export const EventosAlunoPage: React.FC = () => {
               <div className="flex items-center gap-2 text-gray-600">
                 <Clock className="h-4 w-4" />
                 <div>
-                  <p className="font-medium text-gray-900">Data e Hora</p>
+                  <p className="font-medium text-gray-900">{t('aluno.eventos.dateTime')}</p>
                   <p>{formatarData(evento.dataInicio)}</p>
                 </div>
               </div>
@@ -175,8 +171,8 @@ export const EventosAlunoPage: React.FC = () => {
               <div className="flex items-center gap-2 text-gray-600">
                 <MapPin className="h-4 w-4" />
                 <div>
-                  <p className="font-medium text-gray-900">Local</p>
-                  <p>{evento.localTipo === 'online' ? 'Online' : 'Presencial'}</p>
+                  <p className="font-medium text-gray-900">{t('aluno.eventos.location')}</p>
+                  <p>{evento.localTipo === 'online' ? t('aluno.eventos.online') : t('aluno.eventos.inPerson')}</p>
                 </div>
               </div>
 
@@ -184,7 +180,7 @@ export const EventosAlunoPage: React.FC = () => {
                 <div className="flex items-center gap-2 text-gray-600">
                   <Users className="h-4 w-4" />
                   <div>
-                    <p className="font-medium text-gray-900">Vagas</p>
+                    <p className="font-medium text-gray-900">{t('aluno.eventos.spots')}</p>
                     <p>
                       {evento.inscritos} / {evento.totalVagas}
                     </p>
@@ -197,7 +193,7 @@ export const EventosAlunoPage: React.FC = () => {
             {evento.vagasLimitadas && evento.totalVagas && (
               <div className="mb-4">
                 <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
-                  <span>Vagas preenchidas</span>
+                  <span>{t('aluno.eventos.spotsFilled')}</span>
                   <span>{Math.round((evento.inscritos / evento.totalVagas) * 100)}%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
@@ -220,7 +216,7 @@ export const EventosAlunoPage: React.FC = () => {
             {/* Link/Endereço */}
             {inscrito && evento.localTipo === 'online' && evento.localLink && (
               <div className="p-3 bg-blue-50 border border-blue-200 rounded text-sm">
-                <p className="font-medium text-blue-900 mb-1">Link do Evento:</p>
+                <p className="font-medium text-blue-900 mb-1">{t('aluno.eventos.eventLink')}</p>
                 <a href={evento.localLink} className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
                   {evento.localLink}
                 </a>
@@ -229,7 +225,7 @@ export const EventosAlunoPage: React.FC = () => {
 
             {inscrito && evento.localTipo === 'presencial' && evento.localEndereco && (
               <div className="p-3 bg-green-50 border border-green-200 rounded text-sm">
-                <p className="font-medium text-green-900 mb-1">Local do Evento:</p>
+                <p className="font-medium text-green-900 mb-1">{t('aluno.eventos.eventLocation')}</p>
                 <p className="text-green-700">{evento.localEndereco}</p>
               </div>
             )}
@@ -243,15 +239,15 @@ export const EventosAlunoPage: React.FC = () => {
                 onClick={() => handleCancelarInscricao(evento.id)}
                 className="text-red-600 hover:bg-red-50"
               >
-                Cancelar Inscrição
+                {t('aluno.eventos.cancelEnrollment')}
               </Button>
             ) : evento.vagasLimitadas && evento.totalVagas && evento.inscritos >= evento.totalVagas ? (
               <Button disabled>
-                Vagas Esgotadas
+                {t('aluno.eventos.spotsSoldOut')}
               </Button>
             ) : (
               <Button onClick={() => handleInscrever(evento.id)}>
-                Inscrever-se
+                {t('aluno.eventos.enroll')}
               </Button>
             )}
           </div>
@@ -267,9 +263,9 @@ export const EventosAlunoPage: React.FC = () => {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Eventos e Atividades</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('aluno.eventos.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Participe de palestras, workshops e atividades extracurriculares
+          {t('aluno.eventos.subtitle')}
         </p>
       </div>
 
@@ -277,7 +273,7 @@ export const EventosAlunoPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Eventos Disponíveis</CardDescription>
+            <CardDescription>{t('aluno.eventos.stats.availableEvents')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -286,7 +282,7 @@ export const EventosAlunoPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">{eventosDisponiveis.length}</p>
-                <p className="text-xs text-gray-500">para se inscrever</p>
+                <p className="text-xs text-gray-500">{t('aluno.eventos.stats.toEnroll')}</p>
               </div>
             </div>
           </CardContent>
@@ -294,7 +290,7 @@ export const EventosAlunoPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Minhas Inscrições</CardDescription>
+            <CardDescription>{t('aluno.eventos.stats.myEnrollments')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -303,7 +299,7 @@ export const EventosAlunoPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">{eventosInscritos.length}</p>
-                <p className="text-xs text-gray-500">eventos</p>
+                <p className="text-xs text-gray-500">{t('aluno.eventos.stats.events')}</p>
               </div>
             </div>
           </CardContent>
@@ -311,7 +307,7 @@ export const EventosAlunoPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Certificados</CardDescription>
+            <CardDescription>{t('aluno.eventos.stats.certificates')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -320,7 +316,7 @@ export const EventosAlunoPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">1</p>
-                <p className="text-xs text-gray-500">emitido</p>
+                <p className="text-xs text-gray-500">{t('aluno.eventos.stats.issued')}</p>
               </div>
             </div>
           </CardContent>
@@ -333,10 +329,10 @@ export const EventosAlunoPage: React.FC = () => {
           <Tabs value={abaSelecionada} onValueChange={(v) => setAbaSelecionada(v as any)}>
             <TabsList>
               <TabsTrigger value="disponiveis">
-                Disponíveis ({eventosDisponiveis.length})
+                {t('aluno.eventos.tabs.available', { count: eventosDisponiveis.length })}
               </TabsTrigger>
               <TabsTrigger value="inscritos">
-                Minhas Inscrições ({eventosInscritos.length})
+                {t('aluno.eventos.tabs.enrolled', { count: eventosInscritos.length })}
               </TabsTrigger>
             </TabsList>
 
@@ -347,10 +343,10 @@ export const EventosAlunoPage: React.FC = () => {
                 <div className="text-center py-12">
                   <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    Nenhum evento disponível
+                    {t('aluno.eventos.empty.availableTitle')}
                   </h3>
                   <p className="text-gray-500">
-                    Novos eventos serão divulgados em breve
+                    {t('aluno.eventos.empty.availableDesc')}
                   </p>
                 </div>
               )}
@@ -363,10 +359,10 @@ export const EventosAlunoPage: React.FC = () => {
                 <div className="text-center py-12">
                   <UserCheck className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    Você ainda não está inscrito em nenhum evento
+                    {t('aluno.eventos.empty.enrolledTitle')}
                   </h3>
                   <p className="text-gray-500">
-                    Navegue pela aba "Disponíveis" para se inscrever
+                    {t('aluno.eventos.empty.enrolledDesc')}
                   </p>
                 </div>
               )}

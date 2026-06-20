@@ -4,6 +4,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
@@ -16,6 +17,7 @@ import { SabienciaHorizontalLogo } from '../brand/SabienciaBrand';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { login } = useAuth();
 
   const [identificador, setIdentificador] = useState('');
@@ -42,24 +44,24 @@ export const LoginPage: React.FC = () => {
 
     // Validações básicas
     if (!identificador) {
-      setError('Informe CPF ou e‑mail');
+      setError(t('components.loginPage.errors.missingIdentifier'));
       return;
     }
     if (identificador.includes('@')) {
       const isValidEmail = /.+@.+\..+/.test(identificador);
       if (!isValidEmail) {
-        setError('E‑mail inválido');
+        setError(t('components.loginPage.errors.invalidEmail'));
         return;
       }
     } else {
       if (unformatCPF(identificador).length !== 11) {
-        setError('O formato do CPF está incorreto. Por favor, verifique os números e digite novamente.');
+        setError(t('components.loginPage.errors.invalidCpf'));
         return;
       }
     }
 
     if (!senha || senha.length < 6) {
-      setError('Senha deve ter no mínimo 6 caracteres');
+      setError(t('components.loginPage.errors.passwordMinLength'));
       return;
     }
 
@@ -72,10 +74,10 @@ export const LoginPage: React.FC = () => {
         // Login bem-sucedido - redirecionar será feito pelo App.tsx
         navigate('/redirect');
       } else {
-        setError(result.error || 'Não foi possível realizar o login. Por favor, verifique se suas credenciais estão corretas.');
+        setError(result.error || t('components.loginPage.errors.loginFailed'));
       }
     } catch (err) {
-      setError('Não foi possível realizar o login. Por favor, verifique se suas credenciais estão corretas.');
+      setError(t('components.loginPage.errors.loginFailed'));
     } finally {
       setIsLoading(false);
     }

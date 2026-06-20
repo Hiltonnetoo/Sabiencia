@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Turma, Curso } from '../../types';
 import { Card } from '../ui/card';
 import { Badge } from '../ui/badge';
@@ -31,21 +32,22 @@ export function TurmaCard({
   onEdit,
   onDelete 
 }: TurmaCardProps) {
-  
+  const { t } = useTranslation();
+
   const getPeriodoBadge = (periodo: string) => {
     const configs = {
-      manha: { label: 'Manhã', color: 'bg-yellow-100 text-yellow-700' },
-      tarde: { label: 'Tarde', color: 'bg-orange-100 text-orange-700' },
-      noite: { label: 'Noite', color: 'bg-indigo-100 text-indigo-700' },
-      integral: { label: 'Integral', color: 'bg-purple-100 text-purple-700' },
+      manha: { color: 'bg-yellow-100 text-yellow-700' },
+      tarde: { color: 'bg-orange-100 text-orange-700' },
+      noite: { color: 'bg-indigo-100 text-indigo-700' },
+      integral: { color: 'bg-purple-100 text-purple-700' },
     };
-    
+
     const config = configs[periodo as keyof typeof configs];
-    
+
     return (
       <Badge className={`${config.color}`}>
         <Clock className="w-3 h-3 mr-1" />
-        {config.label}
+        {t(`components.turmas.periodo.${periodo}`)}
       </Badge>
     );
   };
@@ -73,11 +75,11 @@ export function TurmaCard({
             <div className="flex items-center gap-2">
               {getPeriodoBadge(turma.periodo)}
               {isAtiva ? (
-                <Badge className="bg-green-100 text-green-700">Ativa</Badge>
+                <Badge className="bg-green-100 text-green-700">{t('components.turmas.card.active')}</Badge>
               ) : isFinalizada ? (
-                <Badge className="bg-gray-100 text-gray-700">Finalizada</Badge>
+                <Badge className="bg-gray-100 text-gray-700">{t('components.turmas.card.finished')}</Badge>
               ) : (
-                <Badge className="bg-red-100 text-red-700">Inativa</Badge>
+                <Badge className="bg-red-100 text-red-700">{t('components.turmas.card.inactive')}</Badge>
               )}
             </div>
           </div>
@@ -93,7 +95,7 @@ export function TurmaCard({
           <div className="flex items-start gap-2">
             <Calendar className="w-4 h-4 text-gray-400 mt-0.5" />
             <div>
-              <p className="text-xs text-gray-500">Início</p>
+              <p className="text-xs text-gray-500">{t('components.turmas.card.startLabel')}</p>
               <p className="text-sm font-medium text-gray-900">
                 {formatDate(turma.data_inicio)}
               </p>
@@ -103,7 +105,7 @@ export function TurmaCard({
           <div className="flex items-start gap-2">
             <Calendar className="w-4 h-4 text-gray-400 mt-0.5" />
             <div>
-              <p className="text-xs text-gray-500">Término</p>
+              <p className="text-xs text-gray-500">{t('components.turmas.card.endLabel')}</p>
               <p className="text-sm font-medium text-gray-900">
                 {formatDate(turma.data_fim)}
               </p>
@@ -121,7 +123,7 @@ export function TurmaCard({
               className="flex-1"
             >
               <Eye className="w-4 h-4 mr-2" />
-              Visualizar
+              {t('components.turmas.card.view')}
             </Button>
           )}
 

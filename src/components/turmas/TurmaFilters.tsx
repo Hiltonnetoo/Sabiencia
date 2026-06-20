@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { 
@@ -36,12 +37,13 @@ export function TurmaFilters({
   onStatusChange,
   onLimpar,
 }: TurmaFiltersProps) {
+  const { t } = useTranslation();
   const hasActiveFilters = busca || curso_id !== 'todos' || periodo !== 'todos' || status !== 'todos';
 
   return (
     <div className="bg-white p-4 rounded-lg border space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-gray-900">Filtros</h3>
+        <h3 className="font-semibold text-gray-900">{t('components.turmas.filters.title')}</h3>
         {hasActiveFilters && (
           <Button
             onClick={onLimpar}
@@ -49,7 +51,7 @@ export function TurmaFilters({
             size="sm"
           >
             <X className="w-4 h-4 mr-2" />
-            Limpar
+            {t('common.actions.clear')}
           </Button>
         )}
       </div>
@@ -58,12 +60,12 @@ export function TurmaFilters({
         {/* Busca */}
         <div>
           <label className="text-sm font-medium text-gray-700 mb-1 block">
-            Buscar
+            {t('components.turmas.filters.searchLabel')}
           </label>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
-              placeholder="Nome da turma..."
+              placeholder={t('components.turmas.filters.searchPlaceholder')}
               value={busca}
               onChange={(e) => onBuscaChange(e.target.value)}
               className="pl-9"
@@ -74,14 +76,14 @@ export function TurmaFilters({
         {/* Curso */}
         <div>
           <label className="text-sm font-medium text-gray-700 mb-1 block">
-            Curso
+            {t('components.turmas.filters.courseLabel')}
           </label>
           <Select value={curso_id} onValueChange={onCursoChange}>
             <SelectTrigger>
-              <SelectValue placeholder="Selecione..." />
+              <SelectValue placeholder={t('components.turmas.filters.selectPlaceholder')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="todos">Todos os cursos</SelectItem>
+              <SelectItem value="todos">{t('components.turmas.filters.allCourses')}</SelectItem>
               {cursos
                 .filter(curso => curso?.id && curso.id.trim() !== '')
                 .map(curso => (
@@ -96,17 +98,17 @@ export function TurmaFilters({
         {/* Período */}
         <div>
           <label className="text-sm font-medium text-gray-700 mb-1 block">
-            Período
+            {t('components.turmas.filters.periodLabel')}
           </label>
           <Select value={periodo} onValueChange={onPeriodoChange}>
             <SelectTrigger>
-              <SelectValue placeholder="Selecione..." />
+              <SelectValue placeholder={t('components.turmas.filters.selectPlaceholder')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="todos">Todos</SelectItem>
-              <SelectItem value="manha">Manhã</SelectItem>
-              <SelectItem value="tarde">Tarde</SelectItem>
-              <SelectItem value="noite">Noite</SelectItem>
+              <SelectItem value="todos">{t('components.turmas.filters.all')}</SelectItem>
+              <SelectItem value="manha">{t('components.turmas.periodo.manha')}</SelectItem>
+              <SelectItem value="tarde">{t('components.turmas.periodo.tarde')}</SelectItem>
+              <SelectItem value="noite">{t('components.turmas.periodo.noite')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -114,16 +116,16 @@ export function TurmaFilters({
         {/* Status */}
         <div>
           <label className="text-sm font-medium text-gray-700 mb-1 block">
-            Status
+            {t('components.turmas.filters.statusLabel')}
           </label>
           <Select value={status} onValueChange={onStatusChange}>
             <SelectTrigger>
-              <SelectValue placeholder="Selecione..." />
+              <SelectValue placeholder={t('components.turmas.filters.selectPlaceholder')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="todos">Todos</SelectItem>
-              <SelectItem value="ativa">Ativa</SelectItem>
-              <SelectItem value="inativa">Inativa</SelectItem>
+              <SelectItem value="todos">{t('components.turmas.filters.all')}</SelectItem>
+              <SelectItem value="ativa">{t('components.turmas.filters.active')}</SelectItem>
+              <SelectItem value="inativa">{t('components.turmas.filters.inactive')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -131,12 +133,14 @@ export function TurmaFilters({
 
       {hasActiveFilters && (
         <div className="text-sm text-gray-600">
-          Filtros ativos: {[
-            busca && 'Busca',
-            curso_id !== 'todos' && 'Curso',
-            periodo !== 'todos' && 'Período',
-            status !== 'todos' && 'Status',
-          ].filter(Boolean).join(', ')}
+          {t('components.turmas.filters.activeFilters', {
+            filters: [
+              busca && t('components.turmas.filters.filterSearch'),
+              curso_id !== 'todos' && t('components.turmas.filters.filterCourse'),
+              periodo !== 'todos' && t('components.turmas.filters.filterPeriod'),
+              status !== 'todos' && t('components.turmas.filters.filterStatus'),
+            ].filter(Boolean).join(', '),
+          })}
         </div>
       )}
     </div>

@@ -3,6 +3,7 @@
 // ============================================
 
 import { useState } from 'react';
+import { useTranslation, Trans } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Lock, Eye, EyeOff, Save, X } from 'lucide-react';
@@ -20,6 +21,7 @@ interface PasswordChangeFormProps {
 }
 
 export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps) {
+  const { t } = useTranslation();
   const [showSenhaAtual, setShowSenhaAtual] = useState(false);
   const [showNovaSenha, setShowNovaSenha] = useState(false);
   const [showConfirmarSenha, setShowConfirmarSenha] = useState(false);
@@ -51,9 +53,9 @@ export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps
       onSave?.(data);
       reset();
       setIsEditing(false);
-      toast.success('Senha alterada com sucesso!');
+      toast.success(t('components.passwordChangeForm.passwordChanged'));
     } catch (error) {
-      toast.error('Erro ao alterar senha');
+      toast.error(t('components.passwordChangeForm.passwordChangeError'));
     }
   };
 
@@ -71,13 +73,13 @@ export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps
             <Lock className="w-5 h-5 text-yellow-600" />
           </div>
           <div>
-            <h2 className="text-xl text-gray-900">Segurança</h2>
-            <p className="text-sm text-gray-600">Altere sua senha de acesso</p>
+            <h2 className="text-xl text-gray-900">{t('components.passwordChangeForm.security')}</h2>
+            <p className="text-sm text-gray-600">{t('components.passwordChangeForm.securityDesc')}</p>
           </div>
         </div>
         {!isEditing && (
           <Button onClick={() => setIsEditing(true)}>
-            Alterar Senha
+            {t('components.passwordChangeForm.changePassword')}
           </Button>
         )}
       </div>
@@ -85,7 +87,7 @@ export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps
       {isEditing ? (
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <FormField
-            label="Senha Atual"
+            label={t('components.passwordChangeForm.currentPassword')}
             htmlFor="senha_atual"
             required
             error={errors.senha_atual?.message}
@@ -95,7 +97,7 @@ export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps
                 id="senha_atual"
                 type={showSenhaAtual ? 'text' : 'password'}
                 {...register('senha_atual')}
-                placeholder="Digite sua senha atual"
+                placeholder={t('components.passwordChangeForm.currentPasswordPlaceholder')}
                 error={errors.senha_atual?.message}
                 showValidation={false}
               />
@@ -110,7 +112,7 @@ export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps
           </FormField>
 
           <FormField
-            label="Nova Senha"
+            label={t('components.passwordChangeForm.newPassword')}
             htmlFor="nova_senha"
             required
             error={errors.nova_senha?.message}
@@ -121,7 +123,7 @@ export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps
                   id="nova_senha"
                   type={showNovaSenha ? 'text' : 'password'}
                   {...register('nova_senha')}
-                  placeholder="Digite a nova senha"
+                  placeholder={t('components.passwordChangeForm.newPasswordPlaceholder')}
                   error={errors.nova_senha?.message}
                   showValidation={false}
                 />
@@ -138,7 +140,7 @@ export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps
           </FormField>
 
           <FormField
-            label="Confirmar Nova Senha"
+            label={t('components.passwordChangeForm.confirmNewPassword')}
             htmlFor="confirmar_senha"
             required
             error={errors.confirmar_senha?.message}
@@ -148,7 +150,7 @@ export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps
                 id="confirmar_senha"
                 type={showConfirmarSenha ? 'text' : 'password'}
                 {...register('confirmar_senha')}
-                placeholder="Digite a senha novamente"
+                placeholder={t('components.passwordChangeForm.confirmNewPasswordPlaceholder')}
                 error={errors.confirmar_senha?.message}
                 showValidation={false}
               />
@@ -166,10 +168,10 @@ export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps
             <LoadingButton 
               type="submit" 
               isLoading={isSubmitting}
-              loadingText="Salvando..."
+              loadingText={t('common.actions.saving')}
             >
               <Save className="w-4 h-4 mr-2" />
-              Salvar Nova Senha
+              {t('components.passwordChangeForm.saveNewPassword')}
             </LoadingButton>
             <Button
               type="button"
@@ -178,7 +180,7 @@ export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps
               disabled={isSubmitting}
             >
               <X className="w-4 h-4 mr-2" />
-              Cancelar
+              {t('common.actions.cancel')}
             </Button>
           </div>
         </form>
@@ -187,12 +189,16 @@ export function PasswordChangeForm({ onSave, onCancel }: PasswordChangeFormProps
           <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg">
             <Lock className="w-5 h-5 text-gray-400" />
             <div>
-              <p className="text-sm text-gray-600">Senha atual</p>
+              <p className="text-sm text-gray-600">{t('components.passwordChangeForm.currentPasswordLabel')}</p>
               <p className="text-gray-900">••••••••••</p>
             </div>
           </div>
           <p className="text-sm text-gray-600">
-            Sua senha foi atualizada pela última vez em: <span className="font-semibold">01/11/2025</span>
+            <Trans
+              i18nKey="components.passwordChangeForm.lastUpdated"
+              values={{ date: '01/11/2025' }}
+              components={[<span className="font-semibold" />]}
+            />
           </p>
         </div>
       )}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card } from '../ui/card';
 import { formatCurrency } from '../../utils/formatters';
 import { 
@@ -32,8 +33,9 @@ export function FinanceiroStats({
   previsaoMes
 }: FinanceiroStatsProps) {
   
-  const percentualRecebido = receitaTotal > 0 
-    ? (receitaRecebida / receitaTotal) * 100 
+  const { t } = useTranslation();
+  const percentualRecebido = receitaTotal > 0
+    ? (receitaRecebida / receitaTotal) * 100
     : 0;
 
   const percentualInadimplencia = receitaTotal > 0
@@ -42,64 +44,64 @@ export function FinanceiroStats({
 
   const stats = [
     {
-      titulo: 'Receita Total',
+      titulo: t('components.financeiroStats.totalRevenue'),
       valor: receitaTotal,
       icon: DollarSign,
       color: 'text-blue-600',
       bgColor: 'bg-blue-50',
-      descricao: `${totalPagamentos} pagamentos`,
+      descricao: t('components.financeiroStats.payments', { count: totalPagamentos }),
     },
     {
-      titulo: 'Receita Recebida',
+      titulo: t('components.financeiroStats.receivedRevenue'),
       valor: receitaRecebida,
       icon: CheckCircle2,
       color: 'text-green-600',
       bgColor: 'bg-green-50',
-      descricao: `${percentualRecebido.toFixed(1)}% do total`,
+      descricao: t('components.financeiroStats.percentOfTotal', { value: percentualRecebido.toFixed(1) }),
       trend: percentualRecebido >= 80 ? 'up' : 'down',
     },
     {
-      titulo: 'Receita Pendente',
+      titulo: t('components.financeiroStats.pendingRevenue'),
       valor: receitaPendente,
       icon: Calendar,
       color: 'text-yellow-600',
       bgColor: 'bg-yellow-50',
-      descricao: 'Aguardando pagamento',
+      descricao: t('components.financeiroStats.awaitingPayment'),
     },
     {
-      titulo: 'Receita Vencida',
+      titulo: t('components.financeiroStats.overdueRevenue'),
       valor: receitaVencida,
       icon: AlertCircle,
       color: 'text-red-600',
       bgColor: 'bg-red-50',
-      descricao: `${percentualInadimplencia.toFixed(1)}% inadimplência`,
+      descricao: t('components.financeiroStats.defaultRate', { value: percentualInadimplencia.toFixed(1) }),
       trend: 'down',
     },
     {
-      titulo: 'Alunos Adimplentes',
+      titulo: t('components.financeiroStats.compliantStudents'),
       valor: alunosAdimplentes,
       icon: Users,
       color: 'text-green-600',
       bgColor: 'bg-green-50',
-      descricao: 'Sem pendências',
+      descricao: t('components.financeiroStats.noPendingPayments'),
       isCount: true,
     },
     {
-      titulo: 'Alunos Inadimplentes',
+      titulo: t('components.financeiroStats.defaultingStudents'),
       valor: alunosInadimplentes,
       icon: AlertCircle,
       color: 'text-red-600',
       bgColor: 'bg-red-50',
-      descricao: 'Com pagamentos vencidos',
+      descricao: t('components.financeiroStats.withOverduePayments'),
       isCount: true,
     },
     {
-      titulo: 'Previsão do Mês',
+      titulo: t('components.financeiroStats.monthlyForecast'),
       valor: previsaoMes,
       icon: TrendingUp,
       color: 'text-purple-600',
       bgColor: 'bg-purple-50',
-      descricao: 'Receita esperada',
+      descricao: t('components.financeiroStats.expectedRevenue'),
     },
   ];
 

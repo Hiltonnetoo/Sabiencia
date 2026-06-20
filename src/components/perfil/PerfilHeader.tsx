@@ -3,6 +3,7 @@
 // ============================================
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Camera } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -16,14 +17,15 @@ interface PerfilHeaderProps {
 }
 
 export function PerfilHeader({ user, onFotoChange }: PerfilHeaderProps) {
+  const { t } = useTranslation();
   const [fotoUrl, setFotoUrl] = useState(user.foto_url || '');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const getRoleLabel = (role: string) => {
     const labels: Record<string, string> = {
-      aluno: 'Aluno',
-      professor: 'Professor',
-      gestor: 'Gestor/CEO',
+      aluno: t('components.perfilHeader.roleStudent'),
+      professor: t('components.perfilHeader.roleTeacher'),
+      gestor: t('components.perfilHeader.roleManager'),
     };
     return labels[role] || role;
   };
@@ -42,13 +44,13 @@ export function PerfilHeader({ user, onFotoChange }: PerfilHeaderProps) {
     if (file) {
       // Validar tipo de arquivo
       if (!file.type.startsWith('image/')) {
-        toast.error('Por favor, selecione um arquivo de imagem');
+        toast.error(t('components.perfilHeader.invalidFileType'));
         return;
       }
 
       // Validar tamanho (máx 5MB)
       if (file.size > 5 * 1024 * 1024) {
-        toast.error('A imagem deve ter no máximo 5MB');
+        toast.error(t('components.perfilHeader.fileTooLarge'));
         return;
       }
 
@@ -59,7 +61,7 @@ export function PerfilHeader({ user, onFotoChange }: PerfilHeaderProps) {
         setFotoUrl(url);
         onFotoChange?.(url);
         setIsDialogOpen(false);
-        toast.success('Foto atualizada com sucesso!');
+        toast.success(t('components.perfilHeader.photoUpdated'));
       };
       reader.readAsDataURL(file);
     }
@@ -89,7 +91,7 @@ export function PerfilHeader({ user, onFotoChange }: PerfilHeaderProps) {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Atualizar Foto de Perfil</DialogTitle>
+                <DialogTitle>{t('components.perfilHeader.updatePhoto')}</DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="flex flex-col items-center gap-4">
@@ -104,7 +106,7 @@ export function PerfilHeader({ user, onFotoChange }: PerfilHeaderProps) {
                     <label htmlFor="foto-upload" className="cursor-pointer">
                       <div className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors">
                         <Camera className="w-4 h-4" />
-                        <span>Escolher Foto</span>
+                        <span>{t('components.perfilHeader.choosePhoto')}</span>
                       </div>
                       <input
                         id="foto-upload"
@@ -116,7 +118,7 @@ export function PerfilHeader({ user, onFotoChange }: PerfilHeaderProps) {
                     </label>
                     
                     <p className="text-sm text-gray-500 text-center">
-                      PNG, JPG ou JPEG (máx. 5MB)
+                      {t('components.perfilHeader.photoHint')}
                     </p>
                   </div>
                 </div>
@@ -131,13 +133,13 @@ export function PerfilHeader({ user, onFotoChange }: PerfilHeaderProps) {
           <p className="text-blue-100 mb-4">{user.email}</p>
           <div className="flex items-center gap-4">
             <div className="bg-white/20 px-4 py-2 rounded-lg backdrop-blur-sm">
-              <p className="text-sm text-blue-100">Tipo de Conta</p>
+              <p className="text-sm text-blue-100">{t('components.perfilHeader.accountType')}</p>
               <p className="font-semibold">{getRoleLabel(user.role)}</p>
             </div>
             <div className="bg-white/20 px-4 py-2 rounded-lg backdrop-blur-sm">
-              <p className="text-sm text-blue-100">Status</p>
+              <p className="text-sm text-blue-100">{t('components.perfilHeader.status')}</p>
               <p className="font-semibold">
-                {user.ativo ? 'Ativo' : 'Inativo'}
+                {user.ativo ? t('components.perfilHeader.active') : t('components.perfilHeader.inactive')}
               </p>
             </div>
           </div>

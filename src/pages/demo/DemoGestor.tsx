@@ -4,6 +4,7 @@
 // ============================================
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { GestorDashboard } from '../gestor/GestorDashboard';
 import { BaseLayout } from '../../components/layout/BaseLayout';
 import { gestorNavItems } from '../../config/navigation';
@@ -15,6 +16,7 @@ import { LoadingFallback } from '../../components/shared/LoadingFallback';
 
 export const DemoGestor: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { login, logout, isAuthenticated, user } = useAuth();
   const hasInitialized = useRef(false);
   const [isInitializing, setIsInitializing] = useState(false);
@@ -55,7 +57,7 @@ export const DemoGestor: React.FC = () => {
   
   // ✅ Mostrar loading até tudo estar correto
   if (isInitializing || !isAuthenticated || user?.role !== 'gestor') {
-    return <LoadingFallback message="Preparando demonstração do Gestor..." />;
+    return <LoadingFallback message={t('demoPages.gestor.loading')} />;
   }
   
   return (
@@ -63,7 +65,7 @@ export const DemoGestor: React.FC = () => {
       <div className="mb-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
         <div className="flex items-center justify-between">
           <p className="text-sm text-yellow-800">
-            🎯 <strong>MODO DEMONSTRAÇÃO - GESTOR</strong> | {user.nome_completo} - Administrador do Sistema
+            🎯 <strong>{t('demoPages.gestor.bannerLabel')}</strong> | {user.nome_completo} - {t('demoPages.gestor.role')}
           </p>
           <Button 
             variant="outline" 
@@ -71,7 +73,7 @@ export const DemoGestor: React.FC = () => {
             onClick={() => navigate('/demo')}
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Voltar
+            {t('demoPages.common.back')}
           </Button>
         </div>
       </div>

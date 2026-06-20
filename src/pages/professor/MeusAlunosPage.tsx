@@ -5,6 +5,7 @@
 
 import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMockData } from '../../contexts/MockDataContext';
 import { PageBreadcrumb } from '../../components/shared/PageBreadcrumb';
@@ -31,6 +32,7 @@ import { formatCPF } from '../../utils/formatters';
 export const MeusAlunosPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { 
     alunos, 
@@ -196,9 +198,9 @@ export const MeusAlunosPage: React.FC = () => {
 
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Meus Alunos</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('professor.meusAlunos.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Acompanhe o desempenho dos alunos das suas turmas
+          {t('professor.meusAlunos.subtitle')}
         </p>
       </div>
 
@@ -206,52 +208,52 @@ export const MeusAlunosPage: React.FC = () => {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total de Alunos</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('professor.meusAlunos.stats.totalStudents')}</CardTitle>
             <Users className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{estatisticas.totalAlunos}</div>
             <p className="text-xs text-gray-500 mt-1">
-              {estatisticas.alunosAtivos} ativos
+              {t('professor.meusAlunos.stats.activeCount', { count: estatisticas.alunosAtivos })}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Frequência Média</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('professor.meusAlunos.stats.averageAttendance')}</CardTitle>
             <FileCheck className="h-4 w-4 text-green-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{estatisticas.frequenciaMedia}%</div>
             <p className="text-xs text-gray-500 mt-1">
-              Das aulas ministradas
+              {t('professor.meusAlunos.stats.ofLessonsHeld')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Média Geral</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('professor.meusAlunos.stats.overallAverage')}</CardTitle>
             <TrendingUp className="h-4 w-4 text-blue-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{estatisticas.mediaGeral}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Nota média das turmas
+              {t('professor.meusAlunos.stats.classesAverageGrade')}
             </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Turmas</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('nav.classes')}</CardTitle>
             <GraduationCap className="h-4 w-4 text-orange-600" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{minhasTurmas.length}</div>
             <p className="text-xs text-gray-500 mt-1">
-              Que você leciona
+              {t('professor.meusAlunos.stats.classesYouTeach')}
             </p>
           </CardContent>
         </Card>
@@ -262,7 +264,7 @@ export const MeusAlunosPage: React.FC = () => {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Filter className="h-5 w-5 text-gray-500" />
-            <CardTitle>Filtros</CardTitle>
+            <CardTitle>{t('common.actions.filters')}</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
@@ -271,7 +273,7 @@ export const MeusAlunosPage: React.FC = () => {
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
               <Input
-                placeholder="Buscar aluno, CPF ou turma..."
+                placeholder={t('professor.meusAlunos.filters.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-9"
@@ -281,10 +283,10 @@ export const MeusAlunosPage: React.FC = () => {
             {/* Filtro por Turma */}
             <Select value={selectedTurma} onValueChange={setSelectedTurma}>
               <SelectTrigger>
-                <SelectValue placeholder="Turma" />
+                <SelectValue placeholder={t('professor.meusAlunos.filters.classPlaceholder')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="todas">Todas as turmas</SelectItem>
+                <SelectItem value="todas">{t('common.labels.allClasses')}</SelectItem>
                 {minhasTurmas.map(turma => (
                   <SelectItem key={turma.id} value={turma.id}>
                     {turma.nome}
@@ -296,10 +298,10 @@ export const MeusAlunosPage: React.FC = () => {
             {/* Filtro por Curso */}
             <Select value={selectedCurso} onValueChange={setSelectedCurso}>
               <SelectTrigger>
-                <SelectValue placeholder="Curso" />
+                <SelectValue placeholder={t('professor.meusAlunos.filters.coursePlaceholder')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="todos">Todos os cursos</SelectItem>
+                <SelectItem value="todos">{t('professor.meusAlunos.filters.allCourses')}</SelectItem>
                 {cursos.map(curso => (
                   <SelectItem key={curso.id} value={curso.id}>
                     {curso.nome}
@@ -311,13 +313,13 @@ export const MeusAlunosPage: React.FC = () => {
             {/* Filtro por Status */}
             <Select value={selectedStatus} onValueChange={setSelectedStatus}>
               <SelectTrigger>
-                <SelectValue placeholder="Status" />
+                <SelectValue placeholder={t('professor.meusAlunos.filters.statusPlaceholder')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="todos">Todos os status</SelectItem>
-                <SelectItem value="ativo">Ativos</SelectItem>
-                <SelectItem value="trancado">Trancados</SelectItem>
-                <SelectItem value="concluido">Concluídos</SelectItem>
+                <SelectItem value="todos">{t('common.labels.allStatuses')}</SelectItem>
+                <SelectItem value="ativo">{t('professor.meusAlunos.filters.statusActive')}</SelectItem>
+                <SelectItem value="trancado">{t('professor.meusAlunos.filters.statusLocked')}</SelectItem>
+                <SelectItem value="concluido">{t('professor.meusAlunos.filters.statusCompleted')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -326,7 +328,7 @@ export const MeusAlunosPage: React.FC = () => {
           {searchTerm || selectedTurma !== 'todas' || selectedCurso !== 'todos' || selectedStatus !== 'todos' ? (
             <div className="mt-4 flex items-center justify-between">
               <p className="text-sm text-gray-600">
-                {alunosFiltrados.length} aluno(s) encontrado(s)
+                {t('professor.meusAlunos.resultsCount', { count: alunosFiltrados.length })}
               </p>
               <Button
                 variant="ghost"
@@ -338,7 +340,7 @@ export const MeusAlunosPage: React.FC = () => {
                   setSelectedStatus('todos');
                 }}
               >
-                Limpar filtros
+                {t('common.actions.clearFilters')}
               </Button>
             </div>
           ) : null}
@@ -348,11 +350,11 @@ export const MeusAlunosPage: React.FC = () => {
       {/* Tabela de Alunos */}
       {alunosFiltrados.length === 0 ? (
         <EmptyState
-          title="Nenhum aluno encontrado"
+          title={t('professor.meusAlunos.emptyTitle')}
           description={
             searchTerm || selectedTurma !== 'todas' || selectedCurso !== 'todos' || selectedStatus !== 'todos'
-              ? "Tente ajustar os filtros para encontrar alunos"
-              : "Não há alunos matriculados nas suas turmas"
+              ? t('professor.meusAlunos.emptyFiltered')
+              : t('professor.meusAlunos.emptyDefault')
           }
           icon={Users}
         />
@@ -363,13 +365,13 @@ export const MeusAlunosPage: React.FC = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Aluno</TableHead>
-                    <TableHead>CPF</TableHead>
-                    <TableHead>Turma</TableHead>
-                    <TableHead className="text-center">Frequência</TableHead>
-                    <TableHead className="text-center">Média</TableHead>
-                    <TableHead className="text-center">Status</TableHead>
-                    <TableHead className="text-center">Ações</TableHead>
+                    <TableHead>{t('professor.meusAlunos.table.student')}</TableHead>
+                    <TableHead>{t('professor.meusAlunos.table.cpf')}</TableHead>
+                    <TableHead>{t('professor.meusAlunos.table.class')}</TableHead>
+                    <TableHead className="text-center">{t('professor.meusAlunos.table.attendance')}</TableHead>
+                    <TableHead className="text-center">{t('professor.meusAlunos.table.average')}</TableHead>
+                    <TableHead className="text-center">{t('professor.meusAlunos.table.status')}</TableHead>
+                    <TableHead className="text-center">{t('professor.meusAlunos.table.actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -433,7 +435,7 @@ export const MeusAlunosPage: React.FC = () => {
                               })}
                               variant="ghost"
                               size="sm"
-                              title="Lançar Frequência"
+                              title={t('professor.meusAlunos.actions.recordAttendance')}
                             >
                               <FileCheck className="w-4 h-4" />
                             </Button>
@@ -443,7 +445,7 @@ export const MeusAlunosPage: React.FC = () => {
                               })}
                               variant="ghost"
                               size="sm"
-                              title="Lançar Notas"
+                              title={t('professor.meusAlunos.actions.recordGrades')}
                             >
                               <ClipboardList className="w-4 h-4" />
                             </Button>
@@ -461,16 +463,16 @@ export const MeusAlunosPage: React.FC = () => {
               <div className="flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
                 <div className="space-y-1">
-                  <p className="text-sm text-gray-700 font-medium">Legenda:</p>
+                  <p className="text-sm text-gray-700 font-medium">{t('professor.meusAlunos.legend.title')}</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-gray-600">
                     <div>
-                      <span className="text-green-600 font-semibold">Verde:</span> Frequência ≥ 75% ou Média ≥ 7.0
+                      <span className="text-green-600 font-semibold">{t('professor.meusAlunos.legend.greenLabel')}</span> {t('professor.meusAlunos.legend.greenDesc')}
                     </div>
                     <div>
-                      <span className="text-yellow-600 font-semibold">Amarelo:</span> Frequência 60-74% ou Média 5.0-6.9
+                      <span className="text-yellow-600 font-semibold">{t('professor.meusAlunos.legend.yellowLabel')}</span> {t('professor.meusAlunos.legend.yellowDesc')}
                     </div>
                     <div>
-                      <span className="text-red-600 font-semibold">Vermelho:</span> Frequência {'<'} 60% ou Média {'<'} 5.0
+                      <span className="text-red-600 font-semibold">{t('professor.meusAlunos.legend.redLabel')}</span> {t('professor.meusAlunos.legend.redDesc')}
                     </div>
                   </div>
                 </div>

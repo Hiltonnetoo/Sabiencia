@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion';
 import { Button } from '../ui/button';
@@ -58,6 +59,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
   getRespostasQuiz,
   onSubmeterQuiz
 }) => {
+  const { t } = useTranslation();
   const [videoaulaSelecionada, setVideoaulaSelecionada] = useState<Videoaula | null>(null);
   const [abaSelecionada, setAbaSelecionada] = useState('video');
   const [currentTime, setCurrentTime] = useState(0);
@@ -118,9 +120,9 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
         <DialogHeader>
           <DialogTitle>{disciplinaNome}</DialogTitle>
           <DialogDescription>
-            {videoaulaSelecionada 
-              ? 'Assistindo videoaula'
-              : 'Selecione uma aula para assistir'
+            {videoaulaSelecionada
+              ? t('components.videoaulas.dialog.watching')
+              : t('components.videoaulas.dialog.selectToWatch')
             }
           </DialogDescription>
         </DialogHeader>
@@ -136,7 +138,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                 className="gap-2"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Voltar para lista de aulas
+                {t('components.videoaulas.dialog.backToList')}
               </Button>
 
               {/* Título da Aula */}
@@ -145,7 +147,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                   {progresso?.concluida && (
                     <Badge className="gap-1 bg-green-600">
                       <CheckCircle className="w-3 h-3" />
-                      Concluída
+                      {t('components.videoaulas.dialog.completed')}
                     </Badge>
                   )}
                 </div>
@@ -162,11 +164,11 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                 <TabsList className="grid w-full grid-cols-4">
                   <TabsTrigger value="video" className="gap-2">
                     <PlayCircle className="w-4 h-4" />
-                    Vídeo
+                    {t('components.videoaulas.dialog.tabVideo')}
                   </TabsTrigger>
                   <TabsTrigger value="materiais" className="gap-2">
                     <FileText className="w-4 h-4" />
-                    Materiais
+                    {t('components.videoaulas.dialog.tabMaterials')}
                     {videoaulaSelecionada.materiais_anexos.length > 0 && (
                       <Badge variant="secondary" className="ml-1">
                         {videoaulaSelecionada.materiais_anexos.length}
@@ -175,7 +177,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                   </TabsTrigger>
                   <TabsTrigger value="anotacoes" className="gap-2">
                     <FileText className="w-4 h-4" />
-                    Anotações
+                    {t('components.videoaulas.dialog.tabNotes')}
                     {anotacoes.length > 0 && (
                       <Badge variant="secondary" className="ml-1">
                         {anotacoes.length}
@@ -185,7 +187,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                   {quiz && (
                     <TabsTrigger value="quiz" className="gap-2">
                       <CheckCircle className="w-4 h-4" />
-                      Quiz
+                      {t('components.videoaulas.dialog.tabQuiz')}
                     </TabsTrigger>
                   )}
                 </TabsList>
@@ -203,7 +205,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-gray-600">
                       <Clock className="w-4 h-4 inline mr-1" />
-                      Duração: {formatDuration(videoaulaSelecionada.duracao_segundos)}
+                      {t('components.videoaulas.dialog.durationLabel', { value: formatDuration(videoaulaSelecionada.duracao_segundos) })}
                     </div>
                     {!progresso?.concluida && (
                       <Button
@@ -212,7 +214,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                         className="gap-2"
                       >
                         <CheckCircle className="w-4 h-4" />
-                        Marcar como concluída
+                        {t('components.videoaulas.dialog.markCompleted')}
                       </Button>
                     )}
                   </div>
@@ -225,7 +227,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                       {videoaulaSelecionada.materiais_anexos.length === 0 ? (
                         <div className="text-center py-8 text-gray-500">
                           <FileText className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                          <p className="text-sm">Nenhum material disponível</p>
+                          <p className="text-sm">{t('components.videoaulas.dialog.noMaterials')}</p>
                         </div>
                       ) : (
                         <div className="space-y-3">
@@ -248,7 +250,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                               </div>
                               <Button variant="outline" size="sm" className="gap-2">
                                 <Download className="w-4 h-4" />
-                                Baixar
+                                {t('components.videoaulas.dialog.download')}
                               </Button>
                             </div>
                           ))}
@@ -292,7 +294,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                 <Input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Buscar videoaulas..."
+                  placeholder={t('components.videoaulas.dialog.searchPlaceholder')}
                   className="pl-10 pr-10"
                 />
                 {searchTerm && (
@@ -308,7 +310,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
               {topicosSorted.length === 0 ? (
                 <div className="text-center py-12 text-gray-500">
                   <PlayCircle className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                  <p className="text-sm">Nenhuma videoaula disponível ainda</p>
+                  <p className="text-sm">{t('components.videoaulas.dialog.noVideoaulas')}</p>
                 </div>
               ) : (
                 <Accordion type="multiple" className="space-y-2">
@@ -330,7 +332,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                           <div className="flex items-center justify-between w-full pr-4">
                             <span className="font-semibold text-gray-900">{topico.titulo}</span>
                             <Badge variant="outline">
-                              {videoaulasTopico.length} aula{videoaulasTopico.length > 1 ? 's' : ''}
+                              {t('components.videoaulas.dialog.lessonsCount', { count: videoaulasTopico.length })}
                             </Badge>
                           </div>
                         </AccordionTrigger>
@@ -365,7 +367,7 @@ export const VideoaulasDialog: React.FC<VideoaulasDialogProps> = ({
                                       {videoaula.materiais_anexos.length > 0 && (
                                         <span className="flex items-center gap-1">
                                           <FileText className="w-3 h-3" />
-                                          {videoaula.materiais_anexos.length} material{videoaula.materiais_anexos.length > 1 ? 'is' : ''}
+                                          {t('components.videoaulas.dialog.materialsCount', { count: videoaula.materiais_anexos.length })}
                                         </span>
                                       )}
                                     </div>

@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '../ui/button';
@@ -33,6 +34,7 @@ interface ComunicadoFormProps {
 }
 
 export function ComunicadoForm({ onSubmit, onCancel, userRole, userId }: ComunicadoFormProps) {
+  const { t } = useTranslation();
   const { turmas, alunos, professores } = useMockData();
   const [, setSelectedDestinatarios] = useState<string>('todos_alunos');
   
@@ -81,33 +83,33 @@ export function ComunicadoForm({ onSubmit, onCancel, userRole, userId }: Comunic
   // Opções de destinatários baseadas no role
   const destinatariosOptions = useMemo(() => {
     const options = [
-      { value: 'todos_alunos', label: 'Todos os Alunos', disabled: false }
+      { value: 'todos_alunos', label: t('components.comunicados.recipients.allStudents'), disabled: false }
     ];
 
     if (userRole === 'gestor') {
       options.push(
-        { value: 'todos_professores', label: 'Todos os Professores', disabled: false },
-        { value: 'turma_especifica', label: 'Turma Específica', disabled: false },
-        { value: 'individual', label: 'Aluno Específico', disabled: false }
+        { value: 'todos_professores', label: t('components.comunicados.recipients.allTeachers'), disabled: false },
+        { value: 'turma_especifica', label: t('components.comunicados.recipients.specificClass'), disabled: false },
+        { value: 'individual', label: t('components.comunicados.recipients.specificStudent'), disabled: false }
       );
     } else if (userRole === 'professor') {
       options.push(
-        { value: 'turma_especifica', label: 'Minha Turma', disabled: false }
+        { value: 'turma_especifica', label: t('components.comunicados.recipients.myClass'), disabled: false }
       );
     }
 
     return options;
-  }, [userRole]);
+  }, [userRole, t]);
 
   const handleFormSubmit = (data: ComunicadoFormData) => {
     // Validação extra
     if (data.destinatarios === 'turma_especifica' && !data.turma_id) {
-      alert('Selecione uma turma');
+      alert(t('components.comunicados.form.selectClassAlert'));
       return;
     }
-    
+
     if (data.destinatarios === 'individual' && !data.aluno_id) {
-      alert('Selecione um aluno');
+      alert(t('components.comunicados.form.selectStudentAlert'));
       return;
     }
 
@@ -120,7 +122,7 @@ export function ComunicadoForm({ onSubmit, onCancel, userRole, userId }: Comunic
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Send className="h-5 w-5" />
-            Novo Comunicado
+            {t('components.comunicados.form.title')}
           </CardTitle>
         </CardHeader>
 
@@ -128,31 +130,31 @@ export function ComunicadoForm({ onSubmit, onCancel, userRole, userId }: Comunic
           {/* Título */}
           <div className="space-y-2">
             <Label htmlFor="titulo">
-              Título *
+              {t('components.comunicados.form.fieldTitle')}
             </Label>
             <Input
               id="titulo"
               {...register('titulo')}
-              placeholder="Ex: Calendário de Provas"
+              placeholder={t('components.comunicados.form.titlePlaceholder')}
               maxLength={100}
             />
             {errors.titulo && (
               <p className="text-sm text-red-600">{errors.titulo.message}</p>
             )}
             <p className="text-xs text-gray-500">
-              {titulo?.length || 0}/100 caracteres
+              {t('components.comunicados.form.charCount', { current: titulo?.length || 0, max: 100 })}
             </p>
           </div>
 
           {/* Mensagem */}
           <div className="space-y-2">
             <Label htmlFor="mensagem">
-              Mensagem *
+              {t('components.comunicados.form.message')}
             </Label>
             <Textarea
               id="mensagem"
               {...register('mensagem')}
-              placeholder="Digite sua mensagem aqui..."
+              placeholder={t('components.comunicados.form.messagePlaceholder')}
               rows={6}
               maxLength={2000}
             />
@@ -160,7 +162,7 @@ export function ComunicadoForm({ onSubmit, onCancel, userRole, userId }: Comunic
               <p className="text-sm text-red-600">{errors.mensagem.message}</p>
             )}
             <p className="text-xs text-gray-500">
-              {mensagem?.length || 0}/2000 caracteres
+              {t('components.comunicados.form.charCount', { current: mensagem?.length || 0, max: 2000 })}
             </p>
           </div>
 

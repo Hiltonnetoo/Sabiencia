@@ -2,6 +2,7 @@
 // OBSERVACAO FORM - Formulário de observação
 // ============================================
 
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { observacaoSchema, type ObservacaoFormData } from '../../schemas/observacaoSchemas';
@@ -56,6 +57,7 @@ export function ObservacaoForm({
   professorId,
   alunoIdPredefinido
 }: ObservacaoFormProps) {
+  const { t } = useTranslation();
   const form = useForm<ObservacaoFormData>({
     resolver: zodResolver(observacaoSchema),
     defaultValues: observacao
@@ -94,12 +96,12 @@ export function ObservacaoForm({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {observacao ? 'Editar Observação' : 'Nova Observação'}
+            {observacao ? t('components.observacoes.form.editTitle') : t('components.observacoes.form.newTitle')}
           </DialogTitle>
           <DialogDescription>
             {observacao
-              ? 'Atualize as informações da observação.'
-              : 'Registre uma nova observação sobre o aluno.'}
+              ? t('components.observacoes.form.editDescription')
+              : t('components.observacoes.form.newDescription')}
           </DialogDescription>
         </DialogHeader>
 
@@ -112,7 +114,7 @@ export function ObservacaoForm({
                 name="aluno_id"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Aluno *</FormLabel>
+                    <FormLabel>{t('components.observacoes.form.student')}</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       value={field.value}
@@ -120,7 +122,7 @@ export function ObservacaoForm({
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Selecione o aluno" />
+                          <SelectValue placeholder={t('components.observacoes.form.selectStudent')} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -144,23 +146,23 @@ export function ObservacaoForm({
                 name="tipo"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Tipo de Observação *</FormLabel>
+                    <FormLabel>{t('components.observacoes.form.type')}</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Selecione o tipo" />
+                          <SelectValue placeholder={t('components.observacoes.form.selectType')} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value="pedagogica">Pedagógica</SelectItem>
-                        <SelectItem value="comportamental">Comportamental</SelectItem>
-                        <SelectItem value="administrativa">Administrativa</SelectItem>
+                        <SelectItem value="pedagogica">{t('components.observacoes.type.pedagogica')}</SelectItem>
+                        <SelectItem value="comportamental">{t('components.observacoes.type.comportamental')}</SelectItem>
+                        <SelectItem value="administrativa">{t('components.observacoes.type.administrativa')}</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormDescription className="text-xs">
-                      {tipoSelecionado === 'pedagogica' && 'Relacionada ao desempenho acadêmico'}
-                      {tipoSelecionado === 'comportamental' && 'Relacionada ao comportamento'}
-                      {tipoSelecionado === 'administrativa' && 'Questões administrativas'}
+                      {tipoSelecionado === 'pedagogica' && t('components.observacoes.form.typeHintPedagogica')}
+                      {tipoSelecionado === 'comportamental' && t('components.observacoes.form.typeHintComportamental')}
+                      {tipoSelecionado === 'administrativa' && t('components.observacoes.form.typeHintAdministrativa')}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -174,18 +176,18 @@ export function ObservacaoForm({
               name="disciplina_id"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Disciplina (opcional)</FormLabel>
+                  <FormLabel>{t('components.observacoes.form.subject')}</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     value={field.value || 'nenhuma'}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Selecione a disciplina" />
+                        <SelectValue placeholder={t('components.observacoes.form.selectSubject')} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="nenhuma">Nenhuma disciplina específica</SelectItem>
+                      <SelectItem value="nenhuma">{t('components.observacoes.form.noSpecificSubject')}</SelectItem>
                       {disciplinas
                         .filter(disciplina => disciplina?.id && disciplina.id.trim() !== '')
                         .map((disciplina) => (
@@ -196,7 +198,7 @@ export function ObservacaoForm({
                     </SelectContent>
                   </Select>
                   <FormDescription className="text-xs">
-                    Associe a observação a uma disciplina específica, se aplicável
+                    {t('components.observacoes.form.subjectHint')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -209,16 +211,16 @@ export function ObservacaoForm({
               name="conteudo"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Observação *</FormLabel>
+                  <FormLabel>{t('components.observacoes.form.content')}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Descreva a observação..."
+                      placeholder={t('components.observacoes.form.contentPlaceholder')}
                       className="resize-none min-h-[120px]"
                       {...field}
                     />
                   </FormControl>
                   <FormDescription className="text-xs">
-                    Mínimo 10 caracteres, máximo 1000 caracteres ({field.value?.length || 0}/1000)
+                    {t('components.observacoes.form.contentHint', { count: field.value?.length || 0 })}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -232,9 +234,9 @@ export function ObservacaoForm({
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border border-gray-200 p-4 bg-gray-50">
                   <div className="space-y-0.5">
-                    <FormLabel className="text-base">Visível para o aluno</FormLabel>
+                    <FormLabel className="text-base">{t('components.observacoes.form.visibleToStudent')}</FormLabel>
                     <FormDescription>
-                      Permitir que o aluno visualize esta observação
+                      {t('components.observacoes.form.visibleToStudentHint')}
                     </FormDescription>
                   </div>
                   <FormControl>
@@ -249,14 +251,14 @@ export function ObservacaoForm({
 
             <DialogFooter>
               <Button type="button" variant="outline" onClick={handleClose}>
-                Cancelar
+                {t('common.actions.cancel')}
               </Button>
-              <LoadingButton 
+              <LoadingButton
                 type="submit"
                 isLoading={form.formState.isSubmitting}
-                loadingText="Salvando..."
+                loadingText={t('components.observacoes.form.saving')}
               >
-                {observacao ? 'Salvar Alterações' : 'Criar Observação'}
+                {observacao ? t('components.observacoes.form.saveChanges') : t('components.observacoes.form.createObservation')}
               </LoadingButton>
             </DialogFooter>
           </form>

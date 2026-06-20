@@ -2,6 +2,7 @@
 // ATIVIDADES RECENTES - Lista de atividades do usuário
 // ============================================
 
+import { useTranslation } from 'react-i18next';
 import { Activity, LogIn, Edit, Lock, Camera, FileText } from 'lucide-react';
 
 type AtividadeTipo = 'login' | 'edicao' | 'senha' | 'foto' | 'outro';
@@ -19,6 +20,8 @@ interface AtividadesRecentesProps {
 }
 
 export function AtividadesRecentes({ atividades = [] }: AtividadesRecentesProps) {
+  const { t } = useTranslation();
+
   const getIconByType = (tipo: AtividadeTipo) => {
     const icons = {
       login: <LogIn className="w-4 h-4" />,
@@ -46,32 +49,32 @@ export function AtividadesRecentes({ atividades = [] }: AtividadesRecentesProps)
     {
       id: '1',
       tipo: 'login',
-      descricao: 'Login realizado com sucesso',
+      descricao: t('components.atividadesRecentes.loginSuccess'),
       data: new Date().toISOString(),
       ip: '192.168.1.100',
     },
     {
       id: '2',
       tipo: 'edicao',
-      descricao: 'Perfil atualizado',
+      descricao: t('components.atividadesRecentes.profileUpdated'),
       data: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
     },
     {
       id: '3',
       tipo: 'senha',
-      descricao: 'Senha alterada',
+      descricao: t('components.atividadesRecentes.passwordChanged'),
       data: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7).toISOString(),
     },
     {
       id: '4',
       tipo: 'foto',
-      descricao: 'Foto de perfil atualizada',
+      descricao: t('components.atividadesRecentes.photoUpdated'),
       data: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14).toISOString(),
     },
     {
       id: '5',
       tipo: 'login',
-      descricao: 'Login realizado',
+      descricao: t('components.atividadesRecentes.loginPerformed'),
       data: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30).toISOString(),
       ip: '192.168.1.101',
     },
@@ -89,13 +92,13 @@ export function AtividadesRecentes({ atividades = [] }: AtividadesRecentesProps)
     const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
 
     if (minutos < 60) {
-      return minutos === 0 ? 'Agora mesmo' : `Há ${minutos} minuto${minutos > 1 ? 's' : ''}`;
+      return minutos === 0 ? t('components.atividadesRecentes.justNow') : t('components.atividadesRecentes.minutesAgo', { count: minutos });
     } else if (horas < 24) {
-      return `Há ${horas} hora${horas > 1 ? 's' : ''}`;
+      return t('components.atividadesRecentes.hoursAgo', { count: horas });
     } else if (dias < 30) {
-      return `Há ${dias} dia${dias > 1 ? 's' : ''}`;
+      return t('components.atividadesRecentes.daysAgo', { count: dias });
     } else {
-      return data.toLocaleDateString('pt-BR');
+      return data.toLocaleDateString(undefined);
     }
   };
 
@@ -106,8 +109,8 @@ export function AtividadesRecentes({ atividades = [] }: AtividadesRecentesProps)
           <Activity className="w-5 h-5 text-gray-600" />
         </div>
         <div>
-          <h2 className="text-xl text-gray-900">Atividades Recentes</h2>
-          <p className="text-sm text-gray-600">Histórico de ações na sua conta</p>
+          <h2 className="text-xl text-gray-900">{t('components.atividadesRecentes.title')}</h2>
+          <p className="text-sm text-gray-600">{t('components.atividadesRecentes.subtitle')}</p>
         </div>
       </div>
 
@@ -139,7 +142,7 @@ export function AtividadesRecentes({ atividades = [] }: AtividadesRecentesProps)
       {atividadesExibir.length === 0 && (
         <div className="text-center py-8">
           <Activity className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-          <p className="text-gray-500">Nenhuma atividade recente</p>
+          <p className="text-gray-500">{t('components.atividadesRecentes.empty')}</p>
         </div>
       )}
     </div>

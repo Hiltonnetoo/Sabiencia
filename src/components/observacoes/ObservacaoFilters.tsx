@@ -2,6 +2,7 @@
 // OBSERVACAO FILTERS - Filtros de observações
 // ============================================
 
+import { useTranslation } from 'react-i18next';
 import { Search, X } from 'lucide-react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
@@ -36,7 +37,8 @@ export function ObservacaoFilters({
   showProfessorFilter = true,
   showDisciplinaFilter = true
 }: ObservacaoFiltersProps) {
-  const hasActiveFilters = 
+  const { t } = useTranslation();
+  const hasActiveFilters =
     filters.busca || 
     filters.aluno_id || 
     filters.professor_id || 
@@ -50,7 +52,7 @@ export function ObservacaoFilters({
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="font-medium text-gray-900">Filtros</h3>
+        <h3 className="font-medium text-gray-900">{t('common.actions.filters')}</h3>
         {hasActiveFilters && (
           <Button
             variant="ghost"
@@ -59,7 +61,7 @@ export function ObservacaoFilters({
             className="h-8 text-red-600 hover:text-red-700 hover:bg-red-50"
           >
             <X className="w-4 h-4 mr-1" />
-            Limpar
+            {t('common.actions.clear')}
           </Button>
         )}
       </div>
@@ -69,7 +71,7 @@ export function ObservacaoFilters({
         <div className="relative lg:col-span-2">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <Input
-            placeholder="Buscar no conteúdo..."
+            placeholder={t('components.observacoes.filters.searchPlaceholder')}
             value={filters.busca || ''}
             onChange={(e) => onFiltersChange({ ...filters, busca: e.target.value })}
             className="pl-9"
@@ -88,13 +90,13 @@ export function ObservacaoFilters({
             }
           >
             <SelectTrigger>
-              <SelectValue placeholder="Tipo" />
+              <SelectValue placeholder={t('components.observacoes.filters.type')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="todos">Todos os tipos</SelectItem>
-              <SelectItem value="pedagogica">Pedagógica</SelectItem>
-              <SelectItem value="comportamental">Comportamental</SelectItem>
-              <SelectItem value="administrativa">Administrativa</SelectItem>
+              <SelectItem value="todos">{t('components.observacoes.filters.allTypes')}</SelectItem>
+              <SelectItem value="pedagogica">{t('components.observacoes.type.pedagogica')}</SelectItem>
+              <SelectItem value="comportamental">{t('components.observacoes.type.comportamental')}</SelectItem>
+              <SelectItem value="administrativa">{t('components.observacoes.type.administrativa')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -112,10 +114,10 @@ export function ObservacaoFilters({
               }
             >
               <SelectTrigger>
-                <SelectValue placeholder="Aluno" />
+                <SelectValue placeholder={t('components.observacoes.filters.student')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="todos">Todos os alunos</SelectItem>
+                <SelectItem value="todos">{t('components.observacoes.filters.allStudents')}</SelectItem>
                 {alunos
                   .filter(aluno => aluno?.id && aluno.id.trim() !== '')
                   .map((aluno) => (
@@ -141,10 +143,10 @@ export function ObservacaoFilters({
               }
             >
               <SelectTrigger>
-                <SelectValue placeholder="Professor" />
+                <SelectValue placeholder={t('components.observacoes.filters.teacher')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="todos">Todos os professores</SelectItem>
+                <SelectItem value="todos">{t('components.observacoes.filters.allTeachers')}</SelectItem>
                 {professores
                   .filter(professor => professor?.id && professor.id.trim() !== '')
                   .map((professor) => (
@@ -170,11 +172,11 @@ export function ObservacaoFilters({
               }
             >
               <SelectTrigger>
-                <SelectValue placeholder="Disciplina" />
+                <SelectValue placeholder={t('components.observacoes.filters.subject')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="todos">Todas as disciplinas</SelectItem>
-                <SelectItem value="sem-disciplina">Sem disciplina</SelectItem>
+                <SelectItem value="todos">{t('components.observacoes.filters.allSubjects')}</SelectItem>
+                <SelectItem value="sem-disciplina">{t('components.observacoes.filters.noSubject')}</SelectItem>
                 {disciplinas
                   .filter(disciplina => disciplina?.id && disciplina.id.trim() !== '')
                   .map((disciplina) => (

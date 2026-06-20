@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
@@ -30,6 +31,7 @@ export const CursoCard: React.FC<CursoCardProps> = ({
   onView,
   onToggleStatus,
 }) => {
+  const { t } = useTranslation();
   const { turmas, matriculas, disciplinas } = useMockData();
 
   // Estatísticas do curso
@@ -51,7 +53,7 @@ export const CursoCard: React.FC<CursoCardProps> = ({
             <div className="flex items-center gap-2">
               <CardTitle className="text-lg">{curso.nome}</CardTitle>
               <Badge variant={curso.ativo ? 'default' : 'secondary'}>
-                {curso.ativo ? 'Ativo' : 'Inativo'}
+                {curso.ativo ? t('components.cursos.card.active') : t('components.cursos.card.inactive')}
               </Badge>
             </div>
             <CardDescription className="line-clamp-2">
@@ -62,22 +64,22 @@ export const CursoCard: React.FC<CursoCardProps> = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                <span className="sr-only">Abrir menu</span>
+                <span className="sr-only">{t('components.cursos.card.openMenu')}</span>
                 <MoreVertical className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => onView(curso)}>
                 <Eye className="mr-2 h-4 w-4" />
-                Visualizar
+                {t('components.cursos.card.view')}
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => onEdit(curso)}>
                 <Edit className="mr-2 h-4 w-4" />
-                Editar
+                {t('components.cursos.card.edit')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => onToggleStatus(curso)}>
-                {curso.ativo ? 'Desativar' : 'Ativar'}
+                {curso.ativo ? t('components.cursos.card.deactivate') : t('components.cursos.card.activate')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

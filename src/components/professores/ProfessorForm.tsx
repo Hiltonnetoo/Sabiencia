@@ -24,24 +24,6 @@ interface ProfessorFormProps {
   onDirtyChange?: (isDirty: boolean) => void;
 }
 
-// Especialidades disponíveis
-const especialidadesDisponiveis = [
-  'Enfermagem',
-  'Administração',
-  'Informática',
-  'Gestão de Pessoas',
-  'Contabilidade',
-  'Marketing',
-  'Logística',
-  'Segurança do Trabalho',
-  'Matemática',
-  'Português',
-  'Inglês',
-  'Química',
-  'Física',
-  'Biologia',
-];
-
 export const ProfessorForm: React.FC<ProfessorFormProps> = ({
   professor,
   onSubmit,
@@ -50,6 +32,7 @@ export const ProfessorForm: React.FC<ProfessorFormProps> = ({
   onDirtyChange,
 }) => {
   const { t } = useTranslation();
+  const especialidadesDisponiveis = t('components.professorForm.specialtiesList', { returnObjects: true }) as string[];
   const [especialidadesInput, setEspecialidadesInput] = useState('');
 
   const {

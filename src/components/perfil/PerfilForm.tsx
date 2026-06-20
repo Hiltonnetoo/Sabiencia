@@ -3,6 +3,7 @@
 // ============================================
 
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Save, X } from 'lucide-react';
@@ -21,6 +22,7 @@ interface PerfilFormProps {
 }
 
 export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
+  const { t } = useTranslation();
   const [isEditing, setIsEditing] = useState(false);
 
   const {
@@ -51,9 +53,9 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
       
       onSave?.(data);
       setIsEditing(false);
-      toast.success('Perfil atualizado com sucesso!');
+      toast.success(t('components.perfilForm.profileUpdated'));
     } catch (error) {
-      toast.error('Erro ao atualizar perfil');
+      toast.error(t('components.perfilForm.profileUpdateError'));
     }
   };
 
@@ -66,10 +68,10 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl text-gray-900">Dados Pessoais</h2>
+        <h2 className="text-xl text-gray-900">{t('components.perfilForm.personalData')}</h2>
         {!isEditing && (
           <Button onClick={() => setIsEditing(true)}>
-            Editar Perfil
+            {t('components.perfilForm.editProfile')}
           </Button>
         )}
       </div>
@@ -78,7 +80,7 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
         {/* Informações Básicas */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="nome_completo">Nome Completo *</Label>
+            <Label htmlFor="nome_completo">{t('components.perfilForm.fullName')} *</Label>
             <Input
               id="nome_completo"
               {...register('nome_completo')}
@@ -91,7 +93,7 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
           </div>
 
           <div>
-            <Label htmlFor="email">Email *</Label>
+            <Label htmlFor="email">{t('components.perfilForm.email')} *</Label>
             <Input
               id="email"
               type="email"
@@ -105,7 +107,7 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
           </div>
 
           <div>
-            <Label htmlFor="cpf">CPF</Label>
+            <Label htmlFor="cpf">{t('common.labels.cpf')}</Label>
             <Input
               id="cpf"
               {...register('cpf')}
@@ -116,7 +118,7 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
           </div>
 
           <div>
-            <Label htmlFor="data_nascimento">Data de Nascimento</Label>
+            <Label htmlFor="data_nascimento">{t('components.perfilForm.birthDate')}</Label>
             <Input
               id="data_nascimento"
               type="date"
@@ -129,10 +131,10 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
 
         {/* Contatos */}
         <div>
-          <h3 className="text-lg text-gray-900 mb-4">Contatos</h3>
+          <h3 className="text-lg text-gray-900 mb-4">{t('components.perfilForm.contacts')}</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="telefone">Telefone</Label>
+              <Label htmlFor="telefone">{t('components.perfilForm.phone')}</Label>
               <Input
                 id="telefone"
                 {...register('telefone')}
@@ -143,7 +145,7 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
             </div>
 
             <div>
-              <Label htmlFor="celular">Celular</Label>
+              <Label htmlFor="celular">{t('components.perfilForm.mobile')}</Label>
               <Input
                 id="celular"
                 {...register('celular')}
@@ -157,14 +159,14 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
 
         {/* Endereço */}
         <div>
-          <h3 className="text-lg text-gray-900 mb-4">Endereço</h3>
+          <h3 className="text-lg text-gray-900 mb-4">{t('components.perfilForm.address')}</h3>
           <div className="grid grid-cols-1 gap-4">
             <div>
-              <Label htmlFor="endereco">Logradouro</Label>
+              <Label htmlFor="endereco">{t('components.perfilForm.street')}</Label>
               <Input
                 id="endereco"
                 {...register('endereco')}
-                placeholder="Rua, Avenida, etc."
+                placeholder={t('components.perfilForm.streetPlaceholder')}
                 disabled={!isEditing}
                 className={!isEditing ? 'bg-gray-50' : ''}
               />
@@ -172,7 +174,7 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <Label htmlFor="cidade">Cidade</Label>
+                <Label htmlFor="cidade">{t('components.perfilForm.city')}</Label>
                 <Input
                   id="cidade"
                   {...register('cidade')}
@@ -182,11 +184,11 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
               </div>
 
               <div>
-                <Label htmlFor="estado">Estado</Label>
+                <Label htmlFor="estado">{t('components.perfilForm.state')}</Label>
                 <Input
                   id="estado"
                   {...register('estado')}
-                  placeholder="UF"
+                  placeholder={t('components.perfilForm.statePlaceholder')}
                   maxLength={2}
                   disabled={!isEditing}
                   className={!isEditing ? 'bg-gray-50' : ''}
@@ -194,7 +196,7 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
               </div>
 
               <div>
-                <Label htmlFor="cep">CEP</Label>
+                <Label htmlFor="cep">{t('components.perfilForm.zipCode')}</Label>
                 <Input
                   id="cep"
                   {...register('cep')}
@@ -213,10 +215,10 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
             <LoadingButton 
               type="submit" 
               isLoading={isSubmitting}
-              loadingText="Salvando..."
+              loadingText={t('common.actions.saving')}
             >
               <Save className="w-4 h-4 mr-2" />
-              Salvar Alterações
+              {t('components.perfilForm.saveChanges')}
             </LoadingButton>
             <Button
               type="button"
@@ -225,7 +227,7 @@ export function PerfilForm({ user, onSave, onCancel }: PerfilFormProps) {
               disabled={isSubmitting}
             >
               <X className="w-4 h-4 mr-2" />
-              Cancelar
+              {t('common.actions.cancel')}
             </Button>
           </div>
         )}

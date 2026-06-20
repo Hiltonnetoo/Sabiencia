@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { forwardRef, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { InputWithValidation } from './InputWithValidation';
 import { useInputMask } from '../../hooks/useInputMask';
 import { MapPin } from 'lucide-react';
@@ -20,6 +21,7 @@ interface CEPInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>
 
 export const CEPInput = forwardRef<HTMLInputElement, CEPInputProps>(
   ({ error, showValidation = true, onChange, onAddressFound, ...props }, ref) => {
+    const { t } = useTranslation();
     const { applyMask, removeMask } = useInputMask();
     const [isSearching, setIsSearching] = useState(false);
     const [isValid, setIsValid] = useState(false);
@@ -90,7 +92,7 @@ export const CEPInput = forwardRef<HTMLInputElement, CEPInputProps>(
           onChange={handleChange}
           placeholder="00000-000"
           maxLength={9}
-          hint={isSearching ? "Buscando endereço..." : undefined}
+          hint={isSearching ? t('components.cepInput.searching') : undefined}
           {...props}
         />
         <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />

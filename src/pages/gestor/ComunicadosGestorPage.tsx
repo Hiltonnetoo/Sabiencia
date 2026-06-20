@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Send, TrendingUp, Users, Eye, Plus } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
@@ -18,6 +19,7 @@ import type { ComunicadoComDetalhes } from '../../types';
 import type { ComunicadoFormData } from '../../schemas/comunicadoSchemas';
 
 export const ComunicadosGestorPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { 
     comunicados, 
@@ -124,7 +126,7 @@ export const ComunicadosGestorPage: React.FC = () => {
       data_envio: new Date()
     } as any);
 
-    toast.success('Comunicado enviado com sucesso!');
+    toast.success(t('gestor.comunicados.sendSuccess'));
     setShowForm(false);
   };
 
@@ -142,16 +144,16 @@ export const ComunicadosGestorPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Comunicados</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('gestor.comunicados.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Envie comunicados e acompanhe o engajamento dos destinatários
+            {t('gestor.comunicados.subtitle')}
           </p>
         </div>
-        
+
         {!showForm && (
           <Button onClick={() => setShowForm(true)}>
             <Plus className="h-4 w-4 mr-2" />
-            Novo Comunicado
+            {t('gestor.comunicados.newAnnouncement')}
           </Button>
         )}
       </div>
@@ -162,7 +164,7 @@ export const ComunicadosGestorPage: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Total Enviados</p>
+                <p className="text-sm text-gray-600">{t('gestor.comunicados.stats.totalSent')}</p>
                 <p className="text-2xl font-semibold mt-1">{totalComunicados}</p>
               </div>
               <Send className="h-8 w-8 text-blue-600" />
@@ -174,7 +176,7 @@ export const ComunicadosGestorPage: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Enviados Hoje</p>
+                <p className="text-sm text-gray-600">{t('gestor.comunicados.stats.sentToday')}</p>
                 <p className="text-2xl font-semibold mt-1">{totalEnviadosHoje}</p>
               </div>
               <TrendingUp className="h-8 w-8 text-green-600" />
@@ -186,7 +188,7 @@ export const ComunicadosGestorPage: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Taxa Média de Leitura</p>
+                <p className="text-sm text-gray-600">{t('gestor.comunicados.stats.averageReadRate')}</p>
                 <p className="text-2xl font-semibold mt-1">{taxaMediaLeitura}%</p>
               </div>
               <Eye className="h-8 w-8 text-purple-600" />
@@ -198,7 +200,7 @@ export const ComunicadosGestorPage: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Baixa Leitura</p>
+                <p className="text-sm text-gray-600">{t('gestor.comunicados.stats.lowReadRate')}</p>
                 <p className="text-2xl font-semibold mt-1">{comunicadosBaixaLeitura}</p>
               </div>
               <Users className="h-8 w-8 text-orange-600" />
@@ -213,13 +215,12 @@ export const ComunicadosGestorPage: React.FC = () => {
           <CardHeader>
             <CardTitle className="text-sm flex items-center gap-2 text-orange-800">
               <Users className="h-4 w-4" />
-              Atenção: {comunicadosBaixaLeitura} comunicado(s) com baixa taxa de leitura
+              {t('gestor.comunicados.lowReadAlertTitle', { count: comunicadosBaixaLeitura })}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-orange-700">
-              Alguns comunicados foram lidos por menos de 50% dos destinatários. 
-              Considere reenviar ou entrar em contato diretamente.
+              {t('gestor.comunicados.lowReadAlertDesc')}
             </p>
           </CardContent>
         </Card>
@@ -250,7 +251,7 @@ export const ComunicadosGestorPage: React.FC = () => {
           />
 
           <div>
-            <h2 className="mb-4">Todos os Comunicados ({comunicadosFiltrados.length})</h2>
+            <h2 className="mb-4">{t('gestor.comunicados.allAnnouncements', { count: comunicadosFiltrados.length })}</h2>
 
             {comunicadosFiltrados.length === 0 ? (
               <Card>
@@ -258,8 +259,8 @@ export const ComunicadosGestorPage: React.FC = () => {
                   <Send className="h-12 w-12 text-gray-400 mx-auto mb-3" />
                   <p className="text-gray-600">
                     {searchTerm || prioridadeFilter !== 'todas' || destinatariosFilter !== 'todos'
-                      ? 'Nenhum comunicado encontrado com os filtros aplicados.'
-                      : 'Nenhum comunicado foi enviado ainda.'}
+                      ? t('gestor.comunicados.noResultsFiltered')
+                      : t('gestor.comunicados.noResultsEmpty')}
                   </p>
                 </CardContent>
               </Card>

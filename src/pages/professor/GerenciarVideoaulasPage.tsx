@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { useMockData } from '../../contexts/MockDataContext';
 import { useVideoaulas } from '../../contexts/VideoaulasContext';
@@ -39,6 +40,7 @@ import { validarTopico, validarVideoaula } from '../../utils/validations';
 import type { Videoaula, TopicoDisciplina, MaterialAnexo } from '../../types/videoaulas';
 
 export const GerenciarVideoaulasPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { disciplinas } = useMockData();
   const {
@@ -109,7 +111,7 @@ export const GerenciarVideoaulasPage: React.FC = () => {
 
   const handleSalvarTopico = () => {
     if (!disciplinaSelecionada) {
-      toast.error('Selecione uma disciplina primeiro');
+      toast.error(t('professor.gerenciarVideoaulas.toasts.selectSubjectFirst'));
       return;
     }
 
@@ -139,11 +141,11 @@ export const GerenciarVideoaulasPage: React.FC = () => {
     const videoaulasTopico = getVideoaulasPorTopico(topicoId);
     
     if (videoaulasTopico.length > 0) {
-      toast.error(`Não é possível excluir o tópico "${titulo}" pois ele contém ${videoaulasTopico.length} videoaula(s)`);
+      toast.error(t('professor.gerenciarVideoaulas.toasts.deleteTopicWithVideoaulas', { titulo, count: videoaulasTopico.length }));
       return;
     }
 
-    if (confirm(`Tem certeza que deseja excluir o tópico "${titulo}"?`)) {
+    if (confirm(t('professor.gerenciarVideoaulas.toasts.confirmDeleteTopic', { titulo }))) {
       deletarTopico(topicoId);
     }
   };
@@ -161,7 +163,7 @@ export const GerenciarVideoaulasPage: React.FC = () => {
     editarTopico(topicoAtual.id, { ordem: topicoTroca.ordem });
     editarTopico(topicoTroca.id, { ordem: topicoAtual.ordem });
 
-    toast.success('Ordem do tópico atualizada');
+    toast.success(t('professor.gerenciarVideoaulas.toasts.topicOrderUpdated'));
   };
 
   // ============================================
@@ -218,12 +220,12 @@ export const GerenciarVideoaulasPage: React.FC = () => {
 
   const handleSalvarVideoaula = () => {
     if (!disciplinaSelecionada) {
-      toast.error('Selecione uma disciplina primeiro');
+      toast.error(t('professor.gerenciarVideoaulas.toasts.selectSubjectFirst'));
       return;
     }
 
     if (!topicoSelecionadoParaVideoaula) {
-      toast.error('Selecione um tópico');
+      toast.error(t('professor.gerenciarVideoaulas.toasts.selectTopic'));
       return;
     }
 
@@ -234,7 +236,7 @@ export const GerenciarVideoaulasPage: React.FC = () => {
     }
 
     if (!youtubeIdExtraido) {
-      toast.error('Não foi possível extrair o ID do vídeo do YouTube');
+      toast.error(t('professor.gerenciarVideoaulas.toasts.youtubeIdError'));
       return;
     }
 
@@ -275,21 +277,21 @@ export const GerenciarVideoaulasPage: React.FC = () => {
   };
 
   const handleDeletarVideoaula = (videoaulaId: string, titulo: string) => {
-    if (confirm(`Tem certeza que deseja excluir a videoaula "${titulo}"?`)) {
+    if (confirm(t('professor.gerenciarVideoaulas.toasts.confirmDeleteVideoaula', { titulo }))) {
       deletarVideoaula(videoaulaId);
     }
   };
 
   const handleToggleVisibilidade = (videoaula: Videoaula) => {
     editarVideoaula(videoaula.id, { visivel: !videoaula.visivel });
-    toast.success(videoaula.visivel ? 'Videoaula ocultada dos alunos' : 'Videoaula visível para alunos');
+    toast.success(videoaula.visivel ? t('professor.gerenciarVideoaulas.toasts.videoaulaHidden') : t('professor.gerenciarVideoaulas.toasts.videoaulaVisible'));
   };
 
   const handleAdicionarMaterial = () => {
     const novoMaterial: MaterialAnexo = {
       id: `m${Date.now()}`,
       tipo: 'pdf',
-      titulo: 'Novo Material',
+      titulo: t('professor.gerenciarVideoaulas.newMaterialTitle'),
       url: '#',
       tamanho_kb: 0
     };
@@ -316,31 +318,31 @@ export const GerenciarVideoaulasPage: React.FC = () => {
     editarVideoaula(videoaulaAtual.id, { ordem_dentro_topico: videoaulaTroca.ordem_dentro_topico });
     editarVideoaula(videoaulaTroca.id, { ordem_dentro_topico: videoaulaAtual.ordem_dentro_topico });
 
-    toast.success('Ordem da videoaula atualizada');
+    toast.success(t('professor.gerenciarVideoaulas.toasts.videoaulaOrderUpdated'));
   };
 
   return (
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Gerenciar Videoaulas</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t('professor.gerenciarVideoaulas.title')}</h1>
         <p className="text-gray-600 mt-1">
-          Organize suas videoaulas por tópicos e disciplinas
+          {t('professor.gerenciarVideoaulas.subtitle')}
         </p>
       </div>
 
       {/* Seleção de Disciplina */}
       <Card>
         <CardHeader>
-          <CardTitle>Selecione a Disciplina</CardTitle>
+          <CardTitle>{t('professor.gerenciarVideoaulas.selectSubject.title')}</CardTitle>
           <CardDescription>
-            Escolha uma disciplina para gerenciar seus tópicos e videoaulas
+            {t('professor.gerenciarVideoaulas.selectSubject.description')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Select value={disciplinaSelecionada} onValueChange={setDisciplinaSelecionada}>
             <SelectTrigger>
-              <SelectValue placeholder="Selecione uma disciplina" />
+              <SelectValue placeholder={t('professor.gerenciarVideoaulas.selectSubject.placeholder')} />
             </SelectTrigger>
             <SelectContent>
               {disciplinas.map(d => (
@@ -361,14 +363,13 @@ export const GerenciarVideoaulasPage: React.FC = () => {
               <div>
                 <CardTitle>{disciplinaObj.nome}</CardTitle>
                 <CardDescription>
-                  {topicosDisciplina.length} tópico{topicosDisciplina.length !== 1 ? 's' : ''} • {' '}
-                  {videoaulas.filter(v => v.disciplina_id === disciplinaSelecionada).length} videoaula
-                  {videoaulas.filter(v => v.disciplina_id === disciplinaSelecionada).length !== 1 ? 's' : ''}
+                  {t('professor.gerenciarVideoaulas.topicsCount', { count: topicosDisciplina.length })} • {' '}
+                  {t('professor.gerenciarVideoaulas.videoaulasCount', { count: videoaulas.filter(v => v.disciplina_id === disciplinaSelecionada).length })}
                 </CardDescription>
               </div>
               <Button onClick={() => handleAbrirDialogTopico()} className="gap-2">
                 <FolderPlus className="w-4 h-4" />
-                Novo Tópico
+                {t('professor.gerenciarVideoaulas.newTopic')}
               </Button>
             </div>
           </CardHeader>
@@ -376,10 +377,10 @@ export const GerenciarVideoaulasPage: React.FC = () => {
             {topicosDisciplina.length === 0 ? (
               <div className="text-center py-12 text-gray-500">
                 <FolderPlus className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                <p className="text-sm mb-4">Nenhum tópico criado ainda</p>
+                <p className="text-sm mb-4">{t('professor.gerenciarVideoaulas.noTopics')}</p>
                 <Button onClick={() => handleAbrirDialogTopico()} variant="outline" className="gap-2">
                   <Plus className="w-4 h-4" />
-                  Criar primeiro tópico
+                  {t('professor.gerenciarVideoaulas.createFirstTopic')}
                 </Button>
               </div>
             ) : (
@@ -398,7 +399,7 @@ export const GerenciarVideoaulasPage: React.FC = () => {
                           </div>
                           <div className="flex items-center gap-2">
                             <Badge variant="outline">
-                              {videoaulasTopico.length} aula{videoaulasTopico.length !== 1 ? 's' : ''}
+                              {t('professor.gerenciarVideoaulas.lessonsBadge', { count: videoaulasTopico.length })}
                             </Badge>
                             {/* Botões de ação */}
                             <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
@@ -407,7 +408,7 @@ export const GerenciarVideoaulasPage: React.FC = () => {
                                   variant="ghost"
                                   size="sm"
                                   onClick={() => handleMoverTopico(topico.id, 'up')}
-                                  title="Mover para cima"
+                                  title={t('professor.gerenciarVideoaulas.moveUp')}
                                 >
                                   <MoveUp className="w-4 h-4" />
                                 </Button>
@@ -417,7 +418,7 @@ export const GerenciarVideoaulasPage: React.FC = () => {
                                   variant="ghost"
                                   size="sm"
                                   onClick={() => handleMoverTopico(topico.id, 'down')}
-                                  title="Mover para baixo"
+                                  title={t('professor.gerenciarVideoaulas.moveDown')}
                                 >
                                   <MoveDown className="w-4 h-4" />
                                 </Button>
@@ -454,13 +455,13 @@ export const GerenciarVideoaulasPage: React.FC = () => {
                           className="gap-2 mb-3"
                         >
                           <Plus className="w-4 h-4" />
-                          Adicionar Videoaula
+                          {t('professor.gerenciarVideoaulas.addVideoaula')}
                         </Button>
 
                         {/* Lista de Videoaulas */}
                         {videoaulasTopico.length === 0 ? (
                           <div className="text-center py-6 text-gray-400 text-sm">
-                            Nenhuma videoaula neste tópico
+                            {t('professor.gerenciarVideoaulas.noVideoaulasInTopic')}
                           </div>
                         ) : (
                           <div className="space-y-2">
@@ -490,7 +491,7 @@ export const GerenciarVideoaulasPage: React.FC = () => {
                                       {!videoaula.visivel && (
                                         <Badge variant="secondary" className="gap-1">
                                           <EyeOff className="w-3 h-3" />
-                                          Oculto
+                                          {t('professor.gerenciarVideoaulas.hidden')}
                                         </Badge>
                                       )}
                                     </div>
@@ -499,8 +500,7 @@ export const GerenciarVideoaulasPage: React.FC = () => {
                                       {videoaula.materiais_anexos.length > 0 && (
                                         <span className="flex items-center gap-1">
                                           <FileText className="w-3 h-3" />
-                                          {videoaula.materiais_anexos.length} material
-                                          {videoaula.materiais_anexos.length !== 1 ? 'is' : ''}
+                                          {t('professor.gerenciarVideoaulas.materialsCount', { count: videoaula.materiais_anexos.length })}
                                         </span>
                                       )}
                                     </div>
@@ -513,7 +513,7 @@ export const GerenciarVideoaulasPage: React.FC = () => {
                                         variant="ghost"
                                         size="sm"
                                         onClick={() => handleMoverVideoaula(videoaula.id, topico.id, 'up')}
-                                        title="Mover para cima"
+                                        title={t('professor.gerenciarVideoaulas.moveUp')}
                                       >
                                         <MoveUp className="w-4 h-4" />
                                       </Button>

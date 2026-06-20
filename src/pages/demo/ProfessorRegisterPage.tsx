@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
@@ -20,6 +21,7 @@ import { SabienciaMonogramBadge } from '../../components/brand/SabienciaBrand';
 
 export const ProfessorRegisterPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [etapa, setEtapa] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -45,35 +47,35 @@ export const ProfessorRegisterPage: React.FC = () => {
 
   // Especialidades disponíveis
   const especialidadesDisponiveis = [
-    { value: 'enfermagem', label: 'Enfermagem' },
-    { value: 'anatomia', label: 'Anatomia' },
-    { value: 'fisiologia', label: 'Fisiologia' },
-    { value: 'farmacologia', label: 'Farmacologia' },
-    { value: 'administracao', label: 'Administração' },
-    { value: 'informatica', label: 'Informática' },
-    { value: 'programacao', label: 'Programação' },
-    { value: 'redes', label: 'Redes de Computadores' },
+    { value: 'enfermagem', label: t('demoPages.register.specialties.enfermagem') },
+    { value: 'anatomia', label: t('demoPages.register.specialties.anatomia') },
+    { value: 'fisiologia', label: t('demoPages.register.specialties.fisiologia') },
+    { value: 'farmacologia', label: t('demoPages.register.specialties.farmacologia') },
+    { value: 'administracao', label: t('demoPages.register.specialties.administracao') },
+    { value: 'informatica', label: t('demoPages.register.specialties.informatica') },
+    { value: 'programacao', label: t('demoPages.register.specialties.programacao') },
+    { value: 'redes', label: t('demoPages.register.specialties.redes') },
   ];
 
   const handleProximaEtapa = () => {
     // Validações
     if (etapa === 1) {
       if (!nomeCompleto || !cpf || !email || !telefone) {
-        toast.error('Preencha todos os campos obrigatórios');
+        toast.error(t('demoPages.register.errors.requiredFields'));
         return;
       }
     }
-    
+
     if (etapa === 2) {
       if (!formacao || especialidades.length === 0) {
-        toast.error('Preencha sua formação e ao menos uma especialidade');
+        toast.error(t('demoPages.register.errors.educationAndSpecialty'));
         return;
       }
     }
 
     if (etapa === 3) {
       if (!motivacao) {
-        toast.error('Por favor, conte-nos sua motivação');
+        toast.error(t('demoPages.register.errors.motivation'));
         return;
       }
     }
@@ -90,12 +92,12 @@ export const ProfessorRegisterPage: React.FC = () => {
 
     // Validar senha
     if (senha.length < 6) {
-      toast.error('A senha deve ter no mínimo 6 caracteres');
+      toast.error(t('demoPages.register.errors.passwordMin'));
       return;
     }
 
     if (senha !== confirmarSenha) {
-      toast.error('As senhas não conferem');
+      toast.error(t('demoPages.register.errors.passwordsDontMatch'));
       return;
     }
 
@@ -105,8 +107,8 @@ export const ProfessorRegisterPage: React.FC = () => {
       // Simular envio
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      toast.success('Cadastro enviado com sucesso!', {
-        description: 'Aguarde a análise do administrador. Você receberá um e-mail em breve.',
+      toast.success(t('demoPages.register.success.title'), {
+        description: t('demoPages.register.success.description'),
         duration: 5000,
       });
 
@@ -115,7 +117,7 @@ export const ProfessorRegisterPage: React.FC = () => {
         navigate('/professor');
       }, 2000);
     } catch (error) {
-      toast.error('Erro ao enviar cadastro. Tente novamente.');
+      toast.error(t('demoPages.register.errors.submitFailed'));
     } finally {
       setIsSubmitting(false);
     }

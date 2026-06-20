@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/AuthContext';
 import { ListaPresencaForm } from '../../components/frequencia/ListaPresencaForm';
 import { Card, CardContent } from '../../components/ui/card';
@@ -10,17 +11,18 @@ import { ClipboardCheck } from 'lucide-react';
 import { toast } from 'sonner';
 
 export const FrequenciaPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
 
   const handleSuccess = () => {
-    toast.success('Frequência registrada com sucesso!');
+    toast.success(t('professor.frequencia.toast.saved'));
   };
 
   if (!user) {
     return (
       <Card>
         <CardContent className="flex flex-col items-center justify-center py-12">
-          <p className="text-gray-500">Você precisa estar logado para acessar esta página</p>
+          <p className="text-gray-500">{t('professor.frequencia.notLoggedIn')}</p>
         </CardContent>
       </Card>
     );
@@ -35,9 +37,9 @@ export const FrequenciaPage: React.FC = () => {
             <ClipboardCheck className="h-6 w-6 text-blue-600" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Registro de Frequência</h1>
+            <h1 className="text-3xl font-bold text-gray-900">{t('professor.frequencia.title')}</h1>
             <p className="text-gray-600 mt-1">
-              Registre a presença dos alunos nas aulas
+              {t('professor.frequencia.subtitle')}
             </p>
           </div>
         </div>
@@ -46,13 +48,13 @@ export const FrequenciaPage: React.FC = () => {
       {/* Instruções */}
       <Card className="bg-blue-50 border-blue-200">
         <CardContent className="pt-6">
-          <h3 className="font-medium text-blue-900 mb-2">Como registrar a frequência:</h3>
+          <h3 className="font-medium text-blue-900 mb-2">{t('professor.frequencia.instructionsTitle')}</h3>
           <ul className="space-y-1 text-sm text-blue-800">
-            <li>1. Selecione a turma, disciplina e data da aula</li>
-            <li>2. Clique no status de cada aluno para alternar entre Presente/Ausente/Justificado</li>
-            <li>3. Adicione observações quando necessário</li>
-            <li>4. Use os botões "Todos presentes" ou "Todos ausentes" para agilizar</li>
-            <li>5. Clique em "Salvar Frequência" para confirmar</li>
+            <li>{t('professor.frequencia.instructions.step1')}</li>
+            <li>{t('professor.frequencia.instructions.step2')}</li>
+            <li>{t('professor.frequencia.instructions.step3')}</li>
+            <li>{t('professor.frequencia.instructions.step4')}</li>
+            <li>{t('professor.frequencia.instructions.step5')}</li>
           </ul>
         </CardContent>
       </Card>

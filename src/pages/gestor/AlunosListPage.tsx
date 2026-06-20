@@ -4,6 +4,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { AlunosPaginatedList } from '../../components/alunos/AlunosPaginatedList';
@@ -24,6 +25,7 @@ import { KeyboardShortcutsHelp } from '../../components/shared/KeyboardShortcuts
 
 export const AlunosListPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { alunos, turmas, matriculas, deleteAluno } = useMockData();
 
   // Estados de filtros
@@ -51,7 +53,7 @@ export const AlunosListPage: React.FC = () => {
   const handleConfirmDelete = () => {
     if (alunoToDelete) {
       deleteAluno(alunoToDelete.id);
-      toast.success(`Aluno ${alunoToDelete.nome_completo} excluído com sucesso!`);
+      toast.success(t('gestor.alunosList.deleteSuccess', { name: alunoToDelete.nome_completo }));
       setDeleteDialogOpen(false);
       setAlunoToDelete(null);
     }
@@ -64,22 +66,22 @@ export const AlunosListPage: React.FC = () => {
 
   // Colunas para exportação
   const exportColumns: ExportColumn[] = [
-    { header: 'Nome', key: 'nome_completo', width: 25 },
-    { header: 'CPF', key: 'cpf', width: 15, format: formatCPF },
-    { header: 'Email', key: 'email', width: 25 },
-    { header: 'Telefone', key: 'telefone', width: 15, format: formatPhone },
-    { 
-      header: 'Data Nascimento', 
-      key: 'data_nascimento', 
+    { header: t('gestor.alunosList.exportColumns.name'), key: 'nome_completo', width: 25 },
+    { header: t('gestor.alunosList.exportColumns.cpf'), key: 'cpf', width: 15, format: formatCPF },
+    { header: t('gestor.alunosList.exportColumns.email'), key: 'email', width: 25 },
+    { header: t('gestor.alunosList.exportColumns.phone'), key: 'telefone', width: 15, format: formatPhone },
+    {
+      header: t('gestor.alunosList.exportColumns.birthDate'),
+      key: 'data_nascimento',
       width: 15,
-      format: (date) => new Date(date).toLocaleDateString('pt-BR')
+      format: (date) => new Date(date).toLocaleDateString()
     },
-    { header: 'Status', key: 'status', width: 12 },
-    { 
-      header: 'Data Matrícula', 
-      key: 'data_matricula', 
+    { header: t('gestor.alunosList.exportColumns.status'), key: 'status', width: 12 },
+    {
+      header: t('gestor.alunosList.exportColumns.enrollmentDate'),
+      key: 'data_matricula',
       width: 15,
-      format: (date) => new Date(date).toLocaleDateString('pt-BR')
+      format: (date) => new Date(date).toLocaleDateString()
     },
   ];
 
@@ -171,15 +173,15 @@ export const AlunosListPage: React.FC = () => {
         e.preventDefault();
         window.location.reload();
       },
-      description: 'Atualizar lista',
+      description: t('gestor.alunosList.shortcuts.refreshList'),
     },
   ]);
 
   // Lista de atalhos para ajuda
   const shortcutsList = [
-    { keys: 'Ctrl + N', description: 'Novo aluno', category: 'Ações' },
-    { keys: 'Ctrl + R', description: 'Atualizar lista', category: 'Ações' },
-    { keys: 'Shift + ?', description: 'Mostrar atalhos', category: 'Ajuda' },
+    { keys: 'Ctrl + N', description: t('gestor.alunosList.shortcuts.newStudent'), category: t('gestor.alunosList.shortcuts.categoryActions') },
+    { keys: 'Ctrl + R', description: t('gestor.alunosList.shortcuts.refreshList'), category: t('gestor.alunosList.shortcuts.categoryActions') },
+    { keys: 'Shift + ?', description: t('gestor.alunosList.shortcuts.showShortcuts'), category: t('gestor.alunosList.shortcuts.categoryHelp') },
   ];
 
   return (
@@ -190,22 +192,22 @@ export const AlunosListPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Alunos</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('gestor.alunosList.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Gerencie os alunos cadastrados no sistema
+            {t('gestor.alunosList.subtitle')}
           </p>
         </div>
         <div className="flex gap-2">
           <KeyboardShortcutsHelp shortcuts={shortcutsList} />
           <ExportButton
-            title="Alunos"
+            title={t('gestor.alunosList.exportTitle')}
             data={filteredAlunos}
             columns={exportColumns}
             filename="alunos"
           />
           <Button onClick={handleNovoAluno} className="gap-2">
             <Plus className="h-4 w-4" />
-            Novo Aluno
+            {t('gestor.alunosList.newStudent')}
           </Button>
         </div>
       </div>
@@ -218,9 +220,9 @@ export const AlunosListPage: React.FC = () => {
               <Users className="h-5 w-5 text-blue-600" />
             </div>
             <div>
-              <CardTitle>Total de Alunos</CardTitle>
+              <CardTitle>{t('gestor.alunosList.totalStudents')}</CardTitle>
               <CardDescription>
-                {filteredAlunos.length} de {alunos.length} alunos
+                {t('gestor.alunosList.totalStudentsDesc', { filtered: filteredAlunos.length, total: alunos.length })}
               </CardDescription>
             </div>
           </div>
@@ -236,9 +238,9 @@ export const AlunosListPage: React.FC = () => {
       {/* Tabela com Paginação */}
       <Card>
         <CardHeader>
-          <CardTitle>Lista de Alunos</CardTitle>
+          <CardTitle>{t('gestor.alunosList.studentsListTitle')}</CardTitle>
           <CardDescription>
-            {pagination.totalItems} aluno{pagination.totalItems !== 1 ? 's' : ''} encontrado{pagination.totalItems !== 1 ? 's' : ''}
+            {t('gestor.alunosList.studentsFound', { count: pagination.totalItems })}
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
@@ -276,9 +278,9 @@ export const AlunosListPage: React.FC = () => {
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
         onConfirm={handleConfirmDelete}
-        title="Excluir Aluno"
+        title={t('gestor.alunosList.deleteDialogTitle')}
         itemName={alunoToDelete?.nome_completo}
-        description="Esta ação irá excluir permanentemente o aluno e todos os seus dados associados (matrículas, notas, frequências, etc.). Esta operação não pode ser desfeita."
+        description={t('gestor.alunosList.deleteDialogDesc')}
       />
     </div>
   );

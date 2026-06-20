@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Download, TrendingUp, Users, DollarSign, BookOpen } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
@@ -15,6 +16,9 @@ import type { RelatorioFiltros } from '../../schemas/relatorioSchemas';
 import { calcularMediaNotas, calcularPercentualFrequencia } from '../../utils/calculations';
 
 export const RelatoriosGestorPage: React.FC = () => {
+  const { t } = useTranslation();
+  const statusActive = t('gestor.relatorios.statusValues.active');
+  const statusInactive = t('gestor.relatorios.statusValues.inactive');
   const {
     alunos,
     professores,
@@ -208,10 +212,10 @@ export const RelatoriosGestorPage: React.FC = () => {
         turma: turma?.nome || '-',
         media: media.toFixed(2),
         frequencia: frequenciaMedia.toFixed(1),
-        status: aluno.ativo ? 'Ativo' : 'Inativo',
+        status: aluno.ativo ? statusActive : statusInactive,
       };
     });
-  }, [alunos, notas, frequencias, matriculas, turmas]);
+  }, [alunos, notas, frequencias, matriculas, turmas, statusActive, statusInactive]);
 
   const dadosTabelaProfessores = useMemo(() => {
     return professores.map(professor => {
@@ -228,17 +232,17 @@ export const RelatoriosGestorPage: React.FC = () => {
         email: professor.email,
         turmas: turmasProfessor,
         observacoes: observacoesProfessor,
-        status: professor.ativo ? 'Ativo' : 'Inativo',
+        status: professor.ativo ? statusActive : statusInactive,
       };
     });
-  }, [professores, turmas, observacoes]);
+  }, [professores, turmas, observacoes, statusActive, statusInactive]);
 
   // ============================================
   // HANDLERS
   // ============================================
 
   const handleExportarRelatorio = () => {
-    toast.success('Relatório exportado com sucesso! (Simulado)');
+    toast.success(t('gestor.relatorios.toast.exported'));
   };
 
   return (
@@ -246,14 +250,14 @@ export const RelatoriosGestorPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Relatórios e Análises</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('gestor.relatorios.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Acompanhe métricas e indicadores do desempenho institucional
+            {t('gestor.relatorios.subtitle')}
           </p>
         </div>
         <Button onClick={handleExportarRelatorio}>
           <Download className="w-4 h-4 mr-2" />
-          Exportar Todos
+          {t('gestor.relatorios.exportAll')}
         </Button>
       </div>
 
@@ -276,7 +280,7 @@ export const RelatoriosGestorPage: React.FC = () => {
               <Users className="w-5 h-5 text-blue-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Total de Alunos</p>
+              <p className="text-sm text-gray-600">{t('gestor.relatorios.metrics.totalStudents')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 {dadosGerais.totalAlunos}
               </p>
@@ -290,7 +294,7 @@ export const RelatoriosGestorPage: React.FC = () => {
               <TrendingUp className="w-5 h-5 text-green-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Média Geral</p>
+              <p className="text-sm text-gray-600">{t('gestor.relatorios.metrics.overallAverage')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 {dadosGerais.mediaGeral.toFixed(2)}
               </p>
@@ -304,7 +308,7 @@ export const RelatoriosGestorPage: React.FC = () => {
               <BookOpen className="w-5 h-5 text-purple-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Frequência Média</p>
+              <p className="text-sm text-gray-600">{t('gestor.relatorios.metrics.averageAttendance')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 {dadosGerais.frequenciaMedia.toFixed(1)}%
               </p>
@@ -318,7 +322,7 @@ export const RelatoriosGestorPage: React.FC = () => {
               <DollarSign className="w-5 h-5 text-yellow-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-600">Receita Total</p>
+              <p className="text-sm text-gray-600">{t('gestor.relatorios.metrics.totalRevenue')}</p>
               <p className="text-2xl font-semibold text-gray-900">
                 R$ {(dadosGerais.receitaTotal / 1000).toFixed(1)}k
               </p>
@@ -330,10 +334,10 @@ export const RelatoriosGestorPage: React.FC = () => {
       {/* Tabs de Relatórios */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList>
-          <TabsTrigger value="geral">Visão Geral</TabsTrigger>
-          <TabsTrigger value="academico">Acadêmico</TabsTrigger>
-          <TabsTrigger value="financeiro">Financeiro</TabsTrigger>
-          <TabsTrigger value="frequencia">Frequência</TabsTrigger>
+          <TabsTrigger value="geral">{t('gestor.relatorios.tabs.general')}</TabsTrigger>
+          <TabsTrigger value="academico">{t('gestor.relatorios.tabs.academic')}</TabsTrigger>
+          <TabsTrigger value="financeiro">{t('gestor.relatorios.tabs.financial')}</TabsTrigger>
+          <TabsTrigger value="frequencia">{t('gestor.relatorios.tabs.attendance')}</TabsTrigger>
         </TabsList>
 
         {/* TAB: GERAL */}
@@ -342,34 +346,34 @@ export const RelatoriosGestorPage: React.FC = () => {
             <GraficoDesempenho
               tipo="bar"
               dados={dadosDesempenhoPorTurma}
-              titulo="Desempenho por Turma"
+              titulo={t('gestor.relatorios.charts.performanceByClass')}
               dataKey="media"
               xAxisKey="name"
             />
             <GraficoDesempenho
               tipo="pie"
               dados={dadosReceitaPorCurso}
-              titulo="Receita por Curso"
+              titulo={t('gestor.relatorios.charts.revenueByCourse')}
               dataKey="value"
               xAxisKey="name"
             />
           </div>
 
           <TabelaRelatorio
-            titulo="Top 10 Alunos"
+            titulo={t('gestor.relatorios.tables.top10Students')}
             colunas={[
-              { key: 'nome', label: 'Nome' },
-              { key: 'turma', label: 'Turma' },
-              { key: 'media', label: 'Média', tipo: 'number' },
-              { key: 'frequencia', label: 'Frequência', tipo: 'percentage' },
-              { 
-                key: 'status', 
-                label: 'Status',
+              { key: 'nome', label: t('gestor.relatorios.tables.columns.name') },
+              { key: 'turma', label: t('gestor.relatorios.tables.columns.class') },
+              { key: 'media', label: t('gestor.relatorios.tables.columns.average'), tipo: 'number' },
+              { key: 'frequencia', label: t('gestor.relatorios.tables.columns.attendance'), tipo: 'percentage' },
+              {
+                key: 'status',
+                label: t('gestor.relatorios.tables.columns.status'),
                 tipo: 'badge',
                 badge: {
                   variants: {
-                    'Ativo': 'default',
-                    'Inativo': 'secondary',
+                    [statusActive]: 'default',
+                    [statusInactive]: 'secondary',
                   }
                 }
               },
@@ -383,26 +387,26 @@ export const RelatoriosGestorPage: React.FC = () => {
           <GraficoDesempenho
             tipo="bar"
             dados={dadosDesempenhoPorTurma}
-            titulo="Média de Notas por Turma"
+            titulo={t('gestor.relatorios.charts.averageGradesByClass')}
             dataKey="media"
             xAxisKey="name"
           />
 
           <TabelaRelatorio
-            titulo="Professores e Atividades"
+            titulo={t('gestor.relatorios.tables.teachersAndActivities')}
             colunas={[
-              { key: 'nome', label: 'Professor' },
-              { key: 'email', label: 'E-mail' },
-              { key: 'turmas', label: 'Turmas', tipo: 'number' },
-              { key: 'observacoes', label: 'Observações', tipo: 'number' },
-              { 
-                key: 'status', 
-                label: 'Status',
+              { key: 'nome', label: t('gestor.relatorios.tables.columns.teacher') },
+              { key: 'email', label: t('gestor.relatorios.tables.columns.email') },
+              { key: 'turmas', label: t('gestor.relatorios.tables.columns.classes'), tipo: 'number' },
+              { key: 'observacoes', label: t('gestor.relatorios.tables.columns.observations'), tipo: 'number' },
+              {
+                key: 'status',
+                label: t('gestor.relatorios.tables.columns.status'),
                 tipo: 'badge',
                 badge: {
                   variants: {
-                    'Ativo': 'default',
-                    'Inativo': 'secondary',
+                    [statusActive]: 'default',
+                    [statusInactive]: 'secondary',
                   }
                 }
               },
@@ -415,21 +419,21 @@ export const RelatoriosGestorPage: React.FC = () => {
         <TabsContent value="financeiro" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <p className="text-sm text-gray-600 mb-2">Receita Total</p>
+              <p className="text-sm text-gray-600 mb-2">{t('gestor.relatorios.financial.totalRevenue')}</p>
               <p className="text-3xl font-semibold text-gray-900 mb-1">
                 R$ {dadosGerais.receitaTotal.toFixed(2)}
               </p>
             </div>
 
             <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <p className="text-sm text-gray-600 mb-2">Receita Recebida</p>
+              <p className="text-sm text-gray-600 mb-2">{t('gestor.relatorios.financial.receivedRevenue')}</p>
               <p className="text-3xl font-semibold text-green-600 mb-1">
                 R$ {dadosGerais.receitaRecebida.toFixed(2)}
               </p>
             </div>
 
             <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <p className="text-sm text-gray-600 mb-2">Taxa de Inadimplência</p>
+              <p className="text-sm text-gray-600 mb-2">{t('gestor.relatorios.financial.defaultRate')}</p>
               <p className="text-3xl font-semibold text-red-600 mb-1">
                 {dadosGerais.taxaInadimplencia.toFixed(1)}%
               </p>
@@ -439,7 +443,7 @@ export const RelatoriosGestorPage: React.FC = () => {
           <GraficoDesempenho
             tipo="pie"
             dados={dadosReceitaPorCurso}
-            titulo="Distribuição de Receita por Curso"
+            titulo={t('gestor.relatorios.charts.revenueDistributionByCourse')}
             dataKey="value"
             xAxisKey="name"
           />
@@ -450,20 +454,20 @@ export const RelatoriosGestorPage: React.FC = () => {
           <GraficoDesempenho
             tipo="line"
             dados={dadosFrequenciaMensal}
-            titulo="Frequência Média Mensal (%)"
+            titulo={t('gestor.relatorios.charts.monthlyAverageAttendance')}
             dataKey="value"
             xAxisKey="name"
           />
 
           <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <h3 className="text-gray-900 mb-4">Resumo de Frequência</h3>
+            <h3 className="text-gray-900 mb-4">{t('gestor.relatorios.attendance.summary')}</h3>
             <div className="space-y-3">
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-gray-600">Frequência Média Geral</span>
+                <span className="text-gray-600">{t('gestor.relatorios.attendance.overallAverage')}</span>
                 <span className="text-gray-900">{dadosGerais.frequenciaMedia.toFixed(1)}%</span>
               </div>
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <span className="text-gray-600">Total de Registros</span>
+                <span className="text-gray-600">{t('gestor.relatorios.attendance.totalRecords')}</span>
                 <span className="text-gray-900">{frequencias.length}</span>
               </div>
             </div>

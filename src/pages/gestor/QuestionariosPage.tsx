@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
@@ -35,6 +36,7 @@ interface QuestionarioCompleto extends Questionario {
 }
 
 export const QuestionariosPage: React.FC = () => {
+  const { t } = useTranslation();
   const [dialogOpen, setDialogOpen] = useState(false);
 
   // Estados do formulário
@@ -145,7 +147,7 @@ export const QuestionariosPage: React.FC = () => {
 
   const adicionarPergunta = () => {
     if (!novaPergunta) {
-      toast.error('Digite o texto da pergunta');
+      toast.error(t('gestor.questionarios.toast.typeQuestion'));
       return;
     }
 
@@ -160,7 +162,7 @@ export const QuestionariosPage: React.FC = () => {
     setNovaPergunta('');
     setTipoPergunta('escala');
     setOpcoesPergunta(['']);
-    toast.success('Pergunta adicionada!');
+    toast.success(t('gestor.questionarios.toast.questionAdded'));
   };
 
   const removerPergunta = (index: number) => {
@@ -169,11 +171,11 @@ export const QuestionariosPage: React.FC = () => {
 
   const handleCriarQuestionario = () => {
     if (!titulo || !descricao || perguntas.length === 0) {
-      toast.error('Preencha todos os campos e adicione ao menos uma pergunta');
+      toast.error(t('gestor.questionarios.toast.fillAndAddQuestion'));
       return;
     }
 
-    toast.success('Questionário criado com sucesso!');
+    toast.success(t('gestor.questionarios.toast.created'));
     setDialogOpen(false);
     // Resetar formulário
     setTitulo('');
@@ -182,22 +184,11 @@ export const QuestionariosPage: React.FC = () => {
   };
 
   const getTipoLabel = (tipo: Questionario['tipo']) => {
-    switch (tipo) {
-      case 'satisfacao_curso': return 'Satisfação do Curso';
-      case 'avaliacao_professor': return 'Avaliação de Professor';
-      case 'feedback_instituicao': return 'Feedback Institucional';
-      case 'pesquisa_personalizada': return 'Pesquisa Personalizada';
-    }
+    return t(`gestor.questionarios.types.${tipo}`);
   };
 
   const getTipoPerguntaLabel = (tipo: PerguntaQuestionario['tipo']) => {
-    switch (tipo) {
-      case 'multipla_escolha': return 'Múltipla Escolha';
-      case 'escala': return 'Escala (1-5 ou 1-10)';
-      case 'texto_curto': return 'Texto Curto';
-      case 'texto_longo': return 'Texto Longo';
-      case 'sim_nao': return 'Sim/Não';
-    }
+    return t(`gestor.questionarios.questionTypes.${tipo}`);
   };
 
   return (
@@ -208,14 +199,14 @@ export const QuestionariosPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Questionários de Avaliação</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('gestor.questionarios.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Crie pesquisas de satisfação e colete feedback dos alunos
+            {t('gestor.questionarios.subtitle')}
           </p>
         </div>
         <Button onClick={() => setDialogOpen(true)} className="gap-2">
           <Plus className="h-4 w-4" />
-          Criar Questionário
+          {t('gestor.questionarios.createButton')}
         </Button>
       </div>
 
@@ -223,7 +214,7 @@ export const QuestionariosPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Questionários Ativos</CardDescription>
+            <CardDescription>{t('gestor.questionarios.stats.activeSurveys')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -232,7 +223,7 @@ export const QuestionariosPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">2</p>
-                <p className="text-xs text-gray-500">ativos</p>
+                <p className="text-xs text-gray-500">{t('gestor.questionarios.stats.active')}</p>
               </div>
             </div>
           </CardContent>
@@ -240,7 +231,7 @@ export const QuestionariosPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Total de Respostas</CardDescription>
+            <CardDescription>{t('gestor.questionarios.stats.totalResponses')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -249,7 +240,7 @@ export const QuestionariosPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">132</p>
-                <p className="text-xs text-gray-500">respostas</p>
+                <p className="text-xs text-gray-500">{t('gestor.questionarios.stats.responses')}</p>
               </div>
             </div>
           </CardContent>
@@ -257,7 +248,7 @@ export const QuestionariosPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Taxa de Resposta</CardDescription>
+            <CardDescription>{t('gestor.questionarios.stats.responseRate')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -266,7 +257,7 @@ export const QuestionariosPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">76%</p>
-                <p className="text-xs text-gray-500">responderam</p>
+                <p className="text-xs text-gray-500">{t('gestor.questionarios.stats.responded')}</p>
               </div>
             </div>
           </CardContent>
@@ -274,7 +265,7 @@ export const QuestionariosPage: React.FC = () => {
 
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Satisfação Média</CardDescription>
+            <CardDescription>{t('gestor.questionarios.stats.averageSatisfaction')}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-3">
@@ -283,7 +274,7 @@ export const QuestionariosPage: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold">8.5</p>
-                <p className="text-xs text-gray-500">de 10</p>
+                <p className="text-xs text-gray-500">{t('gestor.questionarios.stats.outOf10')}</p>
               </div>
             </div>
           </CardContent>
@@ -307,17 +298,17 @@ export const QuestionariosPage: React.FC = () => {
                     </Badge>
                     {questionario.obrigatorio && (
                       <Badge className="bg-orange-100 text-orange-700">
-                        Obrigatório
+                        {t('gestor.questionarios.badges.required')}
                       </Badge>
                     )}
                     {questionario.anonimo && (
                       <Badge variant="outline">
-                        Anônimo
+                        {t('gestor.questionarios.badges.anonymous')}
                       </Badge>
                     )}
                     {questionario.ativo && (
                       <Badge className="bg-green-100 text-green-700">
-                        Ativo
+                        {t('common.status.active')}
                       </Badge>
                     )}
                   </div>
@@ -328,18 +319,18 @@ export const QuestionariosPage: React.FC = () => {
                   {/* Estatísticas */}
                   <div className="grid grid-cols-3 gap-4 mb-4">
                     <div>
-                      <p className="text-sm text-gray-500">Perguntas</p>
+                      <p className="text-sm text-gray-500">{t('gestor.questionarios.fields.questions')}</p>
                       <p className="font-medium">{questionario.perguntas.length}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Respostas</p>
+                      <p className="text-sm text-gray-500">{t('gestor.questionarios.fields.responses')}</p>
                       <p className="font-medium">{questionario.total_respostas}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Período</p>
+                      <p className="text-sm text-gray-500">{t('gestor.questionarios.fields.period')}</p>
                       <p className="font-medium">
-                        {questionario.data_inicio.toLocaleDateString('pt-BR')}
-                        {questionario.data_fim && ` - ${questionario.data_fim.toLocaleDateString('pt-BR')}`}
+                        {questionario.data_inicio.toLocaleDateString()}
+                        {questionario.data_fim && ` - ${questionario.data_fim.toLocaleDateString()}`}
                       </p>
                     </div>
                   </div>
@@ -348,7 +339,7 @@ export const QuestionariosPage: React.FC = () => {
                   <div className="p-3 bg-gray-50 rounded-lg">
                     <p className="text-sm font-medium text-gray-700 mb-2">
                       <List className="h-4 w-4 inline mr-2" />
-                      Perguntas ({questionario.perguntas.length})
+                      {t('gestor.questionarios.questionsCount', { count: questionario.perguntas.length })}
                     </p>
                     <ul className="space-y-1 text-sm text-gray-600">
                       {questionario.perguntas.slice(0, 3).map((pergunta, index) => (
@@ -358,7 +349,7 @@ export const QuestionariosPage: React.FC = () => {
                       ))}
                       {questionario.perguntas.length > 3 && (
                         <li className="text-gray-500 italic">
-                          + {questionario.perguntas.length - 3} pergunta(s)
+                          {t('gestor.questionarios.moreQuestions', { count: questionario.perguntas.length - 3 })}
                         </li>
                       )}
                     </ul>
@@ -390,29 +381,29 @@ export const QuestionariosPage: React.FC = () => {
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>Criar Novo Questionário</DialogTitle>
+            <DialogTitle>{t('gestor.questionarios.dialog.title')}</DialogTitle>
             <DialogDescription>
-              Configure uma pesquisa de satisfação ou avaliação
+              {t('gestor.questionarios.dialog.description')}
             </DialogDescription>
           </DialogHeader>
 
           <div className="space-y-4 py-4">
             {/* Informações Básicas */}
             <div>
-              <Label htmlFor="titulo">Título do Questionário *</Label>
+              <Label htmlFor="titulo">{t('gestor.questionarios.dialog.titleLabel')}</Label>
               <Input
                 id="titulo"
-                placeholder="Ex: Avaliação de Satisfação do Curso"
+                placeholder={t('gestor.questionarios.dialog.titlePlaceholder')}
                 value={titulo}
                 onChange={(e) => setTitulo(e.target.value)}
               />
             </div>
 
             <div>
-              <Label htmlFor="descricao">Descrição *</Label>
+              <Label htmlFor="descricao">{t('gestor.questionarios.dialog.descriptionLabel')}</Label>
               <Textarea
                 id="descricao"
-                placeholder="Explique o objetivo da pesquisa..."
+                placeholder={t('gestor.questionarios.dialog.descriptionPlaceholder')}
                 value={descricao}
                 onChange={(e) => setDescricao(e.target.value)}
                 rows={2}
@@ -421,30 +412,30 @@ export const QuestionariosPage: React.FC = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="tipo">Tipo de Questionário</Label>
+                <Label htmlFor="tipo">{t('gestor.questionarios.dialog.typeLabel')}</Label>
                 <Select value={tipo} onValueChange={(v) => setTipo(v as Questionario['tipo'])}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="satisfacao_curso">Satisfação do Curso</SelectItem>
-                    <SelectItem value="avaliacao_professor">Avaliação de Professor</SelectItem>
-                    <SelectItem value="feedback_instituicao">Feedback Institucional</SelectItem>
-                    <SelectItem value="pesquisa_personalizada">Pesquisa Personalizada</SelectItem>
+                    <SelectItem value="satisfacao_curso">{t('gestor.questionarios.types.satisfacao_curso')}</SelectItem>
+                    <SelectItem value="avaliacao_professor">{t('gestor.questionarios.types.avaliacao_professor')}</SelectItem>
+                    <SelectItem value="feedback_instituicao">{t('gestor.questionarios.types.feedback_instituicao')}</SelectItem>
+                    <SelectItem value="pesquisa_personalizada">{t('gestor.questionarios.types.pesquisa_personalizada')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div>
-                <Label htmlFor="publico">Público-alvo</Label>
+                <Label htmlFor="publico">{t('gestor.questionarios.dialog.audienceLabel')}</Label>
                 <Select value={publico} onValueChange={(v) => setPublico(v as Questionario['publico'])}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="todos">Todos os alunos</SelectItem>
-                    <SelectItem value="curso_especifico">Curso específico</SelectItem>
-                    <SelectItem value="turma_especifica">Turma específica</SelectItem>
+                    <SelectItem value="todos">{t('gestor.questionarios.dialog.audience.all')}</SelectItem>
+                    <SelectItem value="curso_especifico">{t('gestor.questionarios.dialog.audience.specificCourse')}</SelectItem>
+                    <SelectItem value="turma_especifica">{t('gestor.questionarios.dialog.audience.specificClass')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -454,9 +445,9 @@ export const QuestionariosPage: React.FC = () => {
             <div className="space-y-3 pt-3 border-t">
               <div className="flex items-center justify-between">
                 <div>
-                  <Label htmlFor="anonimo">Respostas anônimas</Label>
+                  <Label htmlFor="anonimo">{t('gestor.questionarios.dialog.anonymousLabel')}</Label>
                   <p className="text-xs text-gray-500">
-                    Não armazenar identificação do respondente
+                    {t('gestor.questionarios.dialog.anonymousHint')}
                   </p>
                 </div>
                 <Switch
@@ -468,9 +459,9 @@ export const QuestionariosPage: React.FC = () => {
 
               <div className="flex items-center justify-between">
                 <div>
-                  <Label htmlFor="obrigatorio">Questionário obrigatório</Label>
+                  <Label htmlFor="obrigatorio">{t('gestor.questionarios.dialog.requiredLabel')}</Label>
                   <p className="text-xs text-gray-500">
-                    Alunos devem responder para continuar
+                    {t('gestor.questionarios.dialog.requiredHint')}
                   </p>
                 </div>
                 <Switch
@@ -483,7 +474,7 @@ export const QuestionariosPage: React.FC = () => {
 
             {/* Perguntas */}
             <div className="pt-4 border-t">
-              <h4 className="font-medium mb-3">Perguntas ({perguntas.length})</h4>
+              <h4 className="font-medium mb-3">{t('gestor.questionarios.dialog.questionsTitle', { count: perguntas.length })}</h4>
 
               {/* Lista de Perguntas Adicionadas */}
               {perguntas.length > 0 && (
@@ -495,11 +486,11 @@ export const QuestionariosPage: React.FC = () => {
                           {index + 1}. {pergunta.texto}
                         </p>
                         <p className="text-xs text-gray-500 mt-1">
-                          Tipo: {getTipoPerguntaLabel(pergunta.tipo)}
+                          {t('gestor.questionarios.dialog.questionTypeLabel', { type: getTipoPerguntaLabel(pergunta.tipo) })}
                         </p>
                         {pergunta.opcoes && (
                           <p className="text-xs text-gray-500">
-                            Opções: {pergunta.opcoes.join(', ')}
+                            {t('gestor.questionarios.dialog.optionsLabel', { options: pergunta.opcoes.join(', ') })}
                           </p>
                         )}
                       </div>
@@ -520,38 +511,38 @@ export const QuestionariosPage: React.FC = () => {
               {/* Adicionar Nova Pergunta */}
               <div className="space-y-3 p-4 border-2 border-dashed rounded-lg">
                 <div>
-                  <Label htmlFor="nova-pergunta">Nova Pergunta</Label>
+                  <Label htmlFor="nova-pergunta">{t('gestor.questionarios.dialog.newQuestionLabel')}</Label>
                   <Input
                     id="nova-pergunta"
-                    placeholder="Digite o texto da pergunta..."
+                    placeholder={t('gestor.questionarios.dialog.newQuestionPlaceholder')}
                     value={novaPergunta}
                     onChange={(e) => setNovaPergunta(e.target.value)}
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="tipo-pergunta">Tipo de Resposta</Label>
+                  <Label htmlFor="tipo-pergunta">{t('gestor.questionarios.dialog.answerTypeLabel')}</Label>
                   <Select value={tipoPergunta} onValueChange={(v) => setTipoPergunta(v as PerguntaQuestionario['tipo'])}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="escala">Escala (1-5 ou 1-10)</SelectItem>
-                      <SelectItem value="sim_nao">Sim/Não</SelectItem>
-                      <SelectItem value="multipla_escolha">Múltipla Escolha</SelectItem>
-                      <SelectItem value="texto_curto">Texto Curto</SelectItem>
-                      <SelectItem value="texto_longo">Texto Longo</SelectItem>
+                      <SelectItem value="escala">{t('gestor.questionarios.questionTypes.escala')}</SelectItem>
+                      <SelectItem value="sim_nao">{t('gestor.questionarios.questionTypes.sim_nao')}</SelectItem>
+                      <SelectItem value="multipla_escolha">{t('gestor.questionarios.questionTypes.multipla_escolha')}</SelectItem>
+                      <SelectItem value="texto_curto">{t('gestor.questionarios.questionTypes.texto_curto')}</SelectItem>
+                      <SelectItem value="texto_longo">{t('gestor.questionarios.questionTypes.texto_longo')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 {tipoPergunta === 'multipla_escolha' && (
                   <div>
-                    <Label>Opções de Resposta</Label>
+                    <Label>{t('gestor.questionarios.dialog.answerOptionsLabel')}</Label>
                     {opcoesPergunta.map((opcao, index) => (
                       <Input
                         key={index}
-                        placeholder={`Opção ${index + 1}`}
+                        placeholder={t('gestor.questionarios.dialog.optionPlaceholder', { number: index + 1 })}
                         value={opcao}
                         onChange={(e) => {
                           const novasOpcoes = [...opcoesPergunta];
@@ -568,7 +559,7 @@ export const QuestionariosPage: React.FC = () => {
                       onClick={() => setOpcoesPergunta([...opcoesPergunta, ''])}
                       className="mt-2"
                     >
-                      + Adicionar Opção
+                      {t('gestor.questionarios.dialog.addOption')}
                     </Button>
                   </div>
                 )}
@@ -580,7 +571,7 @@ export const QuestionariosPage: React.FC = () => {
                   className="w-full gap-2"
                 >
                   <PlusCircle className="h-4 w-4" />
-                  Adicionar Pergunta
+                  {t('gestor.questionarios.dialog.addQuestion')}
                 </Button>
               </div>
             </div>
@@ -588,10 +579,10 @@ export const QuestionariosPage: React.FC = () => {
 
           <DialogFooter>
             <Button variant="outline" onClick={() => setDialogOpen(false)}>
-              Cancelar
+              {t('common.actions.cancel')}
             </Button>
             <Button onClick={handleCriarQuestionario}>
-              Criar Questionário
+              {t('gestor.questionarios.createButton')}
             </Button>
           </DialogFooter>
         </DialogContent>

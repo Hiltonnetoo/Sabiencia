@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { disciplinaSchema, type DisciplinaFormData } from '../../schemas/disciplinaSchemas';
@@ -32,6 +33,7 @@ interface DisciplinaFormProps {
 }
 
 export function DisciplinaForm({ disciplina, cursos, open, onClose, onSubmit }: DisciplinaFormProps) {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -65,18 +67,18 @@ export function DisciplinaForm({ disciplina, cursos, open, onClose, onSubmit }: 
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>
-            {disciplina ? 'Editar Disciplina' : 'Nova Disciplina'}
+            {disciplina ? t('components.disciplinas.form.editTitle') : t('components.disciplinas.form.newTitle')}
           </DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
           {/* Nome */}
           <div>
-            <Label htmlFor="nome">Nome da Disciplina *</Label>
+            <Label htmlFor="nome">{t('components.disciplinas.form.nameLabel')}</Label>
             <Input
               id="nome"
               {...register('nome')}
-              placeholder="Ex: Anatomia Humana"
+              placeholder={t('components.disciplinas.form.namePlaceholder')}
               className="mt-1"
             />
             {errors.nome && (
@@ -86,13 +88,13 @@ export function DisciplinaForm({ disciplina, cursos, open, onClose, onSubmit }: 
 
           {/* Curso */}
           <div>
-            <Label htmlFor="curso_id">Curso *</Label>
-            <Select 
-              value={cursoId} 
+            <Label htmlFor="curso_id">{t('components.disciplinas.form.courseLabel')}</Label>
+            <Select
+              value={cursoId}
               onValueChange={(value) => setValue('curso_id', value, { shouldValidate: true })}
             >
               <SelectTrigger className="mt-1">
-                <SelectValue placeholder="Selecione um curso..." />
+                <SelectValue placeholder={t('components.disciplinas.form.coursePlaceholder')} />
               </SelectTrigger>
               <SelectContent>
                 {cursos
@@ -111,11 +113,11 @@ export function DisciplinaForm({ disciplina, cursos, open, onClose, onSubmit }: 
 
           {/* Descrição */}
           <div>
-            <Label htmlFor="descricao">Descrição *</Label>
+            <Label htmlFor="descricao">{t('components.disciplinas.form.descriptionLabel')}</Label>
             <Textarea
               id="descricao"
               {...register('descricao')}
-              placeholder="Breve descrição da disciplina..."
+              placeholder={t('components.disciplinas.form.descriptionPlaceholder')}
               rows={3}
               className="mt-1"
             />
@@ -127,7 +129,7 @@ export function DisciplinaForm({ disciplina, cursos, open, onClose, onSubmit }: 
           {/* Carga Horária e Ordem */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="carga_horaria">Carga Horária (horas) *</Label>
+              <Label htmlFor="carga_horaria">{t('components.disciplinas.form.workloadLabel')}</Label>
               <Input
                 id="carga_horaria"
                 type="number"
@@ -144,7 +146,7 @@ export function DisciplinaForm({ disciplina, cursos, open, onClose, onSubmit }: 
             </div>
 
             <div>
-              <Label htmlFor="ordem">Ordem na Grade *</Label>
+              <Label htmlFor="ordem">{t('components.disciplinas.form.orderLabel')}</Label>
               <Input
                 id="ordem"
                 type="number"
@@ -163,16 +165,16 @@ export function DisciplinaForm({ disciplina, cursos, open, onClose, onSubmit }: 
 
           {/* Ementa */}
           <div>
-            <Label htmlFor="ementa">Ementa</Label>
+            <Label htmlFor="ementa">{t('components.disciplinas.form.ementaLabel')}</Label>
             <Textarea
               id="ementa"
               {...register('ementa')}
-              placeholder="Conteúdo programático da disciplina..."
+              placeholder={t('components.disciplinas.form.ementaPlaceholder')}
               rows={4}
               className="mt-1"
             />
             <p className="text-xs text-gray-500 mt-1">
-              Opcional. Descreva os principais tópicos abordados na disciplina.
+              {t('components.disciplinas.form.ementaHint')}
             </p>
             {errors.ementa && (
               <p className="text-sm text-red-600 mt-1">{errors.ementa.message}</p>
@@ -181,14 +183,14 @@ export function DisciplinaForm({ disciplina, cursos, open, onClose, onSubmit }: 
 
           <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose}>
-              Cancelar
+              {t('common.actions.cancel')}
             </Button>
-            <LoadingButton 
-              type="submit" 
+            <LoadingButton
+              type="submit"
               isLoading={isSubmitting}
-              loadingText="Salvando..."
+              loadingText={t('common.actions.saving')}
             >
-              {disciplina ? 'Salvar Alterações' : 'Criar Disciplina'}
+              {disciplina ? t('components.disciplinas.form.submitEdit') : t('components.disciplinas.form.submitNew')}
             </LoadingButton>
           </DialogFooter>
         </form>

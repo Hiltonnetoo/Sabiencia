@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { PerfilHeader } from '../../components/perfil/PerfilHeader';
 import { PerfilForm } from '../../components/perfil/PerfilForm';
@@ -14,6 +15,7 @@ import { BookOpen, Users, FileText } from 'lucide-react';
 import type { PerfilPessoalFormData, AlterarSenhaFormData } from '../../schemas/perfilSchemas';
 
 export const PerfilProfessorPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { professores, professorTurmaDisciplina, observacoes } = useMockData();
 
@@ -65,10 +67,10 @@ export const PerfilProfessorPage: React.FC = () => {
       {/* Tabs */}
       <Tabs defaultValue="dados-pessoais" className="space-y-6">
         <TabsList>
-          <TabsTrigger value="dados-pessoais">Dados Pessoais</TabsTrigger>
-          <TabsTrigger value="profissional">Dados Profissionais</TabsTrigger>
-          <TabsTrigger value="seguranca">Segurança</TabsTrigger>
-          <TabsTrigger value="atividades">Atividades</TabsTrigger>
+          <TabsTrigger value="dados-pessoais">{t('professor.perfil.tabs.personalData')}</TabsTrigger>
+          <TabsTrigger value="profissional">{t('professor.perfil.tabs.professionalData')}</TabsTrigger>
+          <TabsTrigger value="seguranca">{t('professor.perfil.tabs.security')}</TabsTrigger>
+          <TabsTrigger value="atividades">{t('professor.perfil.tabs.activities')}</TabsTrigger>
         </TabsList>
 
         {/* Tab: Dados Pessoais */}
@@ -87,7 +89,7 @@ export const PerfilProfessorPage: React.FC = () => {
                     <Users className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Turmas</p>
+                    <p className="text-sm text-gray-600">{t('professor.perfil.stats.classes')}</p>
                     <p className="text-2xl font-semibold text-gray-900">{turmasUnicas}</p>
                   </div>
                 </div>
@@ -99,7 +101,7 @@ export const PerfilProfessorPage: React.FC = () => {
                     <BookOpen className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Disciplinas</p>
+                    <p className="text-sm text-gray-600">{t('professor.perfil.stats.subjects')}</p>
                     <p className="text-2xl font-semibold text-gray-900">{disciplinasUnicas}</p>
                   </div>
                 </div>
@@ -111,7 +113,7 @@ export const PerfilProfessorPage: React.FC = () => {
                     <FileText className="w-5 h-5 text-yellow-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Observações</p>
+                    <p className="text-sm text-gray-600">{t('professor.perfil.stats.observations')}</p>
                     <p className="text-2xl font-semibold text-gray-900">{minhasObservacoes.length}</p>
                   </div>
                 </div>
@@ -120,31 +122,31 @@ export const PerfilProfessorPage: React.FC = () => {
 
             {/* Informações Profissionais */}
             <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-6">Informações Profissionais</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-6">{t('professor.perfil.professionalInfo')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600 mb-2">Formação</p>
+                  <p className="text-sm text-gray-600 mb-2">{t('professor.perfil.fields.education')}</p>
                   <p className="text-gray-900">
-                    {professor?.formacao || 'Não informado'}
+                    {professor?.formacao || t('professor.perfil.notInformed')}
                   </p>
                 </div>
 
                 <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600 mb-2">Área de Especialização</p>
+                  <p className="text-sm text-gray-600 mb-2">{t('professor.perfil.fields.specialization')}</p>
                   <p className="text-gray-900">
-                    {professor?.especialidades?.join(', ') || professor?.especializacao || 'Não informado'}
+                    {professor?.especialidades?.join(', ') || professor?.especializacao || t('professor.perfil.notInformed')}
                   </p>
                 </div>
 
                 <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600 mb-2">Registro Profissional</p>
-                  <p className="text-gray-900">Não informado</p>
+                  <p className="text-sm text-gray-600 mb-2">{t('professor.perfil.fields.professionalRegistration')}</p>
+                  <p className="text-gray-900">{t('professor.perfil.notInformed')}</p>
                 </div>
 
                 <div className="p-4 bg-gray-50 rounded-lg">
-                  <p className="text-sm text-gray-600 mb-2">Data de Admissão</p>
+                  <p className="text-sm text-gray-600 mb-2">{t('professor.perfil.fields.admissionDate')}</p>
                   <p className="text-gray-900">
-                    {new Date().toLocaleDateString('pt-BR')}
+                    {new Date().toLocaleDateString()}
                   </p>
                 </div>
               </div>

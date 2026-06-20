@@ -3,6 +3,7 @@
 // ============================================
 
 import React, { useState, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { Button } from '../../components/ui/button';
@@ -20,6 +21,7 @@ import type { Material } from '../../types';
 import type { MaterialFormData } from '../../schemas/materialSchemas';
 
 export const BibliotecaProfessorPage: React.FC = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { materiais: allMateriais, disciplinas, createMaterial, updateMaterial, deleteMaterial } = useMockData();
 
@@ -98,11 +100,11 @@ export const BibliotecaProfessorPage: React.FC = () => {
       try {
         await new Promise(resolve => setTimeout(resolve, 500));
         deleteMaterial(materialToDelete.id);
-        toast.success('Material excluído com sucesso!');
+        toast.success(t('professor.biblioteca.toast.deleted'));
         setDeleteDialogOpen(false);
         setMaterialToDelete(null);
       } catch (error) {
-        toast.error('Erro ao excluir material');
+        toast.error(t('professor.biblioteca.toast.deleteError'));
       } finally {
         setIsLoading(false);
       }
@@ -116,19 +118,19 @@ export const BibliotecaProfessorPage: React.FC = () => {
 
       if (editMaterial) {
         updateMaterial(editMaterial.id, data as any);
-        toast.success('Material atualizado com sucesso!');
+        toast.success(t('professor.biblioteca.toast.updated'));
       } else {
         createMaterial({
           ...data,
           professor_id: user!.id,
         } as any);
-        toast.success('Material publicado com sucesso!');
+        toast.success(t('professor.biblioteca.toast.published'));
       }
 
       setUploadDialogOpen(false);
       setEditMaterial(null);
     } catch (error) {
-      toast.error('Erro ao salvar material');
+      toast.error(t('professor.biblioteca.toast.saveError'));
     } finally {
       setIsLoading(false);
     }
@@ -136,7 +138,7 @@ export const BibliotecaProfessorPage: React.FC = () => {
 
   const handleDownload = (material: Material) => {
     window.open(material.url, '_blank');
-    toast.success('Abrindo material...');
+    toast.success(t('professor.biblioteca.toast.opening'));
   };
 
   const handleClearFilters = () => {
@@ -158,9 +160,9 @@ export const BibliotecaProfessorPage: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Minha Biblioteca</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('professor.biblioteca.title')}</h1>
           <p className="text-gray-600 mt-1">
-            Gerencie materiais de estudo para seus alunos
+            {t('professor.biblioteca.subtitle')}
           </p>
         </div>
         <Button
@@ -171,7 +173,7 @@ export const BibliotecaProfessorPage: React.FC = () => {
           className="gap-2"
         >
           <Plus className="h-4 w-4" />
-          Novo Material
+          {t('professor.biblioteca.newMaterial')}
         </Button>
       </div>
 
@@ -181,7 +183,7 @@ export const BibliotecaProfessorPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <BookOpen className="h-4 w-4" />
-              Meus Materiais
+              {t('professor.biblioteca.stats.myMaterials')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -193,7 +195,7 @@ export const BibliotecaProfessorPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <FileText className="h-4 w-4" />
-              PDFs
+              {t('professor.biblioteca.stats.pdfs')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -205,7 +207,7 @@ export const BibliotecaProfessorPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <Video className="h-4 w-4" />
-              Vídeos
+              {t('professor.biblioteca.stats.videos')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -217,7 +219,7 @@ export const BibliotecaProfessorPage: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <Upload className="h-4 w-4" />
-              Publicados
+              {t('professor.biblioteca.stats.published')}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -231,7 +233,7 @@ export const BibliotecaProfessorPage: React.FC = () => {
       {/* Filtros */}
       <Card>
         <CardHeader>
-          <CardTitle>Filtros</CardTitle>
+          <CardTitle>{t('common.actions.filters')}</CardTitle>
         </CardHeader>
         <CardContent>
           <MaterialFilters
@@ -257,10 +259,10 @@ export const BibliotecaProfessorPage: React.FC = () => {
       <Tabs defaultValue="todos" className="w-full">
         <TabsList className="grid w-full max-w-md grid-cols-3">
           <TabsTrigger value="todos">
-            Todos ({filteredMateriais.length})
+            {t('professor.biblioteca.tabs.all', { count: filteredMateriais.length })}
           </TabsTrigger>
-          <TabsTrigger value="pdfs">PDFs ({pdfs.length})</TabsTrigger>
-          <TabsTrigger value="videos">Vídeos ({videos.length})</TabsTrigger>
+          <TabsTrigger value="pdfs">{t('professor.biblioteca.tabs.pdfs', { count: pdfs.length })}</TabsTrigger>
+          <TabsTrigger value="videos">{t('professor.biblioteca.tabs.videos', { count: videos.length })}</TabsTrigger>
         </TabsList>
 
         {/* Todos */}
@@ -271,8 +273,8 @@ export const BibliotecaProfessorPage: React.FC = () => {
                 <BookOpen className="h-16 w-16 text-gray-300 mb-4" />
                 <p className="text-gray-500 text-center">
                   {myMateriais.length === 0
-                    ? 'Você ainda não possui materiais publicados'
-                    : 'Nenhum material encontrado com os filtros selecionados'}
+                    ? t('professor.biblioteca.empty.noMaterials')
+                    : t('professor.biblioteca.empty.noResults')}
                 </p>
                 {myMateriais.length === 0 && (
                   <Button
@@ -280,7 +282,7 @@ export const BibliotecaProfessorPage: React.FC = () => {
                     className="mt-4 gap-2"
                   >
                     <Plus className="h-4 w-4" />
-                    Publicar Primeiro Material
+                    {t('professor.biblioteca.empty.publishFirst')}
                   </Button>
                 )}
               </CardContent>
@@ -307,7 +309,7 @@ export const BibliotecaProfessorPage: React.FC = () => {
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <FileText className="h-16 w-16 text-gray-300 mb-4" />
-                <p className="text-gray-500">Nenhum PDF publicado</p>
+                <p className="text-gray-500">{t('professor.biblioteca.empty.noPdfs')}</p>
               </CardContent>
             </Card>
           ) : (
@@ -332,7 +334,7 @@ export const BibliotecaProfessorPage: React.FC = () => {
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <Video className="h-16 w-16 text-gray-300 mb-4" />
-                <p className="text-gray-500">Nenhum vídeo publicado</p>
+                <p className="text-gray-500">{t('professor.biblioteca.empty.noVideos')}</p>
               </CardContent>
             </Card>
           ) : (
@@ -357,7 +359,7 @@ export const BibliotecaProfessorPage: React.FC = () => {
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>
-              {editMaterial ? 'Editar Material' : 'Novo Material'}
+              {editMaterial ? t('professor.biblioteca.dialog.edit') : t('professor.biblioteca.dialog.new')}
             </DialogTitle>
           </DialogHeader>
           <MaterialUploadForm
@@ -385,9 +387,9 @@ export const BibliotecaProfessorPage: React.FC = () => {
         open={deleteDialogOpen}
         onOpenChange={setDeleteDialogOpen}
         onConfirm={handleConfirmDelete}
-        title="Excluir Material"
+        title={t('professor.biblioteca.delete.title')}
         itemName={materialToDelete?.titulo}
-        description="Esta ação irá remover permanentemente o material da biblioteca. Os alunos não poderão mais acessá-lo."
+        description={t('professor.biblioteca.delete.description')}
       />
     </div>
   );

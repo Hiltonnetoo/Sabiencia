@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -32,6 +33,7 @@ export function ExportDialog({
   columns,
   defaultFilename = 'export',
 }: ExportDialogProps) {
+  const { t } = useTranslation();
   const [format, setFormat] = useState<ExportFormat>('excel');
   const [filename, setFilename] = useState(defaultFilename);
   const [includeTimestamp, setIncludeTimestamp] = useState(true);
@@ -40,7 +42,7 @@ export function ExportDialog({
 
   const handleExport = async () => {
     if (!filename.trim()) {
-      toast.error('Digite um nome para o arquivo');
+      toast.error(t('components.exportDialog.filenameRequired'));
       return;
     }
 
@@ -57,11 +59,11 @@ export function ExportDialog({
         includeTimestamp,
       });
 
-      toast.success('Dados exportados com sucesso!');
+      toast.success(t('components.exportDialog.exportSuccess'));
       onOpenChange(false);
     } catch (error) {
       console.error('Erro ao exportar:', error);
-      toast.error('Erro ao exportar dados');
+      toast.error(t('components.exportDialog.exportError'));
     } finally {
       setIsExporting(false);
     }
@@ -82,16 +84,16 @@ export function ExportDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Exportar Dados</DialogTitle>
+          <DialogTitle>{t('components.exportDialog.title')}</DialogTitle>
           <DialogDescription>
-            Exporte {data.length} registro(s) de {title.toLowerCase()} no formato desejado.
+            {t('components.exportDialog.description', { count: data.length, entity: title.toLowerCase() })}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6 py-4">
           {/* Formato */}
           <div className="space-y-3">
-            <Label>Formato de Exportação</Label>
+            <Label>{t('components.exportDialog.format')}</Label>
             <RadioGroup value={format} onValueChange={(v: ExportFormat | string) => setFormat(v as ExportFormat)}>
               <div className="flex items-center space-x-2 rounded-lg border p-3 hover:bg-accent cursor-pointer">
                 <RadioGroupItem value="excel" id="excel" />
@@ -101,9 +103,9 @@ export function ExportDialog({
                 >
                   {getFormatIcon('excel')}
                   <div>
-                    <div>Excel (.xlsx)</div>
+                    <div>{t('components.exportDialog.excelOption')}</div>
                     <div className="text-xs text-muted-foreground">
-                      Melhor para análise de dados
+                      {t('components.exportDialog.excelHint')}
                     </div>
                   </div>
                 </Label>
@@ -117,9 +119,9 @@ export function ExportDialog({
                 >
                   {getFormatIcon('pdf')}
                   <div>
-                    <div>PDF (.pdf)</div>
+                    <div>{t('components.exportDialog.pdfOption')}</div>
                     <div className="text-xs text-muted-foreground">
-                      Melhor para impressão
+                      {t('components.exportDialog.pdfHint')}
                     </div>
                   </div>
                 </Label>
@@ -133,9 +135,9 @@ export function ExportDialog({
                 >
                   {getFormatIcon('csv')}
                   <div>
-                    <div>CSV (.csv)</div>
+                    <div>{t('components.exportDialog.csvOption')}</div>
                     <div className="text-xs text-muted-foreground">
-                      Compatível com qualquer sistema
+                      {t('components.exportDialog.csvHint')}
                     </div>
                   </div>
                 </Label>
@@ -145,7 +147,7 @@ export function ExportDialog({
 
           {/* Nome do arquivo */}
           <div className="space-y-2">
-            <Label htmlFor="filename">Nome do Arquivo</Label>
+            <Label htmlFor="filename">{t('components.exportDialog.filename')}</Label>
             <Input
               id="filename"
               value={filename}
@@ -157,7 +159,7 @@ export function ExportDialog({
           {/* Orientação (só para PDF) */}
           {format === 'pdf' && (
             <div className="space-y-2">
-              <Label>Orientação da Página</Label>
+              <Label>{t('components.exportDialog.orientation')}</Label>
               <RadioGroup
                 value={orientation}
                 onValueChange={(v: 'portrait' | 'landscape' | string) => setOrientation(v as 'portrait' | 'landscape')}
@@ -165,13 +167,13 @@ export function ExportDialog({
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="portrait" id="portrait" />
                   <Label htmlFor="portrait" className="cursor-pointer">
-                    Retrato
+                    {t('components.exportDialog.portrait')}
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="landscape" id="landscape" />
                   <Label htmlFor="landscape" className="cursor-pointer">
-                    Paisagem
+                    {t('components.exportDialog.landscape')}
                   </Label>
                 </div>
               </RadioGroup>
@@ -180,7 +182,7 @@ export function ExportDialog({
 
           {/* Opções */}
           <div className="space-y-2">
-            <Label>Opções</Label>
+            <Label>{t('components.exportDialog.options')}</Label>
             <div className="flex items-center space-x-2">
               <Checkbox
                 id="timestamp"
@@ -188,7 +190,7 @@ export function ExportDialog({
                 onCheckedChange={(checked: boolean | 'indeterminate') => setIncludeTimestamp(checked === true)}
               />
               <Label htmlFor="timestamp" className="cursor-pointer">
-                Incluir data/hora no nome do arquivo
+                {t('components.exportDialog.includeTimestamp')}
               </Label>
             </div>
           </div>
@@ -196,11 +198,11 @@ export function ExportDialog({
 
         <div className="flex justify-end gap-3">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancelar
+            {t('common.actions.cancel')}
           </Button>
           <Button onClick={handleExport} disabled={isExporting}>
             {isExporting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Exportar
+            {t('common.actions.export')}
           </Button>
         </div>
       </DialogContent>

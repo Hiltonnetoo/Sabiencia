@@ -3,6 +3,7 @@
 // ============================================
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Badge } from '../ui/badge';
@@ -44,21 +45,23 @@ export const LiveCard: React.FC<LiveCardProps> = ({
   showActions = false,
   userRole = 'aluno'
 }) => {
+  const { t } = useTranslation();
+
   const getStatusBadge = () => {
     switch (aula.status) {
       case 'ao_vivo':
         return (
           <Badge className="bg-red-600 animate-pulse">
             <div className="w-2 h-2 bg-white rounded-full mr-2" />
-            AO VIVO
+            {t('components.lives.card.live')}
           </Badge>
         );
       case 'agendada':
-        return <Badge variant="secondary">Agendada</Badge>;
+        return <Badge variant="secondary">{t('components.lives.card.scheduled')}</Badge>;
       case 'finalizada':
-        return <Badge variant="outline">Finalizada</Badge>;
+        return <Badge variant="outline">{t('components.lives.card.finished')}</Badge>;
       case 'cancelada':
-        return <Badge variant="destructive">Cancelada</Badge>;
+        return <Badge variant="destructive">{t('components.lives.card.cancelled')}</Badge>;
       default:
         return null;
     }
@@ -67,15 +70,15 @@ export const LiveCard: React.FC<LiveCardProps> = ({
   const getPlataformaIcon = () => {
     switch (aula.plataforma) {
       case 'zoom':
-        return '📹 Zoom';
+        return t('components.lives.card.platformZoom');
       case 'google_meet':
-        return '🎥 Google Meet';
+        return t('components.lives.card.platformMeet');
       case 'teams':
-        return '💼 Teams';
+        return t('components.lives.card.platformTeams');
       case 'jitsi':
-        return '🎬 Jitsi';
+        return t('components.lives.card.platformJitsi');
       default:
-        return '🎥 Online';
+        return t('components.lives.card.platformOnline');
     }
   };
 
@@ -89,8 +92,8 @@ export const LiveCard: React.FC<LiveCardProps> = ({
     const diffMins = Math.floor(diffMs / 60000);
 
     if (diffMins < 0) return null;
-    if (diffMins < 60) return `Começa em ${diffMins} min`;
-    if (diffMins < 1440) return `Começa em ${Math.floor(diffMins / 60)}h`;
+    if (diffMins < 60) return t('components.lives.card.startsInMin', { count: diffMins });
+    if (diffMins < 1440) return t('components.lives.card.startsInHours', { count: Math.floor(diffMins / 60) });
     return null;
   };
 
@@ -130,7 +133,7 @@ export const LiveCard: React.FC<LiveCardProps> = ({
           {professorNome && (
             <div className="flex items-center gap-2 text-gray-600">
               <Users className="w-4 h-4" />
-              <span>Prof. {professorNome}</span>
+              <span>{t('components.lives.card.teacherPrefix', { name: professorNome })}</span>
             </div>
           )}
 
@@ -142,11 +145,11 @@ export const LiveCard: React.FC<LiveCardProps> = ({
           <div className="flex items-center gap-2 text-gray-600">
             <Clock className="w-4 h-4" />
             <span>
-              {new Date(aula.data_inicio).toLocaleTimeString('pt-BR', {
+              {new Date(aula.data_inicio).toLocaleTimeString(undefined, {
                 hour: '2-digit',
                 minute: '2-digit'
               })}
-              {' '}({aula.duracao_minutos} min)
+              {' '}({t('components.lives.card.minutes', { count: aula.duracao_minutos })})
             </span>
           </div>
         </div>
@@ -161,7 +164,7 @@ export const LiveCard: React.FC<LiveCardProps> = ({
           <div className="flex items-center gap-2 p-2 bg-red-50 border border-red-200 rounded-lg text-sm">
             <Users className="w-4 h-4 text-red-600" />
             <span className="text-red-900">
-              <strong>{participantes}</strong> participante{participantes !== 1 ? 's' : ''} online
+              {t('components.lives.card.participantsOnline', { count: participantes })}
             </span>
           </div>
         )}
@@ -176,7 +179,7 @@ export const LiveCard: React.FC<LiveCardProps> = ({
               size="lg"
             >
               <ExternalLink className="w-4 h-4" />
-              {isLive ? 'Entrar Agora' : 'Entrar na Sala'}
+              {isLive ? t('components.lives.card.joinNow') : t('components.lives.card.joinRoom')}
             </Button>
           )}
 
@@ -190,7 +193,7 @@ export const LiveCard: React.FC<LiveCardProps> = ({
                 variant={isLive ? 'default' : 'outline'}
               >
                 <ExternalLink className="w-4 h-4" />
-                {isLive ? 'Entrar' : 'Acessar Sala'}
+                {isLive ? t('components.lives.card.enter') : t('components.lives.card.accessRoom')}
               </Button>
 
               {aula.status === 'agendada' && onNotificar && (
@@ -201,7 +204,7 @@ export const LiveCard: React.FC<LiveCardProps> = ({
                   className="gap-2"
                 >
                   <Bell className="w-4 h-4" />
-                  Notificar
+                  {t('components.lives.card.notify')}
                 </Button>
               )}
 
@@ -232,7 +235,7 @@ export const LiveCard: React.FC<LiveCardProps> = ({
         {/* Senha da Sala (se houver) */}
         {aula.senha_sala && canJoin && (
           <div className="text-xs text-gray-600 p-2 bg-yellow-50 border border-yellow-200 rounded">
-            <strong>Senha da sala:</strong> <code className="font-mono">{aula.senha_sala}</code>
+            <strong>{t('components.lives.card.roomPassword')}</strong> <code className="font-mono">{aula.senha_sala}</code>
           </div>
         )}
       </CardContent>
