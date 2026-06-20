@@ -1,0 +1,151 @@
+{
+  "gestor": {
+    "financeiro": {
+      "title": "Gestão Financeira",
+      "subtitle": "Controle de pagamentos e receitas da instituição",
+      "exportReport": "Exportar Relatório",
+      "delinquentAlert_one": "Atenção: {{count}} aluno está com pagamentos vencidos",
+      "delinquentAlert_other": "Atenção: {{count}} alunos estão com pagamentos vencidos",
+      "paymentsTitle": "Pagamentos ({{count}})",
+      "noPaymentsTitle": "Nenhum pagamento encontrado",
+      "noPaymentsFiltered": "Tente ajustar os filtros de busca",
+      "noPaymentsEmpty": "Não há pagamentos registrados ainda",
+      "registerSuccess": "Pagamento registrado com sucesso!",
+      "cancelByManager": "Cancelado pelo gestor",
+      "cancelSuccess": "Pagamento cancelado com sucesso!",
+      "exportEmpty": "Não há pagamentos para exportar com os filtros atuais.",
+      "reportFilename": "relatorio-financeiro",
+      "reportTitle": "Relatório Financeiro — Sabiencia",
+      "exportSuccess": "Relatório exportado em PDF!",
+      "exportError": "Não foi possível gerar o relatório. Tente novamente.",
+      "cancelDialogTitle": "Cancelar Pagamento",
+      "cancelDialogConfirm": "Confirmar Cancelamento",
+      "cancelDialogDesc": "Atenção: Ao cancelar este pagamento, o boleto correspondente será invalidado permanentemente. O aluno não receberá mais cobranças para esta parcela, mas o saldo devedor continuará constando no histórico acadêmico até que uma nova negociação seja registrada.",
+      "statusLabels": {
+        "paid": "Pago",
+        "pending": "Pendente",
+        "overdue": "Vencido",
+        "cancelled": "Cancelado"
+      },
+      "columns": {
+        "student": "Aluno",
+        "value": "Valor",
+        "dueDate": "Vencimento",
+        "payment": "Pagamento",
+        "status": "Status"
+      }
+    },
+    "alunoDetail": {
+      "loading": "Carregando dados...",
+      "idNotProvided": "ID do aluno não fornecido",
+      "notFound": "Aluno não encontrado",
+      "back": "Voltar",
+      "title": "Detalhes do Aluno",
+      "subtitle": "Informações completas do cadastro",
+      "edit": "Editar",
+      "course": "Curso",
+      "class": "Turma",
+      "enrollment": "Matrícula",
+      "stats": {
+        "attendance": "Frequência",
+        "lessonsRatio": "{{present}} de {{total}} aulas",
+        "average": "Média Geral",
+        "evaluations": "{{count}} avaliações",
+        "pendingPayment": "Pend. Pagamento",
+        "overdueCount": "{{count}} vencidos",
+        "status": "Status"
+      },
+      "personalData": "Dados Pessoais",
+      "rg": "RG",
+      "birthDate": "Data de Nascimento",
+      "sex": "Sexo",
+      "male": "Masculino",
+      "female": "Feminino",
+      "maritalStatus": "Estado Civil",
+      "guardian": "Responsável",
+      "guardianDesc": "Informações do responsável (se menor de idade)",
+      "guardianName": "Nome",
+      "guardianPhone": "Telefone",
+      "address": "Endereço",
+      "zipCode": "CEP",
+      "noAddress": "Nenhum endereço cadastrado"
+    },
+    "professorDetail": {
+      "loading": "Carregando dados...",
+      "idNotProvided": "ID do professor não fornecido",
+      "notFound": "Professor não encontrado",
+      "back": "Voltar",
+      "title": "Detalhes do Professor",
+      "subtitle": "Informações completas do cadastro",
+      "edit": "Editar",
+      "education": "Formação",
+      "professionalRegistration": "Registro Profissional",
+      "stats": {
+        "classes": "Turmas",
+        "activeClasses": "turmas ativas",
+        "subjects": "Disciplinas",
+        "subjectsUnit": "disciplinas",
+        "students": "Alunos",
+        "studentsUnit": "alunos",
+        "materials": "Materiais",
+        "published": "publicados"
+      },
+      "specialties": "Especialidades",
+      "specialtiesDesc": "Áreas de atuação do professor",
+      "classesTitle": "Turmas",
+      "classesDesc": "Turmas que o professor leciona",
+      "noClasses": "Nenhuma turma atribuída",
+      "subjectsTitle": "Disciplinas",
+      "subjectsDesc": "Disciplinas que o professor ministra",
+      "noSubjects": "Nenhuma disciplina atribuída",
+      "workload": "{{count}}h"
+    },
+    "comunicados": {
+      "title": "Comunicados",
+      "subtitle": "Envie comunicados e acompanhe o engajamento dos destinatários",
+      "newAnnouncement": "Novo Comunicado",
+      "stats": {
+        "totalSent": "Total Enviados",
+        "sentToday": "Enviados Hoje",
+        "averageReadRate": "Taxa Média de Leitura",
+        "lowReadRate": "Baixa Leitura"
+      },
+      "lowReadAlertTitle": "Atenção: {{count}} comunicado(s) com baixa taxa de leitura",
+      "lowReadAlertDesc": "Alguns comunicados foram lidos por menos de 50% dos destinatários. Considere reenviar ou entrar em contato diretamente.",
+      "sendSuccess": "Comunicado enviado com sucesso!",
+      "allAnnouncements": "Todos os Comunicados ({{count}})",
+      "noResultsFiltered": "Nenhum comunicado encontrado com os filtros aplicados.",
+      "noResultsEmpty": "Nenhum comunicado foi enviado ainda."
+    },
+    "alunosList": {
+      "deleteSuccess": "Aluno {{name}} excluído com sucesso!",
+      "title": "Alunos",
+      "subtitle": "Gerencie os alunos cadastrados no sistema",
+      "newStudent": "Novo Aluno",
+      "exportTitle": "Alunos",
+      "totalStudents": "Total de Alunos",
+      "totalStudentsDesc": "{{filtered}} de {{total}} alunos",
+      "studentsListTitle": "Lista de Alunos",
+      "studentsFound_one": "{{count}} aluno encontrado",
+      "studentsFound_other": "{{count}} alunos encontrados",
+      "deleteDialogTitle": "Excluir Aluno",
+      "deleteDialogDesc": "Esta ação irá excluir permanentemente o aluno e todos os seus dados associados (matrículas, notas, frequências, etc.). Esta operação não pode ser desfeita.",
+      "shortcuts": {
+        "refreshList": "Atualizar lista",
+        "newStudent": "Novo aluno",
+        "showShortcuts": "Mostrar atalhos",
+        "categoryActions": "Ações",
+        "categoryHelp": "Ajuda"
+      },
+      "exportColumns": {
+        "name": "Nome",
+        "cpf": "CPF",
+        "email": "Email",
+        "phone": "Telefone",
+        "birthDate": "Data Nascimento",
+        "status": "Status",
+        "enrollmentDate": "Data Matrícula"
+      }
+    }
+  }
+}

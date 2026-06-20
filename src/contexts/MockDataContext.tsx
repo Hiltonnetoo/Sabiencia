@@ -3,9 +3,22 @@
 // OTIMIZADO: Com memoização e lazy loading para melhor performance
 // ============================================
 
-import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useMemo, useEffect } from 'react';
 import { mockData as initialMockData } from '../data/mockData';
 import { mockNotifications as initialNotifications } from '../data/mockNotifications';
+import i18n from '../i18n';
+import {
+  localizeCursos,
+  localizeDisciplinas,
+  localizeTurmas,
+  localizeMateriais,
+  localizeObservacoes,
+  localizePagamentos,
+  localizeNotas,
+  localizeFrequencias,
+  localizeComunicados,
+  localizeNotificacoes,
+} from '../data/localizeMockData';
 import type { 
   Aluno, 
   Professor,
@@ -135,6 +148,16 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
   const [professorTurmaDisciplina] = useState<ProfessorTurmaDisciplina[]>(initialMockData.professorTurmaDisciplina);
   const [notificacoes, setNotificacoes] = useState<Notificacao[]>(initialNotifications);
   const [logsAuditoria] = useState<LogAuditoria[]>(initialMockData.logsAuditoria || []);
+
+  // Idioma ativo — força recomputação dos dados localizados ao trocar de idioma.
+  const [lang, setLang] = useState<string>(i18n.language);
+  useEffect(() => {
+    const handler = (lng: string) => setLang(lng);
+    i18n.on('languageChanged', handler);
+    return () => {
+      i18n.off('languageChanged', handler);
+    };
+  }, []);
 
   // ==================== ALUNOS ====================
 
@@ -453,19 +476,21 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
     alunos,
     professores,
     gestores,
-    cursos,
-    turmas,
-    disciplinas,
-    materiais,
+    // Dados com texto descritivo são localizados conforme o idioma ativo (lang).
+    // Nomes de pessoas (alunos/professores/gestores) NÃO são traduzidos.
+    cursos: localizeCursos(cursos),
+    turmas: localizeTurmas(turmas),
+    disciplinas: localizeDisciplinas(disciplinas),
+    materiais: localizeMateriais(materiais),
     matriculas,
-    notas,
-    frequencias,
-    observacoes,
-    pagamentos,
-    comunicados,
+    notas: localizeNotas(notas),
+    frequencias: localizeFrequencias(frequencias),
+    observacoes: localizeObservacoes(observacoes),
+    pagamentos: localizePagamentos(pagamentos),
+    comunicados: localizeComunicados(comunicados),
     comunicadosLeituras,
     professorTurmaDisciplina,
-    notificacoes,
+    notificacoes: localizeNotificacoes(notificacoes),
     logsAuditoria,
     createAluno,
     updateAluno,
@@ -506,7 +531,8 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
   }), [
     alunos, professores, gestores, cursos, turmas, disciplinas, materiais,
     matriculas, notas, frequencias, observacoes, pagamentos, comunicados,
-    comunicadosLeituras, professorTurmaDisciplina, notificacoes, logsAuditoria
+    comunicadosLeituras, professorTurmaDisciplina, notificacoes, logsAuditoria,
+    lang // recomputa textos localizados ao trocar de idioma
   ]);
 
   return (

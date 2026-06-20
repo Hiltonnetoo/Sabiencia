@@ -1,0 +1,197 @@
+{
+  "gestor": {
+    "observacoes": {
+      "title": "Gestão de Observações",
+      "subtitle": "Visualize e gerencie todas as observações dos alunos",
+      "new": "Nova Observação",
+      "stats": {
+        "total": "Total",
+        "pedagogicas": "Pedagógicas",
+        "comportamentais": "Comportamentais",
+        "administrativas": "Administrativas",
+        "visiveis": "Visíveis",
+        "ocultas": "Ocultas"
+      },
+      "emptyTitle": "Nenhuma observação encontrada",
+      "emptyFiltered": "Tente ajustar os filtros para encontrar observações.",
+      "emptyDefault": "Ainda não há observações registradas no sistema.",
+      "registerFirst": "Registrar Primeira Observação",
+      "toast": {
+        "updated": "Observação atualizada com sucesso!",
+        "created": "Observação registrada com sucesso!",
+        "error": "Erro ao salvar observação. Tente novamente.",
+        "deleted": "Observação excluída com sucesso!"
+      },
+      "deleteTitle": "Excluir Observação",
+      "deleteDescription": "Tem certeza que deseja excluir esta observação? Esta ação não pode ser desfeita."
+    },
+    "turmaDetail": {
+      "subtitle": "Gerenciamento e informações da turma",
+      "loading": "Carregando dados...",
+      "toast": {
+        "noId": "ID da turma não fornecido",
+        "notFound": "Turma não encontrada"
+      },
+      "dataTitle": "Dados da Turma",
+      "dataDescription": "Informações básicas de vinculação e cronograma",
+      "linkedCourse": "Curso Vinculado",
+      "notAssociated": "Não associado",
+      "periodTurno": "Período/Turno",
+      "classStart": "Início das Aulas",
+      "classEnd": "Fim das Aulas",
+      "enrolledStudents": "Alunos Matriculados",
+      "totalActiveCapacity": "Capacidade total ativa",
+      "currentPeriod": "Período Vigente",
+      "standardSchedule": "Horário de aulas padrão",
+      "estimatedCertification": "Certificação Estimada",
+      "totalEstimatedWorkload": "Carga horária total estimada",
+      "studentsInClass": "Estudantes pertencentes a esta turma",
+      "noStudents": "Nenhum aluno matriculado nesta turma ainda.",
+      "viewProfile": "Ver Perfil",
+      "action": "Ação"
+    },
+    "professoresList": {
+      "title": "Professores",
+      "subtitle": "Gerencie os professores cadastrados no sistema",
+      "new": "Novo Professor",
+      "totalTitle": "Total de Professores",
+      "totalDescription": "Professores cadastrados no sistema",
+      "allSpecialties": "Todas as especialidades",
+      "searchPlaceholder": "Buscar por nome ou CPF...",
+      "exportTitle": "Professores",
+      "deleted": "Professor {{name}} excluído com sucesso!",
+      "deleteTitle": "Excluir Professor",
+      "deleteDescription": "Esta ação irá excluir permanentemente o professor e remover suas atribuições de turmas e disciplinas. Esta operação não pode ser desfeita.",
+      "export": {
+        "name": "Nome",
+        "email": "Email",
+        "phone": "Telefone",
+        "specialties": "Especialidades",
+        "status": "Status",
+        "hireDate": "Data Contratação"
+      },
+      "shortcuts": {
+        "new": "Novo professor",
+        "show": "Mostrar atalhos",
+        "actions": "Ações",
+        "help": "Ajuda"
+      }
+    },
+    "turmasList": {
+      "title": "Gestão de Turmas",
+      "subtitle": "Crie e gerencie as turmas dos cursos",
+      "new": "Nova Turma",
+      "listHeading": "Turmas ({{count}})",
+      "emptyTitle": "Nenhuma turma encontrada",
+      "emptyFiltered": "Tente ajustar os filtros de busca",
+      "emptyDefault": "Comece criando sua primeira turma",
+      "createFirst": "Criar Primeira Turma",
+      "toast": {
+        "cannotDelete": "Não é possível excluir. Existem {{count}} aluno(s) matriculado(s) nesta turma.",
+        "confirmDelete": "Tem certeza que deseja excluir a turma \"{{name}}\"?",
+        "deleted": "Turma excluída com sucesso!",
+        "updated": "Turma atualizada com sucesso!",
+        "created": "Turma criada com sucesso!"
+      }
+    },
+    "disciplinasList": {
+      "title": "Gestão de Disciplinas",
+      "subtitle": "Crie e gerencie as disciplinas dos cursos",
+      "new": "Nova Disciplina",
+      "listHeading": "Disciplinas ({{count}})",
+      "emptyTitle": "Nenhuma disciplina encontrada",
+      "emptyFiltered": "Tente ajustar os filtros de busca",
+      "emptyDefault": "Comece criando sua primeira disciplina",
+      "createFirst": "Criar Primeira Disciplina",
+      "courseNotFound": "Curso não encontrado",
+      "subjectCount": "({{count}} disciplina)",
+      "subjectCount_other": "({{count}} disciplinas)",
+      "toast": {
+        "confirmDelete": "Tem certeza que deseja excluir a disciplina \"{{name}}\"?",
+        "deleted": "Disciplina excluída com sucesso!",
+        "updated": "Disciplina atualizada com sucesso!",
+        "created": "Disciplina criada com sucesso!"
+      }
+    },
+    "perfil": {
+      "tabs": {
+        "personalData": "Dados Pessoais",
+        "managementView": "Visão de Gestão",
+        "security": "Segurança",
+        "activities": "Atividades"
+      },
+      "stats": {
+        "activeStudents": "Alunos Ativos",
+        "teachers": "Professores",
+        "activeClasses": "Turmas Ativas",
+        "activeCourses": "Cursos Ativos"
+      },
+      "managementInfoTitle": "Informações de Gestão",
+      "role": "Cargo",
+      "roleValue": "Gestor / CEO",
+      "accessLevel": "Nível de Acesso",
+      "accessLevelValue": "Administrador Total",
+      "permissions": "Permissões",
+      "perm": {
+        "students": "Gestão de Alunos",
+        "teachers": "Gestão de Professores",
+        "financial": "Gestão Financeira",
+        "reports": "Relatórios Completos",
+        "systemSettings": "Configurações do Sistema"
+      },
+      "calloutTitle": "Sobre as Permissões",
+      "calloutBody": "Como gestor, você tem acesso completo a todas as funcionalidades do sistema, incluindo gestão de usuários, controle financeiro, relatórios e configurações.",
+      "institutionalSummaryTitle": "Resumo Institucional",
+      "totalStudents": "Total de Alunos",
+      "activeEnrolled": "Matriculados ativos",
+      "facultyBody": "Corpo Docente",
+      "activeTeachers": "Professores ativos",
+      "offeredCourses": "Cursos Ofertados",
+      "availablePrograms": "Programas disponíveis"
+    },
+    "configuracoes": {
+      "title": "Configurações do Sistema",
+      "subtitle": "Gerencie configurações gerais e preferências administrativas",
+      "tabs": {
+        "notifications": "Notificações",
+        "system": "Sistema",
+        "privacy": "Privacidade",
+        "appearance": "Aparência"
+      },
+      "notificationsTitle": "Preferências de Notificações",
+      "notificationsDescription": "Configure como e quando você deseja receber notificações administrativas",
+      "systemTitle": "Configurações do Sistema",
+      "systemDescription": "Configurações gerais da plataforma",
+      "privacyTitle": "Configurações de Privacidade",
+      "privacyDescription": "Gerencie configurações de privacidade e segurança (LGPD)",
+      "appearanceTitle": "Aparência do Sistema",
+      "appearanceDescription": "Personalize a aparência da interface"
+    },
+    "alunoForm": {
+      "loading": "Carregando dados...",
+      "editTitle": "Editar Aluno",
+      "newTitle": "Novo Aluno",
+      "editSubtitle": "Atualize as informações do aluno",
+      "newSubtitle": "Preencha os dados para cadastrar um novo aluno",
+      "toast": {
+        "notFound": "Aluno não encontrado",
+        "updated": "Aluno atualizado com sucesso!",
+        "created": "Aluno cadastrado com sucesso!",
+        "error": "Erro ao salvar aluno. Tente novamente."
+      }
+    },
+    "professorForm": {
+      "loading": "Carregando dados...",
+      "editTitle": "Editar Professor",
+      "newTitle": "Novo Professor",
+      "editSubtitle": "Atualize as informações do professor",
+      "newSubtitle": "Preencha os dados para cadastrar um novo professor",
+      "toast": {
+        "notFound": "Professor não encontrado",
+        "updated": "Professor atualizado com sucesso!",
+        "created": "Professor cadastrado com sucesso!",
+        "error": "Erro ao salvar professor. Tente novamente."
+      }
+    }
+  }
+}

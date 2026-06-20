@@ -1,0 +1,197 @@
+{
+  "gestor": {
+    "observacoes": {
+      "title": "Observations Management",
+      "subtitle": "View and manage all student observations",
+      "new": "New Observation",
+      "stats": {
+        "total": "Total",
+        "pedagogicas": "Pedagogical",
+        "comportamentais": "Behavioral",
+        "administrativas": "Administrative",
+        "visiveis": "Visible",
+        "ocultas": "Hidden"
+      },
+      "emptyTitle": "No observations found",
+      "emptyFiltered": "Try adjusting the filters to find observations.",
+      "emptyDefault": "There are no observations registered in the system yet.",
+      "registerFirst": "Register First Observation",
+      "toast": {
+        "updated": "Observation updated successfully!",
+        "created": "Observation registered successfully!",
+        "error": "Error saving observation. Please try again.",
+        "deleted": "Observation deleted successfully!"
+      },
+      "deleteTitle": "Delete Observation",
+      "deleteDescription": "Are you sure you want to delete this observation? This action cannot be undone."
+    },
+    "turmaDetail": {
+      "subtitle": "Class management and information",
+      "loading": "Loading data...",
+      "toast": {
+        "noId": "Class ID not provided",
+        "notFound": "Class not found"
+      },
+      "dataTitle": "Class Data",
+      "dataDescription": "Basic linking information and schedule",
+      "linkedCourse": "Linked Course",
+      "notAssociated": "Not associated",
+      "periodTurno": "Period/Shift",
+      "classStart": "Class Start",
+      "classEnd": "Class End",
+      "enrolledStudents": "Enrolled Students",
+      "totalActiveCapacity": "Total active capacity",
+      "currentPeriod": "Current Period",
+      "standardSchedule": "Standard class schedule",
+      "estimatedCertification": "Estimated Certification",
+      "totalEstimatedWorkload": "Total estimated workload",
+      "studentsInClass": "Students belonging to this class",
+      "noStudents": "No students enrolled in this class yet.",
+      "viewProfile": "View Profile",
+      "action": "Action"
+    },
+    "professoresList": {
+      "title": "Teachers",
+      "subtitle": "Manage the teachers registered in the system",
+      "new": "New Teacher",
+      "totalTitle": "Total Teachers",
+      "totalDescription": "Teachers registered in the system",
+      "allSpecialties": "All specialties",
+      "searchPlaceholder": "Search by name or CPF...",
+      "exportTitle": "Teachers",
+      "deleted": "Teacher {{name}} deleted successfully!",
+      "deleteTitle": "Delete Teacher",
+      "deleteDescription": "This action will permanently delete the teacher and remove their class and subject assignments. This operation cannot be undone.",
+      "export": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "specialties": "Specialties",
+        "status": "Status",
+        "hireDate": "Hire Date"
+      },
+      "shortcuts": {
+        "new": "New teacher",
+        "show": "Show shortcuts",
+        "actions": "Actions",
+        "help": "Help"
+      }
+    },
+    "turmasList": {
+      "title": "Classes Management",
+      "subtitle": "Create and manage the classes of the courses",
+      "new": "New Class",
+      "listHeading": "Classes ({{count}})",
+      "emptyTitle": "No classes found",
+      "emptyFiltered": "Try adjusting the search filters",
+      "emptyDefault": "Start by creating your first class",
+      "createFirst": "Create First Class",
+      "toast": {
+        "cannotDelete": "Cannot delete. There are {{count}} student(s) enrolled in this class.",
+        "confirmDelete": "Are you sure you want to delete the class \"{{name}}\"?",
+        "deleted": "Class deleted successfully!",
+        "updated": "Class updated successfully!",
+        "created": "Class created successfully!"
+      }
+    },
+    "disciplinasList": {
+      "title": "Subjects Management",
+      "subtitle": "Create and manage the subjects of the courses",
+      "new": "New Subject",
+      "listHeading": "Subjects ({{count}})",
+      "emptyTitle": "No subjects found",
+      "emptyFiltered": "Try adjusting the search filters",
+      "emptyDefault": "Start by creating your first subject",
+      "createFirst": "Create First Subject",
+      "courseNotFound": "Course not found",
+      "subjectCount": "({{count}} subject)",
+      "subjectCount_other": "({{count}} subjects)",
+      "toast": {
+        "confirmDelete": "Are you sure you want to delete the subject \"{{name}}\"?",
+        "deleted": "Subject deleted successfully!",
+        "updated": "Subject updated successfully!",
+        "created": "Subject created successfully!"
+      }
+    },
+    "perfil": {
+      "tabs": {
+        "personalData": "Personal Data",
+        "managementView": "Management View",
+        "security": "Security",
+        "activities": "Activities"
+      },
+      "stats": {
+        "activeStudents": "Active Students",
+        "teachers": "Teachers",
+        "activeClasses": "Active Classes",
+        "activeCourses": "Active Courses"
+      },
+      "managementInfoTitle": "Management Information",
+      "role": "Position",
+      "roleValue": "Manager / CEO",
+      "accessLevel": "Access Level",
+      "accessLevelValue": "Full Administrator",
+      "permissions": "Permissions",
+      "perm": {
+        "students": "Student Management",
+        "teachers": "Teacher Management",
+        "financial": "Financial Management",
+        "reports": "Complete Reports",
+        "systemSettings": "System Settings"
+      },
+      "calloutTitle": "About Permissions",
+      "calloutBody": "As a manager, you have full access to all system features, including user management, financial control, reports and settings.",
+      "institutionalSummaryTitle": "Institutional Summary",
+      "totalStudents": "Total Students",
+      "activeEnrolled": "Active enrolled",
+      "facultyBody": "Faculty",
+      "activeTeachers": "Active teachers",
+      "offeredCourses": "Offered Courses",
+      "availablePrograms": "Available programs"
+    },
+    "configuracoes": {
+      "title": "System Settings",
+      "subtitle": "Manage general settings and administrative preferences",
+      "tabs": {
+        "notifications": "Notifications",
+        "system": "System",
+        "privacy": "Privacy",
+        "appearance": "Appearance"
+      },
+      "notificationsTitle": "Notification Preferences",
+      "notificationsDescription": "Configure how and when you want to receive administrative notifications",
+      "systemTitle": "System Settings",
+      "systemDescription": "General platform settings",
+      "privacyTitle": "Privacy Settings",
+      "privacyDescription": "Manage privacy and security settings (LGPD)",
+      "appearanceTitle": "System Appearance",
+      "appearanceDescription": "Customize the interface appearance"
+    },
+    "alunoForm": {
+      "loading": "Loading data...",
+      "editTitle": "Edit Student",
+      "newTitle": "New Student",
+      "editSubtitle": "Update the student's information",
+      "newSubtitle": "Fill in the data to register a new student",
+      "toast": {
+        "notFound": "Student not found",
+        "updated": "Student updated successfully!",
+        "created": "Student registered successfully!",
+        "error": "Error saving student. Please try again."
+      }
+    },
+    "professorForm": {
+      "loading": "Loading data...",
+      "editTitle": "Edit Teacher",
+      "newTitle": "New Teacher",
+      "editSubtitle": "Update the teacher's information",
+      "newSubtitle": "Fill in the data to register a new teacher",
+      "toast": {
+        "notFound": "Teacher not found",
+        "updated": "Teacher updated successfully!",
+        "created": "Teacher registered successfully!",
+        "error": "Error saving teacher. Please try again."
+      }
+    }
+  }
+}

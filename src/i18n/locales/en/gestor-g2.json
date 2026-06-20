@@ -1,0 +1,157 @@
+{
+  "gestor": {
+    "biblioteca": {
+      "title": "Virtual Library",
+      "subtitle": "Overview and material management",
+      "stats": {
+        "totalMaterials": "Total Materials",
+        "filesSummary": "{{pdfs}} PDFs • {{videos}} Videos",
+        "visible": "Visible",
+        "percentOfTotal": "{{percent}}% of total",
+        "hidden": "Hidden",
+        "notVisibleToStudents": "Not visible to students",
+        "activeTeachers": "Active Teachers",
+        "withPublishedMaterials": "With published materials"
+      },
+      "topTeachers": "Teachers with Most Materials",
+      "materialsCount": "{{count}} material",
+      "materialsCount_other": "{{count}} materials",
+      "visibilityFilter": {
+        "all": "All",
+        "visible": "Visible",
+        "hidden": "Hidden"
+      },
+      "badgeHidden": "Hidden",
+      "tabs": {
+        "all": "All ({{count}})",
+        "pdfs": "PDFs ({{count}})",
+        "videos": "Videos ({{count}})"
+      },
+      "empty": {
+        "filtered": "No material found with the selected filters",
+        "pdfs": "No PDF found",
+        "videos": "No video found"
+      },
+      "actions": {
+        "view": "View"
+      },
+      "toast": {
+        "hidden": "Material hidden from students",
+        "visible": "Material visible to students",
+        "visibilityError": "Error updating visibility",
+        "deleted": "Material deleted successfully!",
+        "deleteError": "Error deleting material",
+        "opening": "Opening material..."
+      },
+      "deleteDialog": {
+        "title": "Delete Material",
+        "description": "This action is irreversible. The material will be permanently removed from the library."
+      }
+    },
+    "cursos": {
+      "title": "Courses",
+      "subtitle": "Manage the courses offered by the institution",
+      "newCourse": "New Course",
+      "stats": {
+        "totalCourses": "Total Courses",
+        "activeCount": "{{count}} active",
+        "totalWorkload": "Total Workload",
+        "acrossAllCourses": "Across all courses",
+        "averageDuration": "Average Duration",
+        "monthsPerCourse": "Months per course",
+        "activeClasses": "Active Classes",
+        "ongoing": "Ongoing",
+        "activeStudents": "Active Students",
+        "enrolled": "Enrolled"
+      },
+      "searchPlaceholder": "Search by name or description...",
+      "filtersActive": "Active",
+      "empty": {
+        "title": "No course registered",
+        "description": "Start by creating the institution's first course",
+        "action": "Create First Course"
+      },
+      "view": {
+        "detailsTitle": "Course details",
+        "description": "Description",
+        "workload": "Workload",
+        "duration": "Duration",
+        "months": "{{count}} months",
+        "statistics": "Statistics",
+        "subjects": "Subjects",
+        "activeClasses": "Active Classes",
+        "activeStudents": "Active Students",
+        "editCourse": "Edit Course"
+      },
+      "toast": {
+        "deactivated": "Course deactivated successfully",
+        "activated": "Course activated successfully",
+        "updated": "Course updated successfully!",
+        "created": "Course created successfully!",
+        "saveError": "Error saving course",
+        "deleted": "Course deleted successfully!",
+        "deleteError": "Error deleting course"
+      },
+      "deleteDialog": {
+        "title": "Delete Course",
+        "description": "Are you sure you want to delete the course \"{{name}}\"? This action cannot be undone."
+      }
+    },
+    "relatorios": {
+      "title": "Reports and Analytics",
+      "subtitle": "Track institutional performance metrics and indicators",
+      "exportAll": "Export All",
+      "metrics": {
+        "totalStudents": "Total Students",
+        "overallAverage": "Overall Average",
+        "averageAttendance": "Average Attendance",
+        "totalRevenue": "Total Revenue"
+      },
+      "tabs": {
+        "general": "Overview",
+        "academic": "Academic",
+        "financial": "Financial",
+        "attendance": "Attendance"
+      },
+      "charts": {
+        "performanceByClass": "Performance by Class",
+        "revenueByCourse": "Revenue by Course",
+        "averageGradesByClass": "Average Grades by Class",
+        "revenueDistributionByCourse": "Revenue Distribution by Course",
+        "monthlyAverageAttendance": "Monthly Average Attendance (%)"
+      },
+      "tables": {
+        "top10Students": "Top 10 Students",
+        "teachersAndActivities": "Teachers and Activities",
+        "columns": {
+          "name": "Name",
+          "class": "Class",
+          "average": "Average",
+          "attendance": "Attendance",
+          "status": "Status",
+          "teacher": "Teacher",
+          "email": "E-mail",
+          "classes": "Classes",
+          "observations": "Observations"
+        }
+      },
+      "financial": {
+        "totalRevenue": "Total Revenue",
+        "receivedRevenue": "Received Revenue",
+        "defaultRate": "Default Rate"
+      },
+      "attendance": {
+        "summary": "Attendance Summary",
+        "overallAverage": "Overall Average Attendance",
+        "totalRecords": "Total Records"
+      },
+      "statusValues": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "toast": {
+        "exported": "Report exported successfully! (Simulated)"
+      }
+    }
+  }
+}

@@ -1,0 +1,294 @@
+{
+  "data": {
+    "curso": {
+      "curso-001": {
+        "nome": "Técnico em Enfermagem",
+        "descricao": "Formação técnica completa em enfermagem com aulas 100% remotas e provas presenciais"
+      },
+      "curso-002": {
+        "nome": "Técnico em Administração",
+        "descricao": "Curso técnico em administração com foco em gestão empresarial"
+      },
+      "curso-003": {
+        "nome": "Técnico em Informática",
+        "descricao": "Formação em informática com programação, redes e manutenção"
+      }
+    },
+    "disciplina": {
+      "disc-001": {
+        "nome": "Anatomia Humana",
+        "descricao": "Estudo detalhado da estrutura do corpo humano",
+        "ementa": "Introdução à anatomia, sistemas do corpo humano, nomenclatura anatômica"
+      },
+      "disc-002": {
+        "nome": "Fisiologia",
+        "descricao": "Funcionamento dos sistemas do corpo humano",
+        "ementa": "Fisiologia celular, sistemas cardiovascular, respiratório, digestório"
+      },
+      "disc-003": {
+        "nome": "Procedimentos de Enfermagem",
+        "descricao": "Técnicas e procedimentos práticos de enfermagem",
+        "ementa": "Técnicas básicas, administração de medicamentos, curativos"
+      },
+      "disc-004": {
+        "nome": "Ética e Legislação em Enfermagem",
+        "descricao": "Aspectos éticos e legais da profissão",
+        "ementa": "Código de ética, legislação profissional, direitos do paciente"
+      },
+      "disc-005": {
+        "nome": "Farmacologia",
+        "descricao": "Estudo dos medicamentos e suas aplicações",
+        "ementa": "Classes de medicamentos, vias de administração, efeitos adversos"
+      },
+      "disc-006": {
+        "nome": "Gestão Empresarial",
+        "descricao": "Fundamentos da administração de empresas",
+        "ementa": "Planejamento, organização, direção e controle empresarial"
+      },
+      "disc-007": {
+        "nome": "Contabilidade Básica",
+        "descricao": "Princípios contábeis e demonstrações financeiras",
+        "ementa": "Balanço patrimonial, DRE, fluxo de caixa"
+      },
+      "disc-008": {
+        "nome": "Recursos Humanos",
+        "descricao": "Gestão de pessoas e relações trabalhistas",
+        "ementa": "Recrutamento, seleção, treinamento, legislação trabalhista"
+      },
+      "disc-009": {
+        "nome": "Marketing",
+        "descricao": "Estratégias de marketing e vendas",
+        "ementa": "Mix de marketing, pesquisa de mercado, marketing digital"
+      },
+      "disc-010": {
+        "nome": "Matemática Financeira",
+        "descricao": "Cálculos financeiros e análise de investimentos",
+        "ementa": "Juros simples e compostos, descontos, amortização"
+      },
+      "disc-011": {
+        "nome": "Lógica de Programação",
+        "descricao": "Fundamentos de programação de computadores",
+        "ementa": "Algoritmos, estruturas de dados, fluxogramas"
+      },
+      "disc-012": {
+        "nome": "Programação Web",
+        "descricao": "Desenvolvimento de sites e aplicações web",
+        "ementa": "HTML, CSS, JavaScript, frameworks modernos"
+      },
+      "disc-013": {
+        "nome": "Banco de Dados",
+        "descricao": "Modelagem e administração de bancos de dados",
+        "ementa": "SQL, modelagem relacional, normalização"
+      },
+      "disc-014": {
+        "nome": "Redes de Computadores",
+        "descricao": "Configuração e administração de redes",
+        "ementa": "Protocolos TCP/IP, configuração de roteadores, segurança"
+      },
+      "disc-015": {
+        "nome": "Manutenção de Computadores",
+        "descricao": "Hardware e troubleshooting",
+        "ementa": "Montagem de PCs, diagnóstico de problemas, manutenção preventiva"
+      }
+    },
+    "turma": {
+      "turma-001": { "nome": "Enfermagem 2025.1 - Manhã" },
+      "turma-002": { "nome": "Enfermagem 2025.1 - Noite" },
+      "turma-003": { "nome": "Administração 2025.1" },
+      "turma-004": { "nome": "Informática 2025.1" }
+    },
+    "material": {
+      "mat-001": {
+        "titulo": "Apostila Completa - Anatomia Humana",
+        "descricao": "Material de estudo sobre Anatomia Humana. Contém teoria, exemplos práticos e exercícios resolvidos."
+      },
+      "mat-002": {
+        "titulo": "Videoaula - Anatomia Humana",
+        "descricao": "Aula completa sobre Anatomia Humana ministrada pelo professor. Inclui demonstrações práticas e exemplos do dia a dia."
+      },
+      "mat-003": {
+        "titulo": "Apostila Completa - Fisiologia",
+        "descricao": "Material de estudo sobre Fisiologia. Contém teoria, exemplos práticos e exercícios resolvidos."
+      },
+      "mat-004": {
+        "titulo": "Videoaula - Fisiologia",
+        "descricao": "Aula completa sobre Fisiologia ministrada pelo professor. Inclui demonstrações práticas e exemplos do dia a dia."
+      },
+      "mat-005": {
+        "titulo": "Apostila Completa - Procedimentos de Enfermagem",
+        "descricao": "Material de estudo sobre Procedimentos de Enfermagem. Contém teoria, exemplos práticos e exercícios resolvidos."
+      },
+      "mat-006": {
+        "titulo": "Videoaula - Procedimentos de Enfermagem",
+        "descricao": "Aula completa sobre Procedimentos de Enfermagem ministrada pelo professor. Inclui demonstrações práticas e exemplos do dia a dia."
+      },
+      "mat-007": {
+        "titulo": "Apostila Completa - Ética e Legislação em Enfermagem",
+        "descricao": "Material de estudo sobre Ética e Legislação em Enfermagem. Contém teoria, exemplos práticos e exercícios resolvidos."
+      },
+      "mat-008": {
+        "titulo": "Videoaula - Ética e Legislação em Enfermagem",
+        "descricao": "Aula completa sobre Ética e Legislação em Enfermagem ministrada pelo professor. Inclui demonstrações práticas e exemplos do dia a dia."
+      },
+      "mat-009": {
+        "titulo": "Apostila Completa - Farmacologia",
+        "descricao": "Material de estudo sobre Farmacologia. Contém teoria, exemplos práticos e exercícios resolvidos."
+      },
+      "mat-010": {
+        "titulo": "Videoaula - Farmacologia",
+        "descricao": "Aula completa sobre Farmacologia ministrada pelo professor. Inclui demonstrações práticas e exemplos do dia a dia."
+      },
+      "mat-011": {
+        "titulo": "Apostila Completa - Gestão Empresarial",
+        "descricao": "Material de estudo sobre Gestão Empresarial. Contém teoria, exemplos práticos e exercícios resolvidos."
+      },
+      "mat-012": {
+        "titulo": "Videoaula - Gestão Empresarial",
+        "descricao": "Aula completa sobre Gestão Empresarial ministrada pelo professor. Inclui demonstrações práticas e exemplos do dia a dia."
+      },
+      "mat-013": {
+        "titulo": "Apostila Completa - Contabilidade Básica",
+        "descricao": "Material de estudo sobre Contabilidade Básica. Contém teoria, exemplos práticos e exercícios resolvidos."
+      },
+      "mat-014": {
+        "titulo": "Videoaula - Contabilidade Básica",
+        "descricao": "Aula completa sobre Contabilidade Básica ministrada pelo professor. Inclui demonstrações práticas e exemplos do dia a dia."
+      },
+      "mat-015": {
+        "titulo": "Apostila Completa - Recursos Humanos",
+        "descricao": "Material de estudo sobre Recursos Humanos. Contém teoria, exemplos práticos e exercícios resolvidos."
+      },
+      "mat-016": {
+        "titulo": "Videoaula - Recursos Humanos",
+        "descricao": "Aula completa sobre Recursos Humanos ministrada pelo professor. Inclui demonstrações práticas e exemplos do dia a dia."
+      },
+      "mat-017": {
+        "titulo": "Apostila Completa - Marketing",
+        "descricao": "Material de estudo sobre Marketing. Contém teoria, exemplos práticos e exercícios resolvidos."
+      },
+      "mat-018": {
+        "titulo": "Videoaula - Marketing",
+        "descricao": "Aula completa sobre Marketing ministrada pelo professor. Inclui demonstrações práticas e exemplos do dia a dia."
+      },
+      "mat-019": {
+        "titulo": "Apostila Completa - Matemática Financeira",
+        "descricao": "Material de estudo sobre Matemática Financeira. Contém teoria, exemplos práticos e exercícios resolvidos."
+      },
+      "mat-020": {
+        "titulo": "Videoaula - Matemática Financeira",
+        "descricao": "Aula completa sobre Matemática Financeira ministrada pelo professor. Inclui demonstrações práticas e exemplos do dia a dia."
+      }
+    },
+    "comunicado": {
+      "com-001": {
+        "titulo": "Bem-vindos ao semestre 2024.1",
+        "mensagem": "Prezados alunos, é com grande satisfação que damos início ao semestre letivo 2024.1. Desejamos a todos um excelente aproveitamento!"
+      },
+      "com-002": {
+        "titulo": "Calendário de Provas - 1º Bimestre",
+        "mensagem": "Informamos que as provas do primeiro bimestre ocorrerão de 15 a 25 de abril. Compareçam com documento de identificação."
+      },
+      "com-003": {
+        "titulo": "Material complementar disponível",
+        "mensagem": "Turma de Enfermagem Manhã, disponibilizei novos exercícios de Anatomia na biblioteca virtual. Bons estudos!"
+      },
+      "com-004": {
+        "titulo": "Reunião Pedagógica",
+        "mensagem": "Prezados professores, haverá reunião pedagógica no dia 20/09 às 18h para alinhamento do calendário do próximo bimestre."
+      },
+      "com-005": {
+        "titulo": "Boletos de Outubro disponíveis",
+        "mensagem": "Os boletos referentes à mensalidade de outubro já estão disponíveis para download. Vencimento: 10/10/2024."
+      },
+      "com-006": {
+        "titulo": "Aula prática de Programação Web",
+        "mensagem": "Turma de Informática, a aula prática de sábado será sobre desenvolvimento de sites responsivos. Tragam notebooks!"
+      },
+      "com-007": {
+        "titulo": "Feriado Prolongado - 15 de Novembro",
+        "mensagem": "Informamos que não haverá aulas nos dias 15 e 16 de novembro devido ao feriado da Proclamação da República. Retornamos dia 18/11."
+      },
+      "com-008": {
+        "titulo": "Novos materiais no Portal",
+        "mensagem": "Foram adicionados novos materiais didáticos no portal. Acesse a biblioteca virtual e confira!"
+      }
+    },
+    "notificacao": {
+      "notif-001": {
+        "titulo": "Nova nota lançada",
+        "mensagem": "O professor lançou a nota da prova de Anatomia - 8.5"
+      },
+      "notif-002": {
+        "titulo": "Novo comunicado importante",
+        "mensagem": "Atenção: Prova presencial agendada para 15/11/2025"
+      },
+      "notif-003": {
+        "titulo": "Pagamento vencido",
+        "mensagem": "Sua mensalidade de outubro está vencida. Regularize para evitar bloqueios"
+      },
+      "notif-004": {
+        "titulo": "Novo material disponível",
+        "mensagem": "Apostila Módulo 3 - Farmacologia foi adicionada à biblioteca"
+      },
+      "notif-005": {
+        "titulo": "Alerta de frequência",
+        "mensagem": "Você tem 3 faltas em Primeiros Socorros. Atenção ao limite!"
+      },
+      "notif-101": {
+        "titulo": "Prazo para lançamento de notas",
+        "mensagem": "Você tem até 10/11/2025 para lançar as notas da Turma A - Manhã"
+      },
+      "notif-102": {
+        "titulo": "Reunião pedagógica",
+        "mensagem": "Reunião pedagógica agendada para 08/11/2025 às 14h"
+      },
+      "notif-103": {
+        "titulo": "Frequência registrada",
+        "mensagem": "Frequência da aula de 05/11/2025 foi registrada com sucesso"
+      },
+      "notif-104": {
+        "titulo": "Material compartilhado",
+        "mensagem": "Seu material \"Apostila Módulo 3\" foi compartilhado com a turma"
+      },
+      "notif-201": {
+        "titulo": "Pagamentos pendentes",
+        "mensagem": "15 alunos com mensalidades vencidas neste mês"
+      },
+      "notif-202": {
+        "titulo": "Novo aluno matriculado",
+        "mensagem": "João Silva foi matriculado no curso de Enfermagem"
+      },
+      "notif-203": {
+        "titulo": "Ação necessária",
+        "mensagem": "Professor João Silva não lançou frequência há 5 dias"
+      },
+      "notif-204": {
+        "titulo": "Relatório disponível",
+        "mensagem": "Relatório de desempenho mensal está pronto para visualização"
+      },
+      "notif-205": {
+        "titulo": "Comunicado urgente pendente",
+        "mensagem": "1 comunicado urgente aguarda aprovação"
+      }
+    },
+    "shared": {
+      "modulo_1_introducao": "Módulo 1 - Introdução",
+      "aluno_demonstra_otimo_desempenho_nas_atividades_praticas": "Aluno demonstra ótimo desempenho nas atividades práticas",
+      "necessita_reforco_em_conceitos_teoricos": "Necessita reforço em conceitos teóricos",
+      "participa_ativamente_das_discussoes_em_aula": "Participa ativamente das discussões em aula",
+      "aluno_colaborativo_e_respeitoso_com_colegas": "Aluno colaborativo e respeitoso com colegas",
+      "pontual_e_assiduo_nas_aulas": "Pontual e assíduo nas aulas",
+      "demonstra_proatividade_em_atividades_em_grupo": "Demonstra proatividade em atividades em grupo",
+      "documentacao_em_dia": "Documentação em dia",
+      "solicitou_declaracao_de_matricula": "Solicitou declaração de matrícula",
+      "entregou_atestado_medico": "Entregou atestado médico",
+      "boleto": "Boleto",
+      "pix": "PIX",
+      "cartao": "Cartão",
+      "prova_1": "Prova 1",
+      "prova_2": "Prova 2",
+      "trabalho_final": "Trabalho Final",
+      "atestado_medico": "Atestado médico"
+    }
+  }
+}

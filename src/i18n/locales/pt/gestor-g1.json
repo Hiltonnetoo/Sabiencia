@@ -1,0 +1,228 @@
+{
+  "gestor": {
+    "eventos": {
+      "title": "Eventos e Atividades",
+      "subtitle": "Gerencie eventos, palestras, workshops e atividades extracurriculares",
+      "createButton": "Criar Evento",
+      "stats": {
+        "activeEvents": "Eventos Ativos",
+        "events": "eventos",
+        "totalRegistrations": "Total de Inscritos",
+        "participants": "participantes",
+        "onlineEvents": "Eventos Online",
+        "withCertificate": "Com Certificado"
+      },
+      "listTitle": "Eventos Cadastrados",
+      "listDescription": "Gerencie todos os eventos da instituição",
+      "tabs": {
+        "active": "Ativos ({{count}})",
+        "past": "Finalizados ({{count}})"
+      },
+      "certificateBadge": "Certificado",
+      "details": {
+        "date": "Data",
+        "location": "Local",
+        "registrations": "Inscritos",
+        "slots": "Vagas"
+      },
+      "locationOnline": "Online",
+      "locationInPerson": "Presencial",
+      "linkLabel": "Link:",
+      "addressLabel": "Endereço:",
+      "past": {
+        "title": "Eventos Finalizados",
+        "description": "{{count}} eventos já foram realizados"
+      },
+      "types": {
+        "palestra": "Palestra",
+        "workshop": "Workshop",
+        "aula_ao_vivo": "Aula ao Vivo",
+        "evento_social": "Evento Social",
+        "extracurricular": "Extracurricular",
+        "extracurricularFull": "Atividade Extracurricular"
+      },
+      "dialog": {
+        "title": "Criar Novo Evento",
+        "description": "Crie palestras, workshops e atividades extracurriculares",
+        "titleLabel": "Título do Evento *",
+        "titlePlaceholder": "Ex: Workshop de Primeiros Socorros",
+        "descriptionLabel": "Descrição *",
+        "descriptionPlaceholder": "Descreva o evento e seus objetivos...",
+        "typeLabel": "Tipo de Evento *",
+        "startDateLabel": "Data de Início *",
+        "startTimeLabel": "Hora de Início *",
+        "endDateLabel": "Data de Término *",
+        "endTimeLabel": "Hora de Término *",
+        "locationLabel": "Local do Evento *",
+        "onlineTab": "Online",
+        "inPersonTab": "Presencial",
+        "onlineLinkPlaceholder": "Link da reunião online (Google Meet, Zoom, etc)",
+        "addressPlaceholder": "Endereço completo do evento",
+        "limitSlotsLabel": "Limitar vagas",
+        "limitSlotsHint": "Definir número máximo de participantes",
+        "slotsCountLabel": "Número de Vagas",
+        "slotsCountPlaceholder": "Ex: 50",
+        "audienceLabel": "Público-alvo",
+        "audience": {
+          "all": "Todos os usuários",
+          "specificCourse": "Curso específico",
+          "specificClass": "Turma específica"
+        },
+        "certificateLabel": "Emitir certificado de participação",
+        "certificateHint": "Os participantes receberão certificado digital"
+      },
+      "toast": {
+        "fillRequired": "Preencha todos os campos obrigatórios",
+        "informLink": "Informe o link do evento online",
+        "informAddress": "Informe o endereço do evento",
+        "created": "Evento criado com sucesso!"
+      }
+    },
+    "questionarios": {
+      "title": "Questionários de Avaliação",
+      "subtitle": "Crie pesquisas de satisfação e colete feedback dos alunos",
+      "createButton": "Criar Questionário",
+      "stats": {
+        "activeSurveys": "Questionários Ativos",
+        "active": "ativos",
+        "totalResponses": "Total de Respostas",
+        "responses": "respostas",
+        "responseRate": "Taxa de Resposta",
+        "responded": "responderam",
+        "averageSatisfaction": "Satisfação Média",
+        "outOf10": "de 10"
+      },
+      "badges": {
+        "required": "Obrigatório",
+        "anonymous": "Anônimo"
+      },
+      "fields": {
+        "questions": "Perguntas",
+        "responses": "Respostas",
+        "period": "Período"
+      },
+      "questionsCount": "Perguntas ({{count}})",
+      "moreQuestions": "+ {{count}} pergunta(s)",
+      "types": {
+        "satisfacao_curso": "Satisfação do Curso",
+        "avaliacao_professor": "Avaliação de Professor",
+        "feedback_instituicao": "Feedback Institucional",
+        "pesquisa_personalizada": "Pesquisa Personalizada"
+      },
+      "questionTypes": {
+        "multipla_escolha": "Múltipla Escolha",
+        "escala": "Escala (1-5 ou 1-10)",
+        "texto_curto": "Texto Curto",
+        "texto_longo": "Texto Longo",
+        "sim_nao": "Sim/Não"
+      },
+      "dialog": {
+        "title": "Criar Novo Questionário",
+        "description": "Configure uma pesquisa de satisfação ou avaliação",
+        "titleLabel": "Título do Questionário *",
+        "titlePlaceholder": "Ex: Avaliação de Satisfação do Curso",
+        "descriptionLabel": "Descrição *",
+        "descriptionPlaceholder": "Explique o objetivo da pesquisa...",
+        "typeLabel": "Tipo de Questionário",
+        "audienceLabel": "Público-alvo",
+        "audience": {
+          "all": "Todos os alunos",
+          "specificCourse": "Curso específico",
+          "specificClass": "Turma específica"
+        },
+        "anonymousLabel": "Respostas anônimas",
+        "anonymousHint": "Não armazenar identificação do respondente",
+        "requiredLabel": "Questionário obrigatório",
+        "requiredHint": "Alunos devem responder para continuar",
+        "questionsTitle": "Perguntas ({{count}})",
+        "questionTypeLabel": "Tipo: {{type}}",
+        "optionsLabel": "Opções: {{options}}",
+        "newQuestionLabel": "Nova Pergunta",
+        "newQuestionPlaceholder": "Digite o texto da pergunta...",
+        "answerTypeLabel": "Tipo de Resposta",
+        "answerOptionsLabel": "Opções de Resposta",
+        "optionPlaceholder": "Opção {{number}}",
+        "addOption": "+ Adicionar Opção",
+        "addQuestion": "Adicionar Pergunta"
+      },
+      "toast": {
+        "typeQuestion": "Digite o texto da pergunta",
+        "questionAdded": "Pergunta adicionada!",
+        "fillAndAddQuestion": "Preencha todos os campos e adicione ao menos uma pergunta",
+        "created": "Questionário criado com sucesso!"
+      }
+    },
+    "cupons": {
+      "title": "Cupons de Desconto",
+      "subtitle": "Crie e gerencie cupons promocionais para atrair novos alunos",
+      "createButton": "Criar Cupom",
+      "stats": {
+        "activeCoupons": "Cupons Ativos",
+        "coupons": "cupons",
+        "totalUses": "Total de Usos",
+        "uses": "utilizações",
+        "totalDiscount": "Desconto Total",
+        "granted": "concedido",
+        "conversionRate": "Taxa de Conversão",
+        "converted": "converteram"
+      },
+      "listTitle": "Cupons Cadastrados",
+      "listDescription": "Gerencie todos os cupons de desconto",
+      "tabs": {
+        "active": "Ativos ({{count}})",
+        "expired": "Expirados ({{count}})"
+      },
+      "discountType": {
+        "percentage": "Percentual",
+        "fixedAmount": "Valor Fixo"
+      },
+      "almostSoldOut": "Quase Esgotado",
+      "fields": {
+        "discount": "Desconto",
+        "minimumAmount": "Valor Mínimo",
+        "validity": "Validade",
+        "uses": "Usos"
+      },
+      "couponUses": "Usos do cupom",
+      "maxPerUser": "Máx. {{count}}x por usuário",
+      "specificCourses": "Cursos específicos",
+      "noExpiredCoupons": "Nenhum cupom expirado",
+      "dialog": {
+        "title": "Criar Novo Cupom",
+        "description": "Configure um cupom de desconto promocional",
+        "codeLabel": "Código do Cupom *",
+        "codePlaceholder": "Ex: BEMVINDO2024",
+        "generate": "Gerar",
+        "codeHint": "Use letras maiúsculas e números sem espaços",
+        "descriptionLabel": "Descrição *",
+        "descriptionPlaceholder": "Descrição do cupom...",
+        "discountTypeLabel": "Tipo de Desconto *",
+        "discountTypePercentage": "Percentual (%)",
+        "discountTypeFixed": "Valor Fixo (R$)",
+        "discountValueLabel": "Valor do Desconto *",
+        "discountValuePercentageSuffix": "(%)",
+        "discountValueFixedSuffix": "(R$)",
+        "discountValuePercentagePlaceholder": "Ex: 20",
+        "discountValueFixedPlaceholder": "Ex: 100.00",
+        "minimumPurchaseLabel": "Valor Mínimo de Compra (R$)",
+        "minimumPurchasePlaceholder": "Ex: 500.00",
+        "minimumPurchaseHint": "Deixe vazio para não ter valor mínimo",
+        "startDateLabel": "Data de Início *",
+        "endDateLabel": "Data de Término *",
+        "limitUsesLabel": "Limitar número total de usos",
+        "limitUsesHint": "Definir quantas vezes o cupom pode ser usado no total",
+        "totalUsesLimitLabel": "Limite Total de Usos",
+        "totalUsesLimitPlaceholder": "Ex: 100",
+        "perUserLimitLabel": "Limite por Usuário",
+        "perUserLimitPlaceholder": "Ex: 1"
+      },
+      "toast": {
+        "fillRequired": "Preencha todos os campos obrigatórios",
+        "createdTitle": "Cupom criado com sucesso!",
+        "createdDescription": "Código {{code}} está ativo e pronto para uso.",
+        "copiedTitle": "Código copiado!",
+        "copiedDescription": "O código do cupom foi copiado para a área de transferência."
+      }
+    }
+  }
+}

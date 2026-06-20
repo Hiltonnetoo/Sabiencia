@@ -1,0 +1,43 @@
+{
+  "aluno": {
+    "minhasAulas": {
+      "title": "Minhas Aulas",
+      "subtitle": "Acompanhe suas disciplinas, frequência e materiais de estudo",
+      "attendanceWarningTitle": "Atenção à Frequência",
+      "attendanceWarningDesc": "Você possui disciplinas com frequência abaixo de 75%",
+      "attendanceLabel": "Frequência: {{value}}",
+      "stats": {
+        "totalSubjects": "Total de Disciplinas",
+        "activeSubjects": "disciplinas ativas",
+        "totalLessons": "Total de Aulas",
+        "lessonsHeld": "aulas realizadas",
+        "overallAttendance": "Frequência Geral",
+        "presences": "{{count}} presenças",
+        "availableMaterials": "Materiais Disponíveis",
+        "filesAndVideos": "arquivos e vídeos"
+      },
+      "tabs": {
+        "all": "Todas ({{count}})",
+        "inProgress": "Em Andamento ({{count}})",
+        "completed": "Concluídas ({{count}})"
+      },
+      "empty": {
+        "title": "Nenhuma aula encontrada",
+        "inProgress": "Você não possui aulas em andamento no momento.",
+        "completed": "Você ainda não concluiu nenhuma disciplina.",
+        "default": "Você ainda não possui aulas cadastradas."
+      },
+      "profPrefix": "Prof.",
+      "attendance": "Frequência",
+      "lessonsCount": "{{done}} de {{total}} aulas",
+      "lastLesson": "Última aula",
+      "nextLesson": "Próxima aula",
+      "materialsAvailable": "{{count}} material disponível",
+      "materialsAvailable_other": "{{count}} materiais disponíveis",
+      "viewMaterials": "Ver materiais",
+      "viewAttendance": "Ver Frequência",
+      "viewGrades": "Ver Notas",
+      "viewLessons": "Ver Aulas"
+    }
+  }
+}

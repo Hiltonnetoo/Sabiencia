@@ -1,0 +1,228 @@
+{
+  "gestor": {
+    "eventos": {
+      "title": "Events and Activities",
+      "subtitle": "Manage events, talks, workshops and extracurricular activities",
+      "createButton": "Create Event",
+      "stats": {
+        "activeEvents": "Active Events",
+        "events": "events",
+        "totalRegistrations": "Total Registrations",
+        "participants": "participants",
+        "onlineEvents": "Online Events",
+        "withCertificate": "With Certificate"
+      },
+      "listTitle": "Registered Events",
+      "listDescription": "Manage all the institution's events",
+      "tabs": {
+        "active": "Active ({{count}})",
+        "past": "Finished ({{count}})"
+      },
+      "certificateBadge": "Certificate",
+      "details": {
+        "date": "Date",
+        "location": "Location",
+        "registrations": "Registrations",
+        "slots": "Slots"
+      },
+      "locationOnline": "Online",
+      "locationInPerson": "In person",
+      "linkLabel": "Link:",
+      "addressLabel": "Address:",
+      "past": {
+        "title": "Finished Events",
+        "description": "{{count}} events have already taken place"
+      },
+      "types": {
+        "palestra": "Talk",
+        "workshop": "Workshop",
+        "aula_ao_vivo": "Live Class",
+        "evento_social": "Social Event",
+        "extracurricular": "Extracurricular",
+        "extracurricularFull": "Extracurricular Activity"
+      },
+      "dialog": {
+        "title": "Create New Event",
+        "description": "Create talks, workshops and extracurricular activities",
+        "titleLabel": "Event Title *",
+        "titlePlaceholder": "E.g.: First Aid Workshop",
+        "descriptionLabel": "Description *",
+        "descriptionPlaceholder": "Describe the event and its goals...",
+        "typeLabel": "Event Type *",
+        "startDateLabel": "Start Date *",
+        "startTimeLabel": "Start Time *",
+        "endDateLabel": "End Date *",
+        "endTimeLabel": "End Time *",
+        "locationLabel": "Event Location *",
+        "onlineTab": "Online",
+        "inPersonTab": "In person",
+        "onlineLinkPlaceholder": "Online meeting link (Google Meet, Zoom, etc)",
+        "addressPlaceholder": "Full event address",
+        "limitSlotsLabel": "Limit slots",
+        "limitSlotsHint": "Set maximum number of participants",
+        "slotsCountLabel": "Number of Slots",
+        "slotsCountPlaceholder": "E.g.: 50",
+        "audienceLabel": "Target Audience",
+        "audience": {
+          "all": "All users",
+          "specificCourse": "Specific course",
+          "specificClass": "Specific class"
+        },
+        "certificateLabel": "Issue participation certificate",
+        "certificateHint": "Participants will receive a digital certificate"
+      },
+      "toast": {
+        "fillRequired": "Fill in all required fields",
+        "informLink": "Provide the online event link",
+        "informAddress": "Provide the event address",
+        "created": "Event created successfully!"
+      }
+    },
+    "questionarios": {
+      "title": "Evaluation Surveys",
+      "subtitle": "Create satisfaction surveys and collect feedback from students",
+      "createButton": "Create Survey",
+      "stats": {
+        "activeSurveys": "Active Surveys",
+        "active": "active",
+        "totalResponses": "Total Responses",
+        "responses": "responses",
+        "responseRate": "Response Rate",
+        "responded": "responded",
+        "averageSatisfaction": "Average Satisfaction",
+        "outOf10": "out of 10"
+      },
+      "badges": {
+        "required": "Required",
+        "anonymous": "Anonymous"
+      },
+      "fields": {
+        "questions": "Questions",
+        "responses": "Responses",
+        "period": "Period"
+      },
+      "questionsCount": "Questions ({{count}})",
+      "moreQuestions": "+ {{count}} more question(s)",
+      "types": {
+        "satisfacao_curso": "Course Satisfaction",
+        "avaliacao_professor": "Teacher Evaluation",
+        "feedback_instituicao": "Institutional Feedback",
+        "pesquisa_personalizada": "Custom Survey"
+      },
+      "questionTypes": {
+        "multipla_escolha": "Multiple Choice",
+        "escala": "Scale (1-5 or 1-10)",
+        "texto_curto": "Short Text",
+        "texto_longo": "Long Text",
+        "sim_nao": "Yes/No"
+      },
+      "dialog": {
+        "title": "Create New Survey",
+        "description": "Set up a satisfaction or evaluation survey",
+        "titleLabel": "Survey Title *",
+        "titlePlaceholder": "E.g.: Course Satisfaction Evaluation",
+        "descriptionLabel": "Description *",
+        "descriptionPlaceholder": "Explain the goal of the survey...",
+        "typeLabel": "Survey Type",
+        "audienceLabel": "Target Audience",
+        "audience": {
+          "all": "All students",
+          "specificCourse": "Specific course",
+          "specificClass": "Specific class"
+        },
+        "anonymousLabel": "Anonymous responses",
+        "anonymousHint": "Do not store respondent identification",
+        "requiredLabel": "Required survey",
+        "requiredHint": "Students must respond to continue",
+        "questionsTitle": "Questions ({{count}})",
+        "questionTypeLabel": "Type: {{type}}",
+        "optionsLabel": "Options: {{options}}",
+        "newQuestionLabel": "New Question",
+        "newQuestionPlaceholder": "Type the question text...",
+        "answerTypeLabel": "Answer Type",
+        "answerOptionsLabel": "Answer Options",
+        "optionPlaceholder": "Option {{number}}",
+        "addOption": "+ Add Option",
+        "addQuestion": "Add Question"
+      },
+      "toast": {
+        "typeQuestion": "Type the question text",
+        "questionAdded": "Question added!",
+        "fillAndAddQuestion": "Fill in all fields and add at least one question",
+        "created": "Survey created successfully!"
+      }
+    },
+    "cupons": {
+      "title": "Discount Coupons",
+      "subtitle": "Create and manage promotional coupons to attract new students",
+      "createButton": "Create Coupon",
+      "stats": {
+        "activeCoupons": "Active Coupons",
+        "coupons": "coupons",
+        "totalUses": "Total Uses",
+        "uses": "uses",
+        "totalDiscount": "Total Discount",
+        "granted": "granted",
+        "conversionRate": "Conversion Rate",
+        "converted": "converted"
+      },
+      "listTitle": "Registered Coupons",
+      "listDescription": "Manage all discount coupons",
+      "tabs": {
+        "active": "Active ({{count}})",
+        "expired": "Expired ({{count}})"
+      },
+      "discountType": {
+        "percentage": "Percentage",
+        "fixedAmount": "Fixed Amount"
+      },
+      "almostSoldOut": "Almost Sold Out",
+      "fields": {
+        "discount": "Discount",
+        "minimumAmount": "Minimum Amount",
+        "validity": "Validity",
+        "uses": "Uses"
+      },
+      "couponUses": "Coupon uses",
+      "maxPerUser": "Max. {{count}}x per user",
+      "specificCourses": "Specific courses",
+      "noExpiredCoupons": "No expired coupons",
+      "dialog": {
+        "title": "Create New Coupon",
+        "description": "Set up a promotional discount coupon",
+        "codeLabel": "Coupon Code *",
+        "codePlaceholder": "E.g.: WELCOME2024",
+        "generate": "Generate",
+        "codeHint": "Use uppercase letters and numbers without spaces",
+        "descriptionLabel": "Description *",
+        "descriptionPlaceholder": "Coupon description...",
+        "discountTypeLabel": "Discount Type *",
+        "discountTypePercentage": "Percentage (%)",
+        "discountTypeFixed": "Fixed Amount ($)",
+        "discountValueLabel": "Discount Value *",
+        "discountValuePercentageSuffix": "(%)",
+        "discountValueFixedSuffix": "($)",
+        "discountValuePercentagePlaceholder": "E.g.: 20",
+        "discountValueFixedPlaceholder": "E.g.: 100.00",
+        "minimumPurchaseLabel": "Minimum Purchase Amount ($)",
+        "minimumPurchasePlaceholder": "E.g.: 500.00",
+        "minimumPurchaseHint": "Leave empty for no minimum amount",
+        "startDateLabel": "Start Date *",
+        "endDateLabel": "End Date *",
+        "limitUsesLabel": "Limit total number of uses",
+        "limitUsesHint": "Set how many times the coupon can be used in total",
+        "totalUsesLimitLabel": "Total Use Limit",
+        "totalUsesLimitPlaceholder": "E.g.: 100",
+        "perUserLimitLabel": "Limit per User",
+        "perUserLimitPlaceholder": "E.g.: 1"
+      },
+      "toast": {
+        "fillRequired": "Fill in all required fields",
+        "createdTitle": "Coupon created successfully!",
+        "createdDescription": "Code {{code}} is active and ready to use.",
+        "copiedTitle": "Code copied!",
+        "copiedDescription": "The coupon code was copied to the clipboard."
+      }
+    }
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "aluno": {
+    "biblioteca": {
+      "title": "Virtual Library",
+      "subtitle": "Access study materials, videos and documents",
+      "stats": {
+        "totalMaterials": "Total Materials",
+        "pdfs": "PDFs",
+        "videos": "Videos",
+        "favorites": "Favorites"
+      },
+      "tabs": {
+        "all": "All ({{count}})",
+        "pdfs": "PDFs ({{count}})",
+        "videos": "Videos ({{count}})",
+        "favorites": "Favorites ({{count}})"
+      },
+      "empty": {
+        "filtered": "No material found with the selected filters",
+        "noPdfs": "No PDF found",
+        "noVideos": "No video found",
+        "noFavoritesTitle": "You don't have any favorite materials yet",
+        "noFavoritesHint": "Click the ❤️ on materials to add them to your favorites"
+      },
+      "toasts": {
+        "removedFromFavorites": "Removed from favorites",
+        "addedToFavorites": "Added to favorites",
+        "openingMaterial": "Opening material in a new tab..."
+      }
+    },
+    "minhasNotas": {
+      "title": "My Grades",
+      "subtitle": "Track your academic performance",
+      "loginRequired": "You need to be logged in to access this page",
+      "stats": {
+        "overallAverage": "Overall Average",
+        "subjects": "Subjects",
+        "withGrades": "With grades posted",
+        "approved": "Approved",
+        "averageAtLeast": "Average ≥ 7.0",
+        "recovery": "Recovery",
+        "atRisk": "+ {{count}} at risk",
+        "averageRange": "Average 5.0-6.9"
+      },
+      "bestPerformanceTitle": "Best Performances",
+      "attentionTitle": "Subjects That Need Attention",
+      "attentionHint": "💡 Tip: Look for study materials in the library and ask your teachers for help",
+      "motivationMessage": "<strong>Excellent work!</strong> You're performing great. Keep up the dedication!",
+      "detailedReport": "Detailed Report Card",
+      "empty": "No grades posted yet"
+    },
+    "minhaFrequencia": {
+      "title": "My Attendance",
+      "subtitle": "Track your presence in classes",
+      "loginRequired": "You need to be logged in to access this page",
+      "stats": {
+        "overallAttendance": "Overall Attendance",
+        "totalLessons": "Total Lessons",
+        "registeredInSystem": "Registered in the system",
+        "presences": "Presences",
+        "plusJustified": "+ {{count}} justified",
+        "absences": "Absences",
+        "congratulations": "Congratulations!",
+        "noJustification": "Without justification"
+      },
+      "criticalTitle": "Attention: Subjects with Critical Attendance",
+      "criticalDesc": "You are below the required 75% attendance in the following subjects:",
+      "attendanceBadge": "{{value}}% attendance",
+      "criticalWarning": "⚠️ Attendance below 75% may result in failure due to absences!",
+      "tipMessage": "<strong>Congratulations!</strong> Your attendance is adequate. Keep it up!",
+      "bySubject": "Attendance by Subject",
+      "empty": "No attendance recorded yet"
+    },
+    "progressoVideoaulas": {
+      "title": "Video Lessons Progress",
+      "subtitle": "Track your performance and progress in your studies",
+      "filterTitle": "Filter by Subject",
+      "filterDesc": "View your overall statistics or by a specific subject",
+      "allSubjects": "All Subjects",
+      "empty": {
+        "title": "No video lessons available",
+        "all": "There are no video lessons registered at the moment.",
+        "forSubject": "There are no video lessons for {{nome}}."
+      }
+    }
+  }
+}

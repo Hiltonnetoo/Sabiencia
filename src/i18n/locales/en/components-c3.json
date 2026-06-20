@@ -1,0 +1,127 @@
+{
+  "components": {
+    "comunicados": {
+      "priority": {
+        "baixa": "Low",
+        "normal": "Normal",
+        "alta": "High",
+        "urgente": "Urgent"
+      },
+      "card": {
+        "new": "New",
+        "from": "From: {{name}}",
+        "readCount": "{{read}} of {{total}} read",
+        "readAt": "Read on {{date}}",
+        "viewFull": "View full",
+        "markAsRead": "Mark as read"
+      },
+      "filters": {
+        "search": "Search",
+        "searchPlaceholder": "Search by title or message...",
+        "priority": "Priority",
+        "allPriorities": "All",
+        "recipients": "Recipients",
+        "allRecipients": "All",
+        "readStatus": "Read status",
+        "read": "Read",
+        "unread": "Unread"
+      },
+      "recipients": {
+        "all": "All",
+        "allStudents": "All students",
+        "allTeachers": "All teachers",
+        "specificClass": "Specific class",
+        "individual": "Individual",
+        "specificStudent": "Specific student",
+        "myClass": "My class"
+      },
+      "form": {
+        "title": "New Communication",
+        "fieldTitle": "Title *",
+        "titlePlaceholder": "E.g.: Exam schedule",
+        "charCount": "{{current}}/{{max}} characters",
+        "message": "Message *",
+        "messagePlaceholder": "Type your message here...",
+        "recipients": "Recipients *",
+        "priority": "Priority",
+        "selectClass": "Select the class *",
+        "chooseClass": "Choose a class",
+        "selectStudent": "Select the student *",
+        "chooseStudent": "Choose a student",
+        "allowReply": "Allow recipients to reply",
+        "selectClassAlert": "Select a class",
+        "selectStudentAlert": "Select a student",
+        "summary": "This communication will be sent to <1>{{count}}</1> person.",
+        "summary_other": "This communication will be sent to <1>{{count}}</1> people.",
+        "urgentAlert": "<1>Urgent</1> communications will be highlighted for recipients.",
+        "sending": "Sending...",
+        "send": "Send Communication"
+      },
+      "view": {
+        "new": "New",
+        "sentBy": "Sent by",
+        "unknownSender": "Unknown",
+        "sendDate": "Send date",
+        "message": "Message",
+        "readStats": "Read statistics",
+        "totalRecipients": "Total recipients",
+        "readCount": "Read the communication",
+        "notReadYet": "Not read yet",
+        "readRate": "Read rate",
+        "alreadyRead": "You have already read this communication",
+        "readOn": "On {{date}}",
+        "notMarkedRead": "This communication has not been marked as read yet",
+        "markAsRead": "Mark as read"
+      }
+    },
+    "observacoes": {
+      "type": {
+        "pedagogica": "Pedagogical",
+        "comportamental": "Behavioral",
+        "administrativa": "Administrative"
+      },
+      "card": {
+        "visible": "Visible",
+        "hidden": "Hidden",
+        "teacherNotFound": "Teacher not found"
+      },
+      "filters": {
+        "searchPlaceholder": "Search in content...",
+        "type": "Type",
+        "allTypes": "All types",
+        "student": "Student",
+        "allStudents": "All students",
+        "teacher": "Teacher",
+        "allTeachers": "All teachers",
+        "subject": "Subject",
+        "allSubjects": "All subjects",
+        "noSubject": "No subject"
+      },
+      "form": {
+        "editTitle": "Edit Observation",
+        "newTitle": "New Observation",
+        "editDescription": "Update the observation information.",
+        "newDescription": "Record a new observation about the student.",
+        "student": "Student *",
+        "selectStudent": "Select the student",
+        "type": "Observation type *",
+        "selectType": "Select the type",
+        "typeHintPedagogica": "Related to academic performance",
+        "typeHintComportamental": "Related to behavior",
+        "typeHintAdministrativa": "Administrative matters",
+        "subject": "Subject (optional)",
+        "selectSubject": "Select the subject",
+        "noSpecificSubject": "No specific subject",
+        "subjectHint": "Associate the observation with a specific subject, if applicable",
+        "content": "Observation *",
+        "contentPlaceholder": "Describe the observation...",
+        "contentHint": "Minimum 10 characters, maximum 1000 characters ({{count}}/1000)",
+        "visibleToStudent": "Visible to the student",
+        "visibleToStudentHint": "Allow the student to view this observation",
+        "saving": "Saving...",
+        "saveChanges": "Save Changes",
+        "createObservation": "Create Observation"
+      }
+    }
+  }
+}

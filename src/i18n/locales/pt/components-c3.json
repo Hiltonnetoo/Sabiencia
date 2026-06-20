@@ -1,0 +1,127 @@
+{
+  "components": {
+    "comunicados": {
+      "priority": {
+        "baixa": "Baixa",
+        "normal": "Normal",
+        "alta": "Alta",
+        "urgente": "Urgente"
+      },
+      "card": {
+        "new": "Novo",
+        "from": "De: {{name}}",
+        "readCount": "{{read}} de {{total}} leram",
+        "readAt": "Lido em {{date}}",
+        "viewFull": "Ver Completo",
+        "markAsRead": "Marcar como Lido"
+      },
+      "filters": {
+        "search": "Buscar",
+        "searchPlaceholder": "Buscar por título ou mensagem...",
+        "priority": "Prioridade",
+        "allPriorities": "Todas",
+        "recipients": "Destinatários",
+        "allRecipients": "Todos",
+        "readStatus": "Status de Leitura",
+        "read": "Lidos",
+        "unread": "Não Lidos"
+      },
+      "recipients": {
+        "all": "Todos",
+        "allStudents": "Todos os Alunos",
+        "allTeachers": "Todos os Professores",
+        "specificClass": "Turma Específica",
+        "individual": "Individual",
+        "specificStudent": "Aluno Específico",
+        "myClass": "Minha Turma"
+      },
+      "form": {
+        "title": "Novo Comunicado",
+        "fieldTitle": "Título *",
+        "titlePlaceholder": "Ex: Calendário de Provas",
+        "charCount": "{{current}}/{{max}} caracteres",
+        "message": "Mensagem *",
+        "messagePlaceholder": "Digite sua mensagem aqui...",
+        "recipients": "Destinatários *",
+        "priority": "Prioridade",
+        "selectClass": "Selecione a Turma *",
+        "chooseClass": "Escolha uma turma",
+        "selectStudent": "Selecione o Aluno *",
+        "chooseStudent": "Escolha um aluno",
+        "allowReply": "Permitir que destinatários respondam",
+        "selectClassAlert": "Selecione uma turma",
+        "selectStudentAlert": "Selecione um aluno",
+        "summary": "Este comunicado será enviado para <1>{{count}}</1> pessoa.",
+        "summary_other": "Este comunicado será enviado para <1>{{count}}</1> pessoas.",
+        "urgentAlert": "Comunicados <1>urgentes</1> aparecerão em destaque para os destinatários.",
+        "sending": "Enviando...",
+        "send": "Enviar Comunicado"
+      },
+      "view": {
+        "new": "Novo",
+        "sentBy": "Enviado por",
+        "unknownSender": "Desconhecido",
+        "sendDate": "Data de envio",
+        "message": "Mensagem",
+        "readStats": "Estatísticas de Leitura",
+        "totalRecipients": "Total de destinatários",
+        "readCount": "Leram o comunicado",
+        "notReadYet": "Não leram ainda",
+        "readRate": "Taxa de leitura",
+        "alreadyRead": "Você já leu este comunicado",
+        "readOn": "Em {{date}}",
+        "notMarkedRead": "Este comunicado ainda não foi marcado como lido",
+        "markAsRead": "Marcar como Lido"
+      }
+    },
+    "observacoes": {
+      "type": {
+        "pedagogica": "Pedagógica",
+        "comportamental": "Comportamental",
+        "administrativa": "Administrativa"
+      },
+      "card": {
+        "visible": "Visível",
+        "hidden": "Oculta",
+        "teacherNotFound": "Professor não encontrado"
+      },
+      "filters": {
+        "searchPlaceholder": "Buscar no conteúdo...",
+        "type": "Tipo",
+        "allTypes": "Todos os tipos",
+        "student": "Aluno",
+        "allStudents": "Todos os alunos",
+        "teacher": "Professor",
+        "allTeachers": "Todos os professores",
+        "subject": "Disciplina",
+        "allSubjects": "Todas as disciplinas",
+        "noSubject": "Sem disciplina"
+      },
+      "form": {
+        "editTitle": "Editar Observação",
+        "newTitle": "Nova Observação",
+        "editDescription": "Atualize as informações da observação.",
+        "newDescription": "Registre uma nova observação sobre o aluno.",
+        "student": "Aluno *",
+        "selectStudent": "Selecione o aluno",
+        "type": "Tipo de Observação *",
+        "selectType": "Selecione o tipo",
+        "typeHintPedagogica": "Relacionada ao desempenho acadêmico",
+        "typeHintComportamental": "Relacionada ao comportamento",
+        "typeHintAdministrativa": "Questões administrativas",
+        "subject": "Disciplina (opcional)",
+        "selectSubject": "Selecione a disciplina",
+        "noSpecificSubject": "Nenhuma disciplina específica",
+        "subjectHint": "Associe a observação a uma disciplina específica, se aplicável",
+        "content": "Observação *",
+        "contentPlaceholder": "Descreva a observação...",
+        "contentHint": "Mínimo 10 caracteres, máximo 1000 caracteres ({{count}}/1000)",
+        "visibleToStudent": "Visível para o aluno",
+        "visibleToStudentHint": "Permitir que o aluno visualize esta observação",
+        "saving": "Salvando...",
+        "saveChanges": "Salvar Alterações",
+        "createObservation": "Criar Observação"
+      }
+    }
+  }
+}

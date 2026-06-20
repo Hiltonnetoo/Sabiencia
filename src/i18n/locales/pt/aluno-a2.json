@@ -1,0 +1,194 @@
+{
+  "aluno": {
+    "eventos": {
+      "title": "Eventos e Atividades",
+      "subtitle": "Participe de palestras, workshops e atividades extracurriculares",
+      "certificate": "Certificado",
+      "enrolled": "Inscrito",
+      "dateTime": "Data e Hora",
+      "location": "Local",
+      "online": "Online",
+      "inPerson": "Presencial",
+      "spots": "Vagas",
+      "spotsFilled": "Vagas preenchidas",
+      "eventLink": "Link do Evento:",
+      "eventLocation": "Local do Evento:",
+      "cancelEnrollment": "Cancelar Inscrição",
+      "spotsSoldOut": "Vagas Esgotadas",
+      "enroll": "Inscrever-se",
+      "types": {
+        "palestra": "Palestra",
+        "workshop": "Workshop",
+        "aula_ao_vivo": "Aula ao Vivo",
+        "evento_social": "Evento Social",
+        "extracurricular": "Extracurricular"
+      },
+      "stats": {
+        "availableEvents": "Eventos Disponíveis",
+        "toEnroll": "para se inscrever",
+        "myEnrollments": "Minhas Inscrições",
+        "events": "eventos",
+        "certificates": "Certificados",
+        "issued": "emitido"
+      },
+      "tabs": {
+        "available": "Disponíveis ({{count}})",
+        "enrolled": "Minhas Inscrições ({{count}})"
+      },
+      "empty": {
+        "availableTitle": "Nenhum evento disponível",
+        "availableDesc": "Novos eventos serão divulgados em breve",
+        "enrolledTitle": "Você ainda não está inscrito em nenhum evento",
+        "enrolledDesc": "Navegue pela aba \"Disponíveis\" para se inscrever"
+      },
+      "toast": {
+        "enrolledTitle": "Inscrição realizada com sucesso!",
+        "enrolledDesc": "Você receberá um e-mail de confirmação em breve.",
+        "cancelledTitle": "Inscrição cancelada",
+        "cancelledDesc": "Sua inscrição foi cancelada com sucesso."
+      }
+    },
+    "certificados": {
+      "title": "Meus Certificados",
+      "subtitle": "Visualize, baixe e compartilhe seus certificados",
+      "howToValidateTitle": "Como validar meu certificado?",
+      "howToValidateDesc": "Todos os certificados emitidos possuem um código de validação único. Para validar a autenticidade de um certificado:",
+      "validateStep1": "1. Acesse o site da instituição na página de validação de certificados",
+      "validateStep2": "2. Insira o código de validação do certificado",
+      "validateStep3": "3. O sistema confirmará os dados e a autenticidade do documento",
+      "issuanceDate": "Data de Emissão",
+      "workload": "Carga Horária",
+      "hours": "{{count}} horas",
+      "validationCode": "Código de Validação",
+      "downloadPdf": "Baixar PDF",
+      "view": "Visualizar",
+      "share": "Compartilhar",
+      "types": {
+        "conclusao_curso": "Conclusão de Curso",
+        "participacao_evento": "Participação em Evento",
+        "aprovacao_disciplina": "Aprovação em Disciplina",
+        "horas_complementares": "Horas Complementares"
+      },
+      "stats": {
+        "totalCertificates": "Total de Certificados",
+        "issued": "emitidos",
+        "completedCourses": "Cursos Concluídos",
+        "course": "curso",
+        "certifiedHours": "Horas Certificadas",
+        "hours": "horas",
+        "events": "Eventos",
+        "participation": "participação"
+      },
+      "toast": {
+        "downloadStartedTitle": "Download iniciado!",
+        "downloadStartedDesc": "Seu certificado está sendo baixado.",
+        "generatingTitle": "Gerando certificado...",
+        "generatingDesc": "Seu certificado será gerado em instantes.",
+        "openingPreview": "Abrindo visualização...",
+        "codeCopiedTitle": "Código de validação copiado!",
+        "codeCopiedDesc": "Compartilhe este código para validar seu certificado."
+      }
+    },
+    "financeiro": {
+      "title": "Meu Financeiro",
+      "subtitle": "Acompanhe seus pagamentos e pendências",
+      "overdueAlert": "Você possui {{value}} em pagamentos vencidos. Entre em contato com a secretaria para regularizar sua situação.",
+      "total": "Total",
+      "payments": "{{count}} pagamento",
+      "payments_other": "{{count}} pagamentos",
+      "paid": "Pago",
+      "paidOf": "{{paid}} de {{total}} pagos",
+      "pending": "Pendente",
+      "awaitingPayment": "Aguardando pagamento",
+      "overdue": "Vencido",
+      "regularizeSituation": "Regularize sua situação",
+      "paymentProgressTitle": "Progresso de Pagamentos",
+      "paymentsCompleted": "{{paid}} de {{total}} pagamentos realizados",
+      "nextDueDate": "Próximo Vencimento",
+      "dueOn": "Vencimento em {{date}}",
+      "value": "Valor",
+      "id": "ID",
+      "paymentHistory": "Histórico de Pagamentos ({{count}})",
+      "empty": {
+        "title": "Nenhum pagamento encontrado",
+        "desc": "Você ainda não possui pagamentos registrados"
+      }
+    },
+    "comunicados": {
+      "title": "Meus Comunicados",
+      "subtitle": "Acompanhe os avisos e comunicados da escola",
+      "stats": {
+        "totalAnnouncements": "Total de Comunicados",
+        "unread": "Não Lidos",
+        "urgentUnread": "Urgentes Não Lidos"
+      },
+      "urgentAlert": "Você tem <1>{{count}}</1> comunicado(s) urgente(s) não lido(s). Por favor, leia com atenção!",
+      "receivedAnnouncements": "Comunicados Recebidos",
+      "newCount": "{{count}} novos",
+      "empty": {
+        "filtered": "Nenhum comunicado encontrado com os filtros aplicados.",
+        "default": "Você ainda não recebeu nenhum comunicado."
+      },
+      "toast": {
+        "markedAsRead": "Comunicado marcado como lido!"
+      }
+    },
+    "observacoes": {
+      "title": "Minhas Observações",
+      "subtitle": "Acompanhe as observações registradas pelos professores",
+      "stats": {
+        "totalVisible": "Total Visíveis",
+        "pedagogical": "Pedagógicas",
+        "behavioral": "Comportamentais",
+        "administrative": "Administrativas"
+      },
+      "filterByType": "Filtrar por tipo:",
+      "typePlaceholder": "Tipo",
+      "types": {
+        "all": "Todos os tipos",
+        "pedagogica": "Pedagógica",
+        "comportamental": "Comportamental",
+        "administrativa": "Administrativa"
+      },
+      "infoTitle": "Sobre as observações:",
+      "infoDesc": " Os professores registram observações para acompanhar seu desenvolvimento acadêmico, comportamental e questões administrativas. Algumas observações podem não estar visíveis por serem de uso interno dos professores.",
+      "empty": {
+        "title": "Nenhuma observação encontrada",
+        "filtered": "Não há observações deste tipo para você no momento.",
+        "default": "Você ainda não possui observações visíveis dos professores."
+      },
+      "count": "{{count}} observação encontrada",
+      "count_other": "{{count}} observações encontradas"
+    },
+    "perfil": {
+      "tabs": {
+        "personalData": "Dados Pessoais",
+        "academicData": "Dados Acadêmicos",
+        "security": "Segurança",
+        "activities": "Atividades"
+      },
+      "academicDataUnavailable": "Dados acadêmicos não disponíveis"
+    },
+    "configuracoes": {
+      "title": "Configurações",
+      "subtitle": "Gerencie suas preferências e configurações do sistema",
+      "tabs": {
+        "notifications": "Notificações",
+        "privacy": "Privacidade",
+        "appearance": "Aparência"
+      },
+      "notifications": {
+        "title": "Preferências de Notificações",
+        "desc": "Configure como e quando você deseja receber notificações"
+      },
+      "privacy": {
+        "title": "Configurações de Privacidade",
+        "desc": "Gerencie suas configurações de privacidade e dados pessoais (LGPD)"
+      },
+      "appearance": {
+        "title": "Aparência do Sistema",
+        "desc": "Personalize a aparência da interface"
+      }
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "demoPages": {
+    "common": {
+      "back": "Voltar"
+    },
+    "aluno": {
+      "loading": "Preparando demonstração do Aluno...",
+      "bannerLabel": "MODO DEMONSTRAÇÃO - ALUNO",
+      "defaultCourse": "Enfermagem"
+    },
+    "gestor": {
+      "loading": "Preparando demonstração do Gestor...",
+      "bannerLabel": "MODO DEMONSTRAÇÃO - GESTOR",
+      "role": "Administrador do Sistema"
+    },
+    "professor": {
+      "loading": "Preparando demonstração do Professor...",
+      "bannerLabel": "MODO DEMONSTRAÇÃO - PROFESSOR",
+      "area": "Enfermagem"
+    },
+    "register": {
+      "brandName": "Sabiencia",
+      "headerSubtitle": "Cadastro de Professor",
+      "cardTitle": "Seja um Professor",
+      "cardDescription": "Faça parte da equipe Sabiencia",
+      "steps": {
+        "personal": "Pessoais",
+        "professional": "Profissionais",
+        "motivation": "Motivação",
+        "access": "Acesso"
+      },
+      "buttons": {
+        "back": "Voltar",
+        "next": "Próximo",
+        "submit": "Enviar Cadastro",
+        "submitting": "Enviando...",
+        "backToLogin": "Voltar para página de login"
+      },
+      "fields": {
+        "fullName": "Nome Completo *",
+        "fullNamePlaceholder": "Seu nome completo",
+        "cpf": "CPF *",
+        "email": "E-mail *",
+        "phone": "Telefone/WhatsApp *",
+        "photoUrl": "URL da Foto (opcional)",
+        "photoUrlPlaceholder": "https://...",
+        "photoUrlHint": "Link para sua foto de perfil",
+        "education": "Formação Acadêmica *",
+        "educationPlaceholder": "Ex: Enfermeiro, Mestre em Ciências da Saúde",
+        "professionalRegistration": "Registro Profissional",
+        "professionalRegistrationPlaceholder": "Ex: COREN-MA 123456",
+        "specialties": "Especialidades / Áreas de Atuação *",
+        "specialtiesSelectLabel": "Especialidades / Áreas de Atuação",
+        "specialtiesPlaceholder": "Selecione suas especialidades...",
+        "specialtiesHint": "Selecione todas as áreas em que você tem experiência",
+        "experience": "Experiência Profissional",
+        "experiencePlaceholder": "Descreva brevemente sua experiência profissional e tempo de atuação...",
+        "motivation": "Por que deseja fazer parte da equipe Sabiencia? *",
+        "motivationPlaceholder": "Conte-nos sobre sua motivação para lecionar em nossa instituição...",
+        "createPassword": "Criar Senha *",
+        "createPasswordPlaceholder": "Mínimo 6 caracteres",
+        "confirmPassword": "Confirmar Senha *",
+        "confirmPasswordPlaceholder": "Digite a senha novamente"
+      },
+      "specialties": {
+        "enfermagem": "Enfermagem",
+        "anatomia": "Anatomia",
+        "fisiologia": "Fisiologia",
+        "farmacologia": "Farmacologia",
+        "administracao": "Administração",
+        "informatica": "Informática",
+        "programacao": "Programação",
+        "redes": "Redes de Computadores"
+      },
+      "nextSteps": {
+        "title": "Próximos Passos",
+        "item1": "Seu cadastro será analisado pela equipe administrativa",
+        "item2": "Pode ser solicitado envio de documentos adicionais",
+        "item3": "Você receberá um e-mail com o resultado em até 5 dias úteis",
+        "item4": "Após aprovação, você poderá fazer login na plataforma"
+      },
+      "ready": {
+        "title": "Tudo pronto!",
+        "description": "Ao clicar em \"Enviar Cadastro\", você concorda com nossos Termos de Uso e Política de Privacidade."
+      },
+      "errors": {
+        "requiredFields": "Preencha todos os campos obrigatórios",
+        "educationAndSpecialty": "Preencha sua formação e ao menos uma especialidade",
+        "motivation": "Por favor, conte-nos sua motivação",
+        "passwordMin": "A senha deve ter no mínimo 6 caracteres",
+        "passwordsDontMatch": "As senhas não conferem",
+        "submitFailed": "Erro ao enviar cadastro. Tente novamente."
+      },
+      "success": {
+        "title": "Cadastro enviado com sucesso!",
+        "description": "Aguarde a análise do administrador. Você receberá um e-mail em breve."
+      }
+    }
+  }
+}

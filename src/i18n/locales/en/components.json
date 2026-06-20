@@ -1,0 +1,24 @@
+{
+  "components": {
+    "deleteConfirmDialog": {
+      "title": "Confirm deletion",
+      "description": "Are you sure you want to delete this item? This action cannot be undone.",
+      "descriptionNamed": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone."
+    },
+    "unsavedChangesDialog": {
+      "title": "Unsaved changes",
+      "description": "You have unsaved changes that will be lost. Do you want to leave anyway?",
+      "keepEditing": "Keep editing",
+      "leaveWithoutSaving": "Leave without saving"
+    },
+    "emptyState": {
+      "searchNoResults": "We couldn't find results for <strong>\"{{term}}\"</strong>",
+      "searchHint": "Try different keywords or remove filters.",
+      "clearSearch": "Clear search",
+      "filterNoResults": "No item matches the filters",
+      "activeFilters": "{{count}} active filter",
+      "activeFilters_other": "{{count}} active filters",
+      "filterHint": "Adjust the applied filters to see more results"
+    }
+  }
+}

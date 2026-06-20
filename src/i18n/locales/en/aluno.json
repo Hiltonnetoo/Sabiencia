@@ -1,0 +1,43 @@
+{
+  "aluno": {
+    "minhasAulas": {
+      "title": "My Lessons",
+      "subtitle": "Follow your subjects, attendance and study materials",
+      "attendanceWarningTitle": "Attendance warning",
+      "attendanceWarningDesc": "You have subjects with attendance below 75%",
+      "attendanceLabel": "Attendance: {{value}}",
+      "stats": {
+        "totalSubjects": "Total Subjects",
+        "activeSubjects": "active subjects",
+        "totalLessons": "Total Lessons",
+        "lessonsHeld": "lessons held",
+        "overallAttendance": "Overall Attendance",
+        "presences": "{{count}} presences",
+        "availableMaterials": "Available Materials",
+        "filesAndVideos": "files and videos"
+      },
+      "tabs": {
+        "all": "All ({{count}})",
+        "inProgress": "In Progress ({{count}})",
+        "completed": "Completed ({{count}})"
+      },
+      "empty": {
+        "title": "No lessons found",
+        "inProgress": "You have no lessons in progress right now.",
+        "completed": "You haven't completed any subject yet.",
+        "default": "You don't have any lessons registered yet."
+      },
+      "profPrefix": "Prof.",
+      "attendance": "Attendance",
+      "lessonsCount": "{{done}} of {{total}} lessons",
+      "lastLesson": "Last lesson",
+      "nextLesson": "Next lesson",
+      "materialsAvailable": "{{count}} material available",
+      "materialsAvailable_other": "{{count}} materials available",
+      "viewMaterials": "View materials",
+      "viewAttendance": "View Attendance",
+      "viewGrades": "View Grades",
+      "viewLessons": "View Lessons"
+    }
+  }
+}

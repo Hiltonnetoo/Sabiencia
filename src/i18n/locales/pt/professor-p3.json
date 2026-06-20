@@ -1,0 +1,218 @@
+{
+  "professor": {
+    "minhasTurmas": {
+      "title": "Minhas Turmas",
+      "subtitle": "Gerencie as turmas e disciplinas que você leciona",
+      "stats": {
+        "totalClasses": "Total de Turmas",
+        "activeClasses": "{{count}} turmas ativas",
+        "totalStudents": "Total de Alunos",
+        "inAllClasses": "Em todas as turmas",
+        "overallAttendance": "Frequência Geral",
+        "averagePresence": "Média de presença",
+        "subjects": "Disciplinas",
+        "differentSubjects": "Diferentes disciplinas"
+      },
+      "periods": {
+        "manha": "Manhã",
+        "tarde": "Tarde",
+        "noite": "Noite",
+        "integral": "Integral"
+      },
+      "status": {
+        "active": "Ativa",
+        "finished": "Finalizada",
+        "inactive": "Inativa"
+      },
+      "filters": {
+        "searchPlaceholder": "Buscar turma ou curso...",
+        "coursePlaceholder": "Curso",
+        "periodPlaceholder": "Período",
+        "statusPlaceholder": "Status",
+        "allCourses": "Todos os cursos",
+        "allPeriods": "Todos os períodos",
+        "allStatuses": "Todos os status",
+        "statusActive": "Ativas",
+        "statusFinished": "Finalizadas",
+        "statusInactive": "Inativas"
+      },
+      "resultsCount": "{{count}} turma encontrada",
+      "resultsCount_other": "{{count}} turmas encontradas",
+      "empty": {
+        "title": "Nenhuma turma encontrada",
+        "withFilters": "Tente ajustar os filtros para encontrar turmas",
+        "default": "Você ainda não foi atribuído a nenhuma turma"
+      },
+      "startLabel": "Início",
+      "endLabel": "Término",
+      "subjectsITeach": "Disciplinas que leciono:",
+      "averageAttendance": "Frequência média",
+      "viewStudents": "Ver Alunos"
+    },
+    "biblioteca": {
+      "title": "Minha Biblioteca",
+      "subtitle": "Gerencie materiais de estudo para seus alunos",
+      "newMaterial": "Novo Material",
+      "stats": {
+        "myMaterials": "Meus Materiais",
+        "pdfs": "PDFs",
+        "videos": "Vídeos",
+        "published": "Publicados"
+      },
+      "tabs": {
+        "all": "Todos ({{count}})",
+        "pdfs": "PDFs ({{count}})",
+        "videos": "Vídeos ({{count}})"
+      },
+      "empty": {
+        "noMaterials": "Você ainda não possui materiais publicados",
+        "noResults": "Nenhum material encontrado com os filtros selecionados",
+        "publishFirst": "Publicar Primeiro Material",
+        "noPdfs": "Nenhum PDF publicado",
+        "noVideos": "Nenhum vídeo publicado"
+      },
+      "dialog": {
+        "edit": "Editar Material",
+        "new": "Novo Material"
+      },
+      "delete": {
+        "title": "Excluir Material",
+        "description": "Esta ação irá remover permanentemente o material da biblioteca. Os alunos não poderão mais acessá-lo."
+      },
+      "toast": {
+        "deleted": "Material excluído com sucesso!",
+        "deleteError": "Erro ao excluir material",
+        "updated": "Material atualizado com sucesso!",
+        "published": "Material publicado com sucesso!",
+        "saveError": "Erro ao salvar material",
+        "opening": "Abrindo material..."
+      }
+    },
+    "comunicados": {
+      "title": "Comunicados",
+      "subtitle": "Envie comunicados para suas turmas e receba avisos da escola",
+      "newAnnouncement": "Novo Comunicado",
+      "stats": {
+        "sentByMe": "Enviados por Mim",
+        "received": "Recebidos",
+        "unread": "Não Lidos"
+      },
+      "tabs": {
+        "received": "Recebidos ({{count}})",
+        "sent": "Enviados ({{count}})"
+      },
+      "empty": {
+        "receivedFiltered": "Nenhum comunicado encontrado com os filtros aplicados.",
+        "receivedDefault": "Você não tem comunicados recebidos.",
+        "sentFiltered": "Nenhum comunicado encontrado com os filtros aplicados.",
+        "sentDefault": "Você ainda não enviou nenhum comunicado."
+      },
+      "toast": {
+        "sent": "Comunicado enviado com sucesso!",
+        "markedRead": "Comunicado marcado como lido!"
+      }
+    },
+    "observacoes": {
+      "title": "Observações dos Alunos",
+      "subtitle": "Registre observações pedagógicas, comportamentais e administrativas",
+      "newObservation": "Nova Observação",
+      "stats": {
+        "total": "Total",
+        "pedagogical": "Pedagógicas",
+        "behavioral": "Comportamentais",
+        "administrative": "Administrativas"
+      },
+      "empty": {
+        "title": "Nenhuma observação encontrada",
+        "withFilters": "Tente ajustar os filtros para encontrar observações.",
+        "default": "Comece registrando observações sobre seus alunos.",
+        "registerFirst": "Registrar Primeira Observação"
+      },
+      "delete": {
+        "title": "Excluir Observação",
+        "description": "Tem certeza que deseja excluir esta observação? Esta ação não pode ser desfeita."
+      },
+      "toast": {
+        "updated": "Observação atualizada com sucesso!",
+        "created": "Observação registrada com sucesso!",
+        "saveError": "Erro ao salvar observação. Tente novamente.",
+        "deleted": "Observação excluída com sucesso!"
+      }
+    },
+    "perfil": {
+      "tabs": {
+        "personalData": "Dados Pessoais",
+        "professionalData": "Dados Profissionais",
+        "security": "Segurança",
+        "activities": "Atividades"
+      },
+      "stats": {
+        "classes": "Turmas",
+        "subjects": "Disciplinas",
+        "observations": "Observações"
+      },
+      "professionalInfo": "Informações Profissionais",
+      "fields": {
+        "education": "Formação",
+        "specialization": "Área de Especialização",
+        "professionalRegistration": "Registro Profissional",
+        "admissionDate": "Data de Admissão"
+      },
+      "notInformed": "Não informado"
+    },
+    "configuracoes": {
+      "title": "Configurações",
+      "subtitle": "Gerencie suas preferências e configurações do sistema",
+      "tabs": {
+        "notifications": "Notificações",
+        "privacy": "Privacidade",
+        "appearance": "Aparência"
+      },
+      "notifications": {
+        "title": "Preferências de Notificações",
+        "description": "Configure como e quando você deseja receber notificações"
+      },
+      "privacy": {
+        "title": "Configurações de Privacidade",
+        "description": "Gerencie suas configurações de privacidade e dados pessoais (LGPD)"
+      },
+      "appearance": {
+        "title": "Aparência do Sistema",
+        "description": "Personalize a aparência da interface"
+      }
+    },
+    "notas": {
+      "title": "Lançamento de Notas",
+      "subtitle": "Lance as notas das avaliações dos alunos",
+      "notLoggedIn": "Você precisa estar logado para acessar esta página",
+      "instructionsTitle": "Como lançar notas:",
+      "instructions": {
+        "step1": "1. Selecione a turma, disciplina e tipo de avaliação",
+        "step2": "2. Defina o peso da avaliação e a data",
+        "step3": "3. Digite as notas de 0 a 10 (use ponto para decimais, ex: 7.5)",
+        "step4": "4. Veja a tendência de cada aluno comparando com notas anteriores",
+        "step5": "5. Adicione observações quando necessário",
+        "step6": "6. Clique em \"Salvar Notas\" para confirmar"
+      },
+      "toast": {
+        "saved": "Notas lançadas com sucesso!"
+      }
+    },
+    "frequencia": {
+      "title": "Registro de Frequência",
+      "subtitle": "Registre a presença dos alunos nas aulas",
+      "notLoggedIn": "Você precisa estar logado para acessar esta página",
+      "instructionsTitle": "Como registrar a frequência:",
+      "instructions": {
+        "step1": "1. Selecione a turma, disciplina e data da aula",
+        "step2": "2. Clique no status de cada aluno para alternar entre Presente/Ausente/Justificado",
+        "step3": "3. Adicione observações quando necessário",
+        "step4": "4. Use os botões \"Todos presentes\" ou \"Todos ausentes\" para agilizar",
+        "step5": "5. Clique em \"Salvar Frequência\" para confirmar"
+      },
+      "toast": {
+        "saved": "Frequência registrada com sucesso!"
+      }
+    }
+  }
+}

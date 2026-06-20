@@ -1,0 +1,100 @@
+{
+  "demoPages": {
+    "common": {
+      "back": "Back"
+    },
+    "aluno": {
+      "loading": "Preparing Student demonstration...",
+      "bannerLabel": "DEMONSTRATION MODE - STUDENT",
+      "defaultCourse": "Nursing"
+    },
+    "gestor": {
+      "loading": "Preparing Manager demonstration...",
+      "bannerLabel": "DEMONSTRATION MODE - MANAGER",
+      "role": "System Administrator"
+    },
+    "professor": {
+      "loading": "Preparing Teacher demonstration...",
+      "bannerLabel": "DEMONSTRATION MODE - TEACHER",
+      "area": "Nursing"
+    },
+    "register": {
+      "brandName": "Sabiencia",
+      "headerSubtitle": "Teacher Registration",
+      "cardTitle": "Become a Teacher",
+      "cardDescription": "Join the Sabiencia team",
+      "steps": {
+        "personal": "Personal",
+        "professional": "Professional",
+        "motivation": "Motivation",
+        "access": "Access"
+      },
+      "buttons": {
+        "back": "Back",
+        "next": "Next",
+        "submit": "Submit Registration",
+        "submitting": "Submitting...",
+        "backToLogin": "Back to login page"
+      },
+      "fields": {
+        "fullName": "Full Name *",
+        "fullNamePlaceholder": "Your full name",
+        "cpf": "CPF *",
+        "email": "E-mail *",
+        "phone": "Phone/WhatsApp *",
+        "photoUrl": "Photo URL (optional)",
+        "photoUrlPlaceholder": "https://...",
+        "photoUrlHint": "Link to your profile photo",
+        "education": "Academic Background *",
+        "educationPlaceholder": "E.g.: Nurse, Master in Health Sciences",
+        "professionalRegistration": "Professional Registration",
+        "professionalRegistrationPlaceholder": "E.g.: COREN-MA 123456",
+        "specialties": "Specialties / Areas of Expertise *",
+        "specialtiesSelectLabel": "Specialties / Areas of Expertise",
+        "specialtiesPlaceholder": "Select your specialties...",
+        "specialtiesHint": "Select all the areas in which you have experience",
+        "experience": "Professional Experience",
+        "experiencePlaceholder": "Briefly describe your professional experience and length of practice...",
+        "motivation": "Why do you want to join the Sabiencia team? *",
+        "motivationPlaceholder": "Tell us about your motivation to teach at our institution...",
+        "createPassword": "Create Password *",
+        "createPasswordPlaceholder": "Minimum 6 characters",
+        "confirmPassword": "Confirm Password *",
+        "confirmPasswordPlaceholder": "Type the password again"
+      },
+      "specialties": {
+        "enfermagem": "Nursing",
+        "anatomia": "Anatomy",
+        "fisiologia": "Physiology",
+        "farmacologia": "Pharmacology",
+        "administracao": "Administration",
+        "informatica": "Information Technology",
+        "programacao": "Programming",
+        "redes": "Computer Networks"
+      },
+      "nextSteps": {
+        "title": "Next Steps",
+        "item1": "Your registration will be reviewed by the administrative team",
+        "item2": "Additional documents may be requested",
+        "item3": "You will receive an e-mail with the result within 5 business days",
+        "item4": "Once approved, you will be able to log in to the platform"
+      },
+      "ready": {
+        "title": "All set!",
+        "description": "By clicking \"Submit Registration\", you agree to our Terms of Use and Privacy Policy."
+      },
+      "errors": {
+        "requiredFields": "Fill in all required fields",
+        "educationAndSpecialty": "Fill in your education and at least one specialty",
+        "motivation": "Please tell us your motivation",
+        "passwordMin": "The password must be at least 6 characters long",
+        "passwordsDontMatch": "The passwords do not match",
+        "submitFailed": "Failed to submit registration. Please try again."
+      },
+      "success": {
+        "title": "Registration submitted successfully!",
+        "description": "Wait for the administrator's review. You will receive an e-mail soon."
+      }
+    }
+  }
+}

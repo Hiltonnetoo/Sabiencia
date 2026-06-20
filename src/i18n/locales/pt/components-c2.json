@@ -1,0 +1,143 @@
+{
+  "components": {
+    "turmas": {
+      "card": {
+        "view": "Visualizar",
+        "active": "Ativa",
+        "finished": "Finalizada",
+        "inactive": "Inativa",
+        "startLabel": "Início",
+        "endLabel": "Término"
+      },
+      "periodo": {
+        "manha": "Manhã",
+        "tarde": "Tarde",
+        "noite": "Noite",
+        "integral": "Integral"
+      },
+      "filters": {
+        "title": "Filtros",
+        "searchLabel": "Buscar",
+        "searchPlaceholder": "Nome da turma...",
+        "courseLabel": "Curso",
+        "selectPlaceholder": "Selecione...",
+        "allCourses": "Todos os cursos",
+        "periodLabel": "Período",
+        "statusLabel": "Status",
+        "all": "Todos",
+        "active": "Ativa",
+        "inactive": "Inativa",
+        "activeFilters": "Filtros ativos: {{filters}}",
+        "filterSearch": "Busca",
+        "filterCourse": "Curso",
+        "filterPeriod": "Período",
+        "filterStatus": "Status"
+      },
+      "form": {
+        "editTitle": "Editar Turma",
+        "newTitle": "Nova Turma",
+        "nameLabel": "Nome da Turma *",
+        "namePlaceholder": "Ex: Enfermagem 2025.2 - Manhã",
+        "courseLabel": "Curso *",
+        "coursePlaceholder": "Selecione um curso...",
+        "periodLabel": "Período *",
+        "periodPlaceholder": "Selecione um período...",
+        "startDateLabel": "Data de Início *",
+        "endDateLabel": "Data de Término *",
+        "activeLabel": "Turma Ativa",
+        "activeHint": "Turmas ativas aparecem para professores e alunos",
+        "submitEdit": "Salvar Alterações",
+        "submitNew": "Criar Turma"
+      }
+    },
+    "cursos": {
+      "card": {
+        "active": "Ativo",
+        "inactive": "Inativo",
+        "openMenu": "Abrir menu",
+        "view": "Visualizar",
+        "edit": "Editar",
+        "deactivate": "Desativar",
+        "activate": "Ativar",
+        "workloadLabel": "Carga Horária",
+        "workloadValue": "{{hours}}h",
+        "durationLabel": "Duração",
+        "durationValue": "{{months}} meses",
+        "subjects": "Disciplinas",
+        "classes": "Turmas",
+        "students": "Alunos",
+        "viewDetails": "Ver Detalhes"
+      },
+      "filters": {
+        "title": "Filtros",
+        "statusLabel": "Status",
+        "statusPlaceholder": "Todos",
+        "all": "Todos",
+        "active": "Ativos",
+        "inactive": "Inativos",
+        "workloadLabel": "Carga Horária (horas)",
+        "durationLabel": "Duração (meses)",
+        "min": "Mínimo",
+        "max": "Máximo",
+        "minPlaceholder": "Min",
+        "maxPlaceholder": "Max"
+      },
+      "form": {
+        "editTitle": "Editar Curso",
+        "newTitle": "Novo Curso",
+        "editDescription": "Atualize as informações do curso",
+        "newDescription": "Preencha os dados para criar um novo curso",
+        "validationError": "Por favor, corrija os erros no formulário antes de continuar.",
+        "nameLabel": "Nome do Curso",
+        "namePlaceholder": "Ex: Técnico em Enfermagem",
+        "descriptionLabel": "Descrição",
+        "descriptionPlaceholder": "Descreva o curso, objetivos, competências desenvolvidas...",
+        "workloadLabel": "Carga Horária (horas)",
+        "workloadPlaceholder": "Ex: 1200",
+        "durationLabel": "Duração (meses)",
+        "durationPlaceholder": "Ex: 18",
+        "activeLabel": "Curso Ativo",
+        "activeHintOn": "Este curso está ativo e pode receber novas turmas",
+        "activeHintOff": "Este curso está inativo e não pode receber novas turmas",
+        "submitEdit": "Salvar Alterações",
+        "submitNew": "Criar Curso"
+      }
+    },
+    "disciplinas": {
+      "card": {
+        "order": "{{order}}º",
+        "view": "Visualizar",
+        "ementaLabel": "Ementa",
+        "workloadValue": "{{hours}}h"
+      },
+      "filters": {
+        "title": "Filtros",
+        "searchLabel": "Buscar",
+        "searchPlaceholder": "Nome ou descrição...",
+        "courseLabel": "Curso",
+        "selectPlaceholder": "Selecione...",
+        "allCourses": "Todos os cursos",
+        "activeFilters": "Filtros ativos: {{filters}}",
+        "filterSearch": "Busca",
+        "filterCourse": "Curso"
+      },
+      "form": {
+        "editTitle": "Editar Disciplina",
+        "newTitle": "Nova Disciplina",
+        "nameLabel": "Nome da Disciplina *",
+        "namePlaceholder": "Ex: Anatomia Humana",
+        "courseLabel": "Curso *",
+        "coursePlaceholder": "Selecione um curso...",
+        "descriptionLabel": "Descrição *",
+        "descriptionPlaceholder": "Breve descrição da disciplina...",
+        "workloadLabel": "Carga Horária (horas) *",
+        "orderLabel": "Ordem na Grade *",
+        "ementaLabel": "Ementa",
+        "ementaPlaceholder": "Conteúdo programático da disciplina...",
+        "ementaHint": "Opcional. Descreva os principais tópicos abordados na disciplina.",
+        "submitEdit": "Salvar Alterações",
+        "submitNew": "Criar Disciplina"
+      }
+    }
+  }
+}

@@ -1,0 +1,294 @@
+{
+  "data": {
+    "curso": {
+      "curso-001": {
+        "nome": "Nursing Technician",
+        "descricao": "Complete technical nursing program with 100% remote classes and in-person exams"
+      },
+      "curso-002": {
+        "nome": "Administration Technician",
+        "descricao": "Technical administration course focused on business management"
+      },
+      "curso-003": {
+        "nome": "Information Technology Technician",
+        "descricao": "IT program covering programming, networks and maintenance"
+      }
+    },
+    "disciplina": {
+      "disc-001": {
+        "nome": "Human Anatomy",
+        "descricao": "Detailed study of the structure of the human body",
+        "ementa": "Introduction to anatomy, human body systems, anatomical nomenclature"
+      },
+      "disc-002": {
+        "nome": "Physiology",
+        "descricao": "How the human body systems function",
+        "ementa": "Cellular physiology, cardiovascular, respiratory and digestive systems"
+      },
+      "disc-003": {
+        "nome": "Nursing Procedures",
+        "descricao": "Practical nursing techniques and procedures",
+        "ementa": "Basic techniques, medication administration, dressings"
+      },
+      "disc-004": {
+        "nome": "Nursing Ethics and Legislation",
+        "descricao": "Ethical and legal aspects of the profession",
+        "ementa": "Code of ethics, professional legislation, patient rights"
+      },
+      "disc-005": {
+        "nome": "Pharmacology",
+        "descricao": "Study of medications and their applications",
+        "ementa": "Drug classes, routes of administration, adverse effects"
+      },
+      "disc-006": {
+        "nome": "Business Management",
+        "descricao": "Fundamentals of business administration",
+        "ementa": "Planning, organizing, directing and controlling a business"
+      },
+      "disc-007": {
+        "nome": "Basic Accounting",
+        "descricao": "Accounting principles and financial statements",
+        "ementa": "Balance sheet, income statement, cash flow"
+      },
+      "disc-008": {
+        "nome": "Human Resources",
+        "descricao": "People management and labor relations",
+        "ementa": "Recruitment, selection, training, labor legislation"
+      },
+      "disc-009": {
+        "nome": "Marketing",
+        "descricao": "Marketing and sales strategies",
+        "ementa": "Marketing mix, market research, digital marketing"
+      },
+      "disc-010": {
+        "nome": "Financial Mathematics",
+        "descricao": "Financial calculations and investment analysis",
+        "ementa": "Simple and compound interest, discounts, amortization"
+      },
+      "disc-011": {
+        "nome": "Programming Logic",
+        "descricao": "Fundamentals of computer programming",
+        "ementa": "Algorithms, data structures, flowcharts"
+      },
+      "disc-012": {
+        "nome": "Web Programming",
+        "descricao": "Development of websites and web applications",
+        "ementa": "HTML, CSS, JavaScript, modern frameworks"
+      },
+      "disc-013": {
+        "nome": "Databases",
+        "descricao": "Database modeling and administration",
+        "ementa": "SQL, relational modeling, normalization"
+      },
+      "disc-014": {
+        "nome": "Computer Networks",
+        "descricao": "Network configuration and administration",
+        "ementa": "TCP/IP protocols, router configuration, security"
+      },
+      "disc-015": {
+        "nome": "Computer Maintenance",
+        "descricao": "Hardware and troubleshooting",
+        "ementa": "PC assembly, problem diagnosis, preventive maintenance"
+      }
+    },
+    "turma": {
+      "turma-001": { "nome": "Nursing 2025.1 - Morning" },
+      "turma-002": { "nome": "Nursing 2025.1 - Evening" },
+      "turma-003": { "nome": "Administration 2025.1" },
+      "turma-004": { "nome": "Information Technology 2025.1" }
+    },
+    "material": {
+      "mat-001": {
+        "titulo": "Complete Coursebook - Human Anatomy",
+        "descricao": "Study material on Human Anatomy. Includes theory, practical examples and solved exercises."
+      },
+      "mat-002": {
+        "titulo": "Video Lesson - Human Anatomy",
+        "descricao": "Full lesson on Human Anatomy taught by the professor. Includes practical demonstrations and everyday examples."
+      },
+      "mat-003": {
+        "titulo": "Complete Coursebook - Physiology",
+        "descricao": "Study material on Physiology. Includes theory, practical examples and solved exercises."
+      },
+      "mat-004": {
+        "titulo": "Video Lesson - Physiology",
+        "descricao": "Full lesson on Physiology taught by the professor. Includes practical demonstrations and everyday examples."
+      },
+      "mat-005": {
+        "titulo": "Complete Coursebook - Nursing Procedures",
+        "descricao": "Study material on Nursing Procedures. Includes theory, practical examples and solved exercises."
+      },
+      "mat-006": {
+        "titulo": "Video Lesson - Nursing Procedures",
+        "descricao": "Full lesson on Nursing Procedures taught by the professor. Includes practical demonstrations and everyday examples."
+      },
+      "mat-007": {
+        "titulo": "Complete Coursebook - Nursing Ethics and Legislation",
+        "descricao": "Study material on Nursing Ethics and Legislation. Includes theory, practical examples and solved exercises."
+      },
+      "mat-008": {
+        "titulo": "Video Lesson - Nursing Ethics and Legislation",
+        "descricao": "Full lesson on Nursing Ethics and Legislation taught by the professor. Includes practical demonstrations and everyday examples."
+      },
+      "mat-009": {
+        "titulo": "Complete Coursebook - Pharmacology",
+        "descricao": "Study material on Pharmacology. Includes theory, practical examples and solved exercises."
+      },
+      "mat-010": {
+        "titulo": "Video Lesson - Pharmacology",
+        "descricao": "Full lesson on Pharmacology taught by the professor. Includes practical demonstrations and everyday examples."
+      },
+      "mat-011": {
+        "titulo": "Complete Coursebook - Business Management",
+        "descricao": "Study material on Business Management. Includes theory, practical examples and solved exercises."
+      },
+      "mat-012": {
+        "titulo": "Video Lesson - Business Management",
+        "descricao": "Full lesson on Business Management taught by the professor. Includes practical demonstrations and everyday examples."
+      },
+      "mat-013": {
+        "titulo": "Complete Coursebook - Basic Accounting",
+        "descricao": "Study material on Basic Accounting. Includes theory, practical examples and solved exercises."
+      },
+      "mat-014": {
+        "titulo": "Video Lesson - Basic Accounting",
+        "descricao": "Full lesson on Basic Accounting taught by the professor. Includes practical demonstrations and everyday examples."
+      },
+      "mat-015": {
+        "titulo": "Complete Coursebook - Human Resources",
+        "descricao": "Study material on Human Resources. Includes theory, practical examples and solved exercises."
+      },
+      "mat-016": {
+        "titulo": "Video Lesson - Human Resources",
+        "descricao": "Full lesson on Human Resources taught by the professor. Includes practical demonstrations and everyday examples."
+      },
+      "mat-017": {
+        "titulo": "Complete Coursebook - Marketing",
+        "descricao": "Study material on Marketing. Includes theory, practical examples and solved exercises."
+      },
+      "mat-018": {
+        "titulo": "Video Lesson - Marketing",
+        "descricao": "Full lesson on Marketing taught by the professor. Includes practical demonstrations and everyday examples."
+      },
+      "mat-019": {
+        "titulo": "Complete Coursebook - Financial Mathematics",
+        "descricao": "Study material on Financial Mathematics. Includes theory, practical examples and solved exercises."
+      },
+      "mat-020": {
+        "titulo": "Video Lesson - Financial Mathematics",
+        "descricao": "Full lesson on Financial Mathematics taught by the professor. Includes practical demonstrations and everyday examples."
+      }
+    },
+    "comunicado": {
+      "com-001": {
+        "titulo": "Welcome to the 2024.1 semester",
+        "mensagem": "Dear students, it is with great pleasure that we begin the 2024.1 academic semester. We wish everyone an excellent term!"
+      },
+      "com-002": {
+        "titulo": "Exam Schedule - 1st Term",
+        "mensagem": "Please note that the first-term exams will take place from April 15 to 25. Bring a photo ID."
+      },
+      "com-003": {
+        "titulo": "Supplementary material available",
+        "mensagem": "Morning Nursing class, I have made new Anatomy exercises available in the virtual library. Happy studying!"
+      },
+      "com-004": {
+        "titulo": "Pedagogical Meeting",
+        "mensagem": "Dear professors, there will be a pedagogical meeting on 09/20 at 6 PM to align the schedule for the next term."
+      },
+      "com-005": {
+        "titulo": "October invoices available",
+        "mensagem": "The invoices for the October tuition are now available for download. Due date: 10/10/2024."
+      },
+      "com-006": {
+        "titulo": "Web Programming practical class",
+        "mensagem": "Information Technology class, Saturday's practical class will be about developing responsive websites. Bring your laptops!"
+      },
+      "com-007": {
+        "titulo": "Extended Holiday - November 15",
+        "mensagem": "Please note that there will be no classes on November 15 and 16 due to the Proclamation of the Republic holiday. We return on 11/18."
+      },
+      "com-008": {
+        "titulo": "New materials on the Portal",
+        "mensagem": "New course materials have been added to the portal. Visit the virtual library and check them out!"
+      }
+    },
+    "notificacao": {
+      "notif-001": {
+        "titulo": "New grade posted",
+        "mensagem": "The professor posted the Anatomy exam grade - 8.5"
+      },
+      "notif-002": {
+        "titulo": "New important announcement",
+        "mensagem": "Attention: In-person exam scheduled for 11/15/2025"
+      },
+      "notif-003": {
+        "titulo": "Payment overdue",
+        "mensagem": "Your October tuition is overdue. Settle it to avoid restrictions"
+      },
+      "notif-004": {
+        "titulo": "New material available",
+        "mensagem": "Coursebook Module 3 - Pharmacology has been added to the library"
+      },
+      "notif-005": {
+        "titulo": "Attendance alert",
+        "mensagem": "You have 3 absences in First Aid. Watch the limit!"
+      },
+      "notif-101": {
+        "titulo": "Deadline for posting grades",
+        "mensagem": "You have until 11/10/2025 to post the grades for Class A - Morning"
+      },
+      "notif-102": {
+        "titulo": "Pedagogical meeting",
+        "mensagem": "Pedagogical meeting scheduled for 11/08/2025 at 2 PM"
+      },
+      "notif-103": {
+        "titulo": "Attendance recorded",
+        "mensagem": "Attendance for the 11/05/2025 class was recorded successfully"
+      },
+      "notif-104": {
+        "titulo": "Material shared",
+        "mensagem": "Your material \"Coursebook Module 3\" was shared with the class"
+      },
+      "notif-201": {
+        "titulo": "Pending payments",
+        "mensagem": "15 students with overdue tuition this month"
+      },
+      "notif-202": {
+        "titulo": "New student enrolled",
+        "mensagem": "João Silva was enrolled in the Nursing course"
+      },
+      "notif-203": {
+        "titulo": "Action required",
+        "mensagem": "Professor João Silva has not recorded attendance for 5 days"
+      },
+      "notif-204": {
+        "titulo": "Report available",
+        "mensagem": "The monthly performance report is ready to view"
+      },
+      "notif-205": {
+        "titulo": "Urgent announcement pending",
+        "mensagem": "1 urgent announcement awaits approval"
+      }
+    },
+    "shared": {
+      "modulo_1_introducao": "Module 1 - Introduction",
+      "aluno_demonstra_otimo_desempenho_nas_atividades_praticas": "Student shows excellent performance in practical activities",
+      "necessita_reforco_em_conceitos_teoricos": "Needs reinforcement in theoretical concepts",
+      "participa_ativamente_das_discussoes_em_aula": "Participates actively in class discussions",
+      "aluno_colaborativo_e_respeitoso_com_colegas": "Collaborative student, respectful toward classmates",
+      "pontual_e_assiduo_nas_aulas": "Punctual and regular in attendance",
+      "demonstra_proatividade_em_atividades_em_grupo": "Shows initiative in group activities",
+      "documentacao_em_dia": "Documentation up to date",
+      "solicitou_declaracao_de_matricula": "Requested an enrollment certificate",
+      "entregou_atestado_medico": "Submitted a medical certificate",
+      "boleto": "Bank Slip",
+      "pix": "PIX",
+      "cartao": "Card",
+      "prova_1": "Exam 1",
+      "prova_2": "Exam 2",
+      "trabalho_final": "Final Project",
+      "atestado_medico": "Medical certificate"
+    }
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "components": {
+    "turmas": {
+      "card": {
+        "view": "View",
+        "active": "Active",
+        "finished": "Finished",
+        "inactive": "Inactive",
+        "startLabel": "Start",
+        "endLabel": "End"
+      },
+      "periodo": {
+        "manha": "Morning",
+        "tarde": "Afternoon",
+        "noite": "Evening",
+        "integral": "Full-time"
+      },
+      "filters": {
+        "title": "Filters",
+        "searchLabel": "Search",
+        "searchPlaceholder": "Class name...",
+        "courseLabel": "Course",
+        "selectPlaceholder": "Select...",
+        "allCourses": "All courses",
+        "periodLabel": "Period",
+        "statusLabel": "Status",
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive",
+        "activeFilters": "Active filters: {{filters}}",
+        "filterSearch": "Search",
+        "filterCourse": "Course",
+        "filterPeriod": "Period",
+        "filterStatus": "Status"
+      },
+      "form": {
+        "editTitle": "Edit Class",
+        "newTitle": "New Class",
+        "nameLabel": "Class Name *",
+        "namePlaceholder": "Ex: Nursing 2025.2 - Morning",
+        "courseLabel": "Course *",
+        "coursePlaceholder": "Select a course...",
+        "periodLabel": "Period *",
+        "periodPlaceholder": "Select a period...",
+        "startDateLabel": "Start Date *",
+        "endDateLabel": "End Date *",
+        "activeLabel": "Active Class",
+        "activeHint": "Active classes appear for teachers and students",
+        "submitEdit": "Save Changes",
+        "submitNew": "Create Class"
+      }
+    },
+    "cursos": {
+      "card": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "openMenu": "Open menu",
+        "view": "View",
+        "edit": "Edit",
+        "deactivate": "Deactivate",
+        "activate": "Activate",
+        "workloadLabel": "Workload",
+        "workloadValue": "{{hours}}h",
+        "durationLabel": "Duration",
+        "durationValue": "{{months}} months",
+        "subjects": "Subjects",
+        "classes": "Classes",
+        "students": "Students",
+        "viewDetails": "View Details"
+      },
+      "filters": {
+        "title": "Filters",
+        "statusLabel": "Status",
+        "statusPlaceholder": "All",
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive",
+        "workloadLabel": "Workload (hours)",
+        "durationLabel": "Duration (months)",
+        "min": "Minimum",
+        "max": "Maximum",
+        "minPlaceholder": "Min",
+        "maxPlaceholder": "Max"
+      },
+      "form": {
+        "editTitle": "Edit Course",
+        "newTitle": "New Course",
+        "editDescription": "Update the course information",
+        "newDescription": "Fill in the details to create a new course",
+        "validationError": "Please fix the errors in the form before continuing.",
+        "nameLabel": "Course Name",
+        "namePlaceholder": "Ex: Nursing Technician",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "Describe the course, objectives, skills developed...",
+        "workloadLabel": "Workload (hours)",
+        "workloadPlaceholder": "Ex: 1200",
+        "durationLabel": "Duration (months)",
+        "durationPlaceholder": "Ex: 18",
+        "activeLabel": "Active Course",
+        "activeHintOn": "This course is active and can receive new classes",
+        "activeHintOff": "This course is inactive and cannot receive new classes",
+        "submitEdit": "Save Changes",
+        "submitNew": "Create Course"
+      }
+    },
+    "disciplinas": {
+      "card": {
+        "order": "{{order}}th",
+        "view": "View",
+        "ementaLabel": "Syllabus",
+        "workloadValue": "{{hours}}h"
+      },
+      "filters": {
+        "title": "Filters",
+        "searchLabel": "Search",
+        "searchPlaceholder": "Name or description...",
+        "courseLabel": "Course",
+        "selectPlaceholder": "Select...",
+        "allCourses": "All courses",
+        "activeFilters": "Active filters: {{filters}}",
+        "filterSearch": "Search",
+        "filterCourse": "Course"
+      },
+      "form": {
+        "editTitle": "Edit Subject",
+        "newTitle": "New Subject",
+        "nameLabel": "Subject Name *",
+        "namePlaceholder": "Ex: Human Anatomy",
+        "courseLabel": "Course *",
+        "coursePlaceholder": "Select a course...",
+        "descriptionLabel": "Description *",
+        "descriptionPlaceholder": "Brief description of the subject...",
+        "workloadLabel": "Workload (hours) *",
+        "orderLabel": "Order in Curriculum *",
+        "ementaLabel": "Syllabus",
+        "ementaPlaceholder": "Course content of the subject...",
+        "ementaHint": "Optional. Describe the main topics covered in the subject.",
+        "submitEdit": "Save Changes",
+        "submitNew": "Create Subject"
+      }
+    }
+  }
+}

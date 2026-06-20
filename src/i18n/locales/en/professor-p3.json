@@ -1,0 +1,218 @@
+{
+  "professor": {
+    "minhasTurmas": {
+      "title": "My Classes",
+      "subtitle": "Manage the classes and subjects you teach",
+      "stats": {
+        "totalClasses": "Total Classes",
+        "activeClasses": "{{count}} active classes",
+        "totalStudents": "Total Students",
+        "inAllClasses": "Across all classes",
+        "overallAttendance": "Overall Attendance",
+        "averagePresence": "Average attendance",
+        "subjects": "Subjects",
+        "differentSubjects": "Different subjects"
+      },
+      "periods": {
+        "manha": "Morning",
+        "tarde": "Afternoon",
+        "noite": "Evening",
+        "integral": "Full-time"
+      },
+      "status": {
+        "active": "Active",
+        "finished": "Finished",
+        "inactive": "Inactive"
+      },
+      "filters": {
+        "searchPlaceholder": "Search class or course...",
+        "coursePlaceholder": "Course",
+        "periodPlaceholder": "Period",
+        "statusPlaceholder": "Status",
+        "allCourses": "All courses",
+        "allPeriods": "All periods",
+        "allStatuses": "All statuses",
+        "statusActive": "Active",
+        "statusFinished": "Finished",
+        "statusInactive": "Inactive"
+      },
+      "resultsCount": "{{count}} class found",
+      "resultsCount_other": "{{count}} classes found",
+      "empty": {
+        "title": "No classes found",
+        "withFilters": "Try adjusting the filters to find classes",
+        "default": "You have not been assigned to any class yet"
+      },
+      "startLabel": "Start",
+      "endLabel": "End",
+      "subjectsITeach": "Subjects I teach:",
+      "averageAttendance": "Average attendance",
+      "viewStudents": "View Students"
+    },
+    "biblioteca": {
+      "title": "My Library",
+      "subtitle": "Manage study materials for your students",
+      "newMaterial": "New Material",
+      "stats": {
+        "myMaterials": "My Materials",
+        "pdfs": "PDFs",
+        "videos": "Videos",
+        "published": "Published"
+      },
+      "tabs": {
+        "all": "All ({{count}})",
+        "pdfs": "PDFs ({{count}})",
+        "videos": "Videos ({{count}})"
+      },
+      "empty": {
+        "noMaterials": "You have no published materials yet",
+        "noResults": "No materials found with the selected filters",
+        "publishFirst": "Publish First Material",
+        "noPdfs": "No PDFs published",
+        "noVideos": "No videos published"
+      },
+      "dialog": {
+        "edit": "Edit Material",
+        "new": "New Material"
+      },
+      "delete": {
+        "title": "Delete Material",
+        "description": "This action will permanently remove the material from the library. Students will no longer be able to access it."
+      },
+      "toast": {
+        "deleted": "Material deleted successfully!",
+        "deleteError": "Error deleting material",
+        "updated": "Material updated successfully!",
+        "published": "Material published successfully!",
+        "saveError": "Error saving material",
+        "opening": "Opening material..."
+      }
+    },
+    "comunicados": {
+      "title": "Announcements",
+      "subtitle": "Send announcements to your classes and receive school notices",
+      "newAnnouncement": "New Announcement",
+      "stats": {
+        "sentByMe": "Sent by Me",
+        "received": "Received",
+        "unread": "Unread"
+      },
+      "tabs": {
+        "received": "Received ({{count}})",
+        "sent": "Sent ({{count}})"
+      },
+      "empty": {
+        "receivedFiltered": "No announcements found with the applied filters.",
+        "receivedDefault": "You have no received announcements.",
+        "sentFiltered": "No announcements found with the applied filters.",
+        "sentDefault": "You have not sent any announcements yet."
+      },
+      "toast": {
+        "sent": "Announcement sent successfully!",
+        "markedRead": "Announcement marked as read!"
+      }
+    },
+    "observacoes": {
+      "title": "Student Observations",
+      "subtitle": "Record pedagogical, behavioral and administrative observations",
+      "newObservation": "New Observation",
+      "stats": {
+        "total": "Total",
+        "pedagogical": "Pedagogical",
+        "behavioral": "Behavioral",
+        "administrative": "Administrative"
+      },
+      "empty": {
+        "title": "No observations found",
+        "withFilters": "Try adjusting the filters to find observations.",
+        "default": "Start by recording observations about your students.",
+        "registerFirst": "Record First Observation"
+      },
+      "delete": {
+        "title": "Delete Observation",
+        "description": "Are you sure you want to delete this observation? This action cannot be undone."
+      },
+      "toast": {
+        "updated": "Observation updated successfully!",
+        "created": "Observation recorded successfully!",
+        "saveError": "Error saving observation. Please try again.",
+        "deleted": "Observation deleted successfully!"
+      }
+    },
+    "perfil": {
+      "tabs": {
+        "personalData": "Personal Data",
+        "professionalData": "Professional Data",
+        "security": "Security",
+        "activities": "Activities"
+      },
+      "stats": {
+        "classes": "Classes",
+        "subjects": "Subjects",
+        "observations": "Observations"
+      },
+      "professionalInfo": "Professional Information",
+      "fields": {
+        "education": "Education",
+        "specialization": "Area of Specialization",
+        "professionalRegistration": "Professional Registration",
+        "admissionDate": "Admission Date"
+      },
+      "notInformed": "Not informed"
+    },
+    "configuracoes": {
+      "title": "Settings",
+      "subtitle": "Manage your preferences and system settings",
+      "tabs": {
+        "notifications": "Notifications",
+        "privacy": "Privacy",
+        "appearance": "Appearance"
+      },
+      "notifications": {
+        "title": "Notification Preferences",
+        "description": "Configure how and when you want to receive notifications"
+      },
+      "privacy": {
+        "title": "Privacy Settings",
+        "description": "Manage your privacy settings and personal data (LGPD)"
+      },
+      "appearance": {
+        "title": "System Appearance",
+        "description": "Customize the interface appearance"
+      }
+    },
+    "notas": {
+      "title": "Grade Entry",
+      "subtitle": "Enter grades for student assessments",
+      "notLoggedIn": "You must be logged in to access this page",
+      "instructionsTitle": "How to enter grades:",
+      "instructions": {
+        "step1": "1. Select the class, subject and assessment type",
+        "step2": "2. Set the assessment weight and date",
+        "step3": "3. Enter grades from 0 to 10 (use a dot for decimals, e.g. 7.5)",
+        "step4": "4. View each student's trend compared to previous grades",
+        "step5": "5. Add observations when necessary",
+        "step6": "6. Click \"Save Grades\" to confirm"
+      },
+      "toast": {
+        "saved": "Grades entered successfully!"
+      }
+    },
+    "frequencia": {
+      "title": "Attendance Record",
+      "subtitle": "Record student attendance in lessons",
+      "notLoggedIn": "You must be logged in to access this page",
+      "instructionsTitle": "How to record attendance:",
+      "instructions": {
+        "step1": "1. Select the class, subject and lesson date",
+        "step2": "2. Click on each student's status to toggle between Present/Absent/Justified",
+        "step3": "3. Add observations when necessary",
+        "step4": "4. Use the \"All present\" or \"All absent\" buttons to speed things up",
+        "step5": "5. Click \"Save Attendance\" to confirm"
+      },
+      "toast": {
+        "saved": "Attendance recorded successfully!"
+      }
+    }
+  }
+}

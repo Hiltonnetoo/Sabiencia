@@ -1,0 +1,150 @@
+{
+  "professor": {
+    "gerenciarVideoaulas": {
+      "title": "Gerenciar Videoaulas",
+      "subtitle": "Organize suas videoaulas por tópicos e disciplinas",
+      "selectSubject": {
+        "title": "Selecione a Disciplina",
+        "description": "Escolha uma disciplina para gerenciar seus tópicos e videoaulas",
+        "placeholder": "Selecione uma disciplina"
+      },
+      "topicsCount_one": "{{count}} tópico",
+      "topicsCount_other": "{{count}} tópicos",
+      "videoaulasCount_one": "{{count}} videoaula",
+      "videoaulasCount_other": "{{count}} videoaulas",
+      "newTopic": "Novo Tópico",
+      "noTopics": "Nenhum tópico criado ainda",
+      "createFirstTopic": "Criar primeiro tópico",
+      "lessonsBadge_one": "{{count}} aula",
+      "lessonsBadge_other": "{{count}} aulas",
+      "moveUp": "Mover para cima",
+      "moveDown": "Mover para baixo",
+      "addVideoaula": "Adicionar Videoaula",
+      "noVideoaulasInTopic": "Nenhuma videoaula neste tópico",
+      "hidden": "Oculto",
+      "materialsCount_one": "{{count}} material",
+      "materialsCount_other": "{{count}} materiais",
+      "hideFromStudents": "Ocultar dos alunos",
+      "makeVisible": "Tornar visível",
+      "topicDialog": {
+        "editTitle": "Editar Tópico",
+        "newTitle": "Novo Tópico",
+        "editDescription": "Edite as informações do tópico",
+        "newDescription": "Crie um novo tópico para organizar suas videoaulas",
+        "titleLabel": "Título do Tópico *",
+        "titlePlaceholder": "Ex: Módulo 1 - Fundamentos",
+        "descriptionLabel": "Descrição (opcional)",
+        "descriptionPlaceholder": "Descreva brevemente o conteúdo deste tópico...",
+        "saveChanges": "Salvar Alterações",
+        "create": "Criar Tópico"
+      },
+      "videoaulaDialog": {
+        "editTitle": "Editar Videoaula",
+        "newTitle": "Nova Videoaula",
+        "editDescription": "Edite as informações da videoaula",
+        "newDescription": "Adicione uma nova videoaula do YouTube",
+        "tabBasic": "Dados Básicos",
+        "tabMaterials": "Materiais",
+        "titleLabel": "Título da Videoaula *",
+        "titlePlaceholder": "Ex: 1 - Introdução aos Números Reais",
+        "descriptionLabel": "Descrição *",
+        "descriptionPlaceholder": "Descreva o conteúdo da videoaula...",
+        "youtubeUrlLabel": "URL do YouTube *",
+        "youtubeUrlPlaceholder": "https://www.youtube.com/watch?v=...",
+        "videoIdentified": "Vídeo identificado: {{id}}",
+        "invalidUrl": "URL inválida. Use URLs do YouTube no formato: https://www.youtube.com/watch?v=ID ou https://youtu.be/ID",
+        "visibleToStudents": "Visível para alunos",
+        "materialsHint": "Adicione materiais de apoio (PDFs, slides, etc.)",
+        "addMaterial": "Adicionar Material",
+        "noMaterials": "Nenhum material adicionado",
+        "materialNamePlaceholder": "Nome do material",
+        "materialUrlPlaceholder": "URL do arquivo",
+        "materialTypes": {
+          "pdf": "PDF",
+          "ppt": "PowerPoint",
+          "doc": "Word",
+          "video": "Vídeo",
+          "outro": "Outro"
+        },
+        "saveChanges": "Salvar Alterações",
+        "create": "Criar Videoaula"
+      },
+      "newMaterialTitle": "Novo Material",
+      "toasts": {
+        "selectSubjectFirst": "Selecione uma disciplina primeiro",
+        "selectTopic": "Selecione um tópico",
+        "youtubeIdError": "Não foi possível extrair o ID do vídeo do YouTube",
+        "topicOrderUpdated": "Ordem do tópico atualizada",
+        "videoaulaOrderUpdated": "Ordem da videoaula atualizada",
+        "videoaulaHidden": "Videoaula ocultada dos alunos",
+        "videoaulaVisible": "Videoaula visível para alunos",
+        "deleteTopicWithVideoaulas": "Não é possível excluir o tópico \"{{titulo}}\" pois ele contém {{count}} videoaula(s)",
+        "confirmDeleteTopic": "Tem certeza que deseja excluir o tópico \"{{titulo}}\"?",
+        "confirmDeleteVideoaula": "Tem certeza que deseja excluir a videoaula \"{{titulo}}\"?"
+      }
+    },
+    "gerenciarLives": {
+      "title": "Gerenciar Aulas ao Vivo",
+      "subtitle": "Crie e gerencie suas aulas ao vivo",
+      "newLive": "Nova Aula ao Vivo",
+      "tabs": {
+        "scheduled": "Agendadas ({{count}})",
+        "live": "Ao Vivo ({{count}})",
+        "finished": "Finalizadas ({{count}})"
+      },
+      "empty": {
+        "scheduledTitle": "Nenhuma aula agendada",
+        "scheduledDesc": "Crie uma nova aula ao vivo para seus alunos",
+        "createLive": "Criar Aula ao Vivo",
+        "liveTitle": "Nenhuma aula ao vivo agora",
+        "liveDesc": "Não há aulas acontecendo neste momento",
+        "finishedTitle": "Nenhuma aula finalizada",
+        "finishedDesc": "Aulas finalizadas aparecerão aqui"
+      },
+      "fallbackSubject": "Disciplina",
+      "dialog": {
+        "editTitle": "Editar Aula ao Vivo",
+        "newTitle": "Nova Aula ao Vivo",
+        "editDescription": "Atualize as informações da aula ao vivo",
+        "newDescription": "Agende uma nova aula ao vivo para seus alunos",
+        "subjectLabel": "Disciplina *",
+        "subjectPlaceholder": "Selecione a disciplina",
+        "classLabel": "Turma (opcional)",
+        "allClasses": "Todas as turmas",
+        "titleLabel": "Título *",
+        "titlePlaceholder": "Ex: Revisão para Prova",
+        "descriptionLabel": "Descrição",
+        "descriptionPlaceholder": "Descreva o que será abordado na aula...",
+        "dateLabel": "Data *",
+        "timeLabel": "Hora *",
+        "durationLabel": "Duração (minutos) *",
+        "platformLabel": "Plataforma *",
+        "roomLinkLabel": "Link da Sala *",
+        "roomLinkPlaceholder": "https://meet.google.com/abc-defg-hij",
+        "roomPasswordLabel": "Senha da Sala (opcional)",
+        "roomPasswordPlaceholder": "Digite a senha se houver",
+        "settings": "Configurações",
+        "allowChat": "Permitir chat durante a aula",
+        "allowMicrophone": "Alunos podem usar microfone",
+        "allowCamera": "Alunos podem usar câmera",
+        "update": "Atualizar Aula ao Vivo",
+        "create": "Criar Aula ao Vivo"
+      },
+      "platforms": {
+        "google_meet": "Google Meet",
+        "zoom": "Zoom",
+        "teams": "Microsoft Teams",
+        "jitsi": "Jitsi",
+        "outro": "Outro"
+      },
+      "toasts": {
+        "selectSubject": "Selecione uma disciplina",
+        "enterTitle": "Digite um título para a aula",
+        "defineDateTime": "Defina a data e hora de início",
+        "enterRoomLink": "Digite o link da sala",
+        "confirmDelete": "Tem certeza que deseja excluir esta aula ao vivo?",
+        "notificationsSent": "Notificações enviadas para todos os alunos!"
+      }
+    }
+  }
+}

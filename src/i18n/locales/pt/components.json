@@ -1,0 +1,24 @@
+{
+  "components": {
+    "deleteConfirmDialog": {
+      "title": "Confirmar exclusão",
+      "description": "Tem certeza que deseja excluir este item? Esta ação não pode ser desfeita.",
+      "descriptionNamed": "Tem certeza que deseja excluir \"{{name}}\"? Esta ação não pode ser desfeita."
+    },
+    "unsavedChangesDialog": {
+      "title": "Alterações não salvas",
+      "description": "Você tem alterações não salvas que serão perdidas. Deseja sair mesmo assim?",
+      "keepEditing": "Continuar editando",
+      "leaveWithoutSaving": "Sair sem salvar"
+    },
+    "emptyState": {
+      "searchNoResults": "Não encontramos resultados para <strong>\"{{term}}\"</strong>",
+      "searchHint": "Tente usar palavras-chave diferentes ou remover filtros.",
+      "clearSearch": "Limpar Busca",
+      "filterNoResults": "Nenhum item corresponde aos filtros",
+      "activeFilters": "{{count}} filtro ativo",
+      "activeFilters_other": "{{count}} filtros ativos",
+      "filterHint": "Ajuste os filtros aplicados para ver mais resultados"
+    }
+  }
+}

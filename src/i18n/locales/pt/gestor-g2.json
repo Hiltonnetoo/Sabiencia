@@ -1,0 +1,157 @@
+{
+  "gestor": {
+    "biblioteca": {
+      "title": "Biblioteca Virtual",
+      "subtitle": "Visão geral e gerenciamento de materiais",
+      "stats": {
+        "totalMaterials": "Total de Materiais",
+        "filesSummary": "{{pdfs}} PDFs • {{videos}} Vídeos",
+        "visible": "Visíveis",
+        "percentOfTotal": "{{percent}}% do total",
+        "hidden": "Ocultos",
+        "notVisibleToStudents": "Não visíveis para alunos",
+        "activeTeachers": "Professores Ativos",
+        "withPublishedMaterials": "Com materiais publicados"
+      },
+      "topTeachers": "Professores com Mais Materiais",
+      "materialsCount": "{{count}} material",
+      "materialsCount_other": "{{count}} materiais",
+      "visibilityFilter": {
+        "all": "Todos",
+        "visible": "Visíveis",
+        "hidden": "Ocultos"
+      },
+      "badgeHidden": "Oculto",
+      "tabs": {
+        "all": "Todos ({{count}})",
+        "pdfs": "PDFs ({{count}})",
+        "videos": "Vídeos ({{count}})"
+      },
+      "empty": {
+        "filtered": "Nenhum material encontrado com os filtros selecionados",
+        "pdfs": "Nenhum PDF encontrado",
+        "videos": "Nenhum vídeo encontrado"
+      },
+      "actions": {
+        "view": "Visualizar"
+      },
+      "toast": {
+        "hidden": "Material ocultado dos alunos",
+        "visible": "Material visível para alunos",
+        "visibilityError": "Erro ao atualizar visibilidade",
+        "deleted": "Material excluído com sucesso!",
+        "deleteError": "Erro ao excluir material",
+        "opening": "Abrindo material..."
+      },
+      "deleteDialog": {
+        "title": "Excluir Material",
+        "description": "Esta ação é irreversível. O material será removido permanentemente da biblioteca."
+      }
+    },
+    "cursos": {
+      "title": "Cursos",
+      "subtitle": "Gerencie os cursos oferecidos pela instituição",
+      "newCourse": "Novo Curso",
+      "stats": {
+        "totalCourses": "Total de Cursos",
+        "activeCount": "{{count}} ativos",
+        "totalWorkload": "Carga Horária Total",
+        "acrossAllCourses": "Em todos os cursos",
+        "averageDuration": "Duração Média",
+        "monthsPerCourse": "Meses por curso",
+        "activeClasses": "Turmas Ativas",
+        "ongoing": "Em andamento",
+        "activeStudents": "Alunos Ativos",
+        "enrolled": "Matriculados"
+      },
+      "searchPlaceholder": "Buscar por nome ou descrição...",
+      "filtersActive": "Ativos",
+      "empty": {
+        "title": "Nenhum curso cadastrado",
+        "description": "Comece criando o primeiro curso da instituição",
+        "action": "Criar Primeiro Curso"
+      },
+      "view": {
+        "detailsTitle": "Detalhes do curso",
+        "description": "Descrição",
+        "workload": "Carga Horária",
+        "duration": "Duração",
+        "months": "{{count}} meses",
+        "statistics": "Estatísticas",
+        "subjects": "Disciplinas",
+        "activeClasses": "Turmas Ativas",
+        "activeStudents": "Alunos Ativos",
+        "editCourse": "Editar Curso"
+      },
+      "toast": {
+        "deactivated": "Curso desativado com sucesso",
+        "activated": "Curso ativado com sucesso",
+        "updated": "Curso atualizado com sucesso!",
+        "created": "Curso criado com sucesso!",
+        "saveError": "Erro ao salvar curso",
+        "deleted": "Curso excluído com sucesso!",
+        "deleteError": "Erro ao excluir curso"
+      },
+      "deleteDialog": {
+        "title": "Excluir Curso",
+        "description": "Tem certeza que deseja excluir o curso \"{{name}}\"? Esta ação não pode ser desfeita."
+      }
+    },
+    "relatorios": {
+      "title": "Relatórios e Análises",
+      "subtitle": "Acompanhe métricas e indicadores do desempenho institucional",
+      "exportAll": "Exportar Todos",
+      "metrics": {
+        "totalStudents": "Total de Alunos",
+        "overallAverage": "Média Geral",
+        "averageAttendance": "Frequência Média",
+        "totalRevenue": "Receita Total"
+      },
+      "tabs": {
+        "general": "Visão Geral",
+        "academic": "Acadêmico",
+        "financial": "Financeiro",
+        "attendance": "Frequência"
+      },
+      "charts": {
+        "performanceByClass": "Desempenho por Turma",
+        "revenueByCourse": "Receita por Curso",
+        "averageGradesByClass": "Média de Notas por Turma",
+        "revenueDistributionByCourse": "Distribuição de Receita por Curso",
+        "monthlyAverageAttendance": "Frequência Média Mensal (%)"
+      },
+      "tables": {
+        "top10Students": "Top 10 Alunos",
+        "teachersAndActivities": "Professores e Atividades",
+        "columns": {
+          "name": "Nome",
+          "class": "Turma",
+          "average": "Média",
+          "attendance": "Frequência",
+          "status": "Status",
+          "teacher": "Professor",
+          "email": "E-mail",
+          "classes": "Turmas",
+          "observations": "Observações"
+        }
+      },
+      "financial": {
+        "totalRevenue": "Receita Total",
+        "receivedRevenue": "Receita Recebida",
+        "defaultRate": "Taxa de Inadimplência"
+      },
+      "attendance": {
+        "summary": "Resumo de Frequência",
+        "overallAverage": "Frequência Média Geral",
+        "totalRecords": "Total de Registros"
+      },
+      "statusValues": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "toast": {
+        "exported": "Relatório exportado com sucesso! (Simulado)"
+      }
+    }
+  }
+}

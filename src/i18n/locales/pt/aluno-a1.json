@@ -1,0 +1,87 @@
+{
+  "aluno": {
+    "biblioteca": {
+      "title": "Biblioteca Virtual",
+      "subtitle": "Acesse materiais de estudo, vídeos e documentos",
+      "stats": {
+        "totalMaterials": "Total de Materiais",
+        "pdfs": "PDFs",
+        "videos": "Vídeos",
+        "favorites": "Favoritos"
+      },
+      "tabs": {
+        "all": "Todos ({{count}})",
+        "pdfs": "PDFs ({{count}})",
+        "videos": "Vídeos ({{count}})",
+        "favorites": "Favoritos ({{count}})"
+      },
+      "empty": {
+        "filtered": "Nenhum material encontrado com os filtros selecionados",
+        "noPdfs": "Nenhum PDF encontrado",
+        "noVideos": "Nenhum vídeo encontrado",
+        "noFavoritesTitle": "Você ainda não possui materiais favoritos",
+        "noFavoritesHint": "Clique no ❤️ nos materiais para adicioná-los aos favoritos"
+      },
+      "toasts": {
+        "removedFromFavorites": "Removido dos favoritos",
+        "addedToFavorites": "Adicionado aos favoritos",
+        "openingMaterial": "Abrindo material em nova aba..."
+      }
+    },
+    "minhasNotas": {
+      "title": "Minhas Notas",
+      "subtitle": "Acompanhe seu desempenho acadêmico",
+      "loginRequired": "Você precisa estar logado para acessar esta página",
+      "stats": {
+        "overallAverage": "Média Geral",
+        "subjects": "Disciplinas",
+        "withGrades": "Com notas lançadas",
+        "approved": "Aprovado",
+        "averageAtLeast": "Média ≥ 7.0",
+        "recovery": "Recuperação",
+        "atRisk": "+ {{count}} risco",
+        "averageRange": "Média 5.0-6.9"
+      },
+      "bestPerformanceTitle": "Melhores Desempenhos",
+      "attentionTitle": "Disciplinas que Precisam de Atenção",
+      "attentionHint": "💡 Dica: Procure materiais de estudo na biblioteca e tire dúvidas com seus professores",
+      "motivationMessage": "<strong>Excelente trabalho!</strong> Você está com ótimo desempenho. Continue se dedicando!",
+      "detailedReport": "Boletim Detalhado",
+      "empty": "Nenhuma nota lançada ainda"
+    },
+    "minhaFrequencia": {
+      "title": "Minha Frequência",
+      "subtitle": "Acompanhe sua presença nas aulas",
+      "loginRequired": "Você precisa estar logado para acessar esta página",
+      "stats": {
+        "overallAttendance": "Frequência Geral",
+        "totalLessons": "Total de Aulas",
+        "registeredInSystem": "Registradas no sistema",
+        "presences": "Presenças",
+        "plusJustified": "+ {{count}} justificadas",
+        "absences": "Faltas",
+        "congratulations": "Parabéns!",
+        "noJustification": "Sem justificativa"
+      },
+      "criticalTitle": "Atenção: Disciplinas com Frequência Crítica",
+      "criticalDesc": "Você está abaixo dos 75% de frequência necessários nas seguintes disciplinas:",
+      "attendanceBadge": "{{value}}% de frequência",
+      "criticalWarning": "⚠️ Frequência abaixo de 75% pode resultar em reprovação por falta!",
+      "tipMessage": "<strong>Parabéns!</strong> Sua frequência está adequada. Continue assim!",
+      "bySubject": "Frequência por Disciplina",
+      "empty": "Nenhuma frequência registrada ainda"
+    },
+    "progressoVideoaulas": {
+      "title": "Progresso de Videoaulas",
+      "subtitle": "Acompanhe seu desempenho e evolução nos estudos",
+      "filterTitle": "Filtrar por Disciplina",
+      "filterDesc": "Visualize suas estatísticas gerais ou por disciplina específica",
+      "allSubjects": "Todas as Disciplinas",
+      "empty": {
+        "title": "Nenhuma videoaula disponível",
+        "all": "Não há videoaulas cadastradas no momento.",
+        "forSubject": "Não há videoaulas para {{nome}}."
+      }
+    }
+  }
+}

@@ -1,0 +1,151 @@
+{
+  "gestor": {
+    "financeiro": {
+      "title": "Financial Management",
+      "subtitle": "Control of payments and revenue of the institution",
+      "exportReport": "Export Report",
+      "delinquentAlert_one": "Attention: {{count}} student has overdue payments",
+      "delinquentAlert_other": "Attention: {{count}} students have overdue payments",
+      "paymentsTitle": "Payments ({{count}})",
+      "noPaymentsTitle": "No payment found",
+      "noPaymentsFiltered": "Try adjusting the search filters",
+      "noPaymentsEmpty": "No payments registered yet",
+      "registerSuccess": "Payment registered successfully!",
+      "cancelByManager": "Cancelled by the manager",
+      "cancelSuccess": "Payment cancelled successfully!",
+      "exportEmpty": "There are no payments to export with the current filters.",
+      "reportFilename": "financial-report",
+      "reportTitle": "Financial Report — Sabiencia",
+      "exportSuccess": "Report exported as PDF!",
+      "exportError": "Could not generate the report. Please try again.",
+      "cancelDialogTitle": "Cancel Payment",
+      "cancelDialogConfirm": "Confirm Cancellation",
+      "cancelDialogDesc": "Attention: When you cancel this payment, the corresponding invoice will be permanently invalidated. The student will no longer receive charges for this installment, but the outstanding balance will remain in the academic history until a new negotiation is registered.",
+      "statusLabels": {
+        "paid": "Paid",
+        "pending": "Pending",
+        "overdue": "Overdue",
+        "cancelled": "Cancelled"
+      },
+      "columns": {
+        "student": "Student",
+        "value": "Value",
+        "dueDate": "Due Date",
+        "payment": "Payment",
+        "status": "Status"
+      }
+    },
+    "alunoDetail": {
+      "loading": "Loading data...",
+      "idNotProvided": "Student ID not provided",
+      "notFound": "Student not found",
+      "back": "Back",
+      "title": "Student Details",
+      "subtitle": "Complete registration information",
+      "edit": "Edit",
+      "course": "Course",
+      "class": "Class",
+      "enrollment": "Enrollment",
+      "stats": {
+        "attendance": "Attendance",
+        "lessonsRatio": "{{present}} of {{total}} lessons",
+        "average": "Overall Average",
+        "evaluations": "{{count}} evaluations",
+        "pendingPayment": "Pending Payment",
+        "overdueCount": "{{count}} overdue",
+        "status": "Status"
+      },
+      "personalData": "Personal Data",
+      "rg": "RG",
+      "birthDate": "Date of Birth",
+      "sex": "Sex",
+      "male": "Male",
+      "female": "Female",
+      "maritalStatus": "Marital Status",
+      "guardian": "Guardian",
+      "guardianDesc": "Guardian information (if under age)",
+      "guardianName": "Name",
+      "guardianPhone": "Phone",
+      "address": "Address",
+      "zipCode": "ZIP Code",
+      "noAddress": "No address registered"
+    },
+    "professorDetail": {
+      "loading": "Loading data...",
+      "idNotProvided": "Teacher ID not provided",
+      "notFound": "Teacher not found",
+      "back": "Back",
+      "title": "Teacher Details",
+      "subtitle": "Complete registration information",
+      "edit": "Edit",
+      "education": "Education",
+      "professionalRegistration": "Professional Registration",
+      "stats": {
+        "classes": "Classes",
+        "activeClasses": "active classes",
+        "subjects": "Subjects",
+        "subjectsUnit": "subjects",
+        "students": "Students",
+        "studentsUnit": "students",
+        "materials": "Materials",
+        "published": "published"
+      },
+      "specialties": "Specialties",
+      "specialtiesDesc": "Teacher's areas of expertise",
+      "classesTitle": "Classes",
+      "classesDesc": "Classes the teacher teaches",
+      "noClasses": "No class assigned",
+      "subjectsTitle": "Subjects",
+      "subjectsDesc": "Subjects the teacher delivers",
+      "noSubjects": "No subject assigned",
+      "workload": "{{count}}h"
+    },
+    "comunicados": {
+      "title": "Announcements",
+      "subtitle": "Send announcements and track recipient engagement",
+      "newAnnouncement": "New Announcement",
+      "stats": {
+        "totalSent": "Total Sent",
+        "sentToday": "Sent Today",
+        "averageReadRate": "Average Read Rate",
+        "lowReadRate": "Low Read Rate"
+      },
+      "lowReadAlertTitle": "Attention: {{count}} announcement(s) with low read rate",
+      "lowReadAlertDesc": "Some announcements were read by less than 50% of recipients. Consider resending or contacting directly.",
+      "sendSuccess": "Announcement sent successfully!",
+      "allAnnouncements": "All Announcements ({{count}})",
+      "noResultsFiltered": "No announcement found with the applied filters.",
+      "noResultsEmpty": "No announcement has been sent yet."
+    },
+    "alunosList": {
+      "deleteSuccess": "Student {{name}} deleted successfully!",
+      "title": "Students",
+      "subtitle": "Manage the students registered in the system",
+      "newStudent": "New Student",
+      "exportTitle": "Students",
+      "totalStudents": "Total Students",
+      "totalStudentsDesc": "{{filtered}} of {{total}} students",
+      "studentsListTitle": "Students List",
+      "studentsFound_one": "{{count}} student found",
+      "studentsFound_other": "{{count}} students found",
+      "deleteDialogTitle": "Delete Student",
+      "deleteDialogDesc": "This action will permanently delete the student and all associated data (enrollments, grades, attendance, etc.). This operation cannot be undone.",
+      "shortcuts": {
+        "refreshList": "Refresh list",
+        "newStudent": "New student",
+        "showShortcuts": "Show shortcuts",
+        "categoryActions": "Actions",
+        "categoryHelp": "Help"
+      },
+      "exportColumns": {
+        "name": "Name",
+        "cpf": "CPF",
+        "email": "Email",
+        "phone": "Phone",
+        "birthDate": "Birth Date",
+        "status": "Status",
+        "enrollmentDate": "Enrollment Date"
+      }
+    }
+  }
+}

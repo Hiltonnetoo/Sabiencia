@@ -1,0 +1,162 @@
+{
+  "professor": {
+    "conteudoAulas": {
+      "title": "Manage Lesson Content",
+      "subtitle": "Add video lessons, materials, activities and tests for your subjects",
+      "selectSubjectTitle": "Select the Subject",
+      "selectSubjectDesc": "Choose the subject to manage the lesson content",
+      "selectSubjectPlaceholder": "Select a subject...",
+      "stats": {
+        "videoLessons": "Video Lessons",
+        "videos": "videos",
+        "pdfMaterials": "PDF Materials",
+        "files": "files",
+        "activities": "Activities",
+        "activitiesUnit": "activities",
+        "tests": "Tests",
+        "testsUnit": "tests"
+      },
+      "listTitle": "Lesson Content",
+      "listDesc": "Organize the content by modules and lessons",
+      "addContent": "Add Content",
+      "required": "Required",
+      "minutes": "{{count}} min",
+      "megabytes": "{{value}} MB",
+      "visible": "Visible",
+      "hidden": "Hidden",
+      "emptyTitle": "Select a subject",
+      "emptyDesc": "Choose a subject above to start managing the lesson content",
+      "types": {
+        "video": "Video Lesson",
+        "pdf": "PDF Material",
+        "atividade": "Activity",
+        "teste": "Test/Exam",
+        "extra": "Extra Content"
+      },
+      "tabs": {
+        "video": "Video",
+        "pdf": "PDF",
+        "atividade": "Activity",
+        "teste": "Test",
+        "extra": "Extra"
+      },
+      "dialog": {
+        "title": "Add New Content",
+        "desc": "Add a video lesson, PDF material, activity or test",
+        "typeLabel": "Content Type *",
+        "titleLabel": "Title *",
+        "titlePlaceholder": "Ex: Introduction to Anatomy",
+        "descLabel": "Description",
+        "descPlaceholder": "Briefly describe the content...",
+        "videoUrlLabel": "Video URL (YouTube/Vimeo)",
+        "fileUrlLabel": "File URL",
+        "videoUrlPlaceholder": "https://youtube.com/watch?v=...",
+        "fileUrlPlaceholder": "https://...",
+        "videoUrlHint": "Paste the YouTube or Vimeo video link",
+        "uploadHint": "Or upload the file",
+        "chooseFile": "Choose File",
+        "uploadFormats": "PDF, DOC or DOCX up to 10MB",
+        "visibleLabel": "Visible to students",
+        "visibleHint": "Students will be able to see this content",
+        "requiredLabel": "Required content",
+        "requiredHint": "Mark as required for students"
+      },
+      "toast": {
+        "fillRequired": "Fill in all required fields",
+        "added": "Content added successfully!"
+      }
+    },
+    "meusAlunos": {
+      "title": "My Students",
+      "subtitle": "Track the performance of your classes' students",
+      "stats": {
+        "totalStudents": "Total Students",
+        "activeCount": "{{count}} active",
+        "averageAttendance": "Average Attendance",
+        "ofLessonsHeld": "Of lessons held",
+        "overallAverage": "Overall Average",
+        "classesAverageGrade": "Classes' average grade",
+        "classesYouTeach": "That you teach"
+      },
+      "filters": {
+        "searchPlaceholder": "Search student, CPF or class...",
+        "classPlaceholder": "Class",
+        "coursePlaceholder": "Course",
+        "statusPlaceholder": "Status",
+        "allCourses": "All courses",
+        "statusActive": "Active",
+        "statusLocked": "Locked",
+        "statusCompleted": "Completed"
+      },
+      "resultsCount": "{{count}} student found",
+      "resultsCount_other": "{{count}} students found",
+      "emptyTitle": "No students found",
+      "emptyFiltered": "Try adjusting the filters to find students",
+      "emptyDefault": "There are no students enrolled in your classes",
+      "table": {
+        "student": "Student",
+        "cpf": "CPF",
+        "class": "Class",
+        "attendance": "Attendance",
+        "average": "Average",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "actions": {
+        "recordAttendance": "Record Attendance",
+        "recordGrades": "Record Grades"
+      },
+      "legend": {
+        "title": "Legend:",
+        "greenLabel": "Green:",
+        "greenDesc": "Attendance ≥ 75% or Average ≥ 7.0",
+        "yellowLabel": "Yellow:",
+        "yellowDesc": "Attendance 60-74% or Average 5.0-6.9",
+        "redLabel": "Red:",
+        "redDesc": "Attendance < 60% or Average < 5.0"
+      }
+    },
+    "relatorios": {
+      "title": "My Reports",
+      "subtitle": "Track the performance of your classes and subjects",
+      "exportToast": "Report exported successfully! (Simulated)",
+      "metrics": {
+        "myStudents": "My Students",
+        "overallAverage": "Overall Average",
+        "averageAttendance": "Average Attendance",
+        "observations": "Observations"
+      },
+      "tabs": {
+        "myClasses": "My Classes",
+        "subjects": "Subjects",
+        "students": "Students",
+        "attendance": "Attendance"
+      },
+      "charts": {
+        "averageGradeByClass": "Average Grades by Class",
+        "averageBySubject": "Average by Subject",
+        "averageAttendanceByClass": "Average Attendance by Class (%)"
+      },
+      "classesSummaryTitle": "Classes Summary",
+      "studentsCount": "{{count}} students",
+      "attendanceSummaryTitle": "Attendance Summary",
+      "overallAverageAttendance": "Overall Average Attendance",
+      "subjectsTable": {
+        "title": "Performance by Subject",
+        "subject": "Subject",
+        "students": "Students",
+        "average": "Average",
+        "approved": "Approved",
+        "approvalRate": "Approval Rate"
+      },
+      "studentsTable": {
+        "title": "Students Performance",
+        "name": "Name",
+        "class": "Class",
+        "average": "Average",
+        "attendance": "Attendance",
+        "observations": "Observations"
+      }
+    }
+  }
+}

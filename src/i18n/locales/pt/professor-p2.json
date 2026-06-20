@@ -1,0 +1,162 @@
+{
+  "professor": {
+    "conteudoAulas": {
+      "title": "Gerenciar Conteúdo das Aulas",
+      "subtitle": "Adicione vídeo-aulas, materiais, atividades e testes para suas disciplinas",
+      "selectSubjectTitle": "Selecione a Disciplina",
+      "selectSubjectDesc": "Escolha a disciplina para gerenciar o conteúdo das aulas",
+      "selectSubjectPlaceholder": "Selecione uma disciplina...",
+      "stats": {
+        "videoLessons": "Vídeo-aulas",
+        "videos": "vídeos",
+        "pdfMaterials": "Materiais PDF",
+        "files": "arquivos",
+        "activities": "Atividades",
+        "activitiesUnit": "atividades",
+        "tests": "Testes",
+        "testsUnit": "testes"
+      },
+      "listTitle": "Conteúdos das Aulas",
+      "listDesc": "Organize o conteúdo por módulos e aulas",
+      "addContent": "Adicionar Conteúdo",
+      "required": "Obrigatório",
+      "minutes": "{{count}} min",
+      "megabytes": "{{value}} MB",
+      "visible": "Visível",
+      "hidden": "Oculto",
+      "emptyTitle": "Selecione uma disciplina",
+      "emptyDesc": "Escolha uma disciplina acima para começar a gerenciar o conteúdo das aulas",
+      "types": {
+        "video": "Vídeo-aula",
+        "pdf": "Material PDF",
+        "atividade": "Atividade",
+        "teste": "Teste/Prova",
+        "extra": "Conteúdo Extra"
+      },
+      "tabs": {
+        "video": "Vídeo",
+        "pdf": "PDF",
+        "atividade": "Atividade",
+        "teste": "Teste",
+        "extra": "Extra"
+      },
+      "dialog": {
+        "title": "Adicionar Novo Conteúdo",
+        "desc": "Adicione vídeo-aula, material PDF, atividade ou teste",
+        "typeLabel": "Tipo de Conteúdo *",
+        "titleLabel": "Título *",
+        "titlePlaceholder": "Ex: Introdução à Anatomia",
+        "descLabel": "Descrição",
+        "descPlaceholder": "Descreva brevemente o conteúdo...",
+        "videoUrlLabel": "URL do Vídeo (YouTube/Vimeo)",
+        "fileUrlLabel": "URL do Arquivo",
+        "videoUrlPlaceholder": "https://youtube.com/watch?v=...",
+        "fileUrlPlaceholder": "https://...",
+        "videoUrlHint": "Cole o link do vídeo do YouTube ou Vimeo",
+        "uploadHint": "Ou faça upload do arquivo",
+        "chooseFile": "Escolher Arquivo",
+        "uploadFormats": "PDF, DOC ou DOCX até 10MB",
+        "visibleLabel": "Visível para alunos",
+        "visibleHint": "Alunos poderão ver este conteúdo",
+        "requiredLabel": "Conteúdo obrigatório",
+        "requiredHint": "Marcar como obrigatório para os alunos"
+      },
+      "toast": {
+        "fillRequired": "Preencha todos os campos obrigatórios",
+        "added": "Conteúdo adicionado com sucesso!"
+      }
+    },
+    "meusAlunos": {
+      "title": "Meus Alunos",
+      "subtitle": "Acompanhe o desempenho dos alunos das suas turmas",
+      "stats": {
+        "totalStudents": "Total de Alunos",
+        "activeCount": "{{count}} ativos",
+        "averageAttendance": "Frequência Média",
+        "ofLessonsHeld": "Das aulas ministradas",
+        "overallAverage": "Média Geral",
+        "classesAverageGrade": "Nota média das turmas",
+        "classesYouTeach": "Que você leciona"
+      },
+      "filters": {
+        "searchPlaceholder": "Buscar aluno, CPF ou turma...",
+        "classPlaceholder": "Turma",
+        "coursePlaceholder": "Curso",
+        "statusPlaceholder": "Status",
+        "allCourses": "Todos os cursos",
+        "statusActive": "Ativos",
+        "statusLocked": "Trancados",
+        "statusCompleted": "Concluídos"
+      },
+      "resultsCount": "{{count}} aluno encontrado",
+      "resultsCount_other": "{{count}} alunos encontrados",
+      "emptyTitle": "Nenhum aluno encontrado",
+      "emptyFiltered": "Tente ajustar os filtros para encontrar alunos",
+      "emptyDefault": "Não há alunos matriculados nas suas turmas",
+      "table": {
+        "student": "Aluno",
+        "cpf": "CPF",
+        "class": "Turma",
+        "attendance": "Frequência",
+        "average": "Média",
+        "status": "Status",
+        "actions": "Ações"
+      },
+      "actions": {
+        "recordAttendance": "Lançar Frequência",
+        "recordGrades": "Lançar Notas"
+      },
+      "legend": {
+        "title": "Legenda:",
+        "greenLabel": "Verde:",
+        "greenDesc": "Frequência ≥ 75% ou Média ≥ 7.0",
+        "yellowLabel": "Amarelo:",
+        "yellowDesc": "Frequência 60-74% ou Média 5.0-6.9",
+        "redLabel": "Vermelho:",
+        "redDesc": "Frequência < 60% ou Média < 5.0"
+      }
+    },
+    "relatorios": {
+      "title": "Meus Relatórios",
+      "subtitle": "Acompanhe o desempenho das suas turmas e disciplinas",
+      "exportToast": "Relatório exportado com sucesso! (Simulado)",
+      "metrics": {
+        "myStudents": "Meus Alunos",
+        "overallAverage": "Média Geral",
+        "averageAttendance": "Frequência Média",
+        "observations": "Observações"
+      },
+      "tabs": {
+        "myClasses": "Minhas Turmas",
+        "subjects": "Disciplinas",
+        "students": "Alunos",
+        "attendance": "Frequência"
+      },
+      "charts": {
+        "averageGradeByClass": "Média de Notas por Turma",
+        "averageBySubject": "Média por Disciplina",
+        "averageAttendanceByClass": "Frequência Média por Turma (%)"
+      },
+      "classesSummaryTitle": "Resumo das Turmas",
+      "studentsCount": "{{count}} alunos",
+      "attendanceSummaryTitle": "Resumo de Frequência",
+      "overallAverageAttendance": "Frequência Média Geral",
+      "subjectsTable": {
+        "title": "Desempenho por Disciplina",
+        "subject": "Disciplina",
+        "students": "Alunos",
+        "average": "Média",
+        "approved": "Aprovados",
+        "approvalRate": "Taxa Aprovação"
+      },
+      "studentsTable": {
+        "title": "Desempenho dos Alunos",
+        "name": "Nome",
+        "class": "Turma",
+        "average": "Média",
+        "attendance": "Frequência",
+        "observations": "Observações"
+      }
+    }
+  }
+}

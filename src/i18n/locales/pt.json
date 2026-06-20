@@ -1,152 +1,99 @@
 {
   "landing": {
+    "skipToContent": "Pular para o conteúdo principal",
     "nav": {
-      "home": "Início",
-      "courses": "Cursos",
-      "about": "Sobre",
-      "contact": "Contato",
-      "blog": "Blog"
+      "product": "Produto",
+      "roles": "Perfis",
+      "features": "Recursos",
+      "why": "Por que a Sabiencia",
+      "contact": "Contato"
     },
-    "viewDemo": "Ver Demonstração",
-    "login": "Login",
-    "enroll": "Matricule-se",
-    "openMenu": "Abrir menu",
+    "actions": {
+      "viewDemo": "Ver demonstração",
+      "requestDemo": "Solicitar demonstração",
+      "login": "Entrar",
+      "openMenu": "Abrir menu"
+    },
     "hero": {
-      "badge": "🚀 Escola com 2 anos de experiência",
-      "titleStart": "Transforme sua",
-      "titleHighlight": "carreira",
-      "titleEnd": "com cursos técnicos",
-      "subtitle": "Aprenda online com flexibilidade total e comprove seu conhecimento em provas presenciais. Nossa escola tem 2 anos de experiência formando profissionais qualificados para o mercado de trabalho.",
-      "ctaCourses": "Ver Cursos",
-      "ctaStudentArea": "Área do Estudante",
-      "ctaFreeClass": "Aula grátis",
-      "stats": ["2 anos de experiência", "+500 alunos formados", "3 cursos disponíveis"]
+      "badge": "Plataforma LMS por perfis",
+      "titleStart": "Coloque sua",
+      "titleHighlight": "escola online",
+      "titleEnd": "inteira em uma só plataforma",
+      "subtitle": "A Sabiencia é um sistema de gestão de aprendizagem completo para o ensino online — gestores, professores e alunos, cada um com uma experiência sob medida. Explore o produto inteiro agora: ele roda com dados de demonstração realistas, sem cadastro e sem nada para instalar.",
+      "ctaDemo": "Explorar a demonstração",
+      "ctaContact": "Solicitar demonstração",
+      "trust": ["3 áreas por perfil", "Funciona sem nenhuma configuração", "Inglês e Português", "Tema claro e escuro"]
     },
-    "courses": {
-      "badge": "Nossos Cursos",
-      "title": "Cursos Técnicos que Transformam Carreiras",
-      "subtitle": "3 cursos cuidadosamente desenvolvidos para formar profissionais qualificados. Metodologia 100% online com certificação reconhecida pelo mercado.",
-      "online": "100% Online",
-      "newClass": "Nova Turma",
-      "learnLabel": "O que você vai aprender:",
-      "levelLabel": "Nível",
-      "knowMore": "Saiba Mais",
-      "footerText": "Quer conhecer todos os detalhes dos nossos cursos?",
-      "viewAll": "Ver Todos os Cursos",
+    "roles": {
+      "badge": "Feito para cada perfil",
+      "title": "Uma plataforma, três experiências sob medida",
+      "subtitle": "O acesso é controlado por perfil na camada de rotas (RBAC). Cada perfil vê apenas o que precisa — abra qualquer um na demonstração ao vivo.",
+      "openDemo": "Abrir a demonstração",
       "items": [
         {
-          "title": "Técnico em Enfermagem",
-          "description": "Cuidados de enfermagem, anatomia e fisiologia, administração de medicamentos e procedimentos técnicos. Forme-se na área da saúde.",
-          "duration": "18 meses",
-          "hours": "1200h",
-          "nextClass": "Março/2025",
-          "price": "A partir de R$ 299/mês",
-          "category": "Saúde",
-          "level": "Iniciante ao Avançado",
-          "highlights": ["Cuidados de Enfermagem", "Administração de Medicamentos", "Procedimentos Técnicos", "Primeiros Socorros"]
+          "name": "Gestor / CEO",
+          "tagline": "Administre a instituição",
+          "description": "Uma visão consolidada de toda a operação: matrículas, finanças e indicadores acadêmicos.",
+          "bullets": ["Alunos, professores, cursos e turmas", "Controle financeiro e inadimplência", "Relatórios gerenciais com export em PDF/Excel/CSV", "Comunicados para todos ou turmas específicas"]
         },
         {
-          "title": "Técnico em Administração",
-          "description": "Gestão empresarial, recursos humanos, finanças e marketing. Prepare-se para liderar equipes e processos.",
-          "duration": "15 meses",
-          "hours": "1000h",
-          "nextClass": "Abril/2025",
-          "price": "A partir de R$ 249/mês",
-          "category": "Gestão",
-          "level": "Iniciante ao Intermediário",
-          "highlights": ["Gestão de Pessoas", "Planejamento Estratégico", "Finanças Empresariais", "Marketing Digital"]
+          "name": "Professor",
+          "tagline": "Ensine e avalie",
+          "description": "Um espaço pedagógico focado nas turmas atribuídas a cada professor.",
+          "bullets": ["Turmas e alunos atribuídos", "Lançamento de notas e frequência", "Conteúdo de aula e materiais didáticos", "Observações sobre alunos e comunicados"]
         },
         {
-          "title": "Técnico em Contabilidade",
-          "description": "Escrituração fiscal, demonstrações financeiras, análise contábil e compliance. Torne-se um especialista em números.",
-          "duration": "20 meses",
-          "hours": "1400h",
-          "nextClass": "Maio/2025",
-          "price": "A partir de R$ 279/mês",
-          "category": "Finanças",
-          "level": "Intermediário ao Avançado",
-          "highlights": ["Escrituração Fiscal", "Análise Financeira", "Auditoria", "Compliance"]
+          "name": "Aluno",
+          "tagline": "Aprenda e acompanhe seu progresso",
+          "description": "Tudo o que o aluno precisa para acompanhar o curso, em um só lugar.",
+          "bullets": ["Videoaulas e materiais para download", "Histórico de notas e frequência", "Comunicados e eventos acadêmicos", "Situação financeira e certificados"]
         }
       ]
     },
     "features": {
-      "badge": "Nossos Diferenciais",
-      "title": "Por que escolher nossa escola?",
-      "subtitle": "Conheça os diferenciais que fazem da nossa escola a melhor escolha para sua formação técnica profissional.",
+      "badge": "Tudo o que você precisa",
+      "title": "Um fluxo acadêmico completo",
+      "subtitle": "Da matrícula ao certificado — o dia a dia de uma escola online, coberto de ponta a ponta.",
       "items": [
-        { "title": "2 Anos de Experiência", "description": "Escola consolidada no mercado com histórico comprovado de formação de profissionais qualificados." },
-        { "title": "100% Online", "description": "Estude quando e onde quiser. Aulas gravadas e ao vivo, disponíveis 24h na nossa plataforma." },
-        { "title": "Certificação Reconhecida", "description": "Certificados válidos em todo território nacional, reconhecidos pelo MEC e aceitos pelo mercado." },
-        { "title": "Suporte Personalizado", "description": "Acompanhamento individual com tutores especializados e suporte técnico sempre disponível." }
-      ],
-      "methodTitle": "Metodologia que funciona",
-      "methodText": "Nossa abordagem combina flexibilidade do ensino online com a credibilidade das avaliações presenciais. Você estuda no seu ritmo e comprova seu conhecimento de forma consistente.",
-      "benefits": ["Aulas ao vivo e gravadas", "Professores especializados", "Provas presenciais em nossa sede", "Material didático incluso", "Acesso vitalício ao conteúdo", "Certificado digital e impresso"],
-      "stats": [
-        { "value": "500+", "label": "Alunos Formados" },
-        { "value": "95%", "label": "Taxa de Aprovação" },
-        { "value": "3", "label": "Cursos Disponíveis" },
-        { "value": "2", "label": "Anos de Experiência" }
+        { "title": "Gestão acadêmica", "description": "Alunos, professores, cursos, turmas e disciplinas em um único lugar organizado." },
+        { "title": "Notas e frequência", "description": "Lance notas e controle a frequência por turma, com status claro para cada aluno." },
+        { "title": "Materiais e videoaulas", "description": "Publique PDFs, links e videoaulas hospedadas no YouTube para cada disciplina." },
+        { "title": "Comunicados", "description": "Envie mensagens segmentadas — para todos, para uma turma específica ou para um perfil." },
+        { "title": "Controle financeiro", "description": "Acompanhe mensalidades, vencimentos e inadimplência pelo painel do gestor." },
+        { "title": "Relatórios e exportação", "description": "Relatórios operacionais e financeiros, exportáveis para PDF, Excel e CSV." },
+        { "title": "Busca global", "description": "Encontre alunos, turmas, materiais e mais na hora com Cmd/Ctrl + K." },
+        { "title": "Temas e idiomas", "description": "Tema claro e escuro e troca entre Inglês e Português com um clique." }
       ]
     },
-    "methodology": {
-      "badge": "Nossa Metodologia",
-      "title": "Como funciona nosso método de ensino",
-      "subtitle": "Uma metodologia inovadora que combina a flexibilidade do ensino online com a credibilidade das avaliações presenciais.",
-      "stepLabel": "ETAPA",
-      "nextStep": "Próxima etapa",
-      "steps": [
-        { "title": "Estude Online", "subtitle": "Flexibilidade total", "description": "Acesse aulas gravadas e ao vivo a qualquer hora, em qualquer lugar. Nossa plataforma está disponível 24h.", "features": ["Aulas em vídeo HD", "Material PDF interativo", "Exercícios práticos", "Fórum de dúvidas"] },
-        { "title": "Pratique", "subtitle": "Aprendizado ativo", "description": "Desenvolva projetos reais e execute exercícios práticos que simulam situações do mercado de trabalho.", "features": ["Projetos práticos", "Simuladores", "Estudos de caso", "Laboratórios virtuais"] },
-        { "title": "Comprove", "subtitle": "Avaliação presencial", "description": "Realize provas presenciais em nossa sede para validar seu aprendizado e garantir a credibilidade do certificado.", "features": ["Provas presenciais", "Avaliação técnica", "Feedback individual", "Segunda chamada"] },
-        { "title": "Certifique-se", "subtitle": "Reconhecimento oficial", "description": "Receba seu certificado técnico reconhecido pelo MEC e aceito em todo o território nacional.", "features": ["Certificado MEC", "Versão digital", "Versão impressa", "Histórico escolar"] }
-      ],
-      "ctaTitle": "Pronto para começar sua jornada?",
-      "ctaText": "Junte-se aos mais de 500 profissionais que já transformaram suas carreiras com nossos cursos técnicos.",
-      "ctaEnroll": "Matricule-se Agora",
-      "ctaConsultant": "Falar com Consultor"
-    },
-    "testimonials": {
-      "badge": "Depoimentos",
-      "title": "O que nossos alunos dizem",
-      "subtitle": "Mais de 500 profissionais já transformaram suas carreiras. Conheça algumas histórias de sucesso.",
+    "trust": {
+      "badge": "Por que a Sabiencia",
+      "title": "Substância que você pode verificar",
+      "subtitle": "Sem números inflados — apenas uma visão honesta de como a plataforma é construída.",
       "items": [
-        { "name": "Maria Silva Santos", "course": "Técnico em Informática", "role": "Desenvolvedora Web", "company": "TechStart Solutions", "testimony": "O curso superou minhas expectativas! A metodologia online com provas presenciais me deu confiança total no certificado. Hoje trabalho como desenvolvedora e consegui aumentar meu salário em 80%. Os professores são excelentes e o suporte é incomparável." },
-        { "name": "João Pedro Costa", "course": "Técnico em Administração", "role": "Coordenador Administrativo", "company": "Empresa Nacional Ltda", "testimony": "Flexibilidade total para estudar! Como pai de família, consegui conciliar trabalho, estudos e família. O material é muito completo e as aulas são dinâmicas. Após me formar, assumi a coordenação do setor administrativo da empresa onde trabalho." },
-        { "name": "Ana Carolina Ferreira", "course": "Técnico em Contabilidade", "role": "Contadora Plena", "company": "Consultoria Fiscal ABC", "testimony": "A qualidade do ensino é excepcional. Saí do curso preparada para o mercado de trabalho real. Os casos práticos fizeram toda diferença na minha formação. Recomendo para todos que buscam uma educação técnica de qualidade e reconhecimento profissional." },
-        { "name": "Rafael Oliveira", "course": "Técnico em Informática", "role": "Analista de Suporte", "company": "TI Solutions Corp", "testimony": "Mudei completamente de área profissional através do curso. Saí da área comercial para TI e não me arrependo. O acompanhamento dos tutores foi fundamental para meu sucesso. Hoje trabalho em uma empresa de tecnologia e tenho uma carreira sólida pela frente." },
-        { "name": "Patrícia Mendes", "course": "Técnico em Administração", "role": "Gestora de Projetos", "company": "Inovação Empresarial", "testimony": "Curso muito bem estruturado! A parte de gestão de pessoas e planejamento estratégico transformou minha visão empresarial. Consegui uma promoção antes mesmo de terminar o curso. A escola realmente prepara para o mercado de trabalho atual." }
-      ],
-      "stats": [
-        { "value": "500+", "label": "Alunos Formados" },
-        { "value": "95%", "label": "Taxa de Aprovação" },
-        { "value": "4.9", "label": "Avaliação Média" },
-        { "value": "85%", "label": "Ascensão Profissional" }
+        { "title": "Teste antes de adotar", "description": "Todo o produto roda com dados fictícios realistas de imediato. Explore cada perfil sem configuração e sem conta." },
+        { "title": "Pronta para backend, seus dados", "description": "Uma camada de dados mock-first que passa para o Supabase (Auth, Postgres, Storage) quando você conecta — sua instituição mantém os próprios dados." },
+        { "title": "Segura por design", "description": "A segurança real fica no Row-Level Security do Supabase. Somos honestos: a assinatura no cliente protege apenas o estado local da interface, nunca o banco de dados." },
+        { "title": "Testada e confiável", "description": "478 testes automatizados (unitários, de integração e ponta a ponta) e um código totalmente tipado em TypeScript mantêm o comportamento previsível." },
+        { "title": "Acessível e internacional", "description": "Skip links, foco visível, suporte a reduced-motion e alto contraste, com a interface disponível em Inglês e Português." },
+        { "title": "Rápida por padrão", "description": "Cada área de perfil é carregada sob demanda como seu próprio bundle, e bibliotecas pesadas de exportação só carregam quando são usadas." }
       ]
+    },
+    "contact": {
+      "badge": "Fale com a gente",
+      "title": "Veja a Sabiencia funcionando na sua instituição",
+      "subtitle": "Quer uma demonstração guiada ou conversar sobre levar sua escola para o online? Entre em contato e retornamos rapidamente.",
+      "emailCta": "Enviar e-mail",
+      "whatsappCta": "Falar no WhatsApp",
+      "demoHint": "Prefere olhar primeiro? Explore a demonstração ao vivo — sem cadastro."
     },
     "footer": {
-      "companyDesc": "Formando profissionais qualificados há 2 anos. Cursos técnicos 100% online com certificação reconhecida pelo MEC e comprovação presencial.",
-      "follow": "Siga-nos",
-      "quickLinks": "Links Rápidos",
-      "studentArea": "Área do Aluno",
-      "coursesTitle": "Nossos Cursos",
-      "viewAll": "Ver Todos os Cursos",
-      "contact": "Contato",
-      "addressLine1": "Rua Paulo Ramos, 225",
-      "addressLine2": "Centro - Balsas/MA",
-      "whatsapp": "WhatsApp disponível",
-      "hoursTitle": "Horários de Atendimento",
-      "hoursWeek": "Segunda a Sexta: 8h às 18h",
-      "hoursSat": "Sábados: 8h às 12h",
-      "hoursWhats": "WhatsApp: 24h",
-      "newsletterTitle": "Fique por dentro das novidades",
-      "newsletterText": "Receba informações sobre novos cursos, datas de matrícula e dicas para sua carreira profissional.",
-      "emailPlaceholder": "Seu melhor e-mail",
-      "subscribe": "Inscrever-se",
+      "productDesc": "Uma plataforma moderna de gestão de aprendizagem por perfis para o ensino online. Gerencie alunos, professores, turmas, notas, frequência, comunicados e finanças — tudo em um só lugar.",
+      "navTitle": "Navegar",
+      "contactTitle": "Contato",
+      "demo": "Demonstração",
+      "credit": "Feito por Hilton Neto",
       "copyright": "Sabiencia. Todos os direitos reservados.",
-      "accreditation": "CNPJ: 12.345.678/0001-90 | Credenciamento MEC nº 12345",
-      "legal": ["Política de Privacidade", "Termos de Uso", "Política de Cookies", "LGPD"],
-      "disclaimer": "Esta escola segue todas as diretrizes do MEC para educação técnica profissional. Os certificados emitidos têm validade nacional e são reconhecidos pelo mercado de trabalho."
+      "tagline": "Projeto de portfólio — um LMS totalmente funcional que você pode explorar hoje."
     }
   },
   "demo": {

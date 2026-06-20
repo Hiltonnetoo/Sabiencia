@@ -1,0 +1,150 @@
+{
+  "professor": {
+    "gerenciarVideoaulas": {
+      "title": "Manage Video Lessons",
+      "subtitle": "Organize your video lessons by topics and subjects",
+      "selectSubject": {
+        "title": "Select the Subject",
+        "description": "Choose a subject to manage its topics and video lessons",
+        "placeholder": "Select a subject"
+      },
+      "topicsCount_one": "{{count}} topic",
+      "topicsCount_other": "{{count}} topics",
+      "videoaulasCount_one": "{{count}} video lesson",
+      "videoaulasCount_other": "{{count}} video lessons",
+      "newTopic": "New Topic",
+      "noTopics": "No topics created yet",
+      "createFirstTopic": "Create first topic",
+      "lessonsBadge_one": "{{count}} lesson",
+      "lessonsBadge_other": "{{count}} lessons",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "addVideoaula": "Add Video Lesson",
+      "noVideoaulasInTopic": "No video lessons in this topic",
+      "hidden": "Hidden",
+      "materialsCount_one": "{{count}} material",
+      "materialsCount_other": "{{count}} materials",
+      "hideFromStudents": "Hide from students",
+      "makeVisible": "Make visible",
+      "topicDialog": {
+        "editTitle": "Edit Topic",
+        "newTitle": "New Topic",
+        "editDescription": "Edit the topic information",
+        "newDescription": "Create a new topic to organize your video lessons",
+        "titleLabel": "Topic Title *",
+        "titlePlaceholder": "e.g.: Module 1 - Fundamentals",
+        "descriptionLabel": "Description (optional)",
+        "descriptionPlaceholder": "Briefly describe the content of this topic...",
+        "saveChanges": "Save Changes",
+        "create": "Create Topic"
+      },
+      "videoaulaDialog": {
+        "editTitle": "Edit Video Lesson",
+        "newTitle": "New Video Lesson",
+        "editDescription": "Edit the video lesson information",
+        "newDescription": "Add a new video lesson from YouTube",
+        "tabBasic": "Basic Data",
+        "tabMaterials": "Materials",
+        "titleLabel": "Video Lesson Title *",
+        "titlePlaceholder": "e.g.: 1 - Introduction to Real Numbers",
+        "descriptionLabel": "Description *",
+        "descriptionPlaceholder": "Describe the content of the video lesson...",
+        "youtubeUrlLabel": "YouTube URL *",
+        "youtubeUrlPlaceholder": "https://www.youtube.com/watch?v=...",
+        "videoIdentified": "Video identified: {{id}}",
+        "invalidUrl": "Invalid URL. Use YouTube URLs in the format: https://www.youtube.com/watch?v=ID or https://youtu.be/ID",
+        "visibleToStudents": "Visible to students",
+        "materialsHint": "Add supporting materials (PDFs, slides, etc.)",
+        "addMaterial": "Add Material",
+        "noMaterials": "No materials added",
+        "materialNamePlaceholder": "Material name",
+        "materialUrlPlaceholder": "File URL",
+        "materialTypes": {
+          "pdf": "PDF",
+          "ppt": "PowerPoint",
+          "doc": "Word",
+          "video": "Video",
+          "outro": "Other"
+        },
+        "saveChanges": "Save Changes",
+        "create": "Create Video Lesson"
+      },
+      "newMaterialTitle": "New Material",
+      "toasts": {
+        "selectSubjectFirst": "Select a subject first",
+        "selectTopic": "Select a topic",
+        "youtubeIdError": "Could not extract the YouTube video ID",
+        "topicOrderUpdated": "Topic order updated",
+        "videoaulaOrderUpdated": "Video lesson order updated",
+        "videoaulaHidden": "Video lesson hidden from students",
+        "videoaulaVisible": "Video lesson visible to students",
+        "deleteTopicWithVideoaulas": "Cannot delete topic \"{{titulo}}\" because it contains {{count}} video lesson(s)",
+        "confirmDeleteTopic": "Are you sure you want to delete the topic \"{{titulo}}\"?",
+        "confirmDeleteVideoaula": "Are you sure you want to delete the video lesson \"{{titulo}}\"?"
+      }
+    },
+    "gerenciarLives": {
+      "title": "Manage Live Classes",
+      "subtitle": "Create and manage your live classes",
+      "newLive": "New Live Class",
+      "tabs": {
+        "scheduled": "Scheduled ({{count}})",
+        "live": "Live ({{count}})",
+        "finished": "Finished ({{count}})"
+      },
+      "empty": {
+        "scheduledTitle": "No scheduled classes",
+        "scheduledDesc": "Create a new live class for your students",
+        "createLive": "Create Live Class",
+        "liveTitle": "No live class right now",
+        "liveDesc": "There are no classes happening at the moment",
+        "finishedTitle": "No finished classes",
+        "finishedDesc": "Finished classes will appear here"
+      },
+      "fallbackSubject": "Subject",
+      "dialog": {
+        "editTitle": "Edit Live Class",
+        "newTitle": "New Live Class",
+        "editDescription": "Update the live class information",
+        "newDescription": "Schedule a new live class for your students",
+        "subjectLabel": "Subject *",
+        "subjectPlaceholder": "Select the subject",
+        "classLabel": "Class (optional)",
+        "allClasses": "All classes",
+        "titleLabel": "Title *",
+        "titlePlaceholder": "e.g.: Exam Review",
+        "descriptionLabel": "Description",
+        "descriptionPlaceholder": "Describe what will be covered in the class...",
+        "dateLabel": "Date *",
+        "timeLabel": "Time *",
+        "durationLabel": "Duration (minutes) *",
+        "platformLabel": "Platform *",
+        "roomLinkLabel": "Room Link *",
+        "roomLinkPlaceholder": "https://meet.google.com/abc-defg-hij",
+        "roomPasswordLabel": "Room Password (optional)",
+        "roomPasswordPlaceholder": "Enter the password if any",
+        "settings": "Settings",
+        "allowChat": "Allow chat during the class",
+        "allowMicrophone": "Students can use microphone",
+        "allowCamera": "Students can use camera",
+        "update": "Update Live Class",
+        "create": "Create Live Class"
+      },
+      "platforms": {
+        "google_meet": "Google Meet",
+        "zoom": "Zoom",
+        "teams": "Microsoft Teams",
+        "jitsi": "Jitsi",
+        "outro": "Other"
+      },
+      "toasts": {
+        "selectSubject": "Select a subject",
+        "enterTitle": "Enter a title for the class",
+        "defineDateTime": "Set the start date and time",
+        "enterRoomLink": "Enter the room link",
+        "confirmDelete": "Are you sure you want to delete this live class?",
+        "notificationsSent": "Notifications sent to all students!"
+      }
+    }
+  }
+}

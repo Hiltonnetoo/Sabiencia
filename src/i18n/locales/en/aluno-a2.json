@@ -1,0 +1,194 @@
+{
+  "aluno": {
+    "eventos": {
+      "title": "Events and Activities",
+      "subtitle": "Take part in lectures, workshops and extracurricular activities",
+      "certificate": "Certificate",
+      "enrolled": "Enrolled",
+      "dateTime": "Date and Time",
+      "location": "Location",
+      "online": "Online",
+      "inPerson": "In person",
+      "spots": "Spots",
+      "spotsFilled": "Spots filled",
+      "eventLink": "Event Link:",
+      "eventLocation": "Event Location:",
+      "cancelEnrollment": "Cancel Enrollment",
+      "spotsSoldOut": "Spots Sold Out",
+      "enroll": "Enroll",
+      "types": {
+        "palestra": "Lecture",
+        "workshop": "Workshop",
+        "aula_ao_vivo": "Live Class",
+        "evento_social": "Social Event",
+        "extracurricular": "Extracurricular"
+      },
+      "stats": {
+        "availableEvents": "Available Events",
+        "toEnroll": "to enroll",
+        "myEnrollments": "My Enrollments",
+        "events": "events",
+        "certificates": "Certificates",
+        "issued": "issued"
+      },
+      "tabs": {
+        "available": "Available ({{count}})",
+        "enrolled": "My Enrollments ({{count}})"
+      },
+      "empty": {
+        "availableTitle": "No events available",
+        "availableDesc": "New events will be announced soon",
+        "enrolledTitle": "You are not enrolled in any event yet",
+        "enrolledDesc": "Browse the \"Available\" tab to enroll"
+      },
+      "toast": {
+        "enrolledTitle": "Enrollment completed successfully!",
+        "enrolledDesc": "You will receive a confirmation e-mail soon.",
+        "cancelledTitle": "Enrollment cancelled",
+        "cancelledDesc": "Your enrollment has been cancelled successfully."
+      }
+    },
+    "certificados": {
+      "title": "My Certificates",
+      "subtitle": "View, download and share your certificates",
+      "howToValidateTitle": "How do I validate my certificate?",
+      "howToValidateDesc": "All issued certificates have a unique validation code. To validate the authenticity of a certificate:",
+      "validateStep1": "1. Go to the institution's website on the certificate validation page",
+      "validateStep2": "2. Enter the certificate's validation code",
+      "validateStep3": "3. The system will confirm the data and the authenticity of the document",
+      "issuanceDate": "Issuance Date",
+      "workload": "Workload",
+      "hours": "{{count}} hours",
+      "validationCode": "Validation Code",
+      "downloadPdf": "Download PDF",
+      "view": "View",
+      "share": "Share",
+      "types": {
+        "conclusao_curso": "Course Completion",
+        "participacao_evento": "Event Participation",
+        "aprovacao_disciplina": "Subject Approval",
+        "horas_complementares": "Complementary Hours"
+      },
+      "stats": {
+        "totalCertificates": "Total Certificates",
+        "issued": "issued",
+        "completedCourses": "Completed Courses",
+        "course": "course",
+        "certifiedHours": "Certified Hours",
+        "hours": "hours",
+        "events": "Events",
+        "participation": "participation"
+      },
+      "toast": {
+        "downloadStartedTitle": "Download started!",
+        "downloadStartedDesc": "Your certificate is being downloaded.",
+        "generatingTitle": "Generating certificate...",
+        "generatingDesc": "Your certificate will be generated shortly.",
+        "openingPreview": "Opening preview...",
+        "codeCopiedTitle": "Validation code copied!",
+        "codeCopiedDesc": "Share this code to validate your certificate."
+      }
+    },
+    "financeiro": {
+      "title": "My Finances",
+      "subtitle": "Track your payments and pending balances",
+      "overdueAlert": "You have {{value}} in overdue payments. Contact the secretary's office to regularize your situation.",
+      "total": "Total",
+      "payments": "{{count}} payment",
+      "payments_other": "{{count}} payments",
+      "paid": "Paid",
+      "paidOf": "{{paid}} of {{total}} paid",
+      "pending": "Pending",
+      "awaitingPayment": "Awaiting payment",
+      "overdue": "Overdue",
+      "regularizeSituation": "Regularize your situation",
+      "paymentProgressTitle": "Payment Progress",
+      "paymentsCompleted": "{{paid}} of {{total}} payments completed",
+      "nextDueDate": "Next Due Date",
+      "dueOn": "Due on {{date}}",
+      "value": "Value",
+      "id": "ID",
+      "paymentHistory": "Payment History ({{count}})",
+      "empty": {
+        "title": "No payments found",
+        "desc": "You don't have any payments registered yet"
+      }
+    },
+    "comunicados": {
+      "title": "My Announcements",
+      "subtitle": "Keep track of the school's notices and announcements",
+      "stats": {
+        "totalAnnouncements": "Total Announcements",
+        "unread": "Unread",
+        "urgentUnread": "Urgent Unread"
+      },
+      "urgentAlert": "You have <1>{{count}}</1> urgent unread announcement(s). Please read carefully!",
+      "receivedAnnouncements": "Received Announcements",
+      "newCount": "{{count}} new",
+      "empty": {
+        "filtered": "No announcements found with the applied filters.",
+        "default": "You haven't received any announcements yet."
+      },
+      "toast": {
+        "markedAsRead": "Announcement marked as read!"
+      }
+    },
+    "observacoes": {
+      "title": "My Observations",
+      "subtitle": "Track the observations recorded by teachers",
+      "stats": {
+        "totalVisible": "Total Visible",
+        "pedagogical": "Pedagogical",
+        "behavioral": "Behavioral",
+        "administrative": "Administrative"
+      },
+      "filterByType": "Filter by type:",
+      "typePlaceholder": "Type",
+      "types": {
+        "all": "All types",
+        "pedagogica": "Pedagogical",
+        "comportamental": "Behavioral",
+        "administrativa": "Administrative"
+      },
+      "infoTitle": "About observations:",
+      "infoDesc": " Teachers record observations to track your academic, behavioral and administrative development. Some observations may not be visible because they are for teachers' internal use.",
+      "empty": {
+        "title": "No observations found",
+        "filtered": "There are no observations of this type for you at the moment.",
+        "default": "You don't have any visible observations from teachers yet."
+      },
+      "count": "{{count}} observation found",
+      "count_other": "{{count}} observations found"
+    },
+    "perfil": {
+      "tabs": {
+        "personalData": "Personal Data",
+        "academicData": "Academic Data",
+        "security": "Security",
+        "activities": "Activities"
+      },
+      "academicDataUnavailable": "Academic data not available"
+    },
+    "configuracoes": {
+      "title": "Settings",
+      "subtitle": "Manage your preferences and system settings",
+      "tabs": {
+        "notifications": "Notifications",
+        "privacy": "Privacy",
+        "appearance": "Appearance"
+      },
+      "notifications": {
+        "title": "Notification Preferences",
+        "desc": "Configure how and when you want to receive notifications"
+      },
+      "privacy": {
+        "title": "Privacy Settings",
+        "desc": "Manage your privacy settings and personal data (LGPD)"
+      },
+      "appearance": {
+        "title": "System Appearance",
+        "desc": "Customize the interface appearance"
+      }
+    }
+  }
+}
