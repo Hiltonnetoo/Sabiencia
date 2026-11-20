@@ -6,6 +6,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { AuthProvider, useAuth } from './AuthContext';
 import React from 'react';
+import { signToken } from '../test/signSession';
 
 // Wrapper para o provider
 const wrapper = ({ children }: { children: React.ReactNode }) => (
@@ -145,14 +146,12 @@ describe('AuthContext', () => {
         created_at: new Date()
       };
 
-      const secureStorageObj = {
-        token: {
-          user: mockUser,
-          expiresAt: Date.now() + 1000 * 60 * 60 * 8, // 8h
-          createdAt: Date.now()
-        },
-        signature: 'mock-signature'
+      const token = {
+        user: mockUser,
+        expiresAt: Date.now() + 1000 * 60 * 60 * 8, // 8h
+        createdAt: Date.now()
       };
+      const secureStorageObj = { token, signature: await signToken(token) };
 
       localStorage.setItem('sabiencia_auth_user', JSON.stringify(secureStorageObj));
 
@@ -164,6 +163,24 @@ describe('AuthContext', () => {
 
       expect(result.current.user?.nome_completo).toBe('Maria Clara Santos');
       expect(result.current.user?.role).toBe('gestor');
+    });
+
+    it('deve rejeitar sessão com papel adulterado no localStorage', async () => {
+      const token = {
+        user: { id: '3', cpf: '333.333.333-33', nome_completo: 'Aluno', email: 'a@x.com', role: 'aluno' as const, ativo: true, created_at: new Date() },
+        expiresAt: Date.now() + 1000 * 60 * 60,
+        createdAt: Date.now()
+      };
+      const signature = await signToken(token);
+      // Aluno edita o próprio papel no localStorage mantendo a assinatura antiga
+      const adulterado = { token: { ...token, user: { ...token.user, role: 'gestor' } }, signature };
+      localStorage.setItem('sabiencia_auth_user', JSON.stringify(adulterado));
+
+      const { result } = renderHook(() => useAuth(), { wrapper });
+
+      await waitFor(() => expect(result.current.isLoading).toBe(false));
+      expect(result.current.isAuthenticated).toBe(false);
+      expect(localStorage.getItem('sabiencia_auth_user')).toBeNull();
     });
 
     it('deve limpar sessão inválida do localStorage', async () => {

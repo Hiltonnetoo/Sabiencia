@@ -15,7 +15,7 @@ export const AlunoFormPage: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
-  const { createAluno, updateAluno, getAlunoById, createMatricula, updateMatricula, matriculas } = useMockData();
+  const { cadastrarAluno, atualizarAluno, getAlunoById, matriculas, isSyncing } = useMockData();
   
   const [aluno, setAluno] = useState<Aluno | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +30,8 @@ export const AlunoFormPage: React.FC = () => {
 
   // Carregar aluno se estiver em modo de edição
   useEffect(() => {
+    // No modo supabase, espera o snapshot do banco antes de concluir "não encontrado"
+    if (isSyncing) return;
     if (isEditMode && id) {
       const alunoData = getAlunoById(id);
       if (alunoData) {
@@ -44,51 +46,25 @@ export const AlunoFormPage: React.FC = () => {
       }
     }
     setIsLoadingData(false);
-  }, [id, isEditMode, getAlunoById, matriculas, navigate, t]);
+  }, [id, isEditMode, getAlunoById, matriculas, navigate, t, isSyncing]);
 
   const handleSubmit = async (data: AlunoFormData) => {
     setIsLoading(true);
 
     try {
+      const { turma_id, ...dadosAluno } = data;
       if (isEditMode && id) {
-        // Atualizar aluno existente
-        updateAluno(id, {
-          ...data,
-          role: 'aluno' as const,
-        } as any);
-
-        // Atualizar ou criar matrícula se turma selecionada
-        if (data.turma_id) {
-          const mat = matriculas.find(m => m.aluno_id === id);
-          if (mat) {
-            updateMatricula(mat.id, { turma_id: data.turma_id });
-          } else {
-            createMatricula({
-              aluno_id: id,
-              turma_id: data.turma_id,
-              status: 'ativo',
-            });
-          }
-        }
-
+        await atualizarAluno(id, { ...dadosAluno, role: 'aluno' as const } as any, turma_id);
         toast.success(t('gestor.alunoForm.toast.updated'));
       } else {
-        // Criar novo aluno
-        const novoAluno = createAluno({
-          ...data,
-          role: 'aluno' as const,
-          cpf: data.cpf.replace(/\D/g, ''), // Remover formatação do CPF
-        } as any);
-
-        // Criar matrícula se turma selecionada
-        if (data.turma_id) {
-          createMatricula({
-            aluno_id: novoAluno.id,
-            turma_id: data.turma_id,
-            status: 'ativo',
-          });
-        }
-
+        await cadastrarAluno(
+          {
+            ...dadosAluno,
+            role: 'aluno' as const,
+            cpf: data.cpf.replace(/\D/g, ''), // Remover formatação do CPF
+          } as any,
+          turma_id
+        );
         toast.success(t('gestor.alunoForm.toast.created'));
       }
 

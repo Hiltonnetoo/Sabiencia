@@ -38,7 +38,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
   onSuccess,
 }) => {
   const { t } = useTranslation();
-  const { turmas, disciplinas, alunos, matriculas, notas: notasExistentes, lancarNotasEmLote } = useMockData();
+  const { turmas, disciplinas, alunos, matriculas, professorTurmaDisciplina, notas: notasExistentes, salvarNotas } = useMockData();
   const [selectedTurma, setSelectedTurma] = useState<string>('');
   const [selectedDisciplina, setSelectedDisciplina] = useState<string>('');
   const [tipoAvaliacao, setTipoAvaliacao] = useState<string>('');
@@ -46,6 +46,13 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [notasAlunos, setNotasAlunos] = useState<Map<string, { nota: number | null, observacao?: string }>>(new Map());
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // O professor só lança em turmas/disciplinas que leciona (mesma regra da RLS)
+  const atribuicoes = professorTurmaDisciplina.filter(a => a.professor_id === professorId);
+  const turmasDoProfessor = turmas.filter(turma => atribuicoes.some(a => a.turma_id === turma.id));
+  const disciplinasDaTurma = disciplinas.filter(d =>
+    atribuicoes.some(a => a.disciplina_id === d.id && (!selectedTurma || a.turma_id === selectedTurma))
+  );
 
   // Filtrar alunos da turma selecionada
   const alunosDaTurma: Aluno[] = selectedTurma
@@ -101,7 +108,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
     setIsSubmitting(true);
 
     try {
-      lancarNotasEmLote({
+      await salvarNotas({
         turma_id: selectedTurma,
         disciplina_id: selectedDisciplina,
         professor_id: professorId,
@@ -172,7 +179,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
                 <SelectValue placeholder={t('components.lancamentoNotasForm.selectClass')} />
               </SelectTrigger>
               <SelectContent>
-                {turmas.map((turma) => (
+                {turmasDoProfessor.map((turma) => (
                   <SelectItem key={turma.id} value={turma.id}>
                     {turma.nome}
                   </SelectItem>
@@ -188,8 +195,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
                 <SelectValue placeholder={t('components.lancamentoNotasForm.selectSubject')} />
               </SelectTrigger>
               <SelectContent>
-                {disciplinas
-                  .filter(d => !selectedTurma || d.curso_id === turmas.find(t => t.id === selectedTurma)?.curso_id)
+                {disciplinasDaTurma
                   .map((disciplina) => (
                     <SelectItem key={disciplina.id} value={disciplina.id}>
                       {disciplina.nome}
@@ -304,6 +310,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
                             max="10"
                             step="0.5"
                             value={notaAtual ?? ''}
+                            aria-label={`${t('components.lancamentoNotasForm.gradeRange')} — ${aluno.nome_completo}`}
                             onChange={(e) => handleNotaChange(aluno.id, e.target.value)}
                             placeholder={t('components.lancamentoNotasForm.gradePlaceholder')}
                             className="w-20"
