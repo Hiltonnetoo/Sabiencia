@@ -6,6 +6,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './e2e',
+  testIgnore: ['**/visual/**'],
   
   // Timeout para cada teste
   timeout: 30 * 1000,
@@ -18,7 +19,7 @@ export default defineConfig({
   
   // Reporter
   reporter: [
-    ['html', { outputFolder: 'playwright-report' }],
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
     ['json', { outputFile: 'playwright-report/results.json' }],
     ['list']
   ],

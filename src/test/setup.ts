@@ -53,3 +53,28 @@ global.ResizeObserver = class ResizeObserver {
   observe() {}
   unobserve() {}
 } as any;
+
+// Mock de window.scrollTo
+window.scrollTo = vi.fn();
+
+// Mock global de fetch para evitar chamadas de rede externas (ex: viacep)
+global.fetch = vi.fn().mockImplementation((url: string | URL | Request) => {
+  const urlStr = typeof url === 'string' ? url : url.toString();
+  if (urlStr.includes('viacep.com.br')) {
+    return Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve({
+        cep: '65800-000',
+        logradouro: 'Rua de Teste',
+        bairro: 'Bairro de Teste',
+        localidade: 'Cidade de Teste',
+        uf: 'SP',
+      }),
+    });
+  }
+  return Promise.resolve({
+    ok: true,
+    json: () => Promise.resolve({}),
+    text: () => Promise.resolve(''),
+  });
+});

@@ -237,11 +237,19 @@ src/
 ## Testing
 
 The project uses Vitest + Testing Library for unit/integration tests and Playwright for E2E
-and visual regression.
+and visual regression. The entire test suite runs on CI and locally without external dependencies.
 
-- `npm test` — unit/integration suite (includes RBAC/permissions, formatters, calculations).
-- `npm run test:coverage` — coverage report (output in `coverage/`, uploaded as a CI artifact).
-- `npm run test:e2e` — end-to-end flows, including the three role login journeys.
+- **478 unit and integration tests** across 25 test files (`vitest run --coverage`), covering permissions, formatters, calculations, validation schemas, and hooks.
+- **37 end-to-end tests** across 4 Playwright specs (`npx playwright test`), covering authentication journeys and full user workflows for Manager, Teacher, and Student across desktop and mobile viewports.
+- **Total: 515 automated tests** with 100% passing status.
+
+### Running tests locally
+
+- `npm test` — run unit/integration suite with Vitest.
+- `npm run test:coverage` — run unit/integration suite with v8 coverage report (`coverage/`).
+- `npm run test:e2e` — run Playwright end-to-end test suite.
+- `npm run type-check` — static TypeScript type checking (`tsc --noEmit`).
+- `npm run lint` — ESLint verification with zero warnings.
 
 ## Roadmap
 

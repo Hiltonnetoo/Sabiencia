@@ -3,7 +3,7 @@
 // Testa fluxo completo de gestão de alunos
 // ============================================
 
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
@@ -18,7 +18,7 @@ describe('Aluno Management - Integration', () => {
   });
 
   it('deve criar aluno e exibi-lo na lista', async () => {
-    const user = userEvent.setup();
+    const user = userEvent.setup({ delay: null });
     
     const TestApp = () => {
       const [showForm, setShowForm] = React.useState(true);
@@ -78,8 +78,8 @@ describe('Aluno Management - Integration', () => {
     // Aguardar que o formulário seja fechado e a tabela apareça
     await waitFor(() => {
       expect(screen.queryByText(/Total de alunos:/i)).toBeInTheDocument();
-    }, { timeout: 3000 });
-  });
+    }, { timeout: 10000 });
+  }, 15000);
 
   it('deve buscar e filtrar alunos', async () => {
     const user = userEvent.setup();

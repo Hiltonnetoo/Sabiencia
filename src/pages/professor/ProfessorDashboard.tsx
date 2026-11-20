@@ -39,10 +39,10 @@ export const ProfessorDashboard: React.FC = () => {
     comunicados 
   } = useMockData();
 
-  if (!user) return null;
-
-  // Mapas O(1) memoizados — evitam O(N²) nos lookups de render
+  // Mapas O(1) memoizados — evitam O(N²) nos lookups de render (respeitando Rules of Hooks)
   const dadosProfessor = useMemo(() => {
+    if (!user) return null;
+
     // Construir Maps para lookup O(1)
     const turmasMap      = new Map(turmas.map(t => [t.id, t]));
     const disciplinasMap = new Map(disciplinas.map(d => [d.id, d]));
@@ -102,7 +102,9 @@ export const ProfessorDashboard: React.FC = () => {
       alunosMap,
       alunosPorTurmaMap,
     };
-  }, [user.id, turmas, disciplinas, alunos, cursos, matriculas, professorTurmaDisciplina, materiais, observacoes, comunicados]);
+  }, [user, turmas, disciplinas, alunos, cursos, matriculas, professorTurmaDisciplina, materiais, observacoes, comunicados]);
+
+  if (!user || !dadosProfessor) return null;
 
   const {
     minhasTurmas,

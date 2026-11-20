@@ -38,10 +38,10 @@ export const AlunoDashboard: React.FC = () => {
   const { user } = useAuth();
   const { matriculas, turmas, cursos, disciplinas, notas, frequencias, materiais, pagamentos, comunicados } = useMockData();
 
-  if (!user) return null;
-
-  // OTIMIZADO: Memoizar cálculos para prevenir recálculos em cada render
+  // OTIMIZADO: Memoizar cálculos para prevenir recálculos em cada render (respeitando Rules of Hooks)
   const dadosAluno = useMemo(() => {
+    if (!user) return null;
+
     // Encontrar matrícula do aluno
     const matricula = matriculas.find(m => m.aluno_id === user.id);
     const turma = matricula ? turmas.find(t => t.id === matricula.turma_id) : null;
@@ -108,7 +108,9 @@ export const AlunoDashboard: React.FC = () => {
       comunicadosParaMim,
       progressoCurso
     };
-  }, [user.id, matriculas, turmas, cursos, disciplinas, notas, frequencias, materiais, pagamentos, comunicados]);
+  }, [user, matriculas, turmas, cursos, disciplinas, notas, frequencias, materiais, pagamentos, comunicados]);
+
+  if (!user || !dadosAluno) return null;
 
   const {
     turma,

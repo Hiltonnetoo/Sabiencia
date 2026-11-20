@@ -46,6 +46,7 @@ pnpm-debug.log*
 
 # Misc
 *.pem
+graphify-out/
 
 # Ignore recruitment analysis documents
 temp-analisetech-lead.md
