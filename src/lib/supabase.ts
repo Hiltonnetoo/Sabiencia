@@ -1,10 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
+import { isSupabaseMode } from '../config/appMode';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder.supabase.co';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder_key';
 
-if (import.meta.env.VITE_DEMO_MODE !== 'true' && (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY)) {
-  throw new Error('Missing Supabase environment variables');
+// Validação explícita de ambiente apenas quando o modo Supabase está ativo
+if (isSupabaseMode() && (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY)) {
+  throw new Error(
+    '[CONFIG] VITE_APP_MODE=supabase requer VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY configurados no .env.'
+  );
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {

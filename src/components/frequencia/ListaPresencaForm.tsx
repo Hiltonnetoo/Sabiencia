@@ -23,6 +23,7 @@ import { Textarea } from '../ui/textarea';
 import { CalendarIcon, Check, X, FileQuestion, Save } from 'lucide-react';
 import { format } from 'date-fns';
 import { useMockData } from '../../contexts/MockDataContext';
+import { toast } from 'sonner';
 import type { Aluno } from '../../types';
 
 interface ListaPresencaFormProps {
@@ -35,7 +36,7 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
   onSuccess,
 }) => {
   const { t } = useTranslation();
-  const { turmas, disciplinas, alunos, matriculas } = useMockData();
+  const { turmas, disciplinas, alunos, matriculas, registrarFrequenciasEmLote } = useMockData();
   const [selectedTurma, setSelectedTurma] = useState<string>('');
   const [selectedDisciplina, setSelectedDisciplina] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<Date>();
@@ -90,34 +91,50 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
 
   const handleSubmit = async () => {
     if (!selectedTurma || !selectedDisciplina || !selectedDate) {
+      toast.error('Selecione a turma, a disciplina e a data.');
+      return;
+    }
+
+    if (alunosDaTurma.length === 0) {
+      toast.error('Nenhum aluno matriculado nesta turma.');
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      // Simular salvamento
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const presencasParaSalvar: Array<{ aluno_id: string; status: 'presente' | 'ausente' | 'justificado'; observacao?: string }> = Array.from(presencas.entries()).map(([alunoId, dados]) => ({
+        aluno_id: alunoId,
+        status: dados.status,
+        observacao: dados.observacao,
+      }));
 
-      // Aqui você chamaria a função do contexto para salvar as presenças
-      // createFrequenciasEmLote({ ... })
+      // Qualquer aluno não alterado individualmente assume status 'presente' por padrão
+      alunosDaTurma.forEach(aluno => {
+        if (!presencasParaSalvar.some(p => p.aluno_id === aluno.id)) {
+          presencasParaSalvar.push({
+            aluno_id: aluno.id,
+            status: 'presente',
+            observacao: undefined,
+          });
+        }
+      });
 
-      if (import.meta.env.DEV) {
-        console.debug('[ListaPresenca] Frequências salvas:', {
-          turma_id: selectedTurma,
-          disciplina_id: selectedDisciplina,
+      registrarFrequenciasEmLote({
+        turma_id: selectedTurma,
+        disciplina_id: selectedDisciplina,
+        professor_id: professorId,
         data_aula: selectedDate,
-        presencas: Array.from(presencas.entries()).map(([alunoId, dados]) => ({
-          aluno_id: alunoId,
-          ...dados,
-        })),
-        });
-      }
+        presencas: presencasParaSalvar,
+      });
+
+      toast.success('Lista de presença salva com sucesso!');
 
       // Reset
       setPresencas(new Map());
       onSuccess?.();
     } catch (error) {
+      toast.error('Erro ao salvar frequências.');
       console.error('Erro ao salvar frequências:', error);
     } finally {
       setIsSubmitting(false);

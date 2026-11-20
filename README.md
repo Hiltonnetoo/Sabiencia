@@ -239,9 +239,9 @@ src/
 The project uses Vitest + Testing Library for unit/integration tests and Playwright for E2E
 and visual regression. The entire test suite runs on CI and locally without external dependencies.
 
-- **478 unit and integration tests** across 25 test files (`vitest run --coverage`), covering permissions, formatters, calculations, validation schemas, and hooks.
+- **483 unit and integration tests** across 26 test files (`vitest run --coverage`), covering permissions, formatters, calculations, validation schemas, and hooks.
 - **37 end-to-end tests** across 4 Playwright specs (`npx playwright test`), covering authentication journeys and full user workflows for Manager, Teacher, and Student across desktop and mobile viewports.
-- **Total: 515 automated tests** with 100% passing status.
+- **Total: 520 automated tests** with 100% passing status.
 
 ### Running tests locally
 

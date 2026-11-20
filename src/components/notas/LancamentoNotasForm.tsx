@@ -25,6 +25,7 @@ import { CalendarIcon, Save, TrendingUp, TrendingDown, Minus } from 'lucide-reac
 import { format } from 'date-fns';
 import { TIPOS_AVALIACAO, formatarNota, notaPorExtenso } from '../../schemas/notaSchemas';
 import { useMockData } from '../../contexts/MockDataContext';
+import { toast } from 'sonner';
 import type { Aluno } from '../../types';
 
 interface LancamentoNotasFormProps {
@@ -37,7 +38,7 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
   onSuccess,
 }) => {
   const { t } = useTranslation();
-  const { turmas, disciplinas, alunos, matriculas, notas: notasExistentes } = useMockData();
+  const { turmas, disciplinas, alunos, matriculas, notas: notasExistentes, lancarNotasEmLote } = useMockData();
   const [selectedTurma, setSelectedTurma] = useState<string>('');
   const [selectedDisciplina, setSelectedDisciplina] = useState<string>('');
   const [tipoAvaliacao, setTipoAvaliacao] = useState<string>('');
@@ -80,35 +81,43 @@ export const LancamentoNotasForm: React.FC<LancamentoNotasFormProps> = ({
 
   const handleSubmit = async () => {
     if (!selectedTurma || !selectedDisciplina || !tipoAvaliacao || !selectedDate || !peso) {
+      toast.error('Preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    const notasValidas = Array.from(notasAlunos.entries())
+      .filter(([_, dados]) => dados.nota !== null && dados.nota !== undefined)
+      .map(([alunoId, dados]) => ({
+        aluno_id: alunoId,
+        nota: dados.nota as number,
+        observacao: dados.observacao,
+      }));
+
+    if (notasValidas.length === 0) {
+      toast.error('Informe a nota de pelo menos um aluno.');
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      // Simular salvamento
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      lancarNotasEmLote({
+        turma_id: selectedTurma,
+        disciplina_id: selectedDisciplina,
+        professor_id: professorId,
+        tipo_avaliacao: tipoAvaliacao,
+        peso: parseFloat(peso) || 1,
+        data_avaliacao: selectedDate,
+        notas: notasValidas,
+      });
 
-      if (import.meta.env.DEV) {
-        console.debug('[LancamentoNotas] Notas salvas:', {
-          turma_id: selectedTurma,
-          disciplina_id: selectedDisciplina,
-          tipo_avaliacao: tipoAvaliacao,
-          peso: parseFloat(peso),
-          data_avaliacao: selectedDate,
-          notas: Array.from(notasAlunos.entries())
-            .filter(([_, dados]) => dados.nota !== null)
-            .map(([alunoId, dados]) => ({
-              aluno_id: alunoId,
-              ...dados,
-            })),
-        });
-      }
+      toast.success('Notas salvas com sucesso!');
 
       // Reset
       setNotasAlunos(new Map());
       onSuccess?.();
     } catch (error) {
+      toast.error('Erro ao salvar notas.');
       console.error('Erro ao salvar notas:', error);
     } finally {
       setIsSubmitting(false);

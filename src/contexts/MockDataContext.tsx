@@ -1,9 +1,9 @@
 // ============================================
 // MOCK DATA CONTEXT - Gerenciamento de dados mockados
-// OTIMIZADO: Com memoização e lazy loading para melhor performance
+// OTIMIZADO: Com persistência versionada no localStorage, memoização e lazy loading
 // ============================================
 
-import React, { createContext, useContext, useState, ReactNode, useMemo, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useMemo, useEffect, useRef } from 'react';
 import { mockData as initialMockData } from '../data/mockData';
 import { mockNotifications as initialNotifications } from '../data/mockNotifications';
 import i18n from '../i18n';
@@ -36,10 +36,11 @@ import type {
   ComunicadoLeitura,
   ProfessorTurmaDisciplina,
   Notificacao,
-  LogAuditoria
+  LogAuditoria,
+  StatusFrequencia
 } from '../types';
 
-interface MockDataContextType {
+export interface MockDataContextType {
   // Dados
   alunos: Aluno[];
   professores: Professor[];
@@ -115,39 +116,191 @@ interface MockDataContextType {
   deleteObservacao: (id: string) => void;
   getObservacaoById: (id: string) => Observacao | undefined;
 
+  // CRUD Matrículas
+  createMatricula: (data: Omit<Matricula, 'id' | 'created_at' | 'data_matricula'> & { data_matricula?: Date }) => Matricula;
+  updateMatricula: (id: string, data: Partial<Matricula>) => void;
+  deleteMatricula: (id: string) => void;
+  getMatriculasByAlunoId: (alunoId: string) => Matricula[];
+  getMatriculasByTurmaId: (turmaId: string) => Matricula[];
+
+  // Lançamentos Acadêmicos em Lote (Professor)
+  lancarNotasEmLote: (params: {
+    turma_id: string;
+    disciplina_id: string;
+    professor_id: string;
+    tipo_avaliacao: string;
+    peso: number;
+    data_avaliacao: Date;
+    notas: Array<{ aluno_id: string; nota: number; observacao?: string }>;
+  }) => Nota[];
+
+  registrarFrequenciasEmLote: (params: {
+    turma_id: string;
+    disciplina_id: string;
+    professor_id: string;
+    data_aula: Date;
+    presencas: Array<{ aluno_id: string; status: StatusFrequencia; observacao?: string }>;
+  }) => Frequencia[];
+
   // CRUD Notificações
   markNotificationAsRead: (id: string) => void;
   markAllNotificationsAsRead: (userId: string) => void;
   getNotificationsByUser: (userId: string) => Notificacao[];
+
+  // Gerenciamento do estado mock
+  resetMockData: () => void;
 }
 
 const MockDataContext = createContext<MockDataContextType | undefined>(undefined);
 
-// Função para gerar IDs únicos
+export const MOCK_DATA_STORAGE_KEY = 'sabiencia_mock_data_v1';
+export const MOCK_NOTIFICATIONS_STORAGE_KEY = 'sabiencia_mock_notifications_v1';
+
+// Função para gerar IDs únicos previsíveis e estáveis
 const generateId = (prefix: string): string => {
   const timestamp = Date.now();
-  const random = Math.floor(Math.random() * 1000);
+  const random = Math.floor(1000 + Math.random() * 9000);
   return `${prefix}-${timestamp}-${random}`;
 };
 
+const ISO_DATE_REGEX = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?Z?)?$/;
+
+// Converte recursivamente strings de data em instâncias reais de Date
+function reviveDates<T>(obj: T): T {
+  if (obj === null || obj === undefined) return obj;
+  if (typeof obj === 'string' && ISO_DATE_REGEX.test(obj)) {
+    const d = new Date(obj);
+    if (!isNaN(d.getTime())) return d as unknown as T;
+    return obj;
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(reviveDates) as unknown as T;
+  }
+  if (typeof obj === 'object') {
+    const res: Record<string, unknown> = {};
+    for (const key of Object.keys(obj as Record<string, unknown>)) {
+      res[key] = reviveDates((obj as Record<string, unknown>)[key]);
+    }
+    return res as unknown as T;
+  }
+  return obj;
+}
+
+function loadInitialState(): typeof initialMockData {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return initialMockData;
+  }
+  try {
+    const stored = localStorage.getItem(MOCK_DATA_STORAGE_KEY);
+    if (!stored) return initialMockData;
+    const parsed = JSON.parse(stored);
+    if (parsed && parsed.version === 1 && parsed.data) {
+      const revived = reviveDates(parsed.data);
+      return {
+        ...initialMockData,
+        ...revived,
+      };
+    }
+  } catch (e) {
+    console.warn('[MockData] Falha ao carregar dados do localStorage, usando defaults:', e);
+  }
+  return initialMockData;
+}
+
+function loadInitialNotifications(): Notificacao[] {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return initialNotifications;
+  }
+  try {
+    const stored = localStorage.getItem(MOCK_NOTIFICATIONS_STORAGE_KEY);
+    if (!stored) return initialNotifications;
+    const parsed = JSON.parse(stored);
+    if (Array.isArray(parsed)) {
+      return reviveDates(parsed);
+    }
+  } catch {
+    // fallback
+  }
+  return initialNotifications;
+}
+
 export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [alunos, setAlunos] = useState<Aluno[]>(initialMockData.alunos);
-  const [professores, setProfessores] = useState<Professor[]>(initialMockData.professores);
-  const [gestores] = useState<Gestor[]>(initialMockData.gestores);
-  const [cursos, setCursos] = useState<Curso[]>(initialMockData.cursos);
-  const [turmas, setTurmas] = useState<Turma[]>(initialMockData.turmas);
-  const [disciplinas, setDisciplinas] = useState<Disciplina[]>(initialMockData.disciplinas);
-  const [materiais, setMateriais] = useState<Material[]>(initialMockData.materiais);
-  const [matriculas] = useState<Matricula[]>(initialMockData.matriculas);
-  const [notas] = useState<Nota[]>(initialMockData.notas);
-  const [frequencias] = useState<Frequencia[]>(initialMockData.frequencias);
-  const [observacoes, setObservacoes] = useState<Observacao[]>(initialMockData.observacoes);
-  const [pagamentos, setPagamentos] = useState<Pagamento[]>(initialMockData.pagamentos);
-  const [comunicados, setComunicados] = useState<Comunicado[]>(initialMockData.comunicados);
-  const [comunicadosLeituras, setComunicadosLeituras] = useState<ComunicadoLeitura[]>(initialMockData.comunicadosLeituras || []);
-  const [professorTurmaDisciplina] = useState<ProfessorTurmaDisciplina[]>(initialMockData.professorTurmaDisciplina);
-  const [notificacoes, setNotificacoes] = useState<Notificacao[]>(initialNotifications);
-  const [logsAuditoria] = useState<LogAuditoria[]>(initialMockData.logsAuditoria || []);
+  const loadedInitialData = useMemo(() => loadInitialState(), []);
+
+  const [alunos, setAlunos] = useState<Aluno[]>(() => loadedInitialData.alunos || initialMockData.alunos);
+  const [professores, setProfessores] = useState<Professor[]>(() => loadedInitialData.professores || initialMockData.professores);
+  const [gestores, setGestores] = useState<Gestor[]>(() => loadedInitialData.gestores || initialMockData.gestores);
+  const [cursos, setCursos] = useState<Curso[]>(() => loadedInitialData.cursos || initialMockData.cursos);
+  const [turmas, setTurmas] = useState<Turma[]>(() => loadedInitialData.turmas || initialMockData.turmas);
+  const [disciplinas, setDisciplinas] = useState<Disciplina[]>(() => loadedInitialData.disciplinas || initialMockData.disciplinas);
+  const [materiais, setMateriais] = useState<Material[]>(() => loadedInitialData.materiais || initialMockData.materiais);
+  const [matriculas, setMatriculas] = useState<Matricula[]>(() => loadedInitialData.matriculas || initialMockData.matriculas);
+  const [notas, setNotas] = useState<Nota[]>(() => loadedInitialData.notas || initialMockData.notas);
+  const [frequencias, setFrequencias] = useState<Frequencia[]>(() => loadedInitialData.frequencias || initialMockData.frequencias);
+  const [observacoes, setObservacoes] = useState<Observacao[]>(() => loadedInitialData.observacoes || initialMockData.observacoes);
+  const [pagamentos, setPagamentos] = useState<Pagamento[]>(() => loadedInitialData.pagamentos || initialMockData.pagamentos);
+  const [comunicados, setComunicados] = useState<Comunicado[]>(() => loadedInitialData.comunicados || initialMockData.comunicados);
+  const [comunicadosLeituras, setComunicadosLeituras] = useState<ComunicadoLeitura[]>(() => loadedInitialData.comunicadosLeituras || initialMockData.comunicadosLeituras || []);
+  const [professorTurmaDisciplina, setProfessorTurmaDisciplina] = useState<ProfessorTurmaDisciplina[]>(() => loadedInitialData.professorTurmaDisciplina || initialMockData.professorTurmaDisciplina);
+  const [notificacoes, setNotificacoes] = useState<Notificacao[]>(() => loadInitialNotifications());
+  const [logsAuditoria, setLogsAuditoria] = useState<LogAuditoria[]>(() => loadedInitialData.logsAuditoria || initialMockData.logsAuditoria || []);
+
+  const isInitialMount = useRef(true);
+
+  // Persiste automaticamente as alterações no localStorage
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    if (typeof window === 'undefined' || !window.localStorage) return;
+    try {
+      const payload = {
+        version: 1,
+        timestamp: Date.now(),
+        data: {
+          alunos,
+          professores,
+          gestores,
+          cursos,
+          turmas,
+          disciplinas,
+          materiais,
+          matriculas,
+          notas,
+          frequencias,
+          observacoes,
+          pagamentos,
+          comunicados,
+          comunicadosLeituras,
+          professorTurmaDisciplina,
+          logsAuditoria,
+        },
+      };
+      localStorage.setItem(MOCK_DATA_STORAGE_KEY, JSON.stringify(payload));
+      localStorage.setItem(MOCK_NOTIFICATIONS_STORAGE_KEY, JSON.stringify(notificacoes));
+    } catch (e) {
+      console.warn('[MockData] Erro ao persistir dados no localStorage:', e);
+    }
+  }, [
+    alunos,
+    professores,
+    gestores,
+    cursos,
+    turmas,
+    disciplinas,
+    materiais,
+    matriculas,
+    notas,
+    frequencias,
+    observacoes,
+    pagamentos,
+    comunicados,
+    comunicadosLeituras,
+    professorTurmaDisciplina,
+    notificacoes,
+    logsAuditoria,
+  ]);
 
   // Idioma ativo — força recomputação dos dados localizados ao trocar de idioma.
   const [lang, setLang] = useState<string>(i18n.language);
@@ -185,6 +338,8 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const deleteAluno = (id: string): void => {
     setAlunos(prev => prev.filter(aluno => aluno.id !== id));
+    // Remove em cascata as matrículas associadas ao aluno deletado
+    setMatriculas(prev => prev.filter(m => m.aluno_id !== id));
   };
 
   const getAlunoById = (id: string): Aluno | undefined => {
@@ -369,47 +524,18 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const updateDisciplina = (id: string, data: Partial<Disciplina>): void => {
     setDisciplinas(prev =>
-      prev.map(disciplina =>
-        disciplina.id === id ? { ...disciplina, ...data } : disciplina
+      prev.map(disc =>
+        disc.id === id ? { ...disc, ...data } : disc
       )
     );
   };
 
   const deleteDisciplina = (id: string): void => {
-    setDisciplinas(prev => prev.filter(disciplina => disciplina.id !== id));
+    setDisciplinas(prev => prev.filter(disc => disc.id !== id));
   };
 
   const getDisciplinaById = (id: string): Disciplina | undefined => {
-    return disciplinas.find(disciplina => disciplina.id === id);
-  };
-
-  // ==================== OBSERVAÇÕES ====================
-
-  const addObservacao = (data: Omit<Observacao, 'id' | 'created_at'>): Observacao => {
-    const newObservacao: Observacao = {
-      ...data,
-      id: generateId('obs'),
-      created_at: new Date(),
-    };
-
-    setObservacoes(prev => [...prev, newObservacao]);
-    return newObservacao;
-  };
-
-  const updateObservacao = (id: string, data: Partial<Observacao>): void => {
-    setObservacoes(prev =>
-      prev.map(observacao =>
-        observacao.id === id ? { ...observacao, ...data } : observacao
-      )
-    );
-  };
-
-  const deleteObservacao = (id: string): void => {
-    setObservacoes(prev => prev.filter(observacao => observacao.id !== id));
-  };
-
-  const getObservacaoById = (id: string): Observacao | undefined => {
-    return observacoes.find(observacao => observacao.id === id);
+    return disciplinas.find(disc => disc.id === id);
   };
 
   // ==================== CURSOS ====================
@@ -441,6 +567,195 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
     return cursos.find(curso => curso.id === id);
   };
 
+  // ==================== OBSERVAÇÕES ====================
+
+  const addObservacao = (data: Omit<Observacao, 'id' | 'created_at'>): Observacao => {
+    const newObservacao: Observacao = {
+      ...data,
+      id: generateId('obs'),
+      created_at: new Date(),
+    };
+
+    setObservacoes(prev => [...prev, newObservacao]);
+    return newObservacao;
+  };
+
+  const updateObservacao = (id: string, data: Partial<Observacao>): void => {
+    setObservacoes(prev =>
+      prev.map(obs =>
+        obs.id === id ? { ...obs, ...data } : obs
+      )
+    );
+  };
+
+  const deleteObservacao = (id: string): void => {
+    setObservacoes(prev => prev.filter(obs => obs.id !== id));
+  };
+
+  const getObservacaoById = (id: string): Observacao | undefined => {
+    return observacoes.find(obs => obs.id === id);
+  };
+
+  // ==================== MATRÍCULAS ====================
+
+  const createMatricula = (
+    data: Omit<Matricula, 'id' | 'created_at' | 'data_matricula'> & { data_matricula?: Date }
+  ): Matricula => {
+    const year = new Date().getFullYear();
+    const randomCode = Math.floor(1000 + Math.random() * 9000);
+    const newMatricula: Matricula = {
+      ...data,
+      id: generateId('matr'),
+      numero_matricula: data.numero_matricula || `MAT-${year}-${randomCode}`,
+      data_matricula: data.data_matricula || new Date(),
+      created_at: new Date(),
+      status: data.status || 'ativo',
+    };
+
+    setMatriculas(prev => [...prev, newMatricula]);
+    return newMatricula;
+  };
+
+  const updateMatricula = (id: string, data: Partial<Matricula>): void => {
+    setMatriculas(prev => prev.map(m => m.id === id ? { ...m, ...data } : m));
+  };
+
+  const deleteMatricula = (id: string): void => {
+    setMatriculas(prev => prev.filter(m => m.id !== id));
+  };
+
+  const getMatriculasByAlunoId = (alunoId: string): Matricula[] => {
+    return matriculas.filter(m => m.aluno_id === alunoId);
+  };
+
+  const getMatriculasByTurmaId = (turmaId: string): Matricula[] => {
+    return matriculas.filter(m => m.turma_id === turmaId);
+  };
+
+  // ==================== NOTAS EM LOTE ====================
+
+  const lancarNotasEmLote = (params: {
+    turma_id: string;
+    disciplina_id: string;
+    professor_id: string;
+    tipo_avaliacao: string;
+    peso: number;
+    data_avaliacao: Date;
+    notas: Array<{ aluno_id: string; nota: number; observacao?: string }>;
+  }): Nota[] => {
+    const { turma_id, disciplina_id, professor_id, tipo_avaliacao, peso, data_avaliacao, notas: notasInput } = params;
+    const now = new Date();
+    const resultNotas: Nota[] = [];
+
+    setNotas(prev => {
+      const next = [...prev];
+      for (const item of notasInput) {
+        const existingIndex = next.findIndex(
+          n =>
+            n.aluno_id === item.aluno_id &&
+            n.turma_id === turma_id &&
+            n.disciplina_id === disciplina_id &&
+            n.tipo_avaliacao === tipo_avaliacao
+        );
+
+        if (existingIndex >= 0) {
+          const updated: Nota = {
+            ...next[existingIndex],
+            nota: item.nota,
+            peso,
+            data_avaliacao,
+            observacao: item.observacao,
+            professor_id,
+          };
+          next[existingIndex] = updated;
+          resultNotas.push(updated);
+        } else {
+          const novaNota: Nota = {
+            id: generateId('nota'),
+            aluno_id: item.aluno_id,
+            turma_id,
+            disciplina_id,
+            professor_id,
+            tipo_avaliacao,
+            nota: item.nota,
+            peso,
+            data_avaliacao,
+            observacao: item.observacao,
+            created_at: now,
+          };
+          next.push(novaNota);
+          resultNotas.push(novaNota);
+        }
+      }
+      return next;
+    });
+
+    return resultNotas;
+  };
+
+  // ==================== FREQUÊNCIA EM LOTE ====================
+
+  const registrarFrequenciasEmLote = (params: {
+    turma_id: string;
+    disciplina_id: string;
+    professor_id: string;
+    data_aula: Date;
+    presencas: Array<{ aluno_id: string; status: StatusFrequencia; observacao?: string }>;
+  }): Frequencia[] => {
+    const { turma_id, disciplina_id, professor_id, data_aula, presencas: presencasInput } = params;
+    const now = new Date();
+    const resultFreqs: Frequencia[] = [];
+    const targetDate = new Date(data_aula);
+    const targetDay = targetDate.getDate();
+    const targetMonth = targetDate.getMonth();
+    const targetYear = targetDate.getFullYear();
+
+    setFrequencias(prev => {
+      const next = [...prev];
+      for (const item of presencasInput) {
+        const existingIndex = next.findIndex(f => {
+          if (f.aluno_id !== item.aluno_id || f.turma_id !== turma_id || f.disciplina_id !== disciplina_id) {
+            return false;
+          }
+          const fDate = new Date(f.data_aula);
+          return (
+            fDate.getDate() === targetDay &&
+            fDate.getMonth() === targetMonth &&
+            fDate.getFullYear() === targetYear
+          );
+        });
+
+        if (existingIndex >= 0) {
+          const updated: Frequencia = {
+            ...next[existingIndex],
+            status: item.status,
+            observacao: item.observacao,
+            professor_id,
+          };
+          next[existingIndex] = updated;
+          resultFreqs.push(updated);
+        } else {
+          const novaFreq: Frequencia = {
+            id: generateId('freq'),
+            aluno_id: item.aluno_id,
+            turma_id,
+            disciplina_id,
+            professor_id,
+            data_aula,
+            status: item.status,
+            observacao: item.observacao,
+            created_at: now,
+          };
+          next.push(novaFreq);
+          resultFreqs.push(novaFreq);
+        }
+      }
+      return next;
+    });
+
+    return resultFreqs;
+  };
+
   // ==================== NOTIFICAÇÕES ====================
 
   const markNotificationAsRead = (id: string): void => {
@@ -469,15 +784,38 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
       .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
   };
 
+  // ==================== RESET ====================
+
+  const resetMockData = () => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.removeItem(MOCK_DATA_STORAGE_KEY);
+      localStorage.removeItem(MOCK_NOTIFICATIONS_STORAGE_KEY);
+    }
+    setAlunos(initialMockData.alunos);
+    setProfessores(initialMockData.professores);
+    setGestores(initialMockData.gestores);
+    setCursos(initialMockData.cursos);
+    setTurmas(initialMockData.turmas);
+    setDisciplinas(initialMockData.disciplinas);
+    setMateriais(initialMockData.materiais);
+    setMatriculas(initialMockData.matriculas);
+    setNotas(initialMockData.notas);
+    setFrequencias(initialMockData.frequencias);
+    setObservacoes(initialMockData.observacoes);
+    setPagamentos(initialMockData.pagamentos);
+    setComunicados(initialMockData.comunicados);
+    setComunicadosLeituras(initialMockData.comunicadosLeituras || []);
+    setProfessorTurmaDisciplina(initialMockData.professorTurmaDisciplina);
+    setNotificacoes(initialNotifications);
+    setLogsAuditoria(initialMockData.logsAuditoria || []);
+  };
+
   // ==================== VALUE ====================
-  // OTIMIZADO: Usar useMemo para prevenir recriação desnecessária do objeto de valor
 
   const value: MockDataContextType = useMemo(() => ({
     alunos,
     professores,
     gestores,
-    // Dados com texto descritivo são localizados conforme o idioma ativo (lang).
-    // Nomes de pessoas (alunos/professores/gestores) NÃO são traduzidos.
     cursos: localizeCursos(cursos),
     turmas: localizeTurmas(turmas),
     disciplinas: localizeDisciplinas(disciplinas),
@@ -525,14 +863,22 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
     updateCurso,
     deleteCurso,
     getCursoById,
+    createMatricula,
+    updateMatricula,
+    deleteMatricula,
+    getMatriculasByAlunoId,
+    getMatriculasByTurmaId,
+    lancarNotasEmLote,
+    registrarFrequenciasEmLote,
     markNotificationAsRead,
     markAllNotificationsAsRead,
     getNotificationsByUser,
+    resetMockData,
   }), [
     alunos, professores, gestores, cursos, turmas, disciplinas, materiais,
     matriculas, notas, frequencias, observacoes, pagamentos, comunicados,
     comunicadosLeituras, professorTurmaDisciplina, notificacoes, logsAuditoria,
-    lang // recomputa textos localizados ao trocar de idioma
+    lang
   ]);
 
   return (

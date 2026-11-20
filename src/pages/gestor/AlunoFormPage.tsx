@@ -15,7 +15,7 @@ export const AlunoFormPage: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
-  const { createAluno, updateAluno, getAlunoById } = useMockData();
+  const { createAluno, updateAluno, getAlunoById, createMatricula, updateMatricula, matriculas } = useMockData();
   
   const [aluno, setAluno] = useState<Aluno | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,36 +33,62 @@ export const AlunoFormPage: React.FC = () => {
     if (isEditMode && id) {
       const alunoData = getAlunoById(id);
       if (alunoData) {
-        setAluno(alunoData);
+        const mat = matriculas.find(m => m.aluno_id === id);
+        setAluno({
+          ...alunoData,
+          turma_id: mat?.turma_id,
+        } as any);
       } else {
         toast.error(t('gestor.alunoForm.toast.notFound'));
         navigate('/gestor/alunos');
       }
     }
     setIsLoadingData(false);
-  }, [id, isEditMode, getAlunoById, navigate]);
+  }, [id, isEditMode, getAlunoById, matriculas, navigate, t]);
 
   const handleSubmit = async (data: AlunoFormData) => {
     setIsLoading(true);
 
     try {
-      // Simular delay de API
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
       if (isEditMode && id) {
         // Atualizar aluno existente
         updateAluno(id, {
           ...data,
           role: 'aluno' as const,
         } as any);
+
+        // Atualizar ou criar matrícula se turma selecionada
+        if (data.turma_id) {
+          const mat = matriculas.find(m => m.aluno_id === id);
+          if (mat) {
+            updateMatricula(mat.id, { turma_id: data.turma_id });
+          } else {
+            createMatricula({
+              aluno_id: id,
+              turma_id: data.turma_id,
+              status: 'ativo',
+            });
+          }
+        }
+
         toast.success(t('gestor.alunoForm.toast.updated'));
       } else {
         // Criar novo aluno
-        createAluno({
+        const novoAluno = createAluno({
           ...data,
           role: 'aluno' as const,
           cpf: data.cpf.replace(/\D/g, ''), // Remover formatação do CPF
         } as any);
+
+        // Criar matrícula se turma selecionada
+        if (data.turma_id) {
+          createMatricula({
+            aluno_id: novoAluno.id,
+            turma_id: data.turma_id,
+            status: 'ativo',
+          });
+        }
+
         toast.success(t('gestor.alunoForm.toast.created'));
       }
 

@@ -110,6 +110,9 @@ export const alunoSchema = z.object({
   // Sistema
   foto_url: z.string().url().optional().or(z.literal('')),
   ativo: z.boolean().default(true),
+
+  // Matrícula acadêmica inicial (opcional no cadastro)
+  turma_id: z.string().optional(),
 });
 
 export type AlunoFormData = z.infer<typeof alunoSchema>;

@@ -13,6 +13,7 @@ import { mockUsers, validateLogin } from '../data/mockUsers';
 import { toast } from 'sonner';
 import { supabase } from '../lib/supabase';
 import { unformatCPF } from '../utils/formatters';
+import { isDemoMode } from '../config/appMode';
 
 // Interface do token com segurança
 interface AuthToken {
@@ -237,10 +238,47 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [user]);
 
   // ============================================
-  // LOGIN COM SUPABASE
+  // LOGIN (DEMO OU SUPABASE CONFORME APP_MODE)
   // ============================================
   const login = async (cpf: string, senha: string): Promise<{ success: boolean; error?: string }> => {
     try {
+      // 1. MODO DEMO: autenticação local direta sem chamadas de rede
+      if (isDemoMode()) {
+        const cleanedCpf = unformatCPF(cpf);
+        const existsInMock = mockUsers.some(u => unformatCPF(u.cpf) === cleanedCpf);
+
+        // Permite login passando CPF formatado ou sem formatação
+        const formattedCpf = mockUsers.find(u => unformatCPF(u.cpf) === cleanedCpf)?.cpf || cpf;
+        const mock = validateLogin(formattedCpf, senha);
+        if (mock) {
+          const userData: User = {
+            id: mock.user_id,
+            cpf: mock.cpf,
+            email: `${unformatCPF(mock.cpf)}@demo.local`,
+            role: mock.role as Role,
+            nome_completo: mock.role === 'gestor' ? 'Gestor Demo' : mock.role === 'professor' ? 'Professor Demo' : 'Aluno Demo',
+            ativo: true,
+            created_at: new Date(),
+          };
+          const token: AuthToken = {
+            user: userData,
+            expiresAt: Date.now() + SESSION_DURATION,
+            createdAt: Date.now(),
+          };
+          const signature = await createSignature(token);
+          const secureStorage: SecureStorage = { token, signature };
+          setUser(userData);
+          localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(secureStorage));
+          return { success: true };
+        }
+
+        if (existsInMock) {
+          return { success: false, error: 'CPF ou senha inválidos' };
+        }
+        return { success: false, error: 'CPF não encontrado' };
+      }
+
+      // 2. MODO SUPABASE: autenticação real com backend
       let emailForLogin = '';
       if (cpf.includes('@')) {
         emailForLogin = cpf.trim();
@@ -258,37 +296,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             .single();
 
           if (cpfError || !usuario) {
-            // Fallback DEMO: só ativo quando VITE_DEMO_MODE=true
-            if (import.meta.env.VITE_DEMO_MODE === 'true') {
-              const cleanedCpf = unformatCPF(cpf);
-              const existsInMock = mockUsers.some(u => unformatCPF(u.cpf) === cleanedCpf);
-              if (existsInMock) {
-                const mock = validateLogin(cpf, senha);
-                if (mock) {
-                  const userData: User = {
-                    id: mock.user_id,
-                    cpf: mock.cpf,
-                    email: `${unformatCPF(mock.cpf)}@demo.local`,
-                    role: mock.role as Role,
-                    nome_completo: mock.role === 'gestor' ? 'Gestor Demo' : mock.role === 'professor' ? 'Professor Demo' : 'Aluno Demo',
-                    ativo: true,
-                    created_at: new Date(),
-                  };
-                  const token: AuthToken = {
-                    user: userData,
-                    expiresAt: Date.now() + SESSION_DURATION,
-                    createdAt: Date.now(),
-                  };
-                  const signature = await createSignature(token);
-                  const secureStorage: SecureStorage = { token, signature };
-                  setUser(userData);
-                  localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(secureStorage));
-                  return { success: true };
-                } else {
-                  return { success: false, error: 'CPF ou senha inválidos' };
-                }
-              }
-            }
             return { success: false, error: 'CPF não encontrado' };
           }
           emailForLogin = usuario.email;
@@ -301,32 +308,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       });
 
       if (authError || !authData.user) {
-        // Fallback DEMO: só ativo quando VITE_DEMO_MODE=true
-        // Não ativar por erro de rede, apenas quando modo demo está explicitamente habilitado
-        if (import.meta.env.VITE_DEMO_MODE === 'true') {
-          const mock = validateLogin(cpf, senha);
-          if (mock) {
-            const userData: User = {
-              id: mock.user_id,
-              cpf: mock.cpf,
-              email: `${unformatCPF(mock.cpf)}@demo.local`,
-              role: mock.role as Role,
-              nome_completo: mock.role === 'gestor' ? 'Gestor Demo' : mock.role === 'professor' ? 'Professor Demo' : 'Aluno Demo',
-              ativo: true,
-              created_at: new Date(),
-            };
-            const token: AuthToken = {
-              user: userData,
-              expiresAt: Date.now() + SESSION_DURATION,
-              createdAt: Date.now(),
-            };
-            const signature = await createSignature(token);
-            const secureStorage: SecureStorage = { token, signature };
-            setUser(userData);
-            localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(secureStorage));
-            return { success: true };
-          }
-        }
         return { success: false, error: 'CPF ou senha inválidos' };
       }
 
@@ -404,8 +385,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Função de logout
   const logout = async () => {
     try {
-      // Fazer logout do Supabase
-      await supabase.auth.signOut();
+      // Fazer logout do Supabase apenas se estiver em modo supabase
+      if (!isDemoMode()) {
+        await supabase.auth.signOut();
+      }
     } catch (error) {
       if (isDev()) {
         console.error('[AUTH] Erro ao fazer logout do Supabase:', error);

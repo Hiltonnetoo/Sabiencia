@@ -7,13 +7,16 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
-import { Users, GraduationCap, BookOpen, ArrowRight, Home } from 'lucide-react';
+import { Users, GraduationCap, BookOpen, ArrowRight, Home, RotateCcw } from 'lucide-react';
 import { SabienciaMonogramBadge } from '../../components/brand/SabienciaBrand';
 import { LanguageSwitcher } from '../../components/shared/LanguageSwitcher';
+import { useMockData } from '../../contexts/MockDataContext';
+import { toast } from 'sonner';
 
 export const DemoIndex: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { resetMockData } = useMockData();
   const managerFeatures = t('demo.managerFeatures', { returnObjects: true }) as string[];
   const teacherFeatures = t('demo.teacherFeatures', { returnObjects: true }) as string[];
   const studentFeatures = t('demo.studentFeatures', { returnObjects: true }) as string[];
@@ -148,14 +151,26 @@ export const DemoIndex: React.FC = () => {
           </Card>
         </div>
 
-        {/* Botão voltar */}
-        <div className="text-center mt-8">
+        {/* Botão voltar e Restaurar */}
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
           <Button 
             variant="outline"
             onClick={() => navigate('/')}
           >
             <Home className="mr-2 h-4 w-4" />
             {t('demo.backToLanding')}
+          </Button>
+
+          <Button
+            variant="outline"
+            className="border-amber-300 text-amber-800 hover:bg-amber-50"
+            onClick={() => {
+              resetMockData();
+              toast.success(t('demo.resetSuccess', { defaultValue: 'Dados da demonstração restaurados para o padrão original.' }));
+            }}
+          >
+            <RotateCcw className="mr-2 h-4 w-4 text-amber-600" />
+            {t('demo.resetData', { defaultValue: 'Restaurar Dados Originais' })}
           </Button>
         </div>
 

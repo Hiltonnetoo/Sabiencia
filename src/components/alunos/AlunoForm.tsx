@@ -18,6 +18,7 @@ import { CalendarIcon } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import type { Aluno } from '../../types';
+import { useMockData } from '../../contexts/MockDataContext';
 import { LoadingButton } from '../shared/LoadingButton';
 import { FormField } from '../shared/FormField';
 import { InputWithValidation } from '../shared/InputWithValidation';
@@ -48,6 +49,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
   onDirtyChange,
 }) => {
   const { t } = useTranslation();
+  const { turmas } = useMockData();
   const activeAluno = aluno || initialData;
 
   const form = useForm<AlunoFormData>({
@@ -67,6 +69,7 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
       endereco: activeAluno.endereco,
       foto_url: activeAluno.foto_url,
       ativo: activeAluno.ativo,
+      turma_id: (activeAluno as any)?.turma_id || undefined,
     } : {
       ativo: true,
     },
@@ -456,6 +459,35 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
                 {errors.foto_url.message}
               </p>
             )}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* SEÇÃO 5: MATRÍCULA EM TURMA (OPCIONAL) */}
+      <Card>
+        <CardHeader>
+          <CardTitle>{t('components.alunoForm.academicData', { defaultValue: 'Matrícula Acadêmica' })}</CardTitle>
+          <CardDescription>{t('components.alunoForm.academicDataDesc', { defaultValue: 'Selecione a turma para vincular a matrícula deste aluno' })}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div>
+            <Label htmlFor="turma_id">{t('components.alunoForm.class', { defaultValue: 'Turma' })}</Label>
+            <Select
+              value={watch('turma_id') || 'none'}
+              onValueChange={(val) => setValue('turma_id', val === 'none' ? undefined : val, { shouldDirty: true })}
+            >
+              <SelectTrigger id="turma_id">
+                <SelectValue placeholder={t('components.alunoForm.selectClass', { defaultValue: 'Selecione uma turma (opcional)' })} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">{t('components.alunoForm.noClass', { defaultValue: 'Nenhuma turma no momento' })}</SelectItem>
+                {turmas.map(turma => (
+                  <SelectItem key={turma.id} value={turma.id}>
+                    {turma.nome} ({turma.codigo})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </CardContent>
       </Card>
