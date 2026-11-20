@@ -44,6 +44,36 @@ jobs:
           path: coverage/
           retention-days: 7
 
+  db-rls:
+    name: Database RLS Tests
+    runs-on: ubuntu-24.04
+
+    services:
+      postgres:
+        # Mesma versão principal usada pelo Supabase
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply migrations and run RLS tests
+        run: bash scripts/test-db.sh
+        env:
+          PGHOST: localhost
+          PGPORT: 5432
+          PGUSER: postgres
+          PGPASSWORD: postgres
+
   e2e:
     name: E2E Tests
     runs-on: ubuntu-24.04
