@@ -34,17 +34,20 @@ backend.
 The single most important decision: **the UI depends on a data layer abstraction, not on a
 specific backend.**
 
-- **Mock mode (default).** `src/data/` holds a rich, internally consistent dataset (students,
-  teachers, courses, classes, payments, materials, …) exposed through `MockDataContext`. The
-  app is fully explorable with **zero setup** — ideal for portfolio review and demos.
-- **Supabase mode.** `src/lib/supabase.ts` configures the client. `AuthContext` authenticates
-  via Supabase (`signInWithPassword`, profile lookup) and the data hooks in
-  `src/hooks/supabase/` read from Postgres with RLS. When valid `.env` credentials are
-  present, real auth is used; otherwise a demo fallback (gated by `VITE_DEMO_MODE`) keeps the
-  experience working.
+- **Demo mode (default, `VITE_APP_MODE=demo`).** `src/config/appMode.ts` resolves the active mode.
+  In demo mode, the application runs **100% offline** without any network requests or Supabase
+  credential requirements. State is persistable in `localStorage` (`sabiencia_mock_data_v1`),
+  persisting student registrations, batch grades and attendance across reloads (with `reviveDates()`
+  to reconstruct `Date` instances), and can be restored anytime via `resetMockData()`.
+- **Supabase mode (`VITE_APP_MODE=supabase`).** `src/lib/supabase.ts` connects to PostgreSQL.
+  Full Row-Level Security (RLS) is implemented across all 18 canonical tables
+  (`supabase/migrations/004_rls_security_policies.sql`), using `SECURITY DEFINER` helper functions to
+  eliminate infinite recursion and a database trigger protecting sensitive fields (`role`, `auth_id`,
+  `ativo`) from client tampering.
 
 **Why:** a portfolio reviewer can run it instantly, *and* the codebase demonstrates a
-production path. Swapping the source is a layer change, not a rewrite.
+production-grade database and security architecture. Swapping the source is a configuration change,
+not a rewrite.
 
 ## 3. Authentication & RBAC
 

@@ -144,8 +144,8 @@
 ---
 
 ### Apêndice — Referências do Código
-- Autenticação e sessão: `src/src/contexts/AuthContext.tsx:215–336`
-- RBAC e rotas protegidas: `src/src/components/auth/ProtectedRoute.tsx:1–67`
-- Papéis e tipos principais: `src/src/types/index.ts:1–131`
-- Cliente Supabase: `src/lib/supabase.ts:1–39`
-- Busca global: `src/src/utils/searchService.ts:1–66`
+- Autenticação e sessão: `src/contexts/AuthContext.tsx`
+- RBAC e rotas protegidas: `src/components/auth/ProtectedRoute.tsx`
+- Papéis e tipos principais: `src/types/index.ts`
+- Cliente Supabase: `src/lib/supabase.ts`
+- Busca global: `src/utils/searchService.ts`

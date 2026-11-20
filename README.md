@@ -180,10 +180,11 @@ Copy `.env.example` to `.env` and configure:
 
 | Variable | Required | Description |
 | --- | --- | --- |
-| `VITE_SUPABASE_URL` | for production | Supabase project URL |
-| `VITE_SUPABASE_ANON_KEY` | for production | Supabase public anon key |
-| `VITE_AUTH_SECRET` | yes | 32-byte hex secret used to sign client sessions for local state integrity validation |
-| `VITE_DEMO_MODE` | optional | `true` enables passwordless demo login (development only) |
+| `VITE_APP_MODE` | optional | Application mode: `demo` (default, 100% offline, zero network requests) or `supabase` |
+| `VITE_SUPABASE_URL` | for supabase mode | Supabase project URL |
+| `VITE_SUPABASE_ANON_KEY` | for supabase mode | Supabase public anon key |
+| `VITE_AUTH_SECRET` | optional | 32-byte hex secret used to sign client sessions for local state integrity validation |
+| `VITE_DEMO_MODE` | optional | Legacy fallback: `true` enables demo mode (superseded by `VITE_APP_MODE`) |
 
 > Only the public Supabase **anon** key is used on the client. Never commit `.env` — it is
 > already git-ignored.
@@ -195,11 +196,12 @@ Copy `.env.example` to `.env` and configure:
 | `npm run dev` | Start the development server |
 | `npm run build` | Production build |
 | `npm run preview` | Preview the production build |
-| `npm run lint` | ESLint over `src` |
+| `npm run lint` | ESLint verification with zero warnings |
+| `npm run type-check` | Static TypeScript type checking (`tsc --noEmit`) |
 | `npm test` | Unit/integration tests (Vitest) |
+| `npm run test:coverage` | Test coverage report with v8 engine |
 | `npm run test:e2e` | End-to-end tests (Playwright) |
 | `npm run test:visual` | Visual regression tests |
-| `npm run test:coverage` | Test coverage report |
 
 ## Project structure
 
