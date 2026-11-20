@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { MockDataProvider } from './contexts/MockDataContext';
@@ -102,40 +102,42 @@ const LandingPage: React.FC = () => {
 // ============================================
 function AppRoutes() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Rotas públicas */}
-        <Route path="/" element={<LandingPage />} />
+    <Routes>
+      {/* Rotas públicas */}
+      <Route path="/" element={<LandingPage />} />
 
-        {/* Login: 3 telas por papel + alias /login -> aluno */}
-        <Route path="/login" element={<Navigate to="/login/aluno" replace />} />
-        <Route path="/login/:role" element={<LoginByRole />} />
+      {/* Login: 3 telas por papel + alias /login -> aluno */}
+      <Route path="/login" element={<Navigate to="/login/aluno" replace />} />
+      <Route path="/login/:role" element={<LoginByRole />} />
 
-        <Route path="/debug" element={<LoginDebug />} />
-        <Route path="/redirect" element={<RedirectByRole />} />
+      <Route path="/debug" element={<LoginDebug />} />
+      <Route path="/redirect" element={<RedirectByRole />} />
 
-        {/* Rotas de demonstração */}
-        <Route path="/demo/*" element={<DemoRoutes />} />
+      {/* Rotas de demonstração */}
+      <Route path="/demo/*" element={<DemoRoutes />} />
 
-        {/* Login antigo do professor -> nova rota consolidada */}
-        <Route path="/professor" element={<Navigate to="/login/professor" replace />} />
-        <Route path="/professor/cadastro" element={
-          <Suspense fallback={<AppPreloader message="Carregando..." />}>
-            <ProfessorRegisterPage />
-          </Suspense>
-        } />
+      {/* Login antigo do professor -> nova rota consolidada */}
+      <Route path="/professor" element={<Navigate to="/login/professor" replace />} />
+      <Route path="/professor/cadastro" element={
+        <Suspense fallback={<AppPreloader message="Carregando..." />}>
+          <ProfessorRegisterPage />
+        </Suspense>
+      } />
 
-        {/* Rotas protegidas por papel */}
-        <Route path="/gestor/*" element={<GestorRoutes />} />
-        <Route path="/professor/*" element={<ProfessorRoutes />} />
-        <Route path="/aluno/*" element={<AlunoRoutes />} />
+      {/* Rotas protegidas por papel */}
+      <Route path="/gestor/*" element={<GestorRoutes />} />
+      <Route path="/professor/*" element={<ProfessorRoutes />} />
+      <Route path="/aluno/*" element={<AlunoRoutes />} />
 
-        {/* Rota catch-all */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+      {/* Rota catch-all */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
+
+// Data router: necessário para useBlocker (aviso de alterações não salvas nos
+// formulários de aluno/professor). A rota curinga mantém as <Routes> descendentes.
+const router = createBrowserRouter([{ path: '*', element: <AppRoutes /> }]);
 
 // ============================================
 // APP PRINCIPAL
@@ -148,7 +150,7 @@ export default function App() {
           <MockDataProvider>
             <VideoaulasProvider>
               <ToastProvider />
-              <AppRoutes />
+              <RouterProvider router={router} />
             </VideoaulasProvider>
           </MockDataProvider>
         </AuthProvider>

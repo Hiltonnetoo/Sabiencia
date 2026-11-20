@@ -165,45 +165,51 @@ describe('AlunoForm', () => {
   });
 
   describe('Envio do Formulário', () => {
-    it('deve enviar formulário com dados válidos', async () => {
-      const user = userEvent.setup();
-      renderWithProviders(<AlunoForm onSuccess={mockOnSuccess} />);
-
-      // Preencher campos obrigatórios
+    const preencherObrigatorios = async (user: ReturnType<typeof userEvent.setup>) => {
       await user.type(screen.getByLabelText(/nome completo/i), 'João Silva');
-      await user.type(screen.getByLabelText(/^cpf\s*\*?$/i), '12345678909');
-      await user.type(screen.getByLabelText(/email/i), 'joao@exemplo.com');
-      await user.type(screen.getByLabelText(/^telefone\s*\*?$/i), '11987654321');
-
-      const submitButton = screen.getByRole('button', { name: /salvar/i });
-      await user.click(submitButton);
-
-      // Verificar que o formulário tentou submeter
-      await waitFor(() => {
-        expect(submitButton).toBeDefined();
-      });
-    }, 15000);
-
-    it('deve chamar onSuccess após salvar', async () => {
-      const user = userEvent.setup();
-      const mockSuccess = vi.fn();
-      renderWithProviders(<AlunoForm onSuccess={mockSuccess} />);
-
-      // Preencher campos
-      await user.type(screen.getByLabelText(/nome completo/i), 'João Silva');
-      await user.type(screen.getByLabelText(/^cpf\s*\*?$/i), '12345678909');
+      await user.type(screen.getByLabelText(/^cpf\s*\*?$/i), '52998224725');
       await user.type(screen.getByLabelText(/email/i), 'joao@exemplo.com');
       await user.type(screen.getByLabelText(/^telefone\s*\*?$/i), '11987654321');
       await user.type(screen.getByLabelText(/data de nascimento/i), '2000-01-01');
+    };
 
-      const submitButton = screen.getByRole('button', { name: /salvar/i });
-      await user.click(submitButton);
+    it('deve enviar os dados válidos para onSubmit', async () => {
+      const user = userEvent.setup({ delay: null });
+      const onSubmit = vi.fn();
+      renderWithProviders(<AlunoForm onSubmit={onSubmit} />);
 
-      // onSuccess pode ou não ser chamado dependendo da validação
-      await waitFor(() => {
-        expect(mockSuccess.mock.calls.length >= 0).toBe(true);
-      }, { timeout: 3000 });
-    }, 15000);
+      await preencherObrigatorios(user);
+      await user.click(screen.getByRole('button', { name: /salvar/i }));
+
+      await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));
+      const enviado = onSubmit.mock.calls[0][0];
+      expect(enviado.nome_completo).toBe('João Silva');
+      expect(enviado.email).toBe('joao@exemplo.com');
+      expect(enviado.cpf.replace(/\D/g, '')).toBe('52998224725');
+      expect(enviado.data_nascimento).toBeInstanceOf(Date);
+    });
+
+    it('deve chamar onSuccess após salvar quando não há onSubmit', async () => {
+      const user = userEvent.setup({ delay: null });
+      const onSuccess = vi.fn();
+      renderWithProviders(<AlunoForm onSuccess={onSuccess} />);
+
+      await preencherObrigatorios(user);
+      await user.click(screen.getByRole('button', { name: /salvar/i }));
+
+      await waitFor(() => expect(onSuccess).toHaveBeenCalledTimes(1));
+    });
+
+    it('não deve enviar com campos obrigatórios vazios', async () => {
+      const user = userEvent.setup({ delay: null });
+      const onSubmit = vi.fn();
+      renderWithProviders(<AlunoForm onSubmit={onSubmit} />);
+
+      await user.click(screen.getByRole('button', { name: /salvar/i }));
+
+      await screen.findAllByText(/Nome deve ter pelo menos 3/i);
+      expect(onSubmit).not.toHaveBeenCalled();
+    });
   });
 
   describe('Modo Edição', () => {

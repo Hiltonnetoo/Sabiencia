@@ -30,18 +30,21 @@ test.describe('Gestor - Fluxo Completo', () => {
 
   test('deve buscar aluno por nome', async ({ page }) => {
     await page.goto('/gestor/alunos');
-    await page.waitForLoadState('networkidle');
-    const searchInput = page.getByPlaceholder(/buscar|search/i).first();
-    if (await searchInput.isVisible()) {
-      await searchInput.fill('Ana');
-      await expect(searchInput).toHaveValue('Ana');
-    }
+    await expect(page.getByText('Ana Clara Lima')).toBeVisible();
+    await page.getByRole('button', { name: /^(filtros|filters)/i }).click();
+    await page.getByLabel(/^(buscar|search)$/i).fill('João Pedro');
+    await expect(page.getByText('João Pedro Santos')).toBeVisible();
+    await expect(page.getByText('Ana Clara Lima')).toHaveCount(0);
   });
 
   test('deve filtrar alunos por status', async ({ page }) => {
     await page.goto('/gestor/alunos');
-    await page.waitForLoadState('networkidle');
-    await expect(page.getByRole('heading', { name: /alunos|students/i }).first()).toBeVisible();
+    await expect(page.getByText('João Pedro Santos')).toBeVisible();
+    // Nenhum aluno da fixture está trancado
+    await page.getByText(/^(trancados|locked)$/i).click();
+    await expect(page.getByText('João Pedro Santos')).toHaveCount(0);
+    await page.getByText(/^(ativos|active)$/i).click();
+    await expect(page.getByText('João Pedro Santos')).toBeVisible();
   });
 
   test('deve navegar para professores', async ({ page }) => {

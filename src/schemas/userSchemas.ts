@@ -87,6 +87,12 @@ export const enderecoSchema = z.object({
 
 // ==================== SCHEMA DE ALUNO ====================
 
+const isEnderecoVazio = (value: unknown): boolean =>
+  value === undefined ||
+  value === null ||
+  (typeof value === 'object' &&
+    Object.values(value as Record<string, unknown>).every(v => v === undefined || v === null || String(v).trim() === ''));
+
 export const alunoSchema = z.object({
   // Dados pessoais
   nome_completo: nomeCompletoSchema,
@@ -104,8 +110,12 @@ export const alunoSchema = z.object({
   nome_responsavel: z.string().optional(),
   telefone_responsavel: z.string().optional(),
 
-  // Endereço
-  endereco: enderecoSchema.optional(),
+  // Endereço: opcional. O formulário registra os campos individualmente e
+  // envia strings vazias quando nada é preenchido; nesse caso tratamos como ausente.
+  endereco: z.preprocess(
+    value => (isEnderecoVazio(value) ? undefined : value),
+    enderecoSchema.optional()
+  ),
 
   // Sistema
   foto_url: z.string().url().optional().or(z.literal('')),

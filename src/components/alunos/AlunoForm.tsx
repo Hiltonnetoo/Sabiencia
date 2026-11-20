@@ -466,24 +466,24 @@ export const AlunoForm: React.FC<AlunoFormProps> = ({
       {/* SEÇÃO 5: MATRÍCULA EM TURMA (OPCIONAL) */}
       <Card>
         <CardHeader>
-          <CardTitle>{t('components.alunoForm.academicData', { defaultValue: 'Matrícula Acadêmica' })}</CardTitle>
-          <CardDescription>{t('components.alunoForm.academicDataDesc', { defaultValue: 'Selecione a turma para vincular a matrícula deste aluno' })}</CardDescription>
+          <CardTitle>{t('components.alunoForm.academicData')}</CardTitle>
+          <CardDescription>{t('components.alunoForm.academicDataDesc')}</CardDescription>
         </CardHeader>
         <CardContent>
           <div>
-            <Label htmlFor="turma_id">{t('components.alunoForm.class', { defaultValue: 'Turma' })}</Label>
+            <Label htmlFor="turma_id">{t('components.alunoForm.class')}</Label>
             <Select
               value={watch('turma_id') || 'none'}
               onValueChange={(val) => setValue('turma_id', val === 'none' ? undefined : val, { shouldDirty: true })}
             >
               <SelectTrigger id="turma_id">
-                <SelectValue placeholder={t('components.alunoForm.selectClass', { defaultValue: 'Selecione uma turma (opcional)' })} />
+                <SelectValue placeholder={t('components.alunoForm.selectClass')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">{t('components.alunoForm.noClass', { defaultValue: 'Nenhuma turma no momento' })}</SelectItem>
+                <SelectItem value="none">{t('components.alunoForm.noClass')}</SelectItem>
                 {turmas.map(turma => (
                   <SelectItem key={turma.id} value={turma.id}>
-                    {turma.nome} ({turma.codigo})
+                    {turma.codigo ? `${turma.nome} (${turma.codigo})` : turma.nome}
                   </SelectItem>
                 ))}
               </SelectContent>
