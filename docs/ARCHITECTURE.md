@@ -40,10 +40,15 @@ specific backend.**
   persisting student registrations, batch grades and attendance across reloads (with `reviveDates()`
   to reconstruct `Date` instances), and can be restored anytime via `resetMockData()`.
 - **Supabase mode (`VITE_APP_MODE=supabase`).** `src/lib/supabase.ts` connects to PostgreSQL.
-  Full Row-Level Security (RLS) is implemented across all 18 canonical tables
-  (`supabase/migrations/004_rls_security_policies.sql`), using `SECURITY DEFINER` helper functions to
-  eliminate infinite recursion and a database trigger protecting sensitive fields (`role`, `auth_id`,
-  `ativo`) from client tampering.
+  After login, `MockDataContext` loads the academic journey (courses, classes, subjects, students,
+  teachers, enrollments, grades, attendance) through `src/services/academicRepository.ts` and
+  writes enrollments, grades and attendance to the database before updating the UI. Other modules
+  stay empty in this mode rather than showing demo data.
+  RLS covers all 18 tables (`supabase/migrations/004` and `005`). Every cross-table check goes
+  through `SECURITY DEFINER` helpers so policies never recurse; views run with `security_invoker`;
+  a trigger blocks non-managers from changing `role`, `auth_id` or `ativo`. The policies are
+  exercised against real Postgres by `supabase/tests/rls_test.sql` (`npm run test:db`, CI job
+  "Database RLS Tests"), including denied-access cases.
 
 **Why:** a portfolio reviewer can run it instantly, *and* the codebase demonstrates a
 production-grade database and security architecture. Swapping the source is a configuration change,
@@ -119,7 +124,8 @@ routes (landing, login, demo) and the three guarded role trees.
 | `src/pages/` | Screens grouped by role (`gestor/`, `professor/`, `aluno/`, `demo/`) |
 | `src/components/` | `ui/` primitives, `layout/`, `shared/`, and feature components |
 | `src/data/` | Seeded mock dataset |
-| `src/hooks/` | Custom hooks, incl. Supabase data hooks |
+| `src/hooks/` | Custom hooks |
+| `src/services/` | `academicRepository` — Supabase reads/writes for the academic journey |
 | `src/schemas/` | Zod validation schemas |
 | `src/utils/` | Permissions (RBAC), formatters, export service, media thumbnails |
 | `src/i18n/` | i18next config and locale resources |
