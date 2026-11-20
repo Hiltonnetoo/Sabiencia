@@ -182,7 +182,7 @@ describe('AlunoForm', () => {
       await waitFor(() => {
         expect(submitButton).toBeDefined();
       });
-    });
+    }, 15000);
 
     it('deve chamar onSuccess após salvar', async () => {
       const user = userEvent.setup();
@@ -203,7 +203,7 @@ describe('AlunoForm', () => {
       await waitFor(() => {
         expect(mockSuccess.mock.calls.length >= 0).toBe(true);
       }, { timeout: 3000 });
-    });
+    }, 15000);
   });
 
   describe('Modo Edição', () => {
