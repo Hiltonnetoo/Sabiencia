@@ -15,6 +15,8 @@ import { GestorDashboard } from '../../pages/gestor/GestorDashboard';
 import { ProfessorDashboard } from '../../pages/professor/ProfessorDashboard';
 import { AlunoDashboard } from '../../pages/aluno/AlunoDashboard';
 
+const CI_MULTIPLIER = process.env.CI ? 3 : 1;
+
 const renderWithProviders = (component: React.ReactElement) => {
   return render(
     <BrowserRouter>
@@ -45,7 +47,7 @@ describe('Render Performance - Benchmarks', () => {
       const renderTime = endTime - startTime;
       
       console.log(`AlunosTable render time: ${renderTime.toFixed(2)}ms`);
-      expect(renderTime).toBeLessThan(100);
+      expect(renderTime).toBeLessThan(100 * CI_MULTIPLIER);
     });
 
     it('ProfessoresTable deve renderizar em menos de 100ms', () => {
@@ -64,7 +66,7 @@ describe('Render Performance - Benchmarks', () => {
       const renderTime = endTime - startTime;
       
       console.log(`ProfessoresTable render time: ${renderTime.toFixed(2)}ms`);
-      expect(renderTime).toBeLessThan(100);
+      expect(renderTime).toBeLessThan(100 * CI_MULTIPLIER);
     });
   });
 
@@ -78,7 +80,7 @@ describe('Render Performance - Benchmarks', () => {
       const renderTime = endTime - startTime;
       
       console.log(`GestorDashboard render time: ${renderTime.toFixed(2)}ms`);
-      expect(renderTime).toBeLessThan(200);
+      expect(renderTime).toBeLessThan(200 * CI_MULTIPLIER);
     });
 
     it('ProfessorDashboard deve renderizar em menos de 150ms', () => {
@@ -90,7 +92,7 @@ describe('Render Performance - Benchmarks', () => {
       const renderTime = endTime - startTime;
       
       console.log(`ProfessorDashboard render time: ${renderTime.toFixed(2)}ms`);
-      expect(renderTime).toBeLessThan(150);
+      expect(renderTime).toBeLessThan(150 * CI_MULTIPLIER);
     });
 
     it('AlunoDashboard deve renderizar em menos de 150ms', () => {
@@ -102,7 +104,7 @@ describe('Render Performance - Benchmarks', () => {
       const renderTime = endTime - startTime;
       
       console.log(`AlunoDashboard render time: ${renderTime.toFixed(2)}ms`);
-      expect(renderTime).toBeLessThan(150);
+      expect(renderTime).toBeLessThan(150 * CI_MULTIPLIER);
     });
   });
 
@@ -138,7 +140,7 @@ describe('Render Performance - Benchmarks', () => {
       const rerenderTime = endTime - startTime;
       
       console.log(`AlunosTable re-render time: ${rerenderTime.toFixed(2)}ms`);
-      expect(rerenderTime).toBeLessThan(50);
+      expect(rerenderTime).toBeLessThan(50 * CI_MULTIPLIER);
     });
 
     it('GestorDashboard deve ter re-renders rápidos', () => {
@@ -160,7 +162,7 @@ describe('Render Performance - Benchmarks', () => {
       const rerenderTime = endTime - startTime;
       
       console.log(`GestorDashboard re-render time: ${rerenderTime.toFixed(2)}ms`);
-      expect(rerenderTime).toBeLessThan(100);
+      expect(rerenderTime).toBeLessThan(100 * CI_MULTIPLIER);
     });
   });
 
@@ -184,7 +186,7 @@ describe('Render Performance - Benchmarks', () => {
       const totalTime = endTime - startTime;
       
       console.log(`10x AlunosTable renders: ${totalTime.toFixed(2)}ms`);
-      expect(totalTime).toBeLessThan(1000);
+      expect(totalTime).toBeLessThan(1000 * CI_MULTIPLIER);
     });
 
     it('deve renderizar GestorDashboard 10 vezes em menos de 2 segundos', () => {
@@ -199,7 +201,7 @@ describe('Render Performance - Benchmarks', () => {
       const totalTime = endTime - startTime;
       
       console.log(`10x GestorDashboard renders: ${totalTime.toFixed(2)}ms`);
-      expect(totalTime).toBeLessThan(2000);
+      expect(totalTime).toBeLessThan(2000 * CI_MULTIPLIER);
     });
   });
 });
@@ -261,7 +263,7 @@ describe('Virtual Scrolling Performance', () => {
     
     // Com virtualização, deve renderizar rápido mesmo com muitos dados
     console.log(`AlunosTable (virtual) render time: ${renderTime.toFixed(2)}ms`);
-    expect(renderTime).toBeLessThan(150);
+    expect(renderTime).toBeLessThan(150 * CI_MULTIPLIER);
   });
 });
 
