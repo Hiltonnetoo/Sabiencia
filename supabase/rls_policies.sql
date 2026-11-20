@@ -1,48 +1,79 @@
--- RLS e RPC para tabela de usuários
+-- ============================================
+-- RLS E RPC PARA TABELA DE USUÁRIOS E DOMÍNIO
+-- Consolidação canônica referenciando migrations/004_rls_security_policies.sql
+-- ============================================
 
 -- Habilitar RLS
-alter table if exists public.usuarios enable row level security;
+ALTER TABLE IF EXISTS public.usuarios ENABLE ROW LEVEL SECURITY;
 
--- Política: usuários autenticados podem selecionar seu próprio perfil
-create policy if not exists "select own profile"
-on public.usuarios
-as permissive
-for select
-to authenticated
-using (
-  (exists (select 1 where public.usuarios.auth_id = auth.uid()))
-  or (public.usuarios.email = (auth.jwt() ->> 'email'))
-);
-
--- Política: usuários autenticados podem atualizar seu próprio perfil
-create policy if not exists "update own profile"
-on public.usuarios
-as permissive
-for update
-to authenticated
-using (
-  (exists (select 1 where public.usuarios.auth_id = auth.uid()))
-  or (public.usuarios.email = (auth.jwt() ->> 'email'))
-)
-with check (
-  (exists (select 1 where public.usuarios.auth_id = auth.uid()))
-  or (public.usuarios.email = (auth.jwt() ->> 'email'))
-);
-
--- Função RPC para obter e‑mail via CPF (apenas retorna e‑mail)
-create or replace function public.get_email_by_cpf(cpf text)
-returns text
-language sql
-security definer
-stable
-as $$
-  select email from public.usuarios where public.usuarios.cpf = cpf limit 1;
+-- Funções de Autorização Seguras (Security Definer para prevenir recursão infinita)
+CREATE OR REPLACE FUNCTION public.get_current_user_id()
+RETURNS UUID
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT id FROM public.usuarios WHERE auth_id = auth.uid() LIMIT 1;
 $$;
 
--- Permitir execução da função para anon e authenticated
-grant execute on function public.get_email_by_cpf(text) to anon, authenticated;
+CREATE OR REPLACE FUNCTION public.is_gestor()
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.usuarios
+    WHERE auth_id = auth.uid() AND role = 'gestor'
+  );
+$$;
 
--- Observações:
--- - As políticas assumem existência de coluna auth_id (vinculada ao auth.users.id). Caso não exista,
---   a verificação por e‑mail via JWT cobre leitura/atualização do próprio registro.
--- - A função RPC limita o retorno a um único campo (email), adequado ao fluxo de login por CPF.
+-- Políticas de Usuários
+DROP POLICY IF EXISTS "select own profile" ON public.usuarios;
+CREATE POLICY "select own profile"
+ON public.usuarios
+FOR SELECT
+TO authenticated
+USING (
+  auth_id = auth.uid()
+  OR public.is_gestor()
+);
+
+DROP POLICY IF EXISTS "update own profile" ON public.usuarios;
+CREATE POLICY "update own profile"
+ON public.usuarios
+FOR UPDATE
+TO authenticated
+USING (auth_id = auth.uid() OR public.is_gestor())
+WITH CHECK (auth_id = auth.uid() OR public.is_gestor());
+
+-- Função RPC segura para obter e-mail via CPF (apenas retorna e-mail do titular ativo)
+CREATE OR REPLACE FUNCTION public.get_email_by_cpf(cpf text)
+RETURNS text
+LANGUAGE plpgsql
+SECURITY DEFINER
+STABLE
+SET search_path = public
+AS $$
+DECLARE
+  v_cleaned text;
+  v_email text;
+BEGIN
+  v_cleaned := regexp_replace(cpf, '[^0-9]', '', 'g');
+  IF length(v_cleaned) <> 11 THEN
+    RETURN NULL;
+  END IF;
+
+  SELECT email INTO v_email
+  FROM public.usuarios
+  WHERE regexp_replace(public.usuarios.cpf, '[^0-9]', '', 'g') = v_cleaned
+    AND ativo = true
+  LIMIT 1;
+
+  RETURN v_email;
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.get_email_by_cpf(text) TO anon, authenticated;

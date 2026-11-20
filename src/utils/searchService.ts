@@ -35,7 +35,8 @@ export class SearchService {
       pagamentos: Pagamento[];
     },
     userRole: User['role'],
-    categories?: SearchCategory[]
+    categories?: SearchCategory[],
+    userId?: string
   ): SearchResult[] {
     const normalizedQuery = query.toLowerCase().trim();
     
@@ -45,7 +46,7 @@ export class SearchService {
 
     // Buscar em alunos
     if (!categories || categories.includes('alunos')) {
-      const alunosResults = this.searchAlunos(normalizedQuery, data.alunos, userRole);
+      const alunosResults = this.searchAlunos(normalizedQuery, data.alunos, userRole, userId);
       results.push(...alunosResults);
     }
 
@@ -87,13 +88,13 @@ export class SearchService {
 
     // Buscar em notificações
     if (!categories || categories.includes('notificacoes')) {
-      const notificacoesResults = this.searchNotificacoes(normalizedQuery, data.notificacoes, userRole);
+      const notificacoesResults = this.searchNotificacoes(normalizedQuery, data.notificacoes, userRole, userId);
       results.push(...notificacoesResults);
     }
 
-    // Buscar em pagamentos
+    // Buscar em pagamentos (Professores não acessam financeiro; Aluno só vê seus próprios)
     if (!categories || categories.includes('pagamentos')) {
-      const pagamentosResults = this.searchPagamentos(normalizedQuery, data.pagamentos, userRole);
+      const pagamentosResults = this.searchPagamentos(normalizedQuery, data.pagamentos, userRole, userId);
       results.push(...pagamentosResults);
     }
 
@@ -103,7 +104,12 @@ export class SearchService {
   /**
    * Busca em alunos
    */
-  private static searchAlunos(query: string, alunos: Aluno[], userRole: User['role']): SearchResult[] {
+  private static searchAlunos(
+    query: string, 
+    alunos: Aluno[], 
+    userRole: User['role'],
+    userId?: string
+  ): SearchResult[] {
     return alunos
       .filter(aluno => 
         aluno.nome_completo.toLowerCase().includes(query) ||
@@ -111,15 +117,22 @@ export class SearchService {
         formatCPF(aluno.cpf).includes(query) ||
         aluno.cpf.includes(query)
       )
-      .map(aluno => ({
-        id: aluno.id,
-        type: 'alunos' as SearchCategory,
-        title: aluno.nome_completo,
-        subtitle: `${formatCPF(aluno.cpf)} • ${aluno.email}`,
-        description: `Curso: ${aluno.curso_nome} • Status: ${aluno.status}`,
-        url: userRole === 'gestor' ? `/gestor/alunos/${aluno.id}` : '#',
-        metadata: { aluno },
-      }));
+      .map(aluno => {
+        const isSelf = userRole === 'aluno' && (!userId || aluno.id === userId);
+        const subtitle = (userRole === 'aluno' && !isSelf)
+          ? `Aluno • ${aluno.curso_nome || 'Curso'}`
+          : `${formatCPF(aluno.cpf)} • ${aluno.email}`;
+
+        return {
+          id: aluno.id,
+          type: 'alunos' as SearchCategory,
+          title: aluno.nome_completo,
+          subtitle,
+          description: `Curso: ${aluno.curso_nome} • Status: ${aluno.status}`,
+          url: userRole === 'gestor' ? `/gestor/alunos/${aluno.id}` : '#',
+          metadata: { aluno },
+        };
+      });
   }
 
   /**
@@ -266,12 +279,22 @@ export class SearchService {
   /**
    * Busca em notificações
    */
-  private static searchNotificacoes(query: string, notificacoes: Notificacao[], userRole: User['role']): SearchResult[] {
+  private static searchNotificacoes(
+    query: string, 
+    notificacoes: Notificacao[], 
+    _userRole: User['role'],
+    userId?: string
+  ): SearchResult[] {
     return notificacoes
-      .filter(notificacao => 
-        notificacao.titulo.toLowerCase().includes(query) ||
-        notificacao.mensagem.toLowerCase().includes(query)
-      )
+      .filter(notificacao => {
+        if (userId && (notificacao as any).usuario_id && (notificacao as any).usuario_id !== userId) {
+          return false;
+        }
+        return (
+          notificacao.titulo.toLowerCase().includes(query) ||
+          notificacao.mensagem.toLowerCase().includes(query)
+        );
+      })
       .map(notificacao => ({
         id: notificacao.id,
         type: 'notificacoes' as SearchCategory,
@@ -286,13 +309,27 @@ export class SearchService {
   /**
    * Busca em pagamentos
    */
-  private static searchPagamentos(query: string, pagamentos: Pagamento[], userRole: User['role']): SearchResult[] {
+  private static searchPagamentos(
+    query: string, 
+    pagamentos: Pagamento[], 
+    userRole: User['role'],
+    userId?: string
+  ): SearchResult[] {
+    // Professores não possuem acesso ao módulo financeiro
+    if (userRole === 'professor') return [];
+
     return pagamentos
-      .filter(pagamento => 
-        pagamento.aluno_nome?.toLowerCase().includes(query) ||
-        pagamento.status.toLowerCase().includes(query) ||
-        formatCurrency(pagamento.valor).includes(query)
-      )
+      .filter(pagamento => {
+        // Aluno só pode consultar seus próprios pagamentos
+        if (userRole === 'aluno' && userId && pagamento.aluno_id && pagamento.aluno_id !== userId) {
+          return false;
+        }
+        return (
+          pagamento.aluno_nome?.toLowerCase().includes(query) ||
+          pagamento.status.toLowerCase().includes(query) ||
+          formatCurrency(pagamento.valor).includes(query)
+        );
+      })
       .map(pagamento => ({
         id: pagamento.id,
         type: 'pagamentos' as SearchCategory,

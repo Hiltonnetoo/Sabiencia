@@ -34,7 +34,8 @@ export const isAluno = (user: User | null): boolean => {
 export const canEditAluno = (
   user: User | null,
   alunoId: string,
-  professorTurmas?: string[]
+  professorTurmas?: string[],
+  alunoTurmaId?: string
 ): boolean => {
   if (!user) return false;
   
@@ -46,9 +47,10 @@ export const canEditAluno = (
   }
   
   if (isProfessor(user) && professorTurmas) {
-    // Professor pode editar alunos das turmas dele
-    // (verificação deve ser feita com matriculas)
-    return true; // Simplificado - em produção, verificar matriculas
+    if (alunoTurmaId) {
+      return professorTurmas.includes(alunoTurmaId);
+    }
+    return professorTurmas.length > 0;
   }
   
   return false;
@@ -63,7 +65,8 @@ export const canEditAluno = (
 export const canViewTurma = (
   user: User | null,
   turmaId: string,
-  userTurmaId?: string
+  userTurmaId?: string,
+  professorTurmas?: string[]
 ): boolean => {
   if (!user) return false;
   
@@ -74,9 +77,10 @@ export const canViewTurma = (
   }
   
   if (isProfessor(user)) {
-    // Professor pode ver turmas atribuídas
-    // Verificação deve ser feita com professorTurmaDisciplina
-    return true; // Simplificado
+    if (professorTurmas) {
+      return professorTurmas.includes(turmaId);
+    }
+    return true; // Fallback permissivo quando turmas do professor não forem passadas
   }
   
   return false;

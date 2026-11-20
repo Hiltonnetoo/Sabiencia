@@ -1,17 +1,44 @@
--- Reabilitar RLS com políticas corretas
-ALTER TABLE usuarios ENABLE ROW LEVEL SECURITY;
+-- ============================================
+-- Correção Segura de RLS em Usuarios (Sem USING (true))
+-- Previne recursão infinita via Security Definer is_gestor()
+-- ============================================
 
--- Criar política para permitir leitura de qualquer usuário (necessário para login)
-CREATE POLICY "Permitir leitura de usuários para login" ON usuarios
+ALTER TABLE public.usuarios ENABLE ROW LEVEL SECURITY;
+
+CREATE OR REPLACE FUNCTION public.is_gestor()
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.usuarios
+    WHERE auth_id = auth.uid() AND role = 'gestor'
+  );
+$$;
+
+DROP POLICY IF EXISTS "Permitir leitura de usuários para login" ON public.usuarios;
+DROP POLICY IF EXISTS "usuarios_read_policy" ON public.usuarios;
+CREATE POLICY "usuarios_read_policy" ON public.usuarios
   FOR SELECT
-  USING (true);
+  TO authenticated
+  USING (
+    auth.uid() = auth_id
+    OR public.is_gestor()
+  );
 
--- Criar política para permitir atualização apenas do próprio usuário
-CREATE POLICY "Permitir atualização próprio usuário" ON usuarios
+DROP POLICY IF EXISTS "Permitir atualização próprio usuário" ON public.usuarios;
+DROP POLICY IF EXISTS "usuarios_update_policy" ON public.usuarios;
+CREATE POLICY "usuarios_update_policy" ON public.usuarios
   FOR UPDATE
-  USING (auth.uid() = auth_id);
+  TO authenticated
+  USING (auth.uid() = auth_id OR public.is_gestor())
+  WITH CHECK (auth.uid() = auth_id OR public.is_gestor());
 
--- Criar política para permitir inserção apenas para usuários autenticados
-CREATE POLICY "Permitir inserção para usuários autenticados" ON usuarios
+DROP POLICY IF EXISTS "Permitir inserção para usuários autenticados" ON public.usuarios;
+DROP POLICY IF EXISTS "usuarios_insert_policy" ON public.usuarios;
+CREATE POLICY "usuarios_insert_policy" ON public.usuarios
   FOR INSERT
-  WITH CHECK (auth.uid() = auth_id);
+  TO authenticated
+  WITH CHECK (auth.uid() = auth_id OR public.is_gestor());

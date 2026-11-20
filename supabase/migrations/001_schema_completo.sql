@@ -98,7 +98,8 @@ CREATE TABLE public.frequencias (
   presente BOOLEAN DEFAULT false,
   justificado BOOLEAN DEFAULT false,
   observacao TEXT,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(aluno_id, disciplina_id, turma_id, data)
 );
 
 -- 2.8 Notas
@@ -108,8 +109,8 @@ CREATE TABLE public.notas (
   disciplina_id UUID REFERENCES public.disciplinas(id) ON DELETE CASCADE,
   turma_id UUID REFERENCES public.turmas(id) ON DELETE CASCADE,
   tipo_avaliacao VARCHAR(50), -- prova1, prova2, trabalho
-  nota DECIMAL(4,2),
-  peso DECIMAL(3,2) DEFAULT 1.0,
+  nota DECIMAL(4,2) CHECK (nota >= 0 AND nota <= 10),
+  peso DECIMAL(3,2) DEFAULT 1.0 CHECK (peso > 0),
   data_avaliacao DATE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -197,7 +198,7 @@ CREATE TABLE public.pagamentos (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   aluno_id UUID REFERENCES public.usuarios(id) ON DELETE CASCADE,
   matricula_id UUID REFERENCES public.matriculas(id) ON DELETE CASCADE,
-  valor DECIMAL(10,2) NOT NULL,
+  valor DECIMAL(10,2) NOT NULL CHECK (valor >= 0),
   status status_pagamento DEFAULT 'pendente',
   forma_pagamento VARCHAR(50), -- boleto, pix, cartao
   data_vencimento DATE,
@@ -323,7 +324,113 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- ============================================
--- 5. ROW LEVEL SECURITY (RLS)
+-- 5. VIEWS CANÔNICAS DE COMPATIBILIDADE
+-- ============================================
+
+-- 5.1 Visão de Alunos (reúne dados de usuário e matrícula)
+CREATE OR REPLACE VIEW public.alunos AS
+SELECT 
+  u.id,
+  u.auth_id,
+  u.nome,
+  u.nome AS nome_completo,
+  u.email,
+  u.cpf,
+  u.telefone,
+  u.avatar_url,
+  u.avatar_url AS foto_url,
+  u.ativo,
+  m.id AS matricula_id,
+  m.turma_id,
+  m.curso_id,
+  m.status,
+  m.data_matricula,
+  u.created_at,
+  u.updated_at
+FROM public.usuarios u
+LEFT JOIN public.matriculas m ON m.aluno_id = u.id
+WHERE u.role = 'aluno';
+
+-- 5.2 Visão de Professores
+CREATE OR REPLACE VIEW public.professores AS
+SELECT 
+  u.id,
+  u.auth_id,
+  u.nome,
+  u.nome AS nome_completo,
+  u.email,
+  u.cpf,
+  u.telefone,
+  u.avatar_url,
+  u.avatar_url AS foto_url,
+  u.ativo,
+  u.created_at,
+  u.updated_at
+FROM public.usuarios u
+WHERE u.role = 'professor';
+
+-- 5.3 Visão de Gestores
+CREATE OR REPLACE VIEW public.gestores AS
+SELECT 
+  u.id,
+  u.auth_id,
+  u.nome,
+  u.nome AS nome_completo,
+  u.email,
+  u.cpf,
+  u.telefone,
+  u.avatar_url,
+  u.avatar_url AS foto_url,
+  u.ativo,
+  u.created_at,
+  u.updated_at
+FROM public.usuarios u
+WHERE u.role = 'gestor';
+
+-- 5.4 Visão de Materiais Didáticos
+CREATE OR REPLACE VIEW public.materiais_didaticos AS
+SELECT 
+  id,
+  professor_id,
+  disciplina_id,
+  titulo,
+  descricao,
+  tipo,
+  url,
+  arquivo_url,
+  tags,
+  visualizacoes,
+  downloads,
+  ativo,
+  created_at
+FROM public.materiais;
+
+-- 5.5 Visão de Notificações de Usuário
+CREATE OR REPLACE VIEW public.usuario_notificacoes AS
+SELECT
+  id,
+  usuario_id,
+  tipo,
+  titulo,
+  mensagem,
+  lida,
+  link,
+  created_at
+FROM public.notificacoes;
+
+-- 5.6 Visão de Mensagens de Chat
+CREATE OR REPLACE VIEW public.chat_mensagens AS
+SELECT
+  id,
+  live_id AS turma_id,
+  usuario_id,
+  mensagem,
+  created_at
+FROM public.chat_lives;
+
+-- ============================================
+-- 6. ROW LEVEL SECURITY (RLS)
+-- As políticas granulares completas são versionadas em 004_rls_security_policies.sql
 -- ============================================
 
 -- Habilitar RLS em todas as tabelas

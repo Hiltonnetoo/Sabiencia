@@ -100,7 +100,9 @@ export const GlobalSearch: React.FC<GlobalSearchProps> = ({ open, onOpenChange }
         notificacoes: mockData.notificacoes,
         pagamentos: mockData.pagamentos,
       },
-      user.role
+      user.role,
+      undefined,
+      user.id
     );
   }, [query, user, mockData]);
 
