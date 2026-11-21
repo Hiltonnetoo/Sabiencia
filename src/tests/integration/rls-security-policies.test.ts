@@ -1,12 +1,12 @@
 // ============================================
-// TESTES DE SEGURANÇA: RLS E POLÍTICAS DE AUTORIZAÇÃO
-// Validação do Schema Canônico (18 tabelas), Ausência de Recursão Infinita
-// e Testes de Acesso Permitido vs. Acessos Negados (Negativas de Segurança)
+// AUTORIZAÇÃO NO FRONTEND
+// Testa as regras de permissão da interface (utils/permissions) e o escopo
+// da busca global. Elas espelham a RLS, mas NÃO a substituem: as policies
+// do banco são testadas contra Postgres real em supabase/tests/rls_test.sql
+// (npm run test:db, job "Database RLS Tests" na CI).
 // ============================================
 
 import { describe, it, expect } from 'vitest';
-import fs from 'fs';
-import path from 'path';
 import type { User, Role } from '../../types';
 import {
   isGestor,
@@ -40,88 +40,7 @@ const professorB = createMockUser('professor', 'usr-prof-b', 'prof.carlos@britos
 const aluno1 = createMockUser('aluno', 'usr-aluno-1', 'lucas@britos.edu.br');
 const aluno2 = createMockUser('aluno', 'usr-aluno-2', 'mariana@britos.edu.br');
 
-describe('Fase 3: Supabase Schema, RLS e Políticas de Segurança', () => {
-  const CANONICAL_TABLES = [
-    'usuarios',
-    'cursos',
-    'disciplinas',
-    'turmas',
-    'matriculas',
-    'professor_disciplinas',
-    'frequencias',
-    'notas',
-    'materiais',
-    'topicos',
-    'videoaulas',
-    'progresso_videoaulas',
-    'lives',
-    'chat_lives',
-    'pagamentos',
-    'comunicados',
-    'observacoes',
-    'notificacoes',
-  ];
-
-  describe('Auditoria de Schema e Migrações (T04, T05)', () => {
-    it('o schema principal define exatamente as 18 tabelas relacionais do domínio', () => {
-      const schemaPath = path.resolve(process.cwd(), 'supabase/migrations/001_schema_completo.sql');
-      expect(fs.existsSync(schemaPath)).toBe(true);
-      const schemaContent = fs.readFileSync(schemaPath, 'utf-8');
-
-      for (const table of CANONICAL_TABLES) {
-        const regex = new RegExp(`CREATE TABLE public\\.${table}\\s*\\(`, 'i');
-        expect(regex.test(schemaContent)).toBe(true);
-      }
-    });
-
-    it('todas as 18 tabelas possuem ROW LEVEL SECURITY habilitado no script de RLS', () => {
-      const rlsPath = path.resolve(process.cwd(), 'supabase/migrations/004_rls_security_policies.sql');
-      expect(fs.existsSync(rlsPath)).toBe(true);
-      const rlsContent = fs.readFileSync(rlsPath, 'utf-8');
-
-      for (const table of CANONICAL_TABLES) {
-        const regex = new RegExp(`ALTER TABLE public\\.${table} ENABLE ROW LEVEL SECURITY;`, 'i');
-        expect(regex.test(rlsContent)).toBe(true);
-      }
-    });
-
-    it('as funções de verificação de permissão utilizam SECURITY DEFINER para evitar recursão infinita em usuarios', () => {
-      const rlsPath = path.resolve(process.cwd(), 'supabase/migrations/004_rls_security_policies.sql');
-      const rlsContent = fs.readFileSync(rlsPath, 'utf-8');
-
-      expect(rlsContent).toContain('CREATE OR REPLACE FUNCTION public.get_current_user_id()');
-      expect(rlsContent).toContain('CREATE OR REPLACE FUNCTION public.get_current_user_role()');
-      expect(rlsContent).toContain('CREATE OR REPLACE FUNCTION public.is_gestor()');
-      expect(rlsContent).toContain('SECURITY DEFINER');
-      expect(rlsContent).toContain('SET search_path = public');
-    });
-
-    it('não utiliza sintaxes inválidas como CREATE POLICY IF NOT EXISTS', () => {
-      const rlsPath = path.resolve(process.cwd(), 'supabase/migrations/004_rls_security_policies.sql');
-      const rlsContent = fs.readFileSync(rlsPath, 'utf-8');
-      expect(rlsContent).not.toMatch(/CREATE POLICY IF NOT EXISTS/i);
-    });
-
-    it('elimina leituras públicas irrestritas (USING (true)) em dados sensíveis de usuários', () => {
-      const fixPath = path.resolve(process.cwd(), 'fix-usuarios-rls-policies.sql');
-      const rlsSimplePath = path.resolve(process.cwd(), 'supabase/rls_policies.sql');
-      const fixContent = fs.readFileSync(fixPath, 'utf-8');
-      const rlsSimpleContent = fs.readFileSync(rlsSimplePath, 'utf-8');
-
-      // Não deve ter USING (true) na tabela de usuários para leitura irrestrita
-      expect(fixContent).not.toMatch(/CREATE POLICY .* ON public\.usuarios.*FOR SELECT.*USING\s*\(true\);/is);
-      expect(rlsSimpleContent).not.toMatch(/CREATE POLICY .* ON public\.usuarios.*FOR SELECT.*USING\s*\(true\);/is);
-    });
-
-    it('o script destrutivo de purge foi isolado fora das migrações automáticas de evolução', () => {
-      const oldPurgeMigration = path.resolve(process.cwd(), 'supabase/migrations/004_purge_domain_tables.sql');
-      const newPurgeScript = path.resolve(process.cwd(), 'supabase/scripts/purge_dev_data.sql');
-
-      expect(fs.existsSync(oldPurgeMigration)).toBe(false);
-      expect(fs.existsSync(newPurgeScript)).toBe(true);
-    });
-  });
-
+describe('Autorização no frontend (espelho das regras de RLS)', () => {
   describe('Matriz de Permissões e Acessos Autorizados (T06)', () => {
     it('Gestor tem permissão irrestrita de gestão, lançamento e visualização de rotas', () => {
       expect(isGestor(gestor)).toBe(true);
@@ -286,16 +205,6 @@ describe('Fase 3: Supabase Schema, RLS e Políticas de Segurança', () => {
       expect(searchAluno1).toHaveLength(1);
       expect(searchAluno1[0].metadata?.pagamento?.aluno_id).toBe(aluno1.id);
       expect(searchAluno1[0].title).toContain('Lucas Silva');
-    });
-
-    it('NEGATIVA 12: Trigger no PostgreSQL impede alteração de role por usuários não-gestores', () => {
-      const rlsPath = path.resolve(process.cwd(), 'supabase/migrations/004_rls_security_policies.sql');
-      const rlsContent = fs.readFileSync(rlsPath, 'utf-8');
-
-      expect(rlsContent).toContain('protect_user_sensitive_fields');
-      expect(rlsContent).toContain("RAISE EXCEPTION 'Operação não permitida: alteração de role é restrita a gestores'");
-      expect(rlsContent).toContain("RAISE EXCEPTION 'Operação não permitida: alteração de auth_id é restrita a gestores'");
-      expect(rlsContent).toContain("RAISE EXCEPTION 'Operação não permitida: alteração do status ativo é restrita a gestores'");
     });
   });
 });

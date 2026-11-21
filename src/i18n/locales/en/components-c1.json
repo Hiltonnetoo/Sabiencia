@@ -48,7 +48,12 @@
       "photoDesc": "Profile photo URL (optional)",
       "photoUrl": "Photo URL",
       "photoUrlPlaceholder": "https://example.com/photo.jpg",
-      "saveStudent": "Save Student"
+      "saveStudent": "Save Student",
+      "academicData": "Class Enrollment",
+      "academicDataDesc": "Select the class to enroll this student in",
+      "class": "Class",
+      "selectClass": "Select a class (optional)",
+      "noClass": "No class for now"
     },
     "alunosAdvancedFilters": {
       "quickAll": "All",

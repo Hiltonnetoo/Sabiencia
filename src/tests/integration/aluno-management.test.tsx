@@ -253,7 +253,7 @@ describe('Validação de Dados - Integration', () => {
 
     // Deve mostrar erros de validação
     await waitFor(() => {
-      const errors = screen.queryAllByText(/obrigatório/i);
+      const errors = screen.queryAllByText(/Nome deve ter pelo menos 3|formato do CPF/i);
       expect(errors.length).toBeGreaterThan(0);
     });
 

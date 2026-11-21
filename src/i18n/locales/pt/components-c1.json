@@ -48,7 +48,12 @@
       "photoDesc": "URL da foto de perfil (opcional)",
       "photoUrl": "URL da Foto",
       "photoUrlPlaceholder": "https://exemplo.com/foto.jpg",
-      "saveStudent": "Salvar Aluno"
+      "saveStudent": "Salvar Aluno",
+      "academicData": "Matrícula Acadêmica",
+      "academicDataDesc": "Selecione a turma para vincular a matrícula deste aluno",
+      "class": "Turma",
+      "selectClass": "Selecione uma turma (opcional)",
+      "noClass": "Nenhuma turma no momento"
     },
     "alunosAdvancedFilters": {
       "quickAll": "Todos",

@@ -12,6 +12,7 @@ import { LoginPage } from '../../components/auth/LoginPage';
 import { ProtectedRoute } from '../../components/auth/ProtectedRoute';
 import { GestorDashboard } from '../../pages/gestor/GestorDashboard';
 import { MockDataProvider } from '../../contexts/MockDataContext';
+import { signToken } from '../../test/signSession';
 
 // Componente de teste para rota protegida
 const TestDashboard = () => {
@@ -90,14 +91,12 @@ describe('Authentication Flow - Integration', () => {
       created_at: new Date()
     };
 
-    const secureStorageObj = {
-      token: {
-        user: mockUser,
-        expiresAt: Date.now() + 1000 * 60 * 60 * 8, // 8h
-        createdAt: Date.now()
-      },
-      signature: 'mock-signature'
+    const sessionToken = {
+      user: mockUser,
+      expiresAt: Date.now() + 1000 * 60 * 60 * 8, // 8h
+      createdAt: Date.now()
     };
+    const secureStorageObj = { token: sessionToken, signature: await signToken(sessionToken) };
 
     localStorage.setItem('sabiencia_auth_user', JSON.stringify(secureStorageObj));
     localStorage.setItem('sabiencia_auth_token', 'mock-token');
@@ -134,14 +133,12 @@ describe('Authentication Flow - Integration', () => {
       created_at: new Date()
     };
 
-    const secureStorageObj = {
-      token: {
-        user: mockUser,
-        expiresAt: Date.now() + 1000 * 60 * 60 * 8,
-        createdAt: Date.now()
-      },
-      signature: 'mock-signature'
+    const sessionToken = {
+      user: mockUser,
+      expiresAt: Date.now() + 1000 * 60 * 60 * 8,
+      createdAt: Date.now()
     };
+    const secureStorageObj = { token: sessionToken, signature: await signToken(sessionToken) };
 
     localStorage.setItem('sabiencia_auth_user', JSON.stringify(secureStorageObj));
     
@@ -199,14 +196,12 @@ describe('Authentication Flow - Integration', () => {
       created_at: new Date()
     };
 
-    const secureStorageObj = {
-      token: {
-        user: mockUser,
-        expiresAt: Date.now() + 1000 * 60 * 60 * 8,
-        createdAt: Date.now()
-      },
-      signature: 'mock-signature'
+    const sessionToken = {
+      user: mockUser,
+      expiresAt: Date.now() + 1000 * 60 * 60 * 8,
+      createdAt: Date.now()
     };
+    const secureStorageObj = { token: sessionToken, signature: await signToken(sessionToken) };
 
     localStorage.setItem('sabiencia_auth_user', JSON.stringify(secureStorageObj));
 

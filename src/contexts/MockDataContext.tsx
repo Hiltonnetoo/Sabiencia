@@ -7,6 +7,21 @@ import React, { createContext, useContext, useState, ReactNode, useMemo, useEffe
 import { mockData as initialMockData } from '../data/mockData';
 import { mockNotifications as initialNotifications } from '../data/mockNotifications';
 import i18n from '../i18n';
+import { isSupabaseMode } from '../config/appMode';
+import { supabase } from '../lib/supabase';
+import { useOptionalAuth } from './AuthContext';
+import {
+  fetchAcademicSnapshot,
+  insertAluno,
+  insertMatricula,
+  updateAlunoRow,
+  updateMatriculaTurma,
+  upsertFrequencias,
+  upsertNotas,
+  type LancamentoNotas,
+  type NovoAluno,
+  type RegistroFrequencias,
+} from '../services/academicRepository';
 import {
   localizeCursos,
   localizeDisciplinas,
@@ -37,7 +52,6 @@ import type {
   ProfessorTurmaDisciplina,
   Notificacao,
   LogAuditoria,
-  StatusFrequencia
 } from '../types';
 
 export interface MockDataContextType {
@@ -124,23 +138,24 @@ export interface MockDataContextType {
   getMatriculasByTurmaId: (turmaId: string) => Matricula[];
 
   // Lançamentos Acadêmicos em Lote (Professor)
-  lancarNotasEmLote: (params: {
-    turma_id: string;
-    disciplina_id: string;
-    professor_id: string;
-    tipo_avaliacao: string;
-    peso: number;
-    data_avaliacao: Date;
-    notas: Array<{ aluno_id: string; nota: number; observacao?: string }>;
-  }) => Nota[];
+  lancarNotasEmLote: (params: LancamentoNotas) => Nota[];
+  registrarFrequenciasEmLote: (params: RegistroFrequencias) => Frequencia[];
 
-  registrarFrequenciasEmLote: (params: {
-    turma_id: string;
-    disciplina_id: string;
-    professor_id: string;
-    data_aula: Date;
-    presencas: Array<{ aluno_id: string; status: StatusFrequencia; observacao?: string }>;
-  }) => Frequencia[];
+  // ==================== JORNADA (persistente) ====================
+  // Use estas funções na interface: no modo demo gravam no localStorage;
+  // no modo supabase gravam no banco (sujeitas à RLS) e só então atualizam o estado.
+  /** Origem dos dados exibidos */
+  dataSource: 'demo' | 'supabase';
+  /** true enquanto o snapshot do Supabase está sendo carregado */
+  isSyncing: boolean;
+  /** Último erro de carga do Supabase, se houver */
+  syncError: string | null;
+  /** Recarrega os dados do Supabase (no-op no modo demo) */
+  reloadFromBackend: () => Promise<void>;
+  cadastrarAluno: (data: NovoAluno, turmaId?: string) => Promise<Aluno>;
+  atualizarAluno: (id: string, data: Partial<NovoAluno>, turmaId?: string) => Promise<void>;
+  salvarNotas: (params: LancamentoNotas) => Promise<Nota[]>;
+  salvarFrequencias: (params: RegistroFrequencias) => Promise<Frequencia[]>;
 
   // CRUD Notificações
   markNotificationAsRead: (id: string) => void;
@@ -186,7 +201,15 @@ function reviveDates<T>(obj: T): T {
   return obj;
 }
 
+// Estado vazio do modo supabase: nada de fixture misturado com dado real
+const EMPTY_DATA = Object.fromEntries(
+  Object.entries(initialMockData).map(([key, value]) => [key, Array.isArray(value) ? [] : value])
+) as unknown as typeof initialMockData;
+
 function loadInitialState(): typeof initialMockData {
+  if (isSupabaseMode()) {
+    return EMPTY_DATA;
+  }
   if (typeof window === 'undefined' || !window.localStorage) {
     return initialMockData;
   }
@@ -208,6 +231,9 @@ function loadInitialState(): typeof initialMockData {
 }
 
 function loadInitialNotifications(): Notificacao[] {
+  if (isSupabaseMode()) {
+    return [];
+  }
   if (typeof window === 'undefined' || !window.localStorage) {
     return initialNotifications;
   }
@@ -224,8 +250,42 @@ function loadInitialNotifications(): Notificacao[] {
   return initialNotifications;
 }
 
+// Chaves naturais dos lançamentos (uma nota por avaliação; uma presença por dia)
+type NotaKey = Pick<Nota, 'aluno_id' | 'turma_id' | 'disciplina_id' | 'tipo_avaliacao'>;
+const sameNotaKey = (a: NotaKey, b: NotaKey): boolean =>
+  a.aluno_id === b.aluno_id &&
+  a.turma_id === b.turma_id &&
+  a.disciplina_id === b.disciplina_id &&
+  a.tipo_avaliacao === b.tipo_avaliacao;
+
+type FrequenciaKey = Pick<Frequencia, 'aluno_id' | 'turma_id' | 'disciplina_id' | 'data_aula'>;
+const sameDay = (a: Date, b: Date): boolean => {
+  const x = new Date(a);
+  const y = new Date(b);
+  return x.getFullYear() === y.getFullYear() && x.getMonth() === y.getMonth() && x.getDate() === y.getDate();
+};
+const sameFrequenciaKey = (a: FrequenciaKey, b: FrequenciaKey): boolean =>
+  a.aluno_id === b.aluno_id &&
+  a.turma_id === b.turma_id &&
+  a.disciplina_id === b.disciplina_id &&
+  sameDay(a.data_aula, b.data_aula);
+
+/** Substitui os itens com a mesma chave e acrescenta os novos */
+function upsertBy<T>(prev: T[], items: T[], same: (a: T, b: T) => boolean): T[] {
+  const next = prev.map(old => items.find(item => same(old, item)) ?? old);
+  for (const item of items) {
+    if (!prev.some(old => same(old, item))) next.push(item);
+  }
+  return next;
+}
+
 export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const supabaseMode = isSupabaseMode();
+  const auth = useOptionalAuth();
+  const authUserId = auth?.user?.id ?? null;
   const loadedInitialData = useMemo(() => loadInitialState(), []);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncError, setSyncError] = useState<string | null>(null);
 
   const [alunos, setAlunos] = useState<Aluno[]>(() => loadedInitialData.alunos || initialMockData.alunos);
   const [professores, setProfessores] = useState<Professor[]>(() => loadedInitialData.professores || initialMockData.professores);
@@ -253,6 +313,8 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
       isInitialMount.current = false;
       return;
     }
+    // No modo supabase o banco é a fonte da verdade: nada vai para o localStorage
+    if (supabaseMode) return;
     if (typeof window === 'undefined' || !window.localStorage) return;
     try {
       const payload = {
@@ -311,6 +373,45 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
       i18n.off('languageChanged', handler);
     };
   }, []);
+
+  // ==================== SUPABASE: CARGA DO SNAPSHOT ====================
+
+  const applySnapshot = (snapshot: Awaited<ReturnType<typeof fetchAcademicSnapshot>>) => {
+    setCursos(snapshot.cursos);
+    setDisciplinas(snapshot.disciplinas);
+    setTurmas(snapshot.turmas);
+    setAlunos(snapshot.alunos);
+    setProfessores(snapshot.professores);
+    setMatriculas(snapshot.matriculas);
+    setProfessorTurmaDisciplina(snapshot.professorTurmaDisciplina);
+    setNotas(snapshot.notas);
+    setFrequencias(snapshot.frequencias);
+  };
+
+  const reloadFromBackend = async (): Promise<void> => {
+    if (!supabaseMode) return;
+    setIsSyncing(true);
+    setSyncError(null);
+    try {
+      applySnapshot(await fetchAcademicSnapshot(supabase));
+    } catch (e) {
+      setSyncError(e instanceof Error ? e.message : String(e));
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!supabaseMode) return;
+    if (!authUserId) {
+      applySnapshot({
+        cursos: [], disciplinas: [], turmas: [], alunos: [], professores: [],
+        matriculas: [], professorTurmaDisciplina: [], notas: [], frequencias: [],
+      });
+      return;
+    }
+    void reloadFromBackend();
+  }, [supabaseMode, authUserId]);
 
   // ==================== ALUNOS ====================
 
@@ -634,43 +735,16 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   // ==================== NOTAS EM LOTE ====================
 
-  const lancarNotasEmLote = (params: {
-    turma_id: string;
-    disciplina_id: string;
-    professor_id: string;
-    tipo_avaliacao: string;
-    peso: number;
-    data_avaliacao: Date;
-    notas: Array<{ aluno_id: string; nota: number; observacao?: string }>;
-  }): Nota[] => {
-    const { turma_id, disciplina_id, professor_id, tipo_avaliacao, peso, data_avaliacao, notas: notasInput } = params;
+  const lancarNotasEmLote = (params: LancamentoNotas): Nota[] => {
+    const { turma_id, disciplina_id, professor_id, tipo_avaliacao, peso, data_avaliacao } = params;
     const now = new Date();
-    const resultNotas: Nota[] = [];
-
-    setNotas(prev => {
-      const next = [...prev];
-      for (const item of notasInput) {
-        const existingIndex = next.findIndex(
-          n =>
-            n.aluno_id === item.aluno_id &&
-            n.turma_id === turma_id &&
-            n.disciplina_id === disciplina_id &&
-            n.tipo_avaliacao === tipo_avaliacao
-        );
-
-        if (existingIndex >= 0) {
-          const updated: Nota = {
-            ...next[existingIndex],
-            nota: item.nota,
-            peso,
-            data_avaliacao,
-            observacao: item.observacao,
-            professor_id,
-          };
-          next[existingIndex] = updated;
-          resultNotas.push(updated);
-        } else {
-          const novaNota: Nota = {
+    // Calcula o resultado a partir do estado atual (e não dentro do updater,
+    // que o React pode executar depois do return)
+    const resultNotas: Nota[] = params.notas.map(item => {
+      const existing = notas.find(n => sameNotaKey(n, { ...item, turma_id, disciplina_id, tipo_avaliacao }));
+      return existing
+        ? { ...existing, nota: item.nota, peso, data_avaliacao, observacao: item.observacao, professor_id }
+        : {
             id: generateId('nota'),
             aluno_id: item.aluno_id,
             turma_id,
@@ -683,59 +757,23 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
             observacao: item.observacao,
             created_at: now,
           };
-          next.push(novaNota);
-          resultNotas.push(novaNota);
-        }
-      }
-      return next;
     });
-
+    setNotas(prev => upsertBy(prev, resultNotas, sameNotaKey));
     return resultNotas;
   };
 
   // ==================== FREQUÊNCIA EM LOTE ====================
 
-  const registrarFrequenciasEmLote = (params: {
-    turma_id: string;
-    disciplina_id: string;
-    professor_id: string;
-    data_aula: Date;
-    presencas: Array<{ aluno_id: string; status: StatusFrequencia; observacao?: string }>;
-  }): Frequencia[] => {
-    const { turma_id, disciplina_id, professor_id, data_aula, presencas: presencasInput } = params;
+  const registrarFrequenciasEmLote = (params: RegistroFrequencias): Frequencia[] => {
+    const { turma_id, disciplina_id, professor_id, data_aula } = params;
     const now = new Date();
-    const resultFreqs: Frequencia[] = [];
-    const targetDate = new Date(data_aula);
-    const targetDay = targetDate.getDate();
-    const targetMonth = targetDate.getMonth();
-    const targetYear = targetDate.getFullYear();
-
-    setFrequencias(prev => {
-      const next = [...prev];
-      for (const item of presencasInput) {
-        const existingIndex = next.findIndex(f => {
-          if (f.aluno_id !== item.aluno_id || f.turma_id !== turma_id || f.disciplina_id !== disciplina_id) {
-            return false;
-          }
-          const fDate = new Date(f.data_aula);
-          return (
-            fDate.getDate() === targetDay &&
-            fDate.getMonth() === targetMonth &&
-            fDate.getFullYear() === targetYear
-          );
-        });
-
-        if (existingIndex >= 0) {
-          const updated: Frequencia = {
-            ...next[existingIndex],
-            status: item.status,
-            observacao: item.observacao,
-            professor_id,
-          };
-          next[existingIndex] = updated;
-          resultFreqs.push(updated);
-        } else {
-          const novaFreq: Frequencia = {
+    const resultFreqs: Frequencia[] = params.presencas.map(item => {
+      const existing = frequencias.find(f =>
+        sameFrequenciaKey(f, { aluno_id: item.aluno_id, turma_id, disciplina_id, data_aula })
+      );
+      return existing
+        ? { ...existing, status: item.status, observacao: item.observacao, professor_id }
+        : {
             id: generateId('freq'),
             aluno_id: item.aluno_id,
             turma_id,
@@ -746,14 +784,70 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
             observacao: item.observacao,
             created_at: now,
           };
-          next.push(novaFreq);
-          resultFreqs.push(novaFreq);
-        }
-      }
-      return next;
     });
-
+    setFrequencias(prev => upsertBy(prev, resultFreqs, sameFrequenciaKey));
     return resultFreqs;
+  };
+
+  // ==================== JORNADA (demo ou supabase) ====================
+
+  const cursoDaTurma = (turmaId: string): string => {
+    const turma = turmas.find(t => t.id === turmaId);
+    if (!turma) throw new Error('Turma não encontrada');
+    return turma.curso_id;
+  };
+
+  const cadastrarAluno = async (data: NovoAluno, turmaId?: string): Promise<Aluno> => {
+    if (!supabaseMode) {
+      const aluno = createAluno(data);
+      if (turmaId) createMatricula({ aluno_id: aluno.id, turma_id: turmaId, status: 'ativo' });
+      return aluno;
+    }
+    const aluno = await insertAluno(supabase, data);
+    setAlunos(prev => [...prev, aluno]);
+    if (turmaId) {
+      const matricula = await insertMatricula(supabase, {
+        aluno_id: aluno.id,
+        turma_id: turmaId,
+        curso_id: cursoDaTurma(turmaId),
+      });
+      setMatriculas(prev => [...prev, matricula]);
+    }
+    return aluno;
+  };
+
+  const atualizarAluno = async (id: string, data: Partial<NovoAluno>, turmaId?: string): Promise<void> => {
+    const atual = matriculas.find(m => m.aluno_id === id);
+    if (!supabaseMode) {
+      updateAluno(id, data as Partial<Aluno>);
+      if (turmaId && atual && atual.turma_id !== turmaId) updateMatricula(atual.id, { turma_id: turmaId });
+      if (turmaId && !atual) createMatricula({ aluno_id: id, turma_id: turmaId, status: 'ativo' });
+      return;
+    }
+    const aluno = await updateAlunoRow(supabase, id, data);
+    setAlunos(prev => prev.map(a => (a.id === id ? aluno : a)));
+    if (turmaId && atual && atual.turma_id !== turmaId) {
+      const matricula = await updateMatriculaTurma(supabase, atual.id, { turma_id: turmaId, curso_id: cursoDaTurma(turmaId) });
+      setMatriculas(prev => prev.map(m => (m.id === matricula.id ? matricula : m)));
+    }
+    if (turmaId && !atual) {
+      const matricula = await insertMatricula(supabase, { aluno_id: id, turma_id: turmaId, curso_id: cursoDaTurma(turmaId) });
+      setMatriculas(prev => [...prev, matricula]);
+    }
+  };
+
+  const salvarNotas = async (params: LancamentoNotas): Promise<Nota[]> => {
+    if (!supabaseMode) return lancarNotasEmLote(params);
+    const saved = await upsertNotas(supabase, params);
+    setNotas(prev => upsertBy(prev, saved, sameNotaKey));
+    return saved;
+  };
+
+  const salvarFrequencias = async (params: RegistroFrequencias): Promise<Frequencia[]> => {
+    if (!supabaseMode) return registrarFrequenciasEmLote(params);
+    const saved = await upsertFrequencias(supabase, params);
+    setFrequencias(prev => upsertBy(prev, saved, sameFrequenciaKey));
+    return saved;
   };
 
   // ==================== NOTIFICAÇÕES ====================
@@ -870,6 +964,14 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
     getMatriculasByTurmaId,
     lancarNotasEmLote,
     registrarFrequenciasEmLote,
+    dataSource: supabaseMode ? 'supabase' : 'demo',
+    isSyncing,
+    syncError,
+    reloadFromBackend,
+    cadastrarAluno,
+    atualizarAluno,
+    salvarNotas,
+    salvarFrequencias,
     markNotificationAsRead,
     markAllNotificationsAsRead,
     getNotificationsByUser,
@@ -878,7 +980,7 @@ export const MockDataProvider: React.FC<{ children: ReactNode }> = ({ children }
     alunos, professores, gestores, cursos, turmas, disciplinas, materiais,
     matriculas, notas, frequencias, observacoes, pagamentos, comunicados,
     comunicadosLeituras, professorTurmaDisciplina, notificacoes, logsAuditoria,
-    lang
+    lang, isSyncing, syncError
   ]);
 
   return (

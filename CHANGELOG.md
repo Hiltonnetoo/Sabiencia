@@ -7,7 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- RLS: policies recursed infinitely on `usuarios`, `matriculas` and `professor_disciplinas`
+  (every read failed); views bypassed RLS; teachers could edit/delete other teachers' materials,
+  announcements, video lessons, lives and notes, and grade students outside their class; the
+  sensitive-field trigger also blocked the service role (`005_fix_rls_recursion_and_scope.sql`).
+- "New student" / "New teacher" pages crashed on open (`useBlocker` requires a data router).
+- Student form rejected valid submissions unless the optional address was fully filled.
+- Supabase login by CPF called the RPC with the wrong parameter name; profile is now looked up
+  by `auth_id` instead of e-mail.
+- Grade/attendance forms listed every class and subject; teachers now only see their own.
+
 ### Added
+- `npm run test:db` and CI job "Database RLS Tests": migrations + 42 allow/deny assertions
+  against Postgres 15.
+- Supabase-backed academic journey (`src/services/academicRepository.ts`, migration 006).
+- Cross-role E2E journey (manager enrolls → teacher grades → student sees the grade).
+
+### Removed
+- Unused `services/supabaseData.ts` / `hooks/useSupabaseData.ts` (queried tables that do not
+  exist) and the standalone `supabase/rls_policies.sql` / `fix-usuarios-rls-policies.sql`.
+- Test-only bypass of the session signature check in `AuthContext`.
+
+### Added (earlier)
 - **English-first internationalization** (`react-i18next`) with a one-click PT/EN switcher
   (persisted). Landing, demo and login surfaces plus the app chrome (top bar, sidebar) are
   translated.

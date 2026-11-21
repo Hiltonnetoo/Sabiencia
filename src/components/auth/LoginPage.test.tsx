@@ -21,6 +21,8 @@ vi.mock('react-router-dom', async () => {
 // Mock do useAuth
 const mockLogin = vi.fn();
 vi.mock('../../contexts/AuthContext', () => ({
+  // MockDataProvider lê o usuário (opcional) para decidir a fonte de dados
+  useOptionalAuth: () => undefined,
   useAuth: () => ({
     user: null,
     isAuthenticated: false,

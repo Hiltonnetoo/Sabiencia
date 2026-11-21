@@ -42,26 +42,37 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const AUTH_STORAGE_KEY = 'sabiencia_auth_user';
 const SESSION_DURATION = 8 * 60 * 60 * 1000; // 8 horas em milissegundos
 
-const AUTH_SECRET: string =
-  import.meta.env.VITE_AUTH_SECRET ||
-  (typeof process !== 'undefined' && process.env?.NODE_ENV === 'test'
-    ? 'sabiencia_test_secret_key_32_bytes_min'
-    : 'sabiencia_fallback_secret_32_bytes_long');
+// Chave pública e fixa da demonstração: a demo não tem dados reais nem backend,
+// então não há segredo a proteger. No modo supabase a chave é obrigatória.
+const DEMO_AUTH_SECRET = 'sabiencia-demo-mode-public-key';
 
-if (!import.meta.env.VITE_AUTH_SECRET && import.meta.env.PROD) {
-  console.warn(
-    '[AUTH] VITE_AUTH_SECRET não configurada. Defina a variável no ambiente de produção.'
-  );
-}
+const resolveAuthSecret = (): string | null => {
+  const configured = import.meta.env.VITE_AUTH_SECRET;
+  if (configured) return configured;
+  return isDemoMode() ? DEMO_AUTH_SECRET : null;
+};
 
-// Importa a chave HMAC-SHA256 uma única vez ao inicializar o módulo
-const AUTH_CRYPTO_KEY: Promise<CryptoKey> = crypto.subtle.importKey(
-  'raw',
-  new TextEncoder().encode(AUTH_SECRET),
-  { name: 'HMAC', hash: 'SHA-256' },
-  false,
-  ['sign', 'verify']
-);
+// Importa a chave HMAC-SHA256 uma única vez (sob demanda)
+let authCryptoKey: Promise<CryptoKey> | null = null;
+const getAuthCryptoKey = (): Promise<CryptoKey> => {
+  if (!authCryptoKey) {
+    const secret = resolveAuthSecret();
+    if (!secret) {
+      // Falha fechada: sem chave não há sessão local assinada
+      return Promise.reject(
+        new Error('[AUTH] VITE_AUTH_SECRET não configurada (obrigatória com VITE_APP_MODE=supabase).')
+      );
+    }
+    authCryptoKey = crypto.subtle.importKey(
+      'raw',
+      new TextEncoder().encode(secret),
+      { name: 'HMAC', hash: 'SHA-256' },
+      false,
+      ['sign', 'verify']
+    );
+  }
+  return authCryptoKey;
+};
 
 // Helper para verificar modo desenvolvimento
 const isDev = () => {
@@ -85,7 +96,7 @@ const isDev = () => {
 // A real segurança do sistema e proteção de dados reside na validação de tokens JWT no backend
 // do Supabase e nas regras de Row Level Security (RLS) configuradas nas tabelas do banco de dados.
 const createSignature = async (data: AuthToken): Promise<string> => {
-  const key = await AUTH_CRYPTO_KEY;
+  const key = await getAuthCryptoKey();
   const bytes = new TextEncoder().encode(JSON.stringify(data));
   const buffer = await crypto.subtle.sign('HMAC', key, bytes);
   return btoa(String.fromCharCode(...new Uint8Array(buffer)));
@@ -93,9 +104,6 @@ const createSignature = async (data: AuthToken): Promise<string> => {
 
 // Valida assinatura HMAC-SHA256
 const validateSignature = async (token: AuthToken, signature: string): Promise<boolean> => {
-  if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
-    return true;
-  }
   try {
     return (await createSignature(token)) === signature;
   } catch {
@@ -284,22 +292,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         emailForLogin = cpf.trim();
       } else {
         const cleanedCpf = unformatCPF(cpf);
-        const { data: emailFromRpc, error: rpcError } = await supabase.rpc('get_email_by_cpf', { cpf: cleanedCpf });
+        const { data: emailFromRpc, error: rpcError } = await supabase.rpc('get_email_by_cpf', { cpf_input: cleanedCpf });
 
-        if (!rpcError && emailFromRpc) {
-          emailForLogin = String(emailFromRpc);
-        } else {
-          const { data: usuario, error: cpfError } = await supabase
-            .from('usuarios')
-            .select('email')
-            .eq('cpf', cleanedCpf)
-            .single();
-
-          if (cpfError || !usuario) {
-            return { success: false, error: 'CPF não encontrado' };
-          }
-          emailForLogin = usuario.email;
+        // Antes do login o cliente é anônimo e a RLS não deixa ler usuarios:
+        // a RPC SECURITY DEFINER é o único caminho CPF -> e-mail.
+        if (rpcError || !emailFromRpc) {
+          return { success: false, error: 'CPF não encontrado' };
         }
+        emailForLogin = String(emailFromRpc);
       }
 
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
@@ -311,10 +311,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return { success: false, error: 'CPF ou senha inválidos' };
       }
 
+      // Perfil pelo vínculo estável com a conta autenticada (não pelo e-mail)
       const { data: userProfile, error: profileError } = await supabase
         .from('usuarios')
         .select('*')
-        .eq('email', emailForLogin)
+        .eq('auth_id', authData.user.id)
         .single();
 
       if (profileError || !userProfile) {
@@ -485,6 +486,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 };
 
 // Hook para usar o contexto
+/** Igual a useAuth, mas retorna undefined fora de um AuthProvider (ex.: testes isolados) */
+export const useOptionalAuth = (): AuthContextType | undefined => useContext(AuthContext);
+
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   

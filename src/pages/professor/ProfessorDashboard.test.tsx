@@ -10,6 +10,8 @@ import { MockDataProvider } from '../../contexts/MockDataContext';
 
 // Mock do contexto de autenticação para retornar o usuário de forma síncrona
 vi.mock('../../contexts/AuthContext', () => ({
+  // MockDataProvider lê o usuário (opcional) para decidir a fonte de dados
+  useOptionalAuth: () => undefined,
   useAuth: () => ({
     user: {
       id: 'prof-001',

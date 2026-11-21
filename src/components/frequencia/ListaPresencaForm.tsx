@@ -36,12 +36,19 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
   onSuccess,
 }) => {
   const { t } = useTranslation();
-  const { turmas, disciplinas, alunos, matriculas, registrarFrequenciasEmLote } = useMockData();
+  const { turmas, disciplinas, alunos, matriculas, professorTurmaDisciplina, salvarFrequencias } = useMockData();
   const [selectedTurma, setSelectedTurma] = useState<string>('');
   const [selectedDisciplina, setSelectedDisciplina] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [presencas, setPresencas] = useState<Map<string, { status: 'presente' | 'ausente' | 'justificado', observacao?: string }>>(new Map());
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // O professor só lança em turmas/disciplinas que leciona (mesma regra da RLS)
+  const atribuicoes = professorTurmaDisciplina.filter(a => a.professor_id === professorId);
+  const turmasDoProfessor = turmas.filter(turma => atribuicoes.some(a => a.turma_id === turma.id));
+  const disciplinasDaTurma = disciplinas.filter(d =>
+    atribuicoes.some(a => a.disciplina_id === d.id && (!selectedTurma || a.turma_id === selectedTurma))
+  );
 
   // Filtrar alunos da turma selecionada
   const alunosDaTurma: Aluno[] = selectedTurma
@@ -120,7 +127,7 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
         }
       });
 
-      registrarFrequenciasEmLote({
+      await salvarFrequencias({
         turma_id: selectedTurma,
         disciplina_id: selectedDisciplina,
         professor_id: professorId,
@@ -186,7 +193,7 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
                 <SelectValue placeholder={t('components.listaPresencaForm.selectClass')} />
               </SelectTrigger>
               <SelectContent>
-                {turmas
+                {turmasDoProfessor
                   .filter(turma => turma?.id && turma.id.trim() !== '')
                   .map(turma => (
                     <SelectItem key={turma.id} value={turma.id}>
@@ -205,7 +212,7 @@ export const ListaPresencaForm: React.FC<ListaPresencaFormProps> = ({
                 <SelectValue placeholder={t('components.listaPresencaForm.selectSubject')} />
               </SelectTrigger>
               <SelectContent>
-                {disciplinas
+                {disciplinasDaTurma
                   .filter(disc => disc?.id && disc.id.trim() !== '')
                   .map(disc => (
                     <SelectItem key={disc.id} value={disc.id}>

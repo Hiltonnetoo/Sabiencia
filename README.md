@@ -43,8 +43,9 @@ finance — with a tailored experience for each of its three user roles.
 - **Three role-based experiences** — Manager/CEO, Teacher and Student, each with its own
   navigation, dashboards and permissions enforced by route guards (RBAC).
 - **Runs 100% on realistic mock data out of the box** — no backend required to explore the
-  product. The Supabase data layer is implemented and can be enabled via environment
-  variables (see [Architecture](#architecture)).
+  product. With `VITE_APP_MODE=supabase` the academic journey (enrollment, grades, attendance)
+  reads and writes a real Postgres database protected by tested RLS policies
+  (see [Architecture](#architecture)).
 - **Production-minded foundations** — protected routes, signed/expiring client sessions,
   lazy-loaded route bundles, global search (`Cmd/Ctrl + K`), data export (PDF/Excel/CSV),
   light/dark theming, and accessibility features (skip links, focus rings, reduced-motion
@@ -114,13 +115,25 @@ announcements, financial status, events and certificates.
 
 ## Architecture
 
-**Data layer (mock-first, backend-ready).** The application is designed around a data layer
-that defaults to a rich, in-memory mock dataset (`src/data/`, exposed through
-`MockDataContext`). This makes the product fully explorable with zero setup and ideal for
-demos and portfolio review. The same authentication flow integrates with **Supabase**
-(`signInWithPassword`, profile lookup, RLS-protected reads): when valid Supabase credentials
-are provided via `.env`, real authentication is used, with a demo fallback gated behind
-`VITE_DEMO_MODE`.
+**Data layer: two explicit modes.** `VITE_APP_MODE` selects the source of truth
+(`src/config/appMode.ts`); the modes never mix.
+
+- `demo` (default) — a seeded dataset (`src/data/`) exposed through `MockDataContext`, persisted
+  to `localStorage` (versioned) so changes survive reloads. No network calls, no secrets.
+- `supabase` — Supabase Auth (`signInWithPassword`, CPF → e-mail via a `SECURITY DEFINER` RPC,
+  profile looked up by `auth_id`). After login, `MockDataContext` loads what the user may see
+  from Postgres (`src/services/academicRepository.ts`) and the journey writes —
+  `cadastrarAluno`, `atualizarAluno`, `salvarNotas`, `salvarFrequencias` — go to the database
+  first; the UI only reflects rows the database accepted. Demo fixtures are never shown in this
+  mode.
+
+**Database & RLS.** `supabase/migrations/` builds the schema (18 tables), seed, and RLS. Every
+cross-table check goes through `SECURITY DEFINER` helpers (e.g. `professor_leciona`,
+`aluno_matriculado_turma`), so policies never recurse. Managers see everything; teachers only
+their classes/subjects and enrolled students, and can only write grades/attendance there;
+students only their own records. Views run with `security_invoker`, and a trigger blocks
+non-managers from changing `role`, `auth_id` or `ativo`. `supabase/tests/rls_test.sql` exercises
+the full journey against real Postgres with allowed **and** denied cases (`npm run test:db`).
 
 **Authentication & RBAC.** Login accepts CPF or e-mail. Sessions are persisted with a local integrity signature (HMAC) and a fixed expiry. Note that client-side HMAC signatures validate state consistency in local storage to prevent naive UI role tampering, while the true database security and API protection are handled through Supabase Row-Level Security (RLS) policies. `ProtectedRoute` enforces per-role access and redirects each role to its default dashboard.
 
@@ -183,7 +196,7 @@ Copy `.env.example` to `.env` and configure:
 | `VITE_APP_MODE` | optional | Application mode: `demo` (default, 100% offline, zero network requests) or `supabase` |
 | `VITE_SUPABASE_URL` | for supabase mode | Supabase project URL |
 | `VITE_SUPABASE_ANON_KEY` | for supabase mode | Supabase public anon key |
-| `VITE_AUTH_SECRET` | optional | 32-byte hex secret used to sign client sessions for local state integrity validation |
+| `VITE_AUTH_SECRET` | for supabase mode | 32-byte hex secret used to sign client sessions (local integrity only). Demo mode uses a fixed public key |
 | `VITE_DEMO_MODE` | optional | Legacy fallback: `true` enables demo mode (superseded by `VITE_APP_MODE`) |
 
 > Only the public Supabase **anon** key is used on the client. Never commit `.env` — it is
@@ -201,6 +214,7 @@ Copy `.env.example` to `.env` and configure:
 | `npm test` | Unit/integration tests (Vitest) |
 | `npm run test:coverage` | Test coverage report with v8 engine |
 | `npm run test:e2e` | End-to-end tests (Playwright) |
+| `npm run test:db` | Apply all migrations to a throwaway Postgres and run the RLS tests |
 | `npm run test:visual` | Visual regression tests |
 
 ## Project structure
@@ -212,7 +226,8 @@ src/
 ├── pages/           # Route pages grouped by role: gestor/, professor/, aluno/, demo/
 ├── routes/          # Lazy, role-guarded route definitions
 ├── data/            # Seeded mock dataset
-├── hooks/           # Custom hooks (incl. Supabase hooks)
+├── hooks/           # Custom hooks
+├── services/        # academicRepository: Supabase reads/writes for the academic journey
 ├── lib/             # Supabase client and low-level helpers
 ├── schemas/         # Zod schemas for forms/validation
 ├── utils/           # Formatters, export service, media thumbnails, permissions
@@ -238,20 +253,35 @@ src/
 
 ## Testing
 
-The project uses Vitest + Testing Library for unit/integration tests and Playwright for E2E
-and visual regression. The entire test suite runs on CI and locally without external dependencies.
+Every suite below runs on CI (`.github/workflows/ci.yml`) on each push and pull request.
 
-- **505 unit and integration tests** across 27 test files (`vitest run --coverage`), covering permissions, formatters, calculations, validation schemas, and hooks.
-- **37 end-to-end tests** across 4 Playwright specs (`npx playwright test`), covering authentication journeys and full user workflows for Manager, Teacher, and Student across desktop and mobile viewports.
-- **Total: 542 automated tests** with 100% passing status.
+| Suite | Tool | Size | What it proves |
+| --- | --- | --- | --- |
+| Unit & integration | Vitest + Testing Library | 495 tests, 28 files | permissions, formatters, schemas, contexts (demo **and** supabase mode), forms, Supabase repository mapping |
+| Database / RLS | Postgres 15 + `psql` | 42 assertions | migrations apply cleanly; gestor → professor → aluno journey with allowed and **denied** access per role |
+| End-to-end | Playwright (Chromium on CI) | 39 tests, 5 specs | login per role, navigation, search/filter, and the cross-role journey: manager enrolls a student, teacher grades, student sees the grade after logout/login and reload |
+
+Line coverage of the unit suite is about 21% — most page components are only exercised by E2E.
 
 ### Running tests locally
 
-- `npm test` — run unit/integration suite with Vitest.
-- `npm run test:coverage` — run unit/integration suite with v8 coverage report (`coverage/`).
-- `npm run test:e2e` — run Playwright end-to-end test suite.
-- `npm run type-check` — static TypeScript type checking (`tsc --noEmit`).
-- `npm run lint` — ESLint verification with zero warnings.
+- `npm test` / `npm run test:coverage` — Vitest (coverage report in `coverage/`).
+- `npm run test:e2e` — Playwright (starts the dev server automatically).
+- `npm run test:db` — needs a disposable Postgres 15+ reachable through the standard `PG*`
+  variables, e.g. `PGHOST=localhost PGUSER=postgres PGPASSWORD=postgres npm run test:db`.
+  It drops and recreates the database named in `TEST_DB` (default `sabiencia_rls_test`).
+- `npm run type-check` and `npm run lint`.
+
+### Known limitations
+
+- In `supabase` mode only the academic journey (courses, classes, subjects, students, teachers,
+  enrollments, grades, attendance) is wired to the database. Library, announcements, payments
+  and other modules stay empty in that mode instead of showing demo data.
+- Creating a student in `supabase` mode creates the profile and enrollment; the login account
+  (Supabase Auth user) must be created server-side and linked with
+  `supabase/migrations/003_link_auth_ids.sql` (service role).
+- The RLS tests run against plain Postgres with a minimal stub of Supabase's `auth` schema
+  (`supabase/tests/00_supabase_auth_stub.sql`), not against a hosted Supabase project.
 
 ## Roadmap
 
